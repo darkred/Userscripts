@@ -29,5 +29,5 @@ This repo contains my userscripts.
 
 ## External profiles
 
-- [GreasyFork](https://greasyfork.org/en/users/2160-darkred)  
+- [GreasyFork](https://greasyfork.org/en/users/2160-darkred)
 - [OpenUserJS](https://openuserjs.org/users/darkred)
