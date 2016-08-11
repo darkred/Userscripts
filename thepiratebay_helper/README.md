@@ -1,6 +1,6 @@
 It's a modified version of [PirateBay Time Changer](http://userscripts-mirror.org/scripts/show/164849)
 
-Additionally to the initial version:
+Additional features:
 - Now you may may choose in Settings via a dropdown menu between: 
    - highlighting trusted, 
    - hiding non trusted, or 
