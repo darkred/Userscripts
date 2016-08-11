@@ -1,4 +1,9 @@
+## Description
+
 This repo contains my userscripts.
+
+
+### Userscripts
 
 - [Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles](https://github.com/darkred/Userscripts/tree/master/Bugzilla_-_reveal_the_Depends%2C_Blocks%2C_See_Also_and_Duplicates_bug_titles#readme) - Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
 - [Firefox for desktop - list fixed bugs in Mercurial - 2](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_-_2#readme) - It generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
@@ -22,4 +27,7 @@ This repo contains my userscripts.
 - [thepiratebay helper](https://github.com/darkred/Userscripts/tree/master/thepiratebay_helper#readme) - Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 - [Twitter - add unread notifications count in the tab title](https://github.com/darkred/Userscripts/tree/master/Twitter_-_add_unread_notifications_count_in_the_tab_title#readme) - Adds unread notifications count in the tab title
 
+## External profiles
 
+- [GreasyFork](https://greasyfork.org/en/users/2160-darkred)  
+- [OpenUserJS](https://openuserjs.org/users/darkred)
