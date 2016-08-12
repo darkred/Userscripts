@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name        GreasyFork Bullshit Filter
 // @namespace 	darkred
-// @author      darkred
+// @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @version     1.1
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png

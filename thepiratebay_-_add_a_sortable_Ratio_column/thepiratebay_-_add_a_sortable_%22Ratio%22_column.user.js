@@ -1,5 +1,5 @@
 ﻿// ==UserScript==
-// @name        thepiratebay - adds a sortable "Ratio" column 
+// @name        thepiratebay - add a sortable "Ratio" column 
 // @namespace 	darkred
 // @author      darkred
 // @description adds a sortable "Ratio" column 

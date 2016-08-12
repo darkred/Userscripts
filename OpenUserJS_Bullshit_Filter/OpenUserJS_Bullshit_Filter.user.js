@@ -1,16 +1,16 @@
 ﻿// ==UserScript==
-// @name         OpenUserJS Bullshit Filter
-// @author       darkred
-// @description  Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version      1.1
-// @icon         https://s3.amazonaws.com/uso_ss/icon/97145/large.png
-// @grant        none
-// @include      https://openuserjs.org/
-// @include      https://openuserjs.org/?*p=*
-// @include      https://openuserjs.org/?*q=*
+// @name        OpenUserJS Bullshit Filter
+// @namespace 	darkred
+// @author      kuehlschrank, darkred
+// @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
+// @version     1.1
+// @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @grant       none
+// @include     https://openuserjs.org/
+// @include     https://openuserjs.org/?*p=*
+// @include     https://openuserjs.org/?*q=*
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank. 
 //    Thanks a lot to kuehlschrank for making another great script.
-// @namespace https://greasyfork.org/users/2160
 // ==/UserScript==
 
 

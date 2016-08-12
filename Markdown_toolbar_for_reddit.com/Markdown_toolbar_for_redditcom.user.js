@@ -1,6 +1,7 @@
 ﻿// ==UserScript==
 // @name        Markdown toolbar for reddit.com
 // @namespace 	darkred
+// @author      wOxxOm, darkred
 // @description Creates a Markdown toolbar whenever you make/edit text posts or comments in reddit.com.
 // @include     https://www.reddit.com/*submit*
 // @include     https://www.reddit.com/*comments*
