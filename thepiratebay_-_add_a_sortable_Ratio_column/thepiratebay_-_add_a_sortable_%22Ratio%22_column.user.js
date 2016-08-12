@@ -1,8 +1,8 @@
-﻿// ==UserScript==
-// @name        thepiratebay - add a sortable "Ratio" column 
+// ==UserScript==
+// @name        thepiratebay - add a sortable "Ratio" column
 // @namespace 	darkred
 // @author      darkred
-// @description adds a sortable "Ratio" column 
+// @description adds a sortable "Ratio" column
 // @include     https://thepiratebay.se/search/*
 // @version     1.2
 // @grant       none
@@ -26,14 +26,14 @@ function appendColumn() {
     n = tbl.rows[i].cells[6].innerHTML;   // Retrieve the content of the cell of the LE column and store it to variable n
     ratio = m/n;
     if (m>0 && n==0){
-      ratio=m;      
+      ratio=m;
     }
     if (m==0 && n==0){
-      ratio=0;      
+      ratio=0;
     }
     newCell = tbl.rows[i].insertCell(-1);
     newCell.innerHTML = (Math.round(100 * ratio) / 100);
-    
+
   }
 }
 
@@ -45,7 +45,7 @@ function sorting() {
       0: {sorter: false},
       1: {sorter: false},
       2: {sorter: false},
-      3: {sorter: false},      
+      3: {sorter: false},
       4: {sorter: false},
       5: {sorter: false},
       6: {sorter: false},
@@ -53,7 +53,7 @@ function sorting() {
     }
   });
 }
-// 
+//
 
 appendColumn();
 sorting();

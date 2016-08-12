@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        StackExchange sites - convert dates to local timezone
 // @namespace   darkred
 // @match       *://*.stackoverflow.com/*
@@ -184,7 +184,7 @@ new MutationObserver(function(mutations) {
         convertTitleDates();
     });
 }).observe(
-    document.querySelector('#question'), {         
+    document.querySelector('#question'), {
         attributes: true,
         childList: true,
         characterData: true,

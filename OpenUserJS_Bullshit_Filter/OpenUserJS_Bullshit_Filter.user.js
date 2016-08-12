@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace 	darkred
 // @author      kuehlschrank, darkred
@@ -9,7 +9,7 @@
 // @include     https://openuserjs.org/
 // @include     https://openuserjs.org/?*p=*
 // @include     https://openuserjs.org/?*q=*
-//    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank. 
+//    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
 
@@ -30,16 +30,16 @@
     insertStatus();
     filterScripts();
     insertSwitches();
-    
+
     var flag;
     // ADD A NEWLINE AT THE END OF EACH FILTER
     if (document.querySelector('.filter-status').parentNode.childNodes[5].childNodes[0].innerHTML == 'Games' ) {
         flag = 5; }
     else {flag = 9}
     for (i=0; i<4; i++){
-        document.querySelector('.filter-status').parentNode.childNodes[flag].childNodes[i].innerHTML += '<br>';        
+        document.querySelector('.filter-status').parentNode.childNodes[flag].childNodes[i].innerHTML += '<br>';
     }
-    
+
     // Note: you may uncomment line 45 and comment out line 46, in order the filtered scripts to be highlighted yellow -instead of hiding them- so that you can check which scripts have been filtered
     function insertStyle() {
         var style = document.createElement('style');
@@ -65,9 +65,9 @@
             }
         }
         var nodes = document.querySelectorAll('tr'), numActiveFilters = activeFilters.length, numFiltered = 0;
-        for(var i = 1, numNodes = nodes.length-6, td = null; i < numNodes && (td = nodes[i]); i++) {            
+        for(var i = 1, numNodes = nodes.length-6, td = null; i < numNodes && (td = nodes[i]); i++) {
             td.className = '';
-            for(var j = 0; j < numActiveFilters; j++) {                
+            for(var j = 0; j < numActiveFilters; j++) {
                 if(typeof (td.childNodes[1].childNodes[9]) !== "undefined"){                             // Check whether the current script disctription" element is not undefined, i.e. it exists
                     if(td.childNodes[1].childNodes[9].textContent.match(activeFilters[j]) ) {
                         td.className = 'filtered';
@@ -80,14 +80,14 @@
         document.querySelector('.filter-status').textContent = document.querySelectorAll('tr').length-numFiltered-6 + ' scripts (' + numFiltered + ' filtered)';
     }
     function insertSwitches() {
-        var span = document.createElement('span');      
-        span.className = 'filter-switches';     
+        var span = document.createElement('span');
+        span.className = 'filter-switches';
         for(var filter in filters) {
             if(filters.hasOwnProperty(filter)) {
                 span.appendChild(createSwitch(filter, GM_getValue(filter, 'on') == 'on'));
             }
         }
-        document.querySelector('.filter-status').parentNode.appendChild(span);        
+        document.querySelector('.filter-status').parentNode.appendChild(span);
     }
     function createSwitch(label, isOn) {
         var a = document.createElement('a');

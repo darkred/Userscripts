@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Metal Archives (discography pages) - Reviews column split and sortable tables
 // @namespace 	darkred
 // @author      darkred
@@ -10,14 +10,14 @@
 // @require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
-// 
+//
 // This userscript uses jQuery UI, the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
 // and the JavaScript library 'Mutation Summary' (https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein)
 //
 // ==/UserScript==
 
 
-// CSS rules in order to show 'up' and 'down' arrows in each table header 
+// CSS rules in order to show 'up' and 'down' arrows in each table header
 var stylesheet = '		                                                                                                          \
 <style>												                                                                                                  \
 thead th {                                                                                                                      \
@@ -45,8 +45,8 @@ function appendColumn(jNode) {
 
     // STEP 1+2: SPLIT THE 'REVIEWS' COLUMN INTO A 'REVIEWS' COLUMN AND A 'RATINGS' COLUMN
     var tbl = jNode[0];     // table reference
-    
-    
+
+
     // If you have logged in (therefore the column 'Tools' exists in the discography table)
     if (document.getElementsByClassName('member_name').length >0){
        tbl.rows[0].cells[1].width = "45%";            // In order the column 'Name'(it's the 2nd) to have enough(in fact fixed) width
@@ -54,7 +54,7 @@ function appendColumn(jNode) {
         tbl.rows[0].cells[0].width = "53%";           // In order the column 'Name'(it's the 1nd) to have enough(in fact fixed) width
     }
 
-    
+
 
     // If the current sub-table has no data, then stop the execution of the function
     if (tbl.rows[1].cells[0].innerHTML == '<em>Nothing entered yet. Please add the releases, if applicable. </em>') {

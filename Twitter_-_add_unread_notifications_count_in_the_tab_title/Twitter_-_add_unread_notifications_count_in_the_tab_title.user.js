@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Twitter - add unread notifications count in the tab title
 // @namespace 	darkred
 // @author      darkred

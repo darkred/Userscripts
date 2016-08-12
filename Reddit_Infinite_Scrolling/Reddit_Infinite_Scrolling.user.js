@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Reddit Infinite Scrolling
 // @namespace 	darkred
 // @author      darkred

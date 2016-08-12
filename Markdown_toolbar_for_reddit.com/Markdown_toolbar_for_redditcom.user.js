@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Markdown toolbar for reddit.com
 // @namespace 	darkred
 // @author      wOxxOm, darkred
@@ -9,8 +9,8 @@
 // @version     1.3
 // @grant       GM_addStyle
 //
-// 
-// This is a modified version of the script "Markdown toolbar for GreasyFork and UserStyles.org" ()https://greasyfork.org/en/scripts/6779-markdown-toolbar-for-greasyfork-and-userstyles-org) 
+//
+// This is a modified version of the script "Markdown toolbar for GreasyFork and UserStyles.org" ()https://greasyfork.org/en/scripts/6779-markdown-toolbar-for-greasyfork-and-userstyles-org)
 // Thanks a lot to wOxxOm for making that script.
 //
 // ==/UserScript==
@@ -21,9 +21,9 @@ var x;
 // IF IT'S A SUBMIT PAGE
 if (window.location.href.indexOf('submit') > - 1) {
   // THEN ADD TOOLBAR TO THE 'NEW POST' TEXTBOX
-  x = document.querySelectorAll('div.md > textarea:nth-child(1)')[0].parentNode;  
+  x = document.querySelectorAll('div.md > textarea:nth-child(1)')[0].parentNode;
   addFeatures(x);
-} 
+}
 else {
   var textareas = document.querySelectorAll('textarea');
 
@@ -31,16 +31,16 @@ else {
   for (i = 0; i < textareas.length - 2; i++) {
     x = document.querySelectorAll('textarea') [i].parentNode;
     addFeatures(x);
-  } 
-}  
+  }
+}
 
 
 
 
 
 function addFeatures(n) {
-  
-    n.parentNode.textAreaNode = x.firstChild;              
+
+    n.parentNode.textAreaNode = x.firstChild;
 
     GM_addStyle('\
       .Button {\
@@ -64,7 +64,7 @@ function addFeatures(n) {
   btnMake(n, '<b>B</b>', 'Bold', '**');
   btnMake(n, '<i>I</i>', 'Italic', '*');
   // btnMake(n, '<u>U</u>', 'Underline', '<u>','</u>');
-  // btnMake(n, '<s>S</s>', 'Strikethrough', '<s>','</s>');  
+  // btnMake(n, '<s>S</s>', 'Strikethrough', '<s>','</s>');
   btnMake(n, '<s>S</s>', 'Strikethrough', '~~');
   btnMake(n, '^', 'Superscript', '^','', true);
   btnMake(n, '\\n', 'Line break', '&nbsp;\n', '', true);
@@ -96,27 +96,27 @@ function btnMake(afterNode, label, title, tag1, tag2, noWrap) {
   a.style.setProperty('float','right');
 
   a.addEventListener('click',
-            typeof(tag1) == 'function' 
+            typeof(tag1) == 'function'
                      ? tag1
                      : noWrap ? function(e){edInsertText(tag1, edInit(e.target))}
-                             : function(e){edWrapInTag(tag1, tag2, edInit(e.target))});   
+                             : function(e){edWrapInTag(tag1, tag2, edInit(e.target))});
 
   var nparent = afterNode.parentNode;
   a.textAreaNode = nparent.textAreaNode;
-  nparent.insertBefore(a, nparent.firstElementChild);    
+  nparent.insertBefore(a, nparent.firstElementChild);
 }
 
 
 
 function edInit(btn) {
 
-  var ed = {node: btn.parentNode.textAreaNode } ;           
+  var ed = {node: btn.parentNode.textAreaNode } ;
 
   ed.sel1 = ed.node.selectionStart;
   ed.sel2 = ed.node.selectionEnd,
   ed.text = ed.node.value;
   ed.sel = ed.text.substring(ed.sel1, ed.sel2);
-  return ed;    
+  return ed;
 }
 
 

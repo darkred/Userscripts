@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace 	darkred
 // @author      darkred
@@ -16,41 +16,41 @@ for (i = 0; i < links.length; i++) {
 
     var elem = document.createElement("img");
     elem.setAttribute("src", "http://i.imgur.com/3Y8dqYZ.gif");
-    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link  
+    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
     // links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
-    
-    
+
+
     insertTitle(links[i]);
   };
-  
+
  if (links[i].innerHTML.match(/Bug\ ......./i) ) {
 
     var elem = document.createElement("img");
     elem.setAttribute("src", "http://i.imgur.com/3Y8dqYZ.gif");
-    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link  
+    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
     // links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
-    
-    
+
+
     insertTitle(links[i],true);
   };
-  
+
 };
 
 
 function insertTitle(x,y) {
   if (y==true) {var target = x.href }
     else {var target = x.innerHTML }
-  
+
   var details = GM_xmlhttpRequest({
     method: 'GET',
     url: target,
     synchronous: false,                         // Asynchronous request
-    onload: function (response) {      
+    onload: function (response) {
       var matches = response.responseText.match(/<title>(.*)<\/title>/);
       var regex = /<title>(.*)<\/title>/;
       var title = regex.exec(matches[0]);
-      x.nextSibling.remove();                  // For spinning icon AFTER the link  
-      // x.previousSibling.previousSibling.remove();           // For spinning icon BEFORE the link                  
+      x.nextSibling.remove();                  // For spinning icon AFTER the link
+      // x.previousSibling.previousSibling.remove();           // For spinning icon BEFORE the link
       x.innerHTML = title[1];
     }
   })

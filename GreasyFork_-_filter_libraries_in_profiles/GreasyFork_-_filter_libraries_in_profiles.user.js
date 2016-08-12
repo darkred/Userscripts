@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        GreasyFork - filter libraries in profiles
 // @namespace   darkred
 // @description Filters libraries in GreasyFork profiles
@@ -53,14 +53,14 @@ b.click();
 function toggleAll(){
   a.style.fontWeight = "bold"; b.style.fontWeight = "normal"; c.style.fontWeight = "normal";
   $('article').show();
-  $('.script-type').parent().parent().show();  
+  $('.script-type').parent().parent().show();
 }
 
 
 function toggleScripts(){
   a.style.fontWeight = "normal"; b.style.fontWeight = "bold"; c.style.fontWeight = "normal";
   $('article').show();
-  $('.script-type').parent().parent().hide();  
+  $('.script-type').parent().parent().hide();
 }
 
 
@@ -69,5 +69,5 @@ function toggleLibraries(){
   $('article').hide();
   $('.script-type').parent().parent().show();
 
-  
-}  
+
+}

@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        GreasyFork Bullshit Filter
 // @namespace 	darkred
 // @author      kuehlschrank, darkred

@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles
 // @namespace   darkred
 // @description Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
