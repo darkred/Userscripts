@@ -5,8 +5,8 @@ This repo contains my userscripts.
 ### Userscripts
 
 - [Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles](https://github.com/darkred/Userscripts/tree/master/Bugzilla_-_reveal_the_Depends%2C_Blocks%2C_See_Also_and_Duplicates_bug_titles#readme) - Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
-- [Firefox for desktop - list fixed bugs in Mercurial - 2](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_-_2#readme) - It generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 - [Firefox for desktop - list fixed bugs in Mercurial](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial#readme) - It generates lists of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
+- [Firefox for desktop - list fixed bugs in Mercurial - 2](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_-_2#readme) - It generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 - [Firefox for desktop - list modified bugs in Mercurial - inbound](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_modified_bugs_in_Mercurial_-_inbound#readme) - It generates lists of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
 - [GreasyFork - add a 'send PM to user' button in Greasyfork profile pages](https://github.com/darkred/Userscripts/tree/master/GreasyFork_-_add_a_send_PM_to_user_button_in_Greasyfork_profile_pages#readme) - It adds a 'send PM to user' button in Greasyfork profile pages
 - [GreasyFork - filter libraries in profiles](https://github.com/darkred/Userscripts/tree/master/GreasyFork_-_filter_libraries_in_profiles#readme) - Filters libraries in GreasyFork profiles
