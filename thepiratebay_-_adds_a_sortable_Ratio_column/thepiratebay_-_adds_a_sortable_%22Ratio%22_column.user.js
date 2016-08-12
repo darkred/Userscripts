@@ -1,5 +1,6 @@
 ﻿// ==UserScript==
 // @name        thepiratebay - adds a sortable "Ratio" column 
+// @namespace 	darkred
 // @author      darkred
 // @description adds a sortable "Ratio" column 
 // @include     https://thepiratebay.se/search/*
@@ -8,7 +9,6 @@
 // @require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
-// @namespace rikkie
 // ==/UserScript==
 
 

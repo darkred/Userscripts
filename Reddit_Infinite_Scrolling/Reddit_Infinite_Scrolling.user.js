@@ -1,5 +1,6 @@
 ﻿// ==UserScript==
 // @name        Reddit Infinite Scrolling
+// @namespace 	darkred
 // @author      darkred
 // @description Adds infinite scrolling to subreddits and to comments.
 // @include     https://www.reddit.com/*
@@ -7,7 +8,6 @@
 // @grant       unsafeWindow
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://greasyfork.org/scripts/11636-jscroll/code/jScroll.js?version=67302
-// @namespace rikkie
 // ==/UserScript==
 
 // Jscroll code

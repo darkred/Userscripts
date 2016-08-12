@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name        mozillaZine Forums - inserts titles to bug links
-// @namespace   rikkie
+// @namespace 	darkred
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
 // @version     1.2

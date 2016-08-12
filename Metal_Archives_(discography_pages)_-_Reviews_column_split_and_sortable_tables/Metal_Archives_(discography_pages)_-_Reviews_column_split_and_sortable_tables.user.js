@@ -1,5 +1,6 @@
 ﻿// ==UserScript==
 // @name        Metal Archives (discography pages) - Reviews column split and sortable tables
+// @namespace 	darkred
 // @author      darkred
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @include     http://www.metal-archives.com/bands/*
@@ -13,7 +14,6 @@
 // This userscript uses jQuery UI, the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
 // and the JavaScript library 'Mutation Summary' (https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein)
 //
-// @namespace rikkie
 // ==/UserScript==
 
 

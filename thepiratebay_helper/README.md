@@ -13,7 +13,6 @@ to toggle highlight/hide *(and this is reflected in GM_config too)*.
   - Torrents by "Helpers" are now also highlighted.
   - Torrents by "Trusted" are now highlighted with this color: #F9D5DB *(initially it was #FECDFE)*
   - You may hide non VIP/Trusted/Moderators/Helpers torrents (instead of changing their opacity) by (commenting out line 274 and) uncommenting line 272 and 273.  *(see v0.9.0)*
-- Renamed the script.
 
 
 <u>Screenshots</u>:

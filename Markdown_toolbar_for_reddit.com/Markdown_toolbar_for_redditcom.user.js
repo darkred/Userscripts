@@ -1,12 +1,12 @@
 ﻿// ==UserScript==
-// @name              Markdown toolbar for reddit.com
-// @namespace         rikkie
-// @description       Creates a Markdown toolbar whenever you make/edit text posts or comments in reddit.com.
-// @include           https://www.reddit.com/*submit*
-// @include           https://www.reddit.com/*comments*
-// @icon              https://raw.githubusercontent.com/dcurtis/markdown-mark/master/png/66x40-solid.png
-// @version           1.3
-// @grant             GM_addStyle
+// @name        Markdown toolbar for reddit.com
+// @namespace 	darkred
+// @description Creates a Markdown toolbar whenever you make/edit text posts or comments in reddit.com.
+// @include     https://www.reddit.com/*submit*
+// @include     https://www.reddit.com/*comments*
+// @icon        https://raw.githubusercontent.com/dcurtis/markdown-mark/master/png/66x40-solid.png
+// @version     1.3
+// @grant       GM_addStyle
 //
 // 
 // This is a modified version of the script "Markdown toolbar for GreasyFork and UserStyles.org" ()https://greasyfork.org/en/scripts/6779-markdown-toolbar-for-greasyfork-and-userstyles-org) 
