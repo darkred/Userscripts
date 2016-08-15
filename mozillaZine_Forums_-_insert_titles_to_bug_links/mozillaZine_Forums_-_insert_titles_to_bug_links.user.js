@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace 	darkred
-// @author      darkred
+// @author      darkred, johnp_
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
 // @version     2
@@ -11,14 +11,18 @@
 // @resource    icon http://i.imgur.com/3Y8dqYZ.gif
 // ==/UserScript==
 
+// v2.0: Script rewrite (based on johnp_'s contribution in the userscript 'Firefox for desktop - list fixed bugs in Mercurial'):
+// now the REST API is used (one(1) network connection is made for all unique examined bug IDs)
+
 
  /* eslint-disable no-console */
+
 
 
 var silent = false;
 var debug = false;
 
-time('MozillaMercurial');
+time('MozillaBugzilla');
 
 String.prototype.escapeHTML = function() {
 	var tagsToReplace = {
@@ -65,7 +69,7 @@ var counter = 0;
 
 
 var rest_url = base_url + bugIds.join();
-time('MozillaMercurial-REST');
+time('MozillaBugzilla-REST');
 
 
 
@@ -104,7 +108,7 @@ for (var i = 0; i < links.length; i++) {
 
 
 $.getJSON(rest_url, function(data) {
-	timeEnd('MozillaMercurial-REST');
+	timeEnd('MozillaBugzilla-REST');
 
 
 	$.each(data.bugs, function(index) {
@@ -130,7 +134,7 @@ $.getJSON(rest_url, function(data) {
 
 	// process remaining bugs one-by-one
 	var requests = [];
-	time('MozillaMercurial-missing');
+	time('MozillaBugzilla-missing');
 	$.each(bugIds, function(index) {
 		let id = bugIds[index];
 		if (id !== null) {
@@ -166,7 +170,7 @@ $.getJSON(rest_url, function(data) {
 			return $.Deferred().resolveWith(this, arguments);
 		});
 	})).always(function() {
-		timeEnd('MozillaMercurial-missing');
+		timeEnd('MozillaBugzilla-missing');
 
 		// console.log(bugCodes);
 
@@ -197,7 +201,7 @@ $.getJSON(rest_url, function(data) {
 
 
 		log('ALL IS DONE');
-		timeEnd('MozillaMercurial');
+		timeEnd('MozillaBugzilla');
 	});
 });
 
