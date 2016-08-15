@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name        RARBG - convert torrent dates to local timezone or to relative time
+// @name        RARBG - convert torrent timestamps to relative time
 // @namespace   darkred
-// @description Convert torrent upload dates to local timezone or to relative time
+// @description Converts torrent upload timestamps to relative time
 // @include     https://rarbg.to/torrents.php*
-// @version     1
+// @version     2
 // @grant       none
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js
@@ -25,18 +25,20 @@ var dates = $('tr.lista2 td:nth-child(3)');
 var isDST = moment().isDST();
 
 
+var currtemp;
 
 // 2016-07-21 16:51:24
 function toTimeZone(time, zone) {
+	var format0 = ('YYYY-MM-DD HH:mm:ss');
 	var format1 = ('YYYY-MM-DD HH:mm:ss Z');
 	var zz = moment(time, format1).tz(zone);
 	if (isDST) {
-		// var format2 = ('YYYY-MM-DD HH:mm:ss');				// Note: you may uncomment this line(#34),35 and 39, and comment out lines 36 and 40, in order the dates to just be displayed using local timezone
-		// return zz.subtract(1, 'hours').format(format2);
+		currtemp = moment(zz._i, format1);
+		currtemp = currtemp.subtract(1, 'hours').format(format0);
 		return zz.subtract(1, 'hours').fromNow();
 	} else {
-
-		// return zz.format(format2);
+		currtemp = moment(zz._i, format1);
+		currtemp = currtemp.format(format0);
 		return zz.fromNow();}
 }
 
@@ -45,12 +47,11 @@ function convertDates() {
 	var temp;
 	for (var i = 0; i < dates.length; i++) {
 		temp = dates[i].innerHTML;
-		// temp += ' +0000';
 		temp += ' +0100';			// RARBG Timezone offset : GMT+1
 		var format0 = ('YYYY-MM-DD HH:mm:ss');
-		// var format1 = ('YYYY-MM-DD HH:mm:ss Z');
 		if (moment(dates[i].innerHTML, format0, true).isValid()) {
 			dates[i].innerHTML = toTimeZone(temp, localTimezone);
+			dates[i].title = currtemp;
 		}
 	}
 }
