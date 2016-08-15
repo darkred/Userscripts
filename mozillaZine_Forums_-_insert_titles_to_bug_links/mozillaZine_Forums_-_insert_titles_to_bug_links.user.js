@@ -4,55 +4,223 @@
 // @author      darkred
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
-// @version     1.2
+// @version     2
 // @grant       GM_xmlhttpRequest
+// @grant       GM_getResourceURL
+// @require     https://code.jquery.com/jquery-2.1.4.min.js
+// @resource    icon http://i.imgur.com/3Y8dqYZ.gif
 // ==/UserScript==
 
-var links = document.getElementsByClassName('postlink');
+
+ /* eslint-disable no-console */
 
 
-for (i = 0; i < links.length; i++) {
-  if (links[i].innerHTML.match(/https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=*/)) {
+var silent = false;
+var debug = false;
 
-    var elem = document.createElement("img");
-    elem.setAttribute("src", "http://i.imgur.com/3Y8dqYZ.gif");
-    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
-    // links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
+time('MozillaMercurial');
 
+String.prototype.escapeHTML = function() {
+	var tagsToReplace = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;'
+	};
 
-    insertTitle(links[i]);
-  };
-
- if (links[i].innerHTML.match(/Bug\ ......./i) ) {
-
-    var elem = document.createElement("img");
-    elem.setAttribute("src", "http://i.imgur.com/3Y8dqYZ.gif");
-    links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
-    // links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
-
-
-    insertTitle(links[i],true);
-  };
-
+	return this.replace(/[&<>]/g, function(tag) {
+		return tagsToReplace[tag] || tag;
+	});
 };
 
 
-function insertTitle(x,y) {
-  if (y==true) {var target = x.href }
-    else {var target = x.innerHTML }
+var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+var base_url = 'https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary&id=';
+var bugIds = [];
+var bugCodes = [];
+var bugTitles = [];
+var links = document.getElementsByClassName('postlink');
+var len = links.length;
 
-  var details = GM_xmlhttpRequest({
-    method: 'GET',
-    url: target,
-    synchronous: false,                         // Asynchronous request
-    onload: function (response) {
-      var matches = response.responseText.match(/<title>(.*)<\/title>/);
-      var regex = /<title>(.*)<\/title>/;
-      var title = regex.exec(matches[0]);
-      x.nextSibling.remove();                  // For spinning icon AFTER the link
-      // x.previousSibling.previousSibling.remove();           // For spinning icon BEFORE the link
-      x.innerHTML = title[1];
-    }
-  })
+
+for (let i = 0; i < len; i++) {
+	let n = links[i].href.match(regex);
+	let n2 = links[i].innerHTML;
+	if (n !== null && n.length > 0 && n2.indexOf('#') === -1 && n2.indexOf('-') === -1) {
+		let id = parseInt(n[1]);
+		if (bugIds.indexOf(id) === -1) {
+			bugIds.push(id);
+		}
+	}
 }
 
+
+
+var numBugs = bugIds.length;
+var counter = 0;
+
+
+
+
+
+
+
+var rest_url = base_url + bugIds.join();
+time('MozillaMercurial-REST');
+
+
+
+
+
+
+
+
+
+
+// ADDING a spinning icon to the matching links
+for (var i = 0; i < links.length; i++) {
+	if (   links[i].href.match(regex)
+		&& links[i].innerHTML.indexOf('#') == -1
+		&& links[i].innerHTML.indexOf('-') == -1 ) {
+
+		var elem = document.createElement('img');
+		elem.src = GM_getResourceURL('icon');
+		links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
+		// links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
+
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+$.getJSON(rest_url, function(data) {
+	timeEnd('MozillaMercurial-REST');
+
+
+	$.each(data.bugs, function(index) {
+		let bug = data.bugs[index];
+
+		log('----------------------------------------------------------------------------------------------------------------------------------');
+		log((index + 1) + '/' + numBugs); // Progression counter
+
+		log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary);
+
+
+
+		bugCodes.push(bug.id);
+		bugTitles.push(bug.summary);
+
+
+		counter++; // increase counter
+
+		let i = bugIds.indexOf(bug.id);
+		if (i !== -1) {bugIds[i] = null;}
+	});
+	log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
+
+	// process remaining bugs one-by-one
+	var requests = [];
+	time('MozillaMercurial-missing');
+	$.each(bugIds, function(index) {
+		let id = bugIds[index];
+		if (id !== null) {
+			time('Requesting missing bug ' + id);
+			let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
+								function(json) {
+				// I've not end up here yet, so cry if we do
+									console.error('Request succeeded unexpectedly!');
+									console.error('Please submit this information to the script authors:');
+									timeEnd('Requesting missing bug ' + id);
+									console.log(json);
+									let bug = json.bugs[0];
+									console.log(bug);
+				// TODO: display as much information as possible
+								});
+			// Actually, we usually get an error
+			promise.error(function(req, status, error) {
+				timeEnd('Requesting missing bug ' + id);
+				if (error == 'Authorization Required') {
+					log('Bug ' + id + ' requires authorization!');
+					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
+				} else {
+					console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
+				}
+			});
+			requests.push(promise);
+		}
+	});
+	// wait for all requests to be settled, then join them together
+	// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
+	$.when.apply($, $.map(requests, function(p) {
+		return p.then(null, function() {
+			return $.Deferred().resolveWith(this, arguments);
+		});
+	})).always(function() {
+		timeEnd('MozillaMercurial-missing');
+
+		// console.log(bugCodes);
+
+		for (let z=0; z < links.length; z++) {
+			for (let yy=0; yy < bugCodes.length; yy++) {
+
+				if (regex.test(links[z].href) && links[z].href.match(regex)[1] == bugCodes[yy] && links[z].innerHTML.indexOf('-') == -1 ) {
+
+					if (links[z].innerHTML.match(/(B|b)ug\ [0-9]*/i)) {
+						links[z].innerHTML = links[z].innerHTML.match(/(B|bug)\ ......./i)[1] + ' ' + bugCodes[yy] + ' - ' + bugTitles[yy];
+					} else {
+						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy];
+					}
+
+
+					// REMOVE the spinning icon
+					let elem = document.createElement('img');
+					elem.src = GM_getResourceURL('icon');
+					links[z].nextSibling.remove();           							   // For spinning icon AFTER the link
+					// links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
+
+				}
+			}
+		}
+
+
+
+
+
+		log('ALL IS DONE');
+		timeEnd('MozillaMercurial');
+	});
+});
+
+
+
+
+
+
+
+function log(str) {
+	if (!silent) {
+		console.log(str);
+	}
+}
+
+function time(str) {
+	if (debug) {
+		console.time(str);
+	}
+}
+
+function timeEnd(str) {
+	if (debug) {
+		console.timeEnd(str);
+	}
+}
