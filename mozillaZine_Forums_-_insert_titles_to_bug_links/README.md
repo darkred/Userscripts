@@ -9,6 +9,7 @@ Note: the request for each link is done asynchronously, i.e. Firefox UI is not l
 
 v2.0: Script rewrite _(based on johnp\_'s contribution in the userscript 'Firefox for desktop - list fixed bugs in Mercurial')_:   
 now the REST API is used (one(1) network connection is made for all unique examined bug IDs).
+During this procedure, you may open the Web Console (Ctrl+Shift+K) to monitor progress. ([screenshot](https://i.imgur.com/DQjD09A.jpg))
 
 v1.1 Now, a spinning icon appears at the end of each bug link during the title request procedure:  
 During the request :        ![](https://i.imgur.com/pQVnJyI.jpg)  
