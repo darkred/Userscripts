@@ -23,7 +23,7 @@ This repo contains my userscripts.
 - [Reddit Infinite Scrolling](https://github.com/darkred/Userscripts/tree/master/RARBG_-_convert_torrent_dates_to_local_timezone_or_to_relative_time#readme) - Adds infinite scrolling to subreddits and to comments.
 - [Rotten Tomatoes Decimal Rating](https://github.com/darkred/Userscripts/tree/master/Rotten_Tomatoes_Decimal_Rating#readme) - Changes base-5 Rating of Rotten Tomatoes to base-10.
 - [StackExchange sites - convert dates to local timezone](https://github.com/darkred/Userscripts/tree/master/StackExchange_sites_-_convert_dates_to_local_timezone#readme) - Converts dates to your local timezone.
-- [thepiratebay - add a sortable "Ratio" column](https://github.com/darkred/Userscripts/tree/master/thepiratebay_-_add_a_sortable_Ratio_column#readme) - Adds a sortable "Ratio" column.
+- [thepiratebay - add a sortable Ratio column](https://github.com/darkred/Userscripts/tree/master/thepiratebay_-_add_a_sortable_Ratio_column#readme) - Adds a sortable "Ratio" column.
 - [thepiratebay helper](https://github.com/darkred/Userscripts/tree/master/thepiratebay_helper#readme) - Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether.
 - [Twitter - add unread notifications count in the tab title](https://github.com/darkred/Userscripts/tree/master/Twitter_-_add_unread_notifications_count_in_the_tab_title#readme) - Adds unread notifications count in the tab title.
 
