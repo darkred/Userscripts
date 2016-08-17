@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        OpenUserJS Bullshit Filter
-// @namespace 	darkred
+// @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @version     1.2

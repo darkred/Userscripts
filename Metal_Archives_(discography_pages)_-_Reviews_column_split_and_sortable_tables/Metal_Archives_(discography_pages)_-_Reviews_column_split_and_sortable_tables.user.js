@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Metal Archives (discography pages) - Reviews column split and sortable tables
-// @namespace 	darkred
+// @namespace   darkred
 // @author      darkred
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @include     http://www.metal-archives.com/bands/*

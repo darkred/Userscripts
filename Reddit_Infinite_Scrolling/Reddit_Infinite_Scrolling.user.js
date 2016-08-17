@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Reddit Infinite Scrolling
-// @namespace 	darkred
+// @namespace   darkred
 // @author      darkred
 // @description Adds infinite scrolling to subreddits and to comments.
 // @include     https://www.reddit.com/*
