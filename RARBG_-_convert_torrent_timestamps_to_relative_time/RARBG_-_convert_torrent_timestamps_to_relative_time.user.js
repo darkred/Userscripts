@@ -32,8 +32,7 @@ function convertDates() {
 		var format0 = ('YYYY-MM-DD HH:mm:ss');
 		if (moment(dates[i].innerHTML, format0, true).isValid()) {
 			var format1 = ('YYYY-MM-DD HH:mm:ss Z');
-			// var format2 = ('DD/MM/YYYY HH:mm:ss');
-			var format2 = ('D/M/YYYY HH:mm:ss');
+			var format2 = ('MM/DD/YYYY HH:mm:ss');
 			var temp2 = moment(temp, format1).tz(localTimezone);
 			if (isDST) {
 				temp2.subtract(1, 'hours');
