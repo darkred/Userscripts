@@ -4,7 +4,7 @@
 // @author      darkred
 // @description Adds unread notifications count in the tab title
 // @include     https://twitter.com/*
-// @version     2016.08.16
+// @version     2016.08.20
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
@@ -52,8 +52,8 @@ document.leave('.new-tweets-bar', function () {
 
 
 
-// Whenever viewing the 'Notifications' tab  ('the '.toggle-item-4' is the selector for the 'People you follow' link in the 'Notifications' tab)..
-document.arrive('.toggle-item-4', function () {
+// Whenever viewing the 'Notifications' tab
+document.arrive('.NotificationsHeadingContent', function () {
 	document.querySelector('.count-inner').innerHTML = 0;			// ..reset the counter..
 	document.title = document.title.match(/[0-9]*\ \|\ (.*)/)[1];	// ..and the tab title
 });
