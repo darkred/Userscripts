@@ -4,7 +4,7 @@
 // @author      darkred, johnp_
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
-// @version     2
+// @version     2.0.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getResourceURL
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
@@ -177,20 +177,22 @@ $.getJSON(rest_url, function(data) {
 		for (let z=0; z < links.length; z++) {
 			for (let yy=0; yy < bugCodes.length; yy++) {
 
-				if (regex.test(links[z].href) && links[z].href.match(regex)[1] == bugCodes[yy] && links[z].innerHTML.indexOf('-') == -1 ) {
+				if (regex.test(links[z].href)
+					&& links[z].href.match(regex)[1] == bugCodes[yy]
+					&& links[z].innerHTML.indexOf('-') == -1 ) {
 
-					if (links[z].innerHTML.match(/(B|b)ug\ [0-9]*/i)) {
-						links[z].innerHTML = links[z].innerHTML.match(/(B|bug)\ ......./i)[1] + ' ' + bugCodes[yy] + ' - ' + bugTitles[yy];
+					let temp = links[z].innerHTML.match(/([Bb]ug\ [a-zA-Z]*).*[0-9]*/i);
+					if (temp !== null) {
+						links[z].previousSibling.textContent += temp[1] + ' ';
+						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy];
 					} else {
 						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy];
 					}
 
 
 					// REMOVE the spinning icon
-					let elem = document.createElement('img');
-					elem.src = GM_getResourceURL('icon');
-					links[z].nextSibling.remove();           							   // For spinning icon AFTER the link
-					// links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
+					links[z].nextSibling.remove();           				 // For spinning icon AFTER the link
+					// x.previousSibling.previousSibling.remove();           // For spinning icon BEFORE the link
 
 				}
 			}
