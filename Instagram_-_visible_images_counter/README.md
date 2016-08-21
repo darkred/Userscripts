@@ -10,4 +10,4 @@ Since v2016.08.02 it's no no longer needed to open a profile page in a new tab *
 Thanks a lot to wOxxOm for his valuable help in [here](https://greasyfork.org/en/forum/discussion/4642/help-with-making-a-hovering-element-that-scrolls-with-you-with-attaching-to-infinite-scrolling-event).
 
 
-![Screenshot][https://greasyfork.org/system/screenshots/screenshots/000/001/676/original/2015-08-11_195605_.jpg?1439312224]
+![Screenshot](https://greasyfork.org/system/screenshots/screenshots/000/001/676/original/2015-08-11_195605_.jpg?1439312224)

@@ -15,7 +15,7 @@ to toggle highlight/hide *(and this is reflected in GM_config too)*.
   - You may hide non VIP/Trusted/Moderators/Helpers torrents (instead of changing their opacity) by (commenting out line 274 and) uncommenting line 272 and 273.  *(see v0.9.0)*
 
 
-<u>Screenshots</u>:
+<u>Screenshots</u>:  
 [![](https://i.imgur.com/UjfPtJis.jpg)](https://i.imgur.com/UjfPtJi.jpg) [![](https://i.imgur.com/sTLd6rjs.jpg)](https://i.imgur.com/sTLd6rj.jpg) [![](https://s3.amazonaws.com/uso_ss/21237/thumb.jpg?1366305203)](http://s3.amazonaws.com/uso_ss/21237/large.jpg?1366305203) [![](https://i.imgur.com/lAJiCJcs.jpg)](https://i.imgur.com/lAJiCJc.jpg) [![](https://i.imgur.com/wyyJiujs.jpg)](https://i.imgur.com/wyyJiuj.jpg)
 
 <br/>

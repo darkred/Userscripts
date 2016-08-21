@@ -1,7 +1,7 @@
 By default you may send a pm via a user's forum profile page (e.g. see link 1).  
 With this script you may also send a pm via user's Greasyfork profile page (e.g. see link 2).
 ```
-Forum profile:  https://greasyfork.org/en/forum/profile/324/darkred  
+Forum profile:      https://greasyfork.org/en/forum/profile/324/darkred  
 Greasyfork profile: https://greasyfork.org/en/users/2160-darkred
 ```
 
