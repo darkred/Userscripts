@@ -20,7 +20,7 @@ This repo contains my userscripts.
 - [mozillaZine Forums - insert titles to bug links](https://github.com/darkred/Userscripts/tree/master/mozillaZine_Forums_-_insert_titles_to_bug_links#readme) - Inserts titles to bug links that are plain URLs, in forums.mozillazine.org.
 - [OpenUserJS Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/OpenUserJS_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 - [RARBG - convert torrent timestamps to relative time](https://github.com/darkred/Userscripts/tree/master/RARBG_-_convert_torrent_timestamps_to_relative_time#readme) - Convert torrent upload timestamps to local timezone or to relative time.
-- [Reddit Infinite Scrolling](https://github.com/darkred/Userscripts/tree/master/RARBG_-_convert_torrent_dates_to_local_timezone_or_to_relative_time#readme) - Adds infinite scrolling to subreddits and to comments.
+- [Reddit Infinite Scrolling](https://github.com/darkred/Userscripts/tree/master/Reddit_Infinite_Scrolling#readme) - Adds infinite scrolling to subreddits and to comments.
 - [Rotten Tomatoes Decimal Rating](https://github.com/darkred/Userscripts/tree/master/Rotten_Tomatoes_Decimal_Rating#readme) - Changes base-5 Rating of Rotten Tomatoes to base-10.
 - [StackExchange sites - convert dates to local timezone](https://github.com/darkred/Userscripts/tree/master/StackExchange_sites_-_convert_dates_to_local_timezone#readme) - Converts dates to your local timezone.
 - [thepiratebay - add a sortable Ratio column](https://github.com/darkred/Userscripts/tree/master/thepiratebay_-_add_a_sortable_Ratio_column#readme) - Adds a sortable "Ratio" column.
