@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     1.2
+// @version     1.2.1
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://openuserjs.org/
@@ -43,8 +43,8 @@
 	// Note: you may uncomment line 45 and comment out line 46, in order the filtered scripts to be highlighted yellow -instead of hiding them- so that you can check which scripts have been filtered
 	function insertStyle() {
 		var style = document.createElement('style');
-		// style.textContent = 'tr.filtered { background-color:yellow; !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333 } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
-		style.textContent = 'tr.filtered { display:none; !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333 } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+		// style.textContent = 'tr.filtered { background-color:yellow; !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333; text-decoration:line-through !important  } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+		style.textContent = 'tr.filtered { display:none; !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333; text-decoration:line-through !important } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
 		style.type = 'text/css';
 		document.querySelector('head').appendChild(style);
 	}
