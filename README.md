@@ -26,6 +26,7 @@ This repo contains my userscripts.
 - [thepiratebay - add a sortable Ratio column](https://github.com/darkred/Userscripts/tree/master/thepiratebay_-_add_a_sortable_Ratio_column#readme) - Adds a sortable "Ratio" column.
 - [thepiratebay helper](https://github.com/darkred/Userscripts/tree/master/thepiratebay_helper#readme) - Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether.
 - [Twitter - add unread notifications count in the tab title](https://github.com/darkred/Userscripts/tree/master/Twitter_-_add_unread_notifications_count_in_the_tab_title#readme) - Adds unread notifications count in the tab title.
+- [Userstyles Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/Userstyles_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 
 ## External profiles
 
