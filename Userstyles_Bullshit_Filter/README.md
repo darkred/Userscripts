@@ -5,7 +5,7 @@ i.e. it filters any/all of these 4 categories:
 * **Non-ASCII**: scripts that use non-English characters in description (accents, umlauts, cyrillic letters, ...)  
 * **Clutter**: obvious spam, titles like "asdasdasd", description = title, title < 6 characters, "just a test".  
 
-The filters list appears just below the `#script-list-option-groups` element (i.e. on the right).  
+The filters list appears just below the `#sidebar-forum` element (i.e. on the left).  
 ![image](https://i.imgur.com/ASbOvvm.gif)
 
 *<u>Note</u>: you may uncomment line 42 (and comment out line 43), in order the filtered scripts to be highlighted khaki -instead of hiding them- so that you can check which scripts have been filtered.*  
