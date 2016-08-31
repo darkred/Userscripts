@@ -64,7 +64,7 @@ GM_addStyle('#tbl td:nth-child(1) {text-align: -moz-right;}');
 GM_addStyle('#tbl td:nth-child(2) {text-align: -moz-left;}');
 
 // in order the 'Product/Component' cells to appear truncated
-GM_addStyle('#tbl td:nth-child(2) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:220px;}');   // initially it was max-width:1px;
+GM_addStyle('#tbl td:nth-child(2) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:280px;}');   // initially it was max-width:1px;
 
 // in order the 'Modified' cells to have fixed width (via being displayed truncated but with max-width:100px)  (in order to avoid having to display "Modified__")
 GM_addStyle('#tbl td:nth-child(3) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:700px;}');   // initially it was max-width:1px;
