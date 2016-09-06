@@ -23,9 +23,12 @@ you may enter this: *(it's for the changeset of [this build](https://hg.mozilla.
   
 <br/>  
 Screenshots of the resulting list:  
-[![](https://i.imgur.com/vRuWsuQh.jpg)](https://i.imgur.com/vRuWsuQ.jpg)  
+v5.5.3  
+[![](https://i.imgur.com/3PtDdrph.jpg)](https://i.imgur.com/3PtDdrp.jpg)  
+[v4.2](https://greasyfork.org/en/scripts/19358-firefox-for-desktop-list-fixed-bugs-in-mercurial-2)  
+[![](https://i.imgur.com/zJ9mupfh.jpg)](https://i.imgur.com/zJ9mupf.jpg)  
 and screenshot of progress logging in Web Console:  
-[![](https://i.imgur.com/D2sUx46h.jpg)](https://i.imgur.com/D2sUx46.jpg)  
+[![](https://i.imgur.com/gtYzPTdh.jpg)](https://i.imgur.com/gtYzPTd.jpg)  
   
 During the procedure, you may open the Web Console (Ctrl+Shift+K) to monitor progress.  
   
@@ -38,7 +41,7 @@ After [v4](https://greasyfork.org/en/scripts/13169-firefox-for-desktop-list-fixe
  - parses the response as JSON*  
   
 2. Since v4.2 it now stores the list content HTML code to clipboard.  
-(_You may uncomment (line 11 and) 157 to enable this new feature_)  
+(_You may comment out lines 11 and 157 to disable this new feature_)  
 This feature is aimed to MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer :  
 so, you may do these easy steps in order to produce the Nightly thread:  
  - Go to e.g. http://www.garyshood.com/htmltobb/, paste the HTML code, and press "Submit HTML":  
@@ -47,11 +50,15 @@ it will be converted to BBCode. Copy that to clipboard (Ctrl+C).
  - Finally, by pressing Alt+dragging down, you may do a vertical selection ([screenshot](https://i.imgur.com/GhrnacT.png)),  
 so that you may append a dot (`.`) _(and a space where necessary)_ after each line numbering.  
   
-3. You may also check [v5.5.2](https://greasyfork.org/en/scripts/13169-firefox-for-desktop-list-fixed-bugs-in-mercurial) (for all channels) or [v5.5.3](https://greasyfork.org/en/scripts/15715-firefox-for-desktop-list-modified-bugs-in-mercurial-inbound) (especially for inbound users) :  
-since v5 the results are displayed as a sortable table (instead of a plain list),  
+3. In v5 it displays the results as a sortable table (instead of a plain list),  
 showing in an extra column the "Last Modified Date" of each bug, the values of which are converted to relative time (_e.g, "1 hour ago"_) taking account the user's timezone. (I've created a custom sorter for this extra column).  
 By default it's sorted by "Modified Date" and "Product:Component"(and by "Summary") - _as a mozilla-inbound user I find this most practical because this way I can check whether any notable bugs have been just fixed, and therefore if it's worth downloading the latest m-i build_.  
 But, you may sort the table as you wish: you can sort multiple columns simultaneously by holding down the Shift key and clicking a 2nd, 3rd or even 4th column header.  
+  
+4. In v5.5.1 I bind keypresses of \` to toggle the list display to either:  
+ - sorted by "Modified Date", "Product:Component" and by "Summary") (by default)  
+and having separators between groups of the same timestamps ([screenshot](https://i.imgur.com/aNvAtBh.jpg)), or  
+ - by "Product:Component" and by "Summary" *(i.e. without the separators)* ([screenshot](https://i.imgur.com/P5a2b61.jpg))  
   
   
 <br/>**The procedure:**  
