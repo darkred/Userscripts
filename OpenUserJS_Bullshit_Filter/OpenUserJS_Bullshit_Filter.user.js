@@ -54,20 +54,20 @@
 				activeFilters.push(filters[filter]);
 			}
 		}
-		var nodes = document.querySelectorAll('tr'), numActiveFilters = activeFilters.length, numFiltered = 0;
-		for(var i = 1, numNodes = nodes.length-6, td = null; i < numNodes && (td = nodes[i]); i++) {
+		var nodes = document.querySelectorAll('.col-sm-8 tbody tr'),
+			numActiveFilters = activeFilters.length,
+			numFiltered = 0;
+		for (var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
 			td.className = '';
 			for(var j = 0; j < numActiveFilters; j++) {
-				if(typeof (td.childNodes[1].childNodes[9]) !== 'undefined'){                             // Check whether the current script disctription" element is not undefined, i.e. it exists
-					if(td.childNodes[1].childNodes[9].textContent.match(activeFilters[j]) ) {
-						td.className = 'filtered';
-						numFiltered++;
-						break;
-					}
+				if (td.innerText.match(activeFilters[j]) ) {
+					td.className = 'filtered';
+					numFiltered++;
+					break;
 				}
 			}
 		}
-		document.querySelector('.filter-status').textContent = document.querySelectorAll('tr').length-numFiltered-6 + ' scripts (' + numFiltered + ' filtered)';
+		document.querySelector('.filter-status').textContent = document.querySelectorAll('.col-sm-8 tbody tr').length - numFiltered + ' scripts (' + numFiltered + ' filtered)';
 	}
 	function insertSwitches() {
 		var span = document.createElement('span');
