@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     1.2.2
+// @version     1.2.3
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://openuserjs.org/

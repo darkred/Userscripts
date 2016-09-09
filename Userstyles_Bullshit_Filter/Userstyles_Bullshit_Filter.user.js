@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides styles for popular browser games and social networks as well as styles that use "foreign" characters in descriptions.
-// @version     1
+// @version     1.0.1
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       GM_addStyle
 // @grant       GM_setValue
