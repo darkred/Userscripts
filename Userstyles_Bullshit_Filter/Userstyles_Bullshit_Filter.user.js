@@ -67,8 +67,12 @@
 		for (var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
 			td.id = '';
 			for (var j = 0; j < numActiveFilters; j++) {
-				// if (td.textContent.match(activeFilters[j])) {
-				if (td.textContent.replace(/Updated[\s\S]*/, '').replace(/[\s]*/, '').match(activeFilters[j])) {
+				// if (td.innerText.replace(/\(No\ screenshot\ available\)[\s]/, '').replace(/[\s]*Updated[\s\S]*/, '').match(activeFilters[j])) {
+				var temp = td.innerText.replace(/\(No\ screenshot\ available\)[\s]/, '').replace(/[\s]*Updated[\s\S]*/, '');
+				if (temp.match(/(.*)[\s].*/)[1] == temp.match(/.*[\s][\s](.*)/)[1]){		// if Title and Description are the same, then check only one of them against the filters (--> for the 'Clutter' filter)
+					temp = temp.match(/(.*)[\s].*/)[1];
+				}
+				if (temp.match(activeFilters[j])) {
 					td.id = 'filtered';
 					numFiltered++;
 					break;
@@ -96,14 +100,10 @@
 		a.addEventListener('click', function(e) {
 			if (this.className == 'filter-on') {
 				this.className = 'filter-off';
-				// this.innerHTML = this.textContent + '<br>';
 				GM_setValue(this.textContent, 'off');
-				// GM_setValue(this.textContent.replace(/\ \((.*)/g, ''), 'off');
 			} else {
 				this.className = 'filter-on';
 				GM_setValue(this.textContent, 'on');
-				// this.innerHTML = '<strike>' + this.textContent +  '</strike><br>';
-				// GM_setValue(this.textContent.replace(/\ \((.*)/g, ''), 'on');
 			}
 			filterScripts();
 			e.preventDefault();
