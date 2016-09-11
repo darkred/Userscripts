@@ -4,7 +4,7 @@
 // @author      darkred, johnp_
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
-// @version     2.0.1
+// @version     2.0.2
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getResourceURL
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
@@ -24,20 +24,8 @@ var debug = false;
 
 time('MozillaBugzilla');
 
-String.prototype.escapeHTML = function() {
-	var tagsToReplace = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;'
-	};
 
-	return this.replace(/[&<>]/g, function(tag) {
-		return tagsToReplace[tag] || tag;
-	});
-};
-
-
-var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=([0-9]*).*$/;
 var base_url = 'https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary&id=';
 var bugIds = [];
 var bugCodes = [];
@@ -49,7 +37,9 @@ var len = links.length;
 for (let i = 0; i < len; i++) {
 	let n = links[i].href.match(regex);
 	let n2 = links[i].innerHTML;
-	if (n !== null && n.length > 0 && n2.indexOf('#') === -1 && n2.indexOf('-') === -1) {
+	if (n !== null &&
+		n2.match(/#[0-9]*/) === null &&
+		n2.indexOf('-') === -1) {
 		let id = parseInt(n[1]);
 		if (bugIds.indexOf(id) === -1) {
 			bugIds.push(id);
@@ -83,15 +73,12 @@ time('MozillaBugzilla-REST');
 // ADDING a spinning icon to the matching links
 for (var i = 0; i < links.length; i++) {
 	if (   links[i].href.match(regex)
-		&& links[i].innerHTML.indexOf('#') == -1
+		&& links[i].innerHTML.match(/#[0-9]*/) == null
 		&& links[i].innerHTML.indexOf('-') == -1 ) {
-
 		var elem = document.createElement('img');
 		elem.src = GM_getResourceURL('icon');
 		links[i].parentNode.insertBefore(elem, links[i].nextSibling);          // For spinning icon AFTER the link
 		// links[i].parentNode.insertBefore(elem, links[i].previousSibling);   // For spinning icon BEFORE the link
-
-
 	}
 }
 
@@ -182,11 +169,12 @@ $.getJSON(rest_url, function(data) {
 					&& links[z].innerHTML.indexOf('-') == -1 ) {
 
 					let temp = links[z].innerHTML.match(/([Bb]ug\ [a-zA-Z]*).*[0-9]*/i);
+					var temp2 = links[z].href.match(/^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=[0-9]*(.*)$/);
 					if (temp !== null) {
 						links[z].previousSibling.textContent += temp[1] + ' ';
-						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy];
+						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
 					} else {
-						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy];
+						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
 					}
 
 
