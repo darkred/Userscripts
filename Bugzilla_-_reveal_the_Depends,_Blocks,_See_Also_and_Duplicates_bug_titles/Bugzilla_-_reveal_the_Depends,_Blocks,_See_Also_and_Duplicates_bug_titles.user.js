@@ -19,52 +19,52 @@ var depends, blocks, combined;
 var seealso;
 
 listener1.simple_combo('`', function() {
-    // console.log('You pressed `');
+	// console.log('You pressed `');
 
-    depends = $('#dependson_input_area').siblings();
-    blocks = $('#blocked_input_area').siblings();
-    combined = [].concat(Array.prototype.slice.call(depends), Array.prototype.slice.call(blocks));
+	depends = $('#dependson_input_area').siblings();
+	blocks = $('#blocked_input_area').siblings();
+	combined = [].concat(Array.prototype.slice.call(depends), Array.prototype.slice.call(blocks));
 
-    if (flag1 === 1) {
-        flag1 = 0;
+	if (flag1 === 1) {
+		flag1 = 0;
 
-        for (var i = 0; i < combined.length; i++) {
-            combined[i].innerHTML = '(' + combined[i].innerHTML + ')  ' + combined[i].title;
-            combined[i].outerHTML += '<br/>';
-        }
+		for (var i = 0; i < combined.length; i++) {
+			combined[i].innerHTML = '(' + combined[i].innerHTML + ')  ' + combined[i].title;
+			combined[i].outerHTML += '<br/>';
+		}
 
-        seealso = $('.bug_urls > li').children();
-        for (var z = 0; z < seealso.length; z++) {
-            seealso[z].innerHTML = '(' + seealso[z].innerHTML + ')  ' + seealso[z].title;
-        }
-
-
-
-    } else {
-
-        var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+		seealso = $('.bug_urls > li').children();
+		for (var z = 0; z < seealso.length; z++) {
+			seealso[z].innerHTML = '(' + seealso[z].innerHTML + ')  ' + seealso[z].title;
+		}
 
 
-        if (flag1 === 0) {
-            flag1 = 1;
-            for (var j = 0; j < combined.length; j += 2) {
-                combined[j].innerHTML = combined[j].href.match(regex)[1];
-            }
 
-            for (var k = (combined.length) - 1; k >= 0; k -= 2) {
-                combined[k].remove();
-            }
+	} else {
 
-            seealso = $('.bug_urls > li').children();
+		var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+
+
+		if (flag1 === 0) {
+			flag1 = 1;
+			for (var j = 0; j < combined.length; j += 2) {
+				combined[j].innerHTML = combined[j].href.match(regex)[1];
+			}
+
+			for (var k = (combined.length) - 1; k >= 0; k -= 2) {
+				combined[k].remove();
+			}
+
+			seealso = $('.bug_urls > li').children();
 			for (var w = 0; w < seealso.length; w++) {
 				seealso[w].innerHTML = seealso[w].href.match(regex)[1];
 			}
 
-        }
+		}
 
 
-        document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
-    }
+		document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+	}
 
 });
 
@@ -79,32 +79,32 @@ var listener2 = new window.keypress.Listener();
 var duplicates;
 
 listener2.simple_combo('~', function() {
-    if (flag2 === 1) {
-        flag2 = 0;
-        duplicates = $('#duplicates').children();
+	if (flag2 === 1) {
+		flag2 = 0;
+		duplicates = $('#duplicates').children();
 
-        for (var i = 0; i < duplicates.length; i++) {
-            duplicates[i].innerHTML = '(' + duplicates[i].innerHTML + ')  ' + duplicates[i].title;
-            duplicates[i].outerHTML += '<br/>';
-        }
+		for (var i = 0; i < duplicates.length; i++) {
+			duplicates[i].innerHTML = '(' + duplicates[i].innerHTML + ')  ' + duplicates[i].title;
+			duplicates[i].outerHTML += '<br/>';
+		}
 
-    } else {
+	} else {
 
-        var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+		var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
 
-        duplicates = $('#duplicates').children();
+		duplicates = $('#duplicates').children();
 
-        if (flag2 === 0) {
-            flag2 = 1;
-            for (var j = 0; j < duplicates.length; j += 2) {
-                duplicates[j].innerHTML = duplicates[j].href.match(regex)[1];
-            }
+		if (flag2 === 0) {
+			flag2 = 1;
+			for (var j = 0; j < duplicates.length; j += 2) {
+				duplicates[j].innerHTML = duplicates[j].href.match(regex)[1];
+			}
 
-            for (var k = (duplicates.length) - 1; k >= 0; k -= 2) {
-                duplicates[k].remove();
-            }
-        }
-        document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
-    }
+			for (var k = (duplicates.length) - 1; k >= 0; k -= 2) {
+				duplicates[k].remove();
+			}
+		}
+		document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+	}
 
 });
