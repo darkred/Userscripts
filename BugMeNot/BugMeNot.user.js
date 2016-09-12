@@ -10,11 +10,9 @@
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
 //
+
 // latest version by hosts: 01.03.09
-
 // based on code found at http://www.oreillynet.com/pub/h/4171
-// Notes from previous releases (this release does't have any permission)
-
 // ----------------------------
 // based on code by Matt McCarthy
 // and included here with his gracious permission
