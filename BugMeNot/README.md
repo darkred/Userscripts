@@ -1,5 +1,5 @@
 It's a modified/fixed version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) by hosts  
-which in terms was based on code found at http://www.oreillynet.com/pub/h/4171  
+(which in terms was based on code found at http://www.oreillynet.com/pub/h/4171 )
 because it didn't work anymore.  
 
 This applies in HTTP and HTTPS sites.  
@@ -8,7 +8,7 @@ Many sites (e.g. online newspapers) require you to register with the site before
 
 <br>  
 <u>How to use</u>:  
-After installing this script (Tools > Install This User Script), go to any page that requires Sign in.  
+After installing this script, go to any page that requires Sign in.  
 Click on either the `Username` or the `Password textbox` This is what will appear:  
 ![image](https://i.imgur.com/oMGtvGC.jpg)  
 
