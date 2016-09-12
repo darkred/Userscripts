@@ -5,7 +5,7 @@ This repo contains my userscripts.
 ### Userscripts
 
 - [Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles](https://github.com/darkred/Userscripts/tree/master/Bugzilla_-_reveal_the_Depends%2C_Blocks%2C_See_Also_and_Duplicates_bug_titles#readme) - Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts.
-- [BugMeNot](https://github.com/darkred/Userscripts/blob/master/BugMeNot/README.md) - It fetches logins from bugmenot.com and autofills the login form
+- [BugMeNot](https://github.com/darkred/Userscripts/blob/master/BugMeNot/README.md) - It fetches logins from bugmenot.com and autofills the login form.
 - [Firefox for desktop - list fixed bugs in Mercurial](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial#readme) - It generates lists of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
 - [Firefox for desktop - list fixed bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_as_sortable_table#readme) - It generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
 - [Firefox for desktop - list modified bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_modified_bugs_in_Mercurial_as_sortable_table#readme) - It generates lists of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs.
