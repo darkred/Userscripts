@@ -22,15 +22,6 @@
 
 
 
-// if the current URL is different that the last visited(stored) then reset counter
-if (GM_getValue('lastURL') != window.location){
-	var counter = 0;
-	GM_setValue('counter', 0);
-} else {
-	counter = parseInt(GM_getValue('counter'));		// else retrieve stored counter value
-}
-
-
 
 // new logins gotten from the current page (reset on every page load)
 var retrievals = 0;
@@ -54,6 +45,14 @@ var domainnameRE = new RegExp('(?:https?://)(www\.)?(.*?)/.*?', 'i');
 var domainname = myString.match(domainnameRE);
 domainname = domainname[2];
 
+// If the current domain name doesn't match the stored lastURL, then reset the counter
+if (GM_getValue('lastURL').indexOf(domainname) == -1){
+	var counter = 0;
+	GM_setValue('counter', 0);
+} else {
+	counter = parseInt(GM_getValue('counter'));		// else retrieve stored counter value
+}
+
 
 // var allInputs = null;
 var bmnView = 'http://bugmenot.com/view';
@@ -70,7 +69,8 @@ var Style = {
 		display: 'block',
 		padding: '2px',
 		margin: '0',
-		width: '12em',
+		// width: '12em',
+		width: '15em',
 		fontSize: '8pt',
 		fontWeight: 'normal',
 		textDecoration: 'none'
@@ -144,7 +144,7 @@ function processPasswordFields() {
 		pwField.setAttribute('usernameInputIndex', previousTextFieldInd);
 		pwField.setAttribute('passwordInputIndex', i);
 		// var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
-		var total = JSON.parse(GM_getValue('allUsernames')).length;
+		if (counter == 0) {total = '-';} else {var total = JSON.parse(GM_getValue('allUsernames')).length;}
 		var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
 		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' +
