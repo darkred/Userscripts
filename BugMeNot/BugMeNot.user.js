@@ -6,8 +6,11 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.12
+// @version     2016.09.13
 // @grant       GM_xmlhttpRequest
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @noframes
 // ==/UserScript==
 //
 
@@ -16,6 +19,17 @@
 // ----------------------------
 // based on code by Matt McCarthy
 // and included here with his gracious permission
+
+
+
+// if the current URL is different that the last visited(stored) then reset counter
+if (GM_getValue('lastURL') != window.location){
+	var counter = 0;
+	GM_setValue('counter', 0);
+} else {
+	counter = parseInt(GM_getValue('counter'));		// else retrieve stored counter value
+}
+
 
 
 // new logins gotten from the current page (reset on every page load)
@@ -98,6 +112,7 @@ function getBmnWrapper(pwFieldIndex) {
 	pwFieldIndex);
 }
 
+
 function processPasswordFields() {
 	var allInputs = document.getElementsByTagName('input');
 	//allInputslength = allInputs.length;
@@ -128,7 +143,9 @@ function processPasswordFields() {
 		Utility.addEventHandler(pwField, 'blur', pwField_onblur);
 		pwField.setAttribute('usernameInputIndex', previousTextFieldInd);
 		pwField.setAttribute('passwordInputIndex', i);
-		var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+		// var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+		var total = JSON.parse(GM_getValue('allUsernames')).length;
+		var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
 		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' +
 		'(opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
@@ -289,10 +306,12 @@ function positionBmnWrapper(bmnWrapper, usernameField, pwField) {
 	}
 }
 
+
 // We have a uri param rather than assuming it's for the current
 // page so this function can be modular and potentially used
 // for pages other than the current one.
 function getLogin(uri, usernameInputIndex, passwordInputIndex) {
+
 	var allInputs = document.getElementsByTagName('input');
 	var usernameField = allInputs[usernameInputIndex];
 	var pwField = allInputs[passwordInputIndex];
@@ -301,42 +320,72 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 	var firstAttempt = retrievals == 0;
 	var submitData = 'submit=This+login+didn%27t+work&num=' + retrievals +
 	'&site=' + encodeURI(location.hostname);
-	GM_xmlhttpRequest({
-		method: firstAttempt ? 'get' : 'post',
-		headers: firstAttempt ? null :
-			{
-				'Content-type': 'application/x-www-form-urlencoded'
+
+	if (counter == 0){
+		GM_xmlhttpRequest({
+			method: firstAttempt ? 'get' : 'post',
+			headers: firstAttempt ? null :
+				{
+					'Content-type': 'application/x-www-form-urlencoded'
+				},
+			data: firstAttempt ? null : submitData,
+			url: firstAttempt ? uri : bmnView,
+			onload: function (responseDetails) {
+				if (responseDetails.status == 200) {
+					waitOrRestoreFields(usernameField, pwField, true);
+					// decoded = decodeit(responseDetails.responseText);
+					var decoded = responseDetails.responseText;
+					var doc = textToXml(decoded);
+					if (!(doc && doc.documentElement)) {
+						return Errors.say(Errors.malformedResponse);
+					}
+
+
+
+					var allUsernames = doc.documentElement.querySelectorAll('dd:nth-child(2) > kbd');
+					var allPasswords = doc.documentElement.querySelectorAll('dd:nth-child(4) > kbd');
+					var allUsernamesArray = [];
+					var allPasswordsArray = [];
+					for (var i = 0; i < allUsernames.length; i++) {
+						allUsernamesArray.push(allUsernames[i].innerHTML);
+						allPasswordsArray.push(allPasswords[i].innerHTML);
+					}
+					GM_setValue('allUsernames', JSON.stringify(allUsernamesArray));
+					GM_setValue('allPasswords', JSON.stringify(allPasswordsArray));
+
+
+					// var accountInfo = doc.documentElement.getElementsByTagName('td') [0];
+					var accountInfo = doc.documentElement.getElementsByTagName('kbd') [0];
+					if (!(accountInfo)) {
+						return Errors.say(Errors.noLoginAvailable);
+					}
+					usernameField.value = accountInfo.childNodes[0].nodeValue;
+					// var pwsField = doc.documentElement.getElementsByTagName('td') [1];
+					var pwsField = doc.documentElement.getElementsByTagName('kbd') [1];
+					pwField.value = pwsField.childNodes[0].nodeValue;
+					retrievals++;
+				} else {
+					return Errors.say(Errors.xmlHttpFailure);
+				}
 			},
-		data: firstAttempt ? null : submitData,
-		url: firstAttempt ? uri : bmnView,
-		onload: function (responseDetails) {
-			if (responseDetails.status == 200) {
+			onerror: function (responseDetails) {
 				waitOrRestoreFields(usernameField, pwField, true);
-				// decoded = decodeit(responseDetails.responseText);
-				var decoded = responseDetails.responseText;
-				var doc = textToXml(decoded);
-				if (!(doc && doc.documentElement)) {
-					return Errors.say(Errors.malformedResponse);
-				}
-				// var accountInfo = doc.documentElement.getElementsByTagName('td') [0];
-				var accountInfo = doc.documentElement.getElementsByTagName('kbd') [0];
-				if (!(accountInfo)) {
-					return Errors.say(Errors.noLoginAvailable);
-				}
-				usernameField.value = accountInfo.childNodes[0].nodeValue;
-				// var pwsField = doc.documentElement.getElementsByTagName('td') [1];
-				var pwsField = doc.documentElement.getElementsByTagName('kbd') [1];
-				pwField.value = pwsField.childNodes[0].nodeValue;
-				retrievals++;
-			} else {
-				return Errors.say(Errors.xmlHttpFailure);
+				Errors.say(Errors.xmlHttpFailure);
 			}
-		},
-		onerror: function (responseDetails) {
-			waitOrRestoreFields(usernameField, pwField, true);
-			Errors.say(Errors.xmlHttpFailure);
-		}
-	});
+		});
+	} else {
+		var retrievedUsernames = [];
+		var retrievedPasswords = [];
+		retrievedUsernames = JSON.parse(GM_getValue('allUsernames'));
+		retrievedPasswords = JSON.parse(GM_getValue('allPasswords'));
+		usernameField.value = retrievedUsernames[counter];
+		pwField.value = retrievedPasswords[counter];
+	}
+
+	counter = parseInt(counter);
+	counter++;											// (after all is done..)
+	GM_setValue('counter', counter);					// .. store just increased counter and..
+	GM_setValue('lastURL', String(window.location)); 	// .. store current location as lastURL
 }
 
 function waitOrRestoreFields(usernameField, pwField, restore) {
