@@ -3,8 +3,9 @@
 // @author        wOxxOm
 // @description   Changes base-5 Rating of Rotten Tomatoes to base-10
 // @include       http://www.rottentomatoes.com/*
+// @include       https://www.rottentomatoes.com/*
 // @grant         none
-// @version       3
+// @version       3.0.1
 // @run-at        document-start
 // @require       https://greasyfork.org/scripts/12228/code/setMutationHandler.js
 // @namespace     https://greasyfork.org/users/2160
