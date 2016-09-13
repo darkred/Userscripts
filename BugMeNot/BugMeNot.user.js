@@ -146,11 +146,13 @@ function processPasswordFields() {
 		// var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		if (counter == 0) {
 			var myprompt = 'Get login from BugMeNot' + ' (' + (counter + 1) + '/-)';
+			var myprompt2 = 'Get a login from BugMeNot';
 		} else {
 			var total = JSON.parse(GM_getValue('allUsernames')).length;
 			myprompt = 'Try next login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')';
+			myprompt2 = 'Try next login';
 		}
-		var getLoginLink = menuLink(bmnUri, myprompt, 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+		var getLoginLink = menuLink(bmnUri, myprompt, myprompt2, getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
 		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' +
 		'(opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
