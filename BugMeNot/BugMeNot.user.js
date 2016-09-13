@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.13
+// @version     2016.09.13.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -70,7 +70,7 @@ var Style = {
 		padding: '2px',
 		margin: '0',
 		// width: '12em',
-		width: '15em',
+		width: '17em',
 		fontSize: '8pt',
 		fontWeight: 'normal',
 		textDecoration: 'none'
@@ -144,8 +144,13 @@ function processPasswordFields() {
 		pwField.setAttribute('usernameInputIndex', previousTextFieldInd);
 		pwField.setAttribute('passwordInputIndex', i);
 		// var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
-		if (counter == 0) {total = '-';} else {var total = JSON.parse(GM_getValue('allUsernames')).length;}
-		var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+		if (counter == 0) {
+			var myprompt = 'Get login from BugMeNot' + ' (' + (counter + 1) + '/-)';
+		} else {
+			var total = JSON.parse(GM_getValue('allUsernames')).length;
+			myprompt = 'Try next login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')';
+		}
+		var getLoginLink = menuLink(bmnUri, myprompt, 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
 		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' +
 		'(opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
