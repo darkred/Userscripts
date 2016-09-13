@@ -1,4 +1,4 @@
-It userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts',  
+This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts',  
 (which in terms was based on code found at http://www.oreillynet.com/pub/h/4171).  
 
 This applies in both HTTP and HTTPS sites.  
@@ -44,8 +44,8 @@ meaning that you can either (see the 1st screenshot for referance):
 - press `More Options` to open(in a new tab) the relevant bugmenot page, or  
 - just press `Visit BugMeNot` which will open(in a new tab) http://bugmenot.com .  
 
-Note: you may reset the attempt(=login) count by opening/refreshing any irrelevant page to the current one,
-i.e. just navigate to an irrelevant page, then switch to the login page.
+Note: you may reset the attempt(=login) count by opening/refreshing any irrelevant page to the current one,  
+i.e. just navigate to an irrelevant page, then switch to the login page.  
 
 <br>
 
