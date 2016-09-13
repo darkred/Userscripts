@@ -14,7 +14,7 @@ Extra features/changes to the '09 version:
 
 <br>  
 
-**How to use:**
+**How to use:**  
 
 After installing this script, go to any page that requires Sign in.    
 Click on either the `Username` or the `Password` textbox. This is what will appear:     
