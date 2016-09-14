@@ -1,5 +1,5 @@
 This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts',  
-(which in terms was based on code found at http://www.oreillynet.com/pub/h/4171).  
+(which in turn was based on code found at http://www.oreillynet.com/pub/h/4171).  
 
 This applies in both HTTP and HTTPS sites.  
 
