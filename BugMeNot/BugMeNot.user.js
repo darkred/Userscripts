@@ -2,7 +2,7 @@
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred
-// @description It fetches logins from bugmenot.com and autofills the login form
+// @description It fetches all logins from bugmenot.com and autofills the login form
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
@@ -12,7 +12,6 @@
 // @grant       GM_getValue
 // @noframes
 // ==/UserScript==
-//
 
 // latest version by hosts: 01.03.09
 // based on code found at http://www.oreillynet.com/pub/h/4171

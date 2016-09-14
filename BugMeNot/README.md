@@ -6,7 +6,7 @@ This applies in both HTTP and HTTPS sites.
 Many sites (e.g. online newspapers) require you to register with the site before being able to read content. This registration is annoying, invasive, and a serious privacy risk. (Several newspaper publishing companies have been caught selling their registration information to spammers.) A site called BugMeNot.com (http://www.bugmenot.com) has sprung up to aggregate fake logins for such sites. This script takes BugMeNot one step further by integrating it into the login page itself.
 It retrieves all possible logins from bugmenot.com, shows their count, and you can try each one on every clicking of 'Get login from BugMeNot'.
 
-Extra features/changes to the '09 version:
+Extra features/changes to the initial version:
 - During the 1st attempt all found logins are temporarily stored for using them in the next login attempts.
 - Only 1 connection is done to bugmenot.com.
 - Added the `// @noframes` imperative.
