@@ -1,5 +1,5 @@
-This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts',  
-(which in turn was based on code found at http://www.oreillynet.com/pub/h/4171).  
+This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts' 
+_(which in turn was based on code found at http://www.oreillynet.com/pub/h/4171)_. 
 
 This applies in both HTTP and HTTPS sites.  
 
@@ -16,7 +16,7 @@ Extra features/changes to the '09 version:
 
 **How to use:**  
 
-After installing this script, go to any page that requires Sign in.    
+After installing this script _(tested in Greasemonkey)_, go to any page that requires sign in.    
 Click on either the `Username` or the `Password` textbox. This is what will appear:     
 ![image](https://i.imgur.com/bMyO0Un.jpg)   
 (the `1/-` means the 1st login out of yet unknown available logins)
@@ -28,19 +28,20 @@ and then it will autofill the login form with the 1st found login, as shown belo
 
 Try to sign in with that 1st found login.  
 If the login is invalid, you may navigate again to the sign-in page   
-and you may try each one of the rest logins by clicking 'Try next login from BugMeNot', i.e.  
+and try each one of the rest logins by clicking again on either the `Username` or the `Password` textbox  
+and then to `Try next login from BugMeNot`, i.e.  
 ![image](https://i.imgur.com/R03FX2V.jpg)  
 Notice the `2/3`? It means the 2nd login out of 3 available logins.  
 *Also, note that only 1 connection is done to bugmenot.com - all login attempts are done using the stored logins from the 1st attempt.*  
 
 Also, during this, if the Username or Password textbox are already filed with the previous login,  
-you'll get a prompt to `Overwrite the current login entry`:  (Just press Ok).  
+you'll get a prompt to `Overwrite the current login entry`: (just press OK to continue)  
 ![image](https://i.imgur.com/ismAlzx.jpg)
 
 
 If there were no logins found you'll get this alert box:  
 ![image](https://i.imgur.com/ayDyxaR.jpg)  
-meaning that you can either (see the 1st screenshot for referance):  
+meaning that you can either (see the 1st screenshot for reference): 
 - press `More Options` to open(in a new tab) the relevant bugmenot page, or  
 - just press `Visit BugMeNot` which will open(in a new tab) http://bugmenot.com .  
 
