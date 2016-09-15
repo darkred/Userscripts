@@ -6,11 +6,14 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.13.1
+// @version     2016.09.15
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
+// @grant       GM_log
+// @grant       GM_openInTab
 // @noframes
+// @run-at      document-idle
 // ==/UserScript==
 
 // latest version by hosts: 01.03.09
@@ -117,7 +120,7 @@ function processPasswordFields() {
 	//allInputslength = allInputs.length;
 	var bmnContainer = document.createElement('div');
 	bmnContainer.id = 'reify-bugmenot-container';
-	var bodyEl = document.getElementsByTagName('body') [0];
+	var bodyEl = document.getElementsByTagName('body')[0];
 	if (!bodyEl) return;
 	for (var i = 0; i < allInputs.length; i++) {
 		var pwField = allInputs[i];
@@ -404,7 +407,7 @@ function waitOrRestoreFields(usernameField, pwField, restore) {
 function getPreviousTextField(pwFieldIndex, allInputs) {
 	//var allInputs = document.getElementsByTagName("input");
 	for (var i = pwFieldIndex; i >= 0 && i < allInputs.length; i--)
-		if (allInputs[i].type && allInputs[i].type.toLowerCase() == 'text')
+		if (allInputs[i].type && (allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'email'))
 			return i;
 	return - 1;
 }
