@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred
@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.15
+// @version     2016.09.15.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -137,6 +137,7 @@ function processPasswordFields() {
 			}
 		}
 		var usernameField = allInputs[previousTextFieldInd];
+		usernameField.blur();		// Workaround for when the Username textbox has focus by default on page load
 		usernameField.setAttribute('usernameInputIndex', previousTextFieldInd);
 		usernameField.setAttribute('passwordInputIndex', i);
 		Utility.addEventHandler(usernameField, 'focus', usernameField_onfocus);
@@ -273,11 +274,11 @@ function hideIfNoFocus(usernameField, pwField) {
 	return (function () {
 		var bUsernameFocus = usernameField.getAttribute('hasFocus');
 		if (typeof bUsernameFocus == 'string') {
-			bUsernameFocus = (bUsernameFocus && bUsernameFocus != 'false');
+			bUsernameFocus = (bUsernameFocus && bUsernameFocus !== false);
 		}
 		var bPasswordFocus = pwField.getAttribute('hasFocus');
 		if (typeof bPasswordFocus == 'string') {
-			bPasswordFocus = (bPasswordFocus && bPasswordFocus != 'false');
+			bPasswordFocus = (bPasswordFocus && bPasswordFocus !== false);
 		}
 		if ((!bUsernameFocus) && (!bPasswordFocus)) {
 			showHideBmnWrapper(usernameField, pwField, false);
