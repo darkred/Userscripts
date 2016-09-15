@@ -1,4 +1,4 @@
-This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts' 
+This userscript is an improved version of [BugMeNot](http://userscripts-mirror.org/scripts/show/23074) dated from 2009, by 'hosts'   
 _(which in turn was based on code found at http://www.oreillynet.com/pub/h/4171)_. 
 
 This applies in both HTTP and HTTPS sites.  
@@ -9,17 +9,26 @@ It retrieves all possible logins from bugmenot.com, shows their count, and you c
 Extra features/changes to the initial version:
 - During the 1st attempt all found logins are temporarily stored for using them in the next login attempts.
 - Only 1 connection is done to bugmenot.com.
+- The script now works even when the `Username` \<input> element has `type="email"` (i.e. not only `type="text"`)
 - Added the `// @noframes` imperative.
+- Sometimes, when you open a login page, the `Username` field would have focus by default.  
+This would cause the following issue:  
+clicking inside the field, would only Firefox's autocomplete entries - not the script's entries.  
+To workaround this, the script causes an unfocus on the `Username` field on page load,  
+to make sure that the options will appear when you click(focus) inside the field.  
 
+*Tested in Greasemonkey.*
 
-<br>  
+<br> 
 
 **How to use:**  
 
-After installing this script _(tested in Greasemonkey)_, go to any page that requires sign in.    
+After installing this script, go to any page that requires sign in.    
 Click on either the `Username` or the `Password` textbox. This is what will appear:     
 ![image](https://i.imgur.com/bMyO0Un.jpg)   
-(the `1/-` means the 1st login out of yet unknown available logins)
+(the `1/-` means the 1st login out of yet unknown available logins)  
+Note: in login pages where where the sign in form appears as a hovering/expanding element,  
+just open the login link in a new tab: now the script will work.
 
 By clicking `Get login from BugMeNot` the script will contact bugmenot.com, and,  
 if it finds login(s), it will temporarily store all found logins for the current browser session via GM_setValue,  
@@ -35,7 +44,7 @@ Notice the `2/3`? It means the 2nd login out of 3 available logins.
 *Also, note that only 1 connection is done to bugmenot.com - all login attempts are done using the stored logins from the 1st attempt.*  
 
 Also, during this, if the Username or Password textbox are already filed with the previous login,  
-you'll get a prompt to `Overwrite the current login entry`: (just press OK to continue)  
+you'll get a prompt to `Overwrite the current login entry`: (just press OK to continue).  
 ![image](https://i.imgur.com/ismAlzx.jpg)
 
 
