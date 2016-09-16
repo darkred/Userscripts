@@ -2,7 +2,7 @@
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred
-// @description It fetches all logins from bugmenot.com and autofills the login form
+// @description It integrates BugMeNot into any login form  (it retrieves all matching logins from bugmenot.com and autofills the login form)
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
