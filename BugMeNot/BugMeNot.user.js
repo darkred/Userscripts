@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred
@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.15.1
+// @version     2016.09.16
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -146,6 +146,7 @@ function processPasswordFields() {
 		Utility.addEventHandler(pwField, 'blur', pwField_onblur);
 		pwField.setAttribute('usernameInputIndex', previousTextFieldInd);
 		pwField.setAttribute('passwordInputIndex', i);
+
 		// var getLoginLink = menuLink(bmnUri, 'Get login from BugMeNot', 'Get a login from BugMeNot', getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		if (counter == 0) {
 			var myprompt = 'Get login from BugMeNot' + ' (' + (counter + 1) + '/-)';
@@ -155,19 +156,32 @@ function processPasswordFields() {
 			myprompt = 'Try next login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')';
 			myprompt2 = 'Try next login';
 		}
+
 		var getLoginLink = menuLink(bmnUri, myprompt, myprompt2, getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
-		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' +
-		'(opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+		if (counter > 0) {
+			var resetCounterLink = menuLink('', 'Reset login attempt counter', 'Resets the login attempt counter (reloads the page)', resetCounterLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
+			var resetCounterLinkWrapper = menuEntry(resetCounterLink, Style.menuLinkWrapper);
+		}
+
+		var fullFormLink = menuLink(bmnUri, 'More options', 'See more options for getting logins from BugMeNot.com ' + '(opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var fullFormLinkWrapper = menuEntry(fullFormLink, Style.menuLinkWrapper);
+
 		var visitBmnLink = menuLink(bmnHomeUri, 'Visit BugMeNot', 'Go to the BugMeNot home page (opens a new window)', openMenuLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var visitBmnLinkWrapper = menuEntry(visitBmnLink, Style.menuLinkWrapper);
+
+
 		var bmnWrapper = document.createElement('div');
 		bmnWrapper.id = 'reify-bugmenot-bmnWrapper' + i;
 		bmnWrapper.className = 'reify-bugmenot-bmnWrapper';
+
 		bmnWrapper.appendChild(getLoginLinkWrapper);
+		if (counter > 0) {
+			bmnWrapper.appendChild(resetCounterLinkWrapper);
+		}
 		bmnWrapper.appendChild(fullFormLinkWrapper);
 		bmnWrapper.appendChild(visitBmnLinkWrapper);
+
 		copyProperties(bmnWrapper.style, Style.bmnWrapper);
 		bmnContainer.appendChild(bmnWrapper);
 	}
@@ -233,6 +247,12 @@ function openMenuLink_onclick(event) {
 	event.preventDefault && event.preventDefault();
 	return false;
 }
+
+function resetCounterLink_onclick(){
+	GM_setValue('counter', 0);
+	window.location.reload();
+}
+
 
 function usernameField_onfocus(event) {
 	var allInputs = document.getElementsByTagName('input');
@@ -360,6 +380,12 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 						allUsernamesArray.push(allUsernames[i].innerHTML);
 						allPasswordsArray.push(allPasswords[i].innerHTML);
 					}
+
+					for (var j = 0; j < allUsernamesArray.length; j++){
+						console.log(allUsernamesArray[j] + ', ' + allPasswordsArray[j]);
+					}
+
+
 					GM_setValue('allUsernames', JSON.stringify(allUsernamesArray));
 					GM_setValue('allPasswords', JSON.stringify(allPasswordsArray));
 
@@ -388,6 +414,11 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 		var retrievedPasswords = [];
 		retrievedUsernames = JSON.parse(GM_getValue('allUsernames'));
 		retrievedPasswords = JSON.parse(GM_getValue('allPasswords'));
+
+		for (var j = 0; j < retrievedUsernames.length; j++){
+			console.log(retrievedUsernames[j] + ', ' + retrievedPasswords[j]);
+		}
+
 		usernameField.value = retrievedUsernames[counter];
 		pwField.value = retrievedPasswords[counter];
 	}

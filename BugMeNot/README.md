@@ -17,7 +17,7 @@ clicking inside the field, would only Firefox's autocomplete entries - not the s
 To workaround this, the script causes an unfocus on the `Username` field on page load,  
 to make sure that the options will appear when you click(focus) inside the field.  
 
-*Tested in Greasemonkey.*
+Tested in Greasemonkey.
 
 <br> 
 
@@ -34,14 +34,16 @@ By clicking `Get login from BugMeNot` the script will contact bugmenot.com, and,
 if it finds login(s), it will temporarily store all found logins for the current browser session via GM_setValue,  
 and then it will autofill the login form with the 1st found login, as shown below:  
 ![image](https://i.imgur.com/E7ccv8O.jpg)  
+*Note: you may view all found logins in Web Console.*
 
 Try to sign in with that 1st found login.  
 If the login is invalid, you may navigate again to the sign-in page   
 and try each one of the rest logins by clicking again on either the `Username` or the `Password` textbox  
 and then to `Try next login from BugMeNot`, i.e.  
-![image](https://i.imgur.com/R03FX2V.jpg)  
+![image](https://i.imgur.com/pqZ0Rz7.jpg)  
 Notice the `2/3`? It means the 2nd login out of 3 available logins.  
-*Also, note that only 1 connection is done to bugmenot.com - all login attempts are done using the stored logins from the 1st attempt.*  
+*Note that only 1 connection is done to bugmenot.com - all login attempts are done using the stored logins from the 1st attempt* *(you may view all stored logins in Web Console).*  
+Also, now you may use the entry `Reset login attempt counter` if needed.
 
 Also, during this, if the Username or Password textbox are already filed with the previous login,  
 you'll get a prompt to `Overwrite the current login entry`: (just press OK to continue).  
@@ -54,9 +56,11 @@ meaning that you can either (see the 1st screenshot for reference):
 - press `More Options` to open(in a new tab) the relevant bugmenot page, or  
 - just press `Visit BugMeNot` which will open(in a new tab) http://bugmenot.com .  
 
-Note: you may reset the attempt(=login) count by opening/refreshing any irrelevant page to the current one,  
-i.e. just navigate to an irrelevant page, then switch to the login page.  
+Note: you may reset the attempt(=login) count:
+- either by clicking on the `Reset login attempt counter`, 
+- or by opening/refreshing any irrelevant page to the current one,
+i.e. just navigate to an irrelevant page, then switch to the login page.
 
 <br>
 
-Thanks to 'hosts' for making a very useful script!
+Thanks to 'hosts' for his version of a very useful script!
