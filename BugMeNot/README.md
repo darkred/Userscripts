@@ -63,6 +63,4 @@ i.e. just navigate to an irrelevant page, then switch to the login page.
 
 <br>
 
-Thanks to 'hosts' for his version of a very useful script!  
-  
-[Hosted in GitHub](https://github.com/darkred/Userscripts)
+Thanks to 'hosts' for his version of a very useful script!

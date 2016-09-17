@@ -2,6 +2,3 @@ This script adds a sortable "Ratio" column to torrent search results in thepirat
 
 Note: it works only in single-line view (not in double line).  
 <IMG SRC="https://i.imgur.com/WEDaZoI.jpg">  
-
-
-[Hosted in GitHub](https://github.com/darkred/Userscripts)

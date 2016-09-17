@@ -4,5 +4,3 @@ By default it shows only the active styles - optionally you may display only the
 
 It adds these 3 links/buttons on top right. For example:  
 ![image](https://i.imgur.com/4W4K8F4.jpg)  
-
-[Hosted in GitHub](https://github.com/darkred/Userscripts)

@@ -9,6 +9,4 @@ example:
 ![image](https://i.imgur.com/KPikvlM.jpg)
 
 *Notes: the button doesn't appear in your own Greasyfork profile page,  
-and it only works when you are logged in, for obvious reasons*.  
-  
-[Hosted in GitHub](https://github.com/darkred/Userscripts)
+and it only works when you are logged in, for obvious reasons*.

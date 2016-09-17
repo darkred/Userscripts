@@ -108,5 +108,3 @@ Thanks a lot to:
 - wOxxOm for his help in [here](https://greasyfork.org/en/forum/discussion/6616/help-with-making-a-function-wait-until-all-gm-xmlhttprequest-requests-are-fully-completed),  
 - Brock Adams for his help on [this](http://stackoverflow.com/questions/33347825/jquery-ui-dialog-in-a-userscript-for-greasemonkey-missing-close-button) i.e. [this](http://stackoverflow.com/a/25468298/3231411), and  
 - johnp for modifying my code thus offering [v4](http://forums.mozillazine.org/viewtopic.php?p=14397041#p14397041) and [v4.1](http://forums.mozillazine.org/viewtopic.php?p=14397041#p14397041) that is [here](http://pastebin.com/5LwQUsLF). Your contribution is most appreciated!  
-
-[Hosted in GitHub](https://github.com/darkred/Userscripts)

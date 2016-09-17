@@ -11,5 +11,3 @@ so, in this way, it shows the bugs for which patches have landed in the given in
   
   
 [![](https://i.imgur.com/SbqOUemh.jpg)](https://i.imgur.com/SbqOUem.jpg)  
-
-[Hosted in GitHub](https://github.com/darkred/Userscripts)
