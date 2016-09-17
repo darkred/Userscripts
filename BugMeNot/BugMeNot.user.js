@@ -1,11 +1,11 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred
 // @description It integrates BugMeNot into any login form  (it retrieves all matching logins from bugmenot.com and autofills the login form)
 // @include     http://*
 // @include     https://*
-// @exclude     *bugmenot*
+// @exclude     http://bugmenot.com/*
 // @version     2016.09.17.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
