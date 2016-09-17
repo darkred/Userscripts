@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.17
+// @version     2016.09.17.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -384,7 +384,7 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 					for (var j = 0; j < allUsernamesArray.length; j++){
 						temp += (j + 1) + ': ' + allUsernamesArray[j] + ', ' + allPasswordsArray[j] + '\n';
 					}
-					console.log(allUsernamesArray.length + ' found logins:\n' + temp);
+					console.log('Found logins (' + allUsernamesArray.length + '):\n' + temp);
 
 
 					GM_setValue('allUsernames', JSON.stringify(allUsernamesArray));
@@ -420,7 +420,7 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 		for (var j = 0; j < retrievedUsernames.length; j++){
 			temp += (j + 1) + ': ' + retrievedUsernames[j] + ', ' + retrievedPasswords[j] + '\n';
 		}
-		console.log(retrievedUsernames.length + ' stored logins:\n' + temp);
+		console.log('Found logins (' + retrievedUsernames.length + '):\n' + temp);
 
 
 
