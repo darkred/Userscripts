@@ -12,4 +12,6 @@ The filters list appears just below the `#sidebar-forum` element (i.e. on the le
 *<u>Note</u>: you may uncomment line 42 (and comment out line 43), in order the filtered styles to be highlighted khaki -instead of hiding them- so that you can check which styles have been filtered.*  
 
 This is a modified version of this script: [userscripts.org Bullshit Filter](http://userscripts-mirror.org/scripts/show/97145) (by kuehlschrank).  
-Thanks a lot to kuehlschrank for making another great script.
+Thanks a lot to kuehlschrank for making another great script.  
+  
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

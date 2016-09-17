@@ -7,3 +7,5 @@ where 3 is the unread notifications count and (1) the default unread tweets coun
 Since v3 using the excellent library [arrive.js](https://github.com/uzairfarooq/arrive)  
 
 Thanks a lot to wOxxOm for his valuable help in [here](https://greasyfork.org/en/forum/discussion/3765/twitter-to-include-the-unread-notifications-count-in-the-tab-title).  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

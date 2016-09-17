@@ -12,4 +12,6 @@ i.e. it applies in these 3 cases:
 - when attempting to submit a new comment (while having focus in the new comment textarea) via <kbd>Ctrl+Enter</kbd>
 
 <br>
-Thanks to trespassersW for his help [here](https://greasyfork.org/en/forum/discussion/comment/25063/#Comment_25063).
+Thanks to trespassersW for his help [here](https://greasyfork.org/en/forum/discussion/comment/25063/#Comment_25063).  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

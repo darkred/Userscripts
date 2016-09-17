@@ -9,3 +9,5 @@ GitHub page: https://github.com/pklauzinski/jscroll
 Thanks a lot to jScroll's developer, Philip Klauzinski,  
 for essentially making this script himself, ([the initial version](https://github.com/pklauzinski/jscroll/issues/58), i.e. for subreddits only),  
 as well as wOxxOm for his help [here](https://greasyfork.org/en/forum/discussion/comment/16349#Comment_16349).  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

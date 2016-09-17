@@ -11,4 +11,6 @@ This is a modified version of this script [Markdown toolbar for GreasyFork and U
 Thanks a lot to wOxxOm for making that script.
 
 
-![screenshot](https://greasyfork.org/system/screenshots/screenshots/000/002/244/original/2015-10-15_163149.jpg?1444915978)
+![screenshot](https://greasyfork.org/system/screenshots/screenshots/000/002/244/original/2015-10-15_163149.jpg?1444915978)  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

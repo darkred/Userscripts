@@ -5,5 +5,6 @@ It adds 2 keyboard shortcuts in bugzilla.mozilla.org to reveal:
 
 *(press again to restore the initial display way, i.e. only the bug numbers).*
 
-<br>
-*It uses [Keypress](https://github.com/dmauro/Keypress/) keyboard input capturing utility.*
+*It uses [Keypress](https://github.com/dmauro/Keypress/) keyboard input capturing utility.*  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

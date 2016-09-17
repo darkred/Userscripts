@@ -11,4 +11,6 @@ The filters list appears just below the "Announcements" table (i.e. on the right
 *<u>Note</u>: you may uncomment line 37 (and comment out line 38), in order the filtered scripts to be highlighted khaki -instead of hiding them- so that you can check which scripts have been filtered.*  
 
 This is a modified version of this script: [userscripts.org Bullshit Filter](http://userscripts-mirror.org/scripts/show/97145) (by kuehlschrank).  
-Thanks a lot to kuehlschrank for making another great script.
+Thanks a lot to kuehlschrank for making another great script.  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

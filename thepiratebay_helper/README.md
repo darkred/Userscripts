@@ -24,7 +24,9 @@ to toggle highlight/hide *(and this is reflected in GM_config too)*.
 
 
 
-Thanks to emptyparad0x for making a very useful script!
+Thanks to emptyparad0x for making a very useful script!  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)
 
 
 ---

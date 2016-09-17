@@ -13,4 +13,6 @@ During this procedure, you may open the Web Console (Ctrl+Shift+K) to monitor pr
 
 v1.1 Now, a spinning icon appears at the end of each bug link during the title request procedure:  
 During the request :  ![](https://i.imgur.com/pQVnJyI.jpg)  
-After appending title:  ![](https://i.imgur.com/9MwgmlB.jpg)
+After appending title:  ![](https://i.imgur.com/9MwgmlB.jpg)  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)

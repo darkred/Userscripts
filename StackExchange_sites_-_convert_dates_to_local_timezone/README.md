@@ -22,3 +22,5 @@ Known issues:
 
 Relative post I made in stackapps.com  
 [Here's a script to convert dates to local timezone in Stack Exchange sites](http://stackapps.com/questions/6711/heres-a-script-to-convert-dates-to-local-timezone-in-stack-exchange-sites)  
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)
