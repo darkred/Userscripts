@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        StackExchange sites - convert dates to local timezone
 // @namespace   darkred
 // @match       *://*.stackoverflow.com/*

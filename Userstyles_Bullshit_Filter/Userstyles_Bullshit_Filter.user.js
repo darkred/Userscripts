@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Userstyles Bullshit Filter
 // @namespace   darkred
 // @author      kuehlschrank, darkred

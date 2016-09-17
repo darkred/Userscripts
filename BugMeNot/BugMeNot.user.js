@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        BugMeNot
 // @namespace   darkred
 // @authors     hosts, Matt McCarthy, darkred

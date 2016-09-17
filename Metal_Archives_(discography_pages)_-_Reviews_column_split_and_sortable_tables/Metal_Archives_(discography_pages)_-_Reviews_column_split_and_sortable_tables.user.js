@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Metal Archives (discography pages) - Reviews column split and sortable tables
 // @namespace   darkred
 // @author      darkred

@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        GitHub - Confirmations before submitting issues and comments
 // @namespace   darkred
 // @author      darkred

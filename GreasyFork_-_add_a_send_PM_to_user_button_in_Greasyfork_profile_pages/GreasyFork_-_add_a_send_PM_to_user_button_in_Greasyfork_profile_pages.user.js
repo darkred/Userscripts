@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages
 // @namespace   darkred
 // @description It adds a 'send PM to user' button in Greasyfork profile pages

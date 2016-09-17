@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Firefox for desktop - list fixed bugs in Mercurial as sortable table
 // @namespace   darkred
 // @authors     darkred, johnp

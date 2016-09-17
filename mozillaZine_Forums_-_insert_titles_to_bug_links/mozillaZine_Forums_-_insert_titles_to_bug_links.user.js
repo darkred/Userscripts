@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace   darkred
 // @author      darkred, johnp_

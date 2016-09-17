@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        GreasyFork - filter libraries in profiles
 // @namespace   darkred
 // @description Filters libraries in GreasyFork profiles

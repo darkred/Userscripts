@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        KAT - add APPROVE ALL and APPROVE SELECTED buttons to Feedback popup
 // @namespace   darkred
 // @author      darkred

@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative time
 // @namespace   darkred
 // @description Converts torrent upload timestamps to relative time

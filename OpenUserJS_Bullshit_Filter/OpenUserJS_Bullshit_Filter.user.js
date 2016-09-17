@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace   darkred
 // @author      kuehlschrank, darkred

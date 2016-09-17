@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Markdown toolbar for reddit.com
 // @namespace   darkred
 // @author      wOxxOm, darkred

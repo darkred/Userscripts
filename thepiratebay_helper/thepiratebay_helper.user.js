@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        thepiratebay helper
 // @namespace   darkred
 // @authors     emptyparad0x, darkred

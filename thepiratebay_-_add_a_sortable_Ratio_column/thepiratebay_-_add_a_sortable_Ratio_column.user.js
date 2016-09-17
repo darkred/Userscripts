@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        thepiratebay - add a sortable Ratio column
-// @namespace   darkred
+// @namespace 	darkred
 // @author      darkred
 // @description Adds a sortable "Ratio" column
 // @include     https://thepiratebay.se/search/*

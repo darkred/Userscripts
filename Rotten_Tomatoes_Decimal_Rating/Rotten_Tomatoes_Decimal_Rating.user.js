@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name          Rotten Tomatoes Decimal Rating
 // @author        wOxxOm
 // @description   Changes base-5 Rating of Rotten Tomatoes to base-10
