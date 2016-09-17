@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     *bugmenot*
-// @version     2016.09.16
+// @version     2016.09.17
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -110,8 +110,7 @@ function main() {
 }
 
 function getBmnWrapper(pwFieldIndex) {
-	return document.getElementById('reify-bugmenot-bmnWrapper' +
-	pwFieldIndex);
+	return document.getElementById('reify-bugmenot-bmnWrapper' + pwFieldIndex);
 }
 
 
@@ -294,11 +293,11 @@ function hideIfNoFocus(usernameField, pwField) {
 	return (function () {
 		var bUsernameFocus = usernameField.getAttribute('hasFocus');
 		if (typeof bUsernameFocus == 'string') {
-			bUsernameFocus = (bUsernameFocus && bUsernameFocus !== false);
+			bUsernameFocus = (bUsernameFocus && bUsernameFocus != 'false');
 		}
 		var bPasswordFocus = pwField.getAttribute('hasFocus');
 		if (typeof bPasswordFocus == 'string') {
-			bPasswordFocus = (bPasswordFocus && bPasswordFocus !== false);
+			bPasswordFocus = (bPasswordFocus && bPasswordFocus != 'false');
 		}
 		if ((!bUsernameFocus) && (!bPasswordFocus)) {
 			showHideBmnWrapper(usernameField, pwField, false);
@@ -381,9 +380,11 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 						allPasswordsArray.push(allPasswords[i].innerHTML);
 					}
 
+					var temp = '';
 					for (var j = 0; j < allUsernamesArray.length; j++){
-						console.log(allUsernamesArray[j] + ', ' + allPasswordsArray[j]);
+						temp += (j + 1) + ': ' + allUsernamesArray[j] + ', ' + allPasswordsArray[j] + '\n';
 					}
+					console.log(allUsernamesArray.length + ' found logins:\n' + temp);
 
 
 					GM_setValue('allUsernames', JSON.stringify(allUsernamesArray));
@@ -415,9 +416,13 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 		retrievedUsernames = JSON.parse(GM_getValue('allUsernames'));
 		retrievedPasswords = JSON.parse(GM_getValue('allPasswords'));
 
+		var temp = '';
 		for (var j = 0; j < retrievedUsernames.length; j++){
-			console.log(retrievedUsernames[j] + ', ' + retrievedPasswords[j]);
+			temp += (j + 1) + ': ' + retrievedUsernames[j] + ', ' + retrievedPasswords[j] + '\n';
 		}
+		console.log(retrievedUsernames.length + ' stored logins:\n' + temp);
+
+
 
 		usernameField.value = retrievedUsernames[counter];
 		pwField.value = retrievedPasswords[counter];
