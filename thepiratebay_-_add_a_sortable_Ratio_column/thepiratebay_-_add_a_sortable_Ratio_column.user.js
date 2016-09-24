@@ -1,10 +1,16 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        thepiratebay - add a sortable Ratio column
-// @namespace 	darkred
+// @namespace   darkred
 // @author      darkred
 // @description Adds a sortable "Ratio" column
-// @include     https://thepiratebay.se/search/*
-// @version     1.2
+// @include     https://thepiratebay.org/search/*
+// @include     https://thepiratebay.org/browse/*
+// @include     https://thepiratebay.org/recent
+// @include     https://thepiratebay.org/user/*
+// @include     https://thepiratebay.org/tv/
+// @include     https://thepiratebay.org/music
+// @include     https://thepiratebay.org/top
+// @version     1.2.1
 // @grant       none
 // @require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
