@@ -3,9 +3,10 @@
 // @namespace   darkred
 // @description Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
 // @include     https://bugzilla.mozilla.org/show_bug.cgi?id=*
-// @version     1.2
+// @version     1.3
 // @grant       none
-// @require     http://code.jquery.com/ui/1.11.4/jquery-ui.min.js
+// @require		https://code.jquery.com/jquery-3.1.1.min.js
+// @require 	https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
 // ==/UserScript==
 
@@ -15,46 +16,59 @@
 
 var flag1 = 1;
 var listener1 = new window.keypress.Listener();
-var depends, blocks, combined;
-var seealso;
-var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
+var listener2 = new window.keypress.Listener();
+var depends, blocks, combinedRefs, seeAlsoRefs, duplicatesRefs;
+
+var combinedInners = [], seeAlsoInners = [], duplicatesInners = [];
 
 listener1.simple_combo('`', function() {
 	// console.log('You pressed `');
+
 	depends = $('#dependson_input_area  ~ .bz_bug_link');
 	blocks = $('#blocked_input_area ~ .bz_bug_link');
-	combined = [].concat(Array.prototype.slice.call(depends), Array.prototype.slice.call(blocks));
+	combinedRefs = depends.add(blocks);
 
-	seealso = $('.bug_urls > li > a');
+	seeAlsoRefs = $('.bug_urls > li > a');
 
 	if (flag1 === 1) {
 		flag1 = 0;
-		for (var i = 0; i < combined.length; i++) {
-			combined[i].innerHTML = '(' + combined[i].innerHTML + ')  ' + combined[i].title;
-			combined[i].outerHTML += '<br/>';
-		}
-		for (var z = 0; z < seealso.length; z++) {
-			seealso[z].innerHTML = '(' + seealso[z].innerHTML + ')  ' + seealso[z].title;
-		}
+
+		$(window).scrollTo('#field_label_see_also');
+
+		$.each(combinedRefs, function(index, val) {	combinedInners[index] = combinedRefs[index].innerHTML;});
+		$.each(seeAlsoRefs, function(index, val) {	seeAlsoInners[index] = seeAlsoRefs[index].innerHTML; });
+
+		$.each(combinedRefs, function(index, val) {
+			combinedRefs[index].innerHTML = '(' + combinedRefs[index].innerHTML + ')  ' + combinedRefs[index].title;
+			combinedRefs[index].outerHTML += '<br/>';
+		});
+
+		$.each(seeAlsoRefs, function(index, val) {
+			seeAlsoRefs[index].innerHTML = '(' + seeAlsoRefs[index].innerHTML + ')  ' + seeAlsoRefs[index].title;
+			combinedRefs[index].outerHTML += '<br/>';
+		});
+
+
 	} else {
 		if (flag1 === 0) {
 			flag1 = 1;
-			for (var j = 0; j < combined.length; j++) {
-				if (regex.test(combined[j].href)){
-					combined[j].innerHTML = combined[j].href.match(regex)[1];
-				}
-			}
+
+			$.each(combinedRefs, function(index, val) {	combinedRefs[index].innerHTML = combinedInners[index]; });
+
 			var dependsNL = $('#dependson_input_area  ~ .bz_bug_link ~ br');
 			var blocksNL = $('#blocked_input_area ~ .bz_bug_link  ~ br');
-			var combinedNL = [].concat(Array.prototype.slice.call(dependsNL), Array.prototype.slice.call(blocksNL));
-			for (var k = (combinedNL.length) - 1; k >= 0; k -= 1) {
-				combinedNL[k].remove();
+
+			var combinedNL = dependsNL.add(blocksNL);
+			for (let m = (combinedNL.length) - 1; m >= 0; m -= 1) {
+				combinedNL[m].remove();
 			}
-			for (var w = 0; w < seealso.length; w++) {
-				seealso[w].innerHTML = seealso[w].href.match(regex)[1];
-			}
+
+			$.each(seeAlsoRefs, function(index, val) {	seeAlsoRefs[index].innerHTML = seeAlsoInners[index]; });
 		}
-		document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+		// document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+		// window.scrollTo(0, 0);
+		// document.querySelector('html').scrollIntoView();
+		$(window).scrollTo('#field_label_see_also');
 	}
 });
 
@@ -65,32 +79,39 @@ listener1.simple_combo('`', function() {
 // Case 2: when you press ~ (in order to toggle Duplicates)
 
 var flag2 = 1;
-var listener2 = new window.keypress.Listener();
-var duplicates;
 
 listener2.simple_combo('~', function() {
 	// console.log('You pressed ~');
 
-	duplicates = $('#duplicates > .bz_bug_link');
+	duplicatesRefs = $('#duplicates > .bz_bug_link');
 
 	if (flag2 === 1) {
 		flag2 = 0;
-		for (var i = 0; i < duplicates.length; i++) {
-			duplicates[i].innerHTML = '(' + duplicates[i].innerHTML + ')  ' + duplicates[i].title;
-			duplicates[i].outerHTML += '<br/>';
-		}
+
+		$(window).scrollTo('#duplicates');
+
+		$.each(duplicatesRefs, function(index, val) {	duplicatesInners[index] = duplicatesRefs[index].innerHTML;});
+
+		$.each(duplicatesRefs, function(index, val) {
+			duplicatesRefs[index].innerHTML = '(' + duplicatesRefs[index].innerHTML + ')  ' + duplicatesRefs[index].title;
+			duplicatesRefs[index].outerHTML += '<br/>';
+		});
+
 	} else {
 		if (flag2 === 0) {
 			flag2 = 1;
-			for (var j = 0; j < duplicates.length; j++) {
-				duplicates[j].innerHTML = duplicates[j].href.match(regex)[1];
-			}
+
+			$.each(duplicatesRefs, function(index, val) {	duplicatesRefs[index].innerHTML = duplicatesInners[index]; });
+
 			var duplicatesNL = $('#duplicates > .bz_bug_link ~ br');
-			for (var k = (duplicatesNL.length) - 1; k >= 0; k -= 1) {
+			for (let k = (duplicatesNL.length) - 1; k >= 0; k -= 1) {
 				duplicatesNL[k].remove();
 			}
 		}
 
-		document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+		// document.body.scrollTop = document.documentElement.scrollTop = 0;           // scroll to the top of the page
+		// window.scrollTo(0, 0);
+		// document.querySelector('html').scrollIntoView();
+		$(window).scrollTo('#duplicates');
 	}
 });
