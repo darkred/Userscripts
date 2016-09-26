@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.5b
-// @date	    2016-08-31
+// @version     0.9.5c
+// @date	    2016-09-26
 // @require	    http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @require     https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
@@ -287,7 +287,8 @@ else {
 		function toggleHide() {
 			if (counter > 0) {
 				if (flagHide == true) {
-					$('table#searchResult tbody tr').each(function() {
+					// $('table#searchResult tbody tr').each(function() {
+					$(getAllTableLines()).each(function() {
 						$(this).children('td').show();
 					});
 					$('#TimeChangerConfig').nextAll().eq(1).html('<i>click here (or press `) to view only verified torrents</i>');
@@ -323,7 +324,14 @@ else {
 
 
 
+function getAllTableLines(){
+	if (  ($('#searchResult > TBODY > TR:last-child td a:last-child img').attr('alt') === 'Next')) {	// if there's a Next button, i.e. the search results are multi plage
+		return $('table#searchResult tbody tr').not('#searchResult > TBODY > TR:last-child');			// then ignore the last row of the table (the navigation links)
+	} else {
+		return $('table#searchResult tbody tr');
+	}
 
+}
 
 
 
@@ -336,7 +344,8 @@ else {
 function hideNonTrusted() {
 	// var total = 0;
 	// var counter = 0;
-	$('table#searchResult tbody tr').each(function() {
+	// $('table#searchResult tbody tr').each(function() {
+	$(getAllTableLines()).each(function() {
 		// total++;
 		if (($(this).html().indexOf('title="VIP"') > -1) ||
 			($(this).html().indexOf('title="Trusted"') > -1) ||
@@ -356,7 +365,8 @@ function hideNonTrusted() {
 
 function highlight() {
 
-	$('table#searchResult tbody tr').each(function() {
+	// $('table#searchResult tbody tr').each(function() {
+	$(getAllTableLines()).each(function() {
 		if ($(this).html().indexOf('title="VIP"') > -1) {
 			$(this).children('td').css({
 				'background-color': '#CFFECD'
