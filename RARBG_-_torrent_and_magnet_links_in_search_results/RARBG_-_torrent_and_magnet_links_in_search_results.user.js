@@ -4,11 +4,9 @@
 // @description Adds a column in search results for direct torrent or magnet link downloading
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
-// @version     1.1.3
+// @version     1.1.4
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
-// @grant       GM_getResourceURL
-// @resource    icon1 https://dyncdn.me/static/20/img/16x16/download.png
-// @resource    icon2 https://dyncdn.me/static/20/img/magnet.gif
+// @grant       none
 // ==/UserScript==
 
 
@@ -38,9 +36,9 @@ function addLinks(){
 		var title = arr2[index].firstChild.innerText;
 		var trackers = 'http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710';
 
-		arr1[index].innerHTML = '<a href="' + arr2[index].firstChild.href.replace('torrent/', 'download.php?id=') + '&f=' + arr2[index].firstChild.innerText + '-[rarbg.com].torrent">' + '<img src="'+ GM_getResourceURL('icon1') + '">' + '</>';
+		arr1[index].innerHTML = '<a href="' + arr2[index].firstChild.href.replace('torrent/', 'download.php?id=') + '&f=' + arr2[index].firstChild.innerText + '-[rarbg.com].torrent"><img src="https://dyncdn.me/static/20/img/16x16/download.png"">' + '</>';
 		if (hash !== undefined){
-			arr1[index].innerHTML += '&nbsp;<a href="magnet:?xt=urn:btih:' + hash + '&dn=' + title + '&tr=' + trackers + ' ">' + '<img src="'+ GM_getResourceURL('icon2') + '">' + '</>';
+			arr1[index].innerHTML += '&nbsp;<a href="magnet:?xt=urn:btih:' + hash + '&dn=' + title + '&tr=' + trackers + ' "><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
 		} else {
 			arr1[index].innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;';
 		}
