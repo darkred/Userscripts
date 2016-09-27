@@ -4,7 +4,7 @@
 // @description Adds a column in search results for direct torrent or magnet link downloading
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
-// @version     1.1.1
+// @version     1.1.3
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
 // @grant       GM_getResourceURL
 // @resource    icon1 https://dyncdn.me/static/20/img/16x16/download.png
