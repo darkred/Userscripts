@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        RARBG - torrent and magnet links in search results
 // @namespace   darkred
 // @description Adds a column in search results for direct torrent or magnet link downloading
