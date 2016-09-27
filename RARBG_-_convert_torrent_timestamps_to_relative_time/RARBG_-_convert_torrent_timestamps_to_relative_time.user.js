@@ -2,8 +2,9 @@
 // @name        RARBG - convert torrent timestamps to relative time
 // @namespace   darkred
 // @description Converts torrent upload timestamps to relative time
-// @include     https://rarbg.to/torrents.php*
-// @version     2.0.1
+// @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
+// @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
+// @version     2.0.2
 // @grant       none
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js
