@@ -1,12 +1,13 @@
-﻿// ==UserScript==
-// @name        GreasyFork Bullshit Filter (compatible with Citrus GFork)
+// ==UserScript==
+// @name        GreasyFork Bullshit Filter - compatible with Citrus GFork
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     1.2
+// @version     1.3
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://greasyfork.org/*/scripts*
+// @run-at      document-idle
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
@@ -14,7 +15,7 @@
 (function() {
 	var filters = {
 		'Games': /AntiGame|Agar|agar.io|ExtencionRipXChetoMalo|AposBot|DFxLite|ZTx-Lite|AposFeedingBot|AposLoader|Blah Blah|Orc Clan Script|Astro\s*Empires|^\s*Attack|^\s*Battle|BiteFight|Blood\s*Wars|Bots|Bots4|Brawler|\bBvS\b|Business\s*Tycoon|Castle\s*Age|City\s*Ville|Comunio|Conquer\s*Club|CosmoPulse|Dark\s*Orbit|Dead\s*Frontier|Diep\.io|\bDOA\b|Dossergame|Dragons\s*of\s*Atlantis|Dugout|\bDS[a-z]+\n|Empire\s*Board|eRep(ublik)?|Epic.*War|ExoPlanet|Falcon Tools|Feuerwache|Farming|FarmVille|Fightinfo|Frontier\s*Ville|Ghost\s*Trapper|Gladiatus|Goalline|Gondal|Grepolis|Hobopolis|\bhwm(\b|_)|Ikariam|\bIT2\b|Jellyneo|Kapi\s*Hospital|Kings\s*Age|Kingdoms?\s*of|knastv(ö|oe)gel|Knight\s*Fight|\b(Power)?KoC(Atta?ck)?\b|\bKOL\b|Kongregate|Last\s*Emperor|Legends?\s*of|Light\s*Rising|Lockerz|\bLoU\b|Mafia\s*(Wars|Mofo)|Menelgame|Mob\s*Wars|Mouse\s*Hunt|Molehill\s*Empire|NeoQuest|MyFreeFarm|Neopets|Nemexia|\bOGame\b|Ogar(io)?|Pardus|Pennergame|Pigskin\s*Empire|PlayerScripts|Popmundo|Po?we?r\s*(Bot|Tools)|PsicoTSI|Ravenwood|Schulterglatze|slither\.io|SpaceWars|\bSW_[a-z]+\n|\bSnP\b|The\s*Crims|The\s*West|Travian|Treasure\s*Isl(and|e)|Tribal\s*Wars|TW.?PRO|Vampire\s*Wars|War\s*of\s*Ninja|West\s*Wars|\bWoD\b|World\s*of\s*Dungeons|wtf\s*battles|Wurzelimperium/i,
-		'Social Networks': /Face\s*book|Google(\+| Plus)|\bHabbo|Kaskus|\bLepra|Leprosorium|MySpace|meinVZ|odnoklassniki|Одноклассники|Orkut|sch(ue|ü)ler(VZ|\.cc)?|studiVZ|Unfriend|Valenth|vkontakte|ВКонтакте|Qzone|Twitter|TweetDeck/i,
+		'Social Networks': /Face\s*book|Google(\+| Plus)|\bHabbo|Kaskus|\bLepra|Leprosorium|MySpace|meinVZ|odnoklassniki|Одноклассники|Orkut|sch(ue|ü)ler(VZ|\.cc)?|studiVZ|Unfriend|Valenth|VK|vkontakte|ВКонтакте|Qzone|Twitter|TweetDeck/i,
 		'Non-ASCII':/[^\x00-\x7F\s]+/i,
 		'Clutter':/^\s*(.{1,3})\1+\n|^\s*(.+?)\n+\2\n*$|^\s*.{1,5}\n|do\s*n('|o)?t (install|download)|nicht installieren|just(\s*a)?\s*test|^\s*.{0,4}test.{0,4}\n|\ntest(ing)?\s*|^\s*(\{@|Smolka|Hacks)|\[\d{4,5}\]|free\s*download/i
 	};
@@ -27,34 +28,68 @@
 	filterScripts();
 	insertSwitches();
 
-	var flag;
-	// ADD A NEWLINE AT THE END OF EACH FILTER
-	if (document.querySelector('.filter-status').parentNode.childNodes[5].childNodes[0].innerHTML == 'Games' ) {
-		flag = 5; }
-	else {flag = 9;}
-	for (var i=0; i<4; i++){
-		document.querySelector('.filter-status').parentNode.childNodes[flag].childNodes[i].innerHTML += '<br>';
-	}
-
-	// Note: you may uncomment line 41 and comment out line 42, in order the filtered scripts to be highlighted yellow -instead of hiding them- so that you can check which scripts have been filtered
+	// Note: you may uncomment line 37-81 and comment out line 36, in order the filtered scripts to be highlighted red -instead of hiding them- so that you can check which scripts have been filtered
 	function insertStyle() {
 		var style = document.createElement('style');
-		// NOT WORKING ---> style.textContent = 'tr.filtered { background-color:yellow !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333 } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
-		// WORKING  ------> style.textContent = 'tr.filtered { color: red !important;              } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333 } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
-		style.textContent = 'tr.filtered { display:none !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:inline; } .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:blue; color:#333333 } a.filter-off { background-color:#A4A1A1; color:#333333 }  ';
+		// style.textContent = 'tr.filtered > td:nth-child(2)  {background-color:red !important;} .filter-status {margin-left:6px; position:fixed; top:-moz-calc(0%); left:-moz-calc(13.5%)} .filter-switches {display:none; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
+		style.textContent = '   tr.filtered {									\
+									display: none !important;					\
+								}												\
+								.filter-status {								\
+									margin-left: 6px;							\
+									position: fixed;							\
+									top: -moz-calc(0%);							\
+									left: -moz-calc(13.5%);						\
+								}												\
+								.filter-switches {								\
+									display: none;								\
+									position: fixed;							\
+									top: -moz-calc(2.5%);						\
+									left: -moz-calc(14%);						\
+								}												\
+								*:hover > .filter-switches {					\
+									display: block !important;					\
+									position: fixed;							\
+									top: -moz-calc(2.5%);						\
+									left: -moz-calc(14%);						\
+								}												\
+								.filter-on,										\
+								.filter-off {									\
+									display: block !important;					\
+									width: 105px;								\
+								}												\
+								}												\
+								.filter-switches a {							\
+									text-decoration: none !important;			\
+									color: inherit;								\
+									cursor: pointer;							\
+								}												\
+								.filter-switches a {							\
+									margin-left: 8px;							\
+									padding: 0 4px;								\
+								}												\
+								a.filter-on {									\
+									background-color: #ea6e6e;					\
+									color: #333333;								\
+									text-decoration: line-through !important	\
+								}												\
+								a.filter-off {									\
+									background-color: #6da46b;					\
+									color: #333333;								\
+		}';
 		style.type = 'text/css';
 		document.querySelector('head').appendChild(style);
 	}
+
 	function insertStatus() {
-		var p = document.querySelector('div.width-constraint:nth-child(1)');
-//         var p = document.querySelector('#main-header');
+		var p = document.querySelector('#main-header');
 		if(p) {
 			var status = document.createElement('span');
 			status.className = 'filter-status';
 			p.appendChild(status);
 		}
-		p.innerHTML += '<br>';        // ADDS A NEWLINE AT THE END OF THE 'STATUS' ENTRY
 	}
+
 	function filterScripts() {
 		var activeFilters = [];
 		for(var filter in filters) {
@@ -62,11 +97,15 @@
 				activeFilters.push(filters[filter]);
 			}
 		}
-		var nodes = document.querySelectorAll('tr > td > div.thetitle'), numActiveFilters = activeFilters.length, numFiltered = 0;
+		var nodes = document.querySelectorAll('tbody > tr > td > div.thetitle'),
+			numActiveFilters = activeFilters.length,
+			numFiltered = 0;
 		for(var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
 			td.parentNode.parentNode.className = '';
 			for(var j = 0; j < numActiveFilters; j++) {
-				if(td.parentNode.childNodes[1].textContent.match(activeFilters[j])) {
+				// if(td.parentNode.textContent.match(activeFilters[j])) {
+				var temp = td.parentNode.firstChild.textContent + ' ' + td.parentNode.lastChild.textContent;
+				if(temp.match(activeFilters[j])) {
 					td.parentNode.parentNode.className = 'filtered';
 					numFiltered++;
 					break;
@@ -74,8 +113,9 @@
 			}
 		}
 
-		document.querySelector('.filter-status').textContent = document.querySelectorAll('tr').length-1-numFiltered + ' scripts (' + numFiltered + ' filtered)';
+		document.querySelector('.filter-status').textContent = (document.querySelectorAll('tbody > tr > td > div.thetitle').length - numFiltered) + ' scripts (' + numFiltered + ' filtered)';
 	}
+
 	function insertSwitches() {
 		var span = document.createElement('span');
 		span.className = 'filter-switches';
@@ -86,6 +126,7 @@
 		}
 		document.querySelector('.filter-status').parentNode.appendChild(span);
 	}
+
 	function createSwitch(label, isOn) {
 		var a = document.createElement('a');
 		a.className = isOn ? 'filter-on' : 'filter-off';
@@ -103,9 +144,11 @@
 		}, false);
 		return a;
 	}
+
 	function my_GM_setValue(name, value) {
 		localStorage.setItem(name, value);
 	}
+
 	function my_GM_getValue(name, defaultValue) {
 		var value;
 		if (!(value = localStorage.getItem(name))) {
@@ -113,4 +156,5 @@
 		}
 		return value;
 	}
+
 })();
