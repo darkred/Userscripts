@@ -13,7 +13,7 @@ Thanks a lot to kuehlschrank for making another great script.
 
 
  <u>Screen capture:</u>  
- ![](https://i.imgur.com/J1aYPlq.gif)
+ ![](http://i.imgur.com/Qc84iHc.gif)
 
 
 
