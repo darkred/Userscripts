@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        Metal Archives - group together entries for the same album in the Reviews section
 // @namespace   darkred
+// @description Groups together entries for the same album in the Reviews section
 // @include     http://www.metal-archives.com/review/browse*
 // @version     1
 // @grant       GM_addStyle
