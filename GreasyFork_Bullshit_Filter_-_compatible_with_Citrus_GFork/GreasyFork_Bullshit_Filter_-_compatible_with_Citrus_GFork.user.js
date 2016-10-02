@@ -33,51 +33,51 @@
 	function insertStyle() {
 		var style = document.createElement('style');
 		// style.textContent = 'tr.filtered > td:nth-child(2)  {background-color:red !important;} .filter-status {margin-left:6px; position:fixed; top:-moz-calc(0%); left:-moz-calc(13.5%)} .filter-switches {display:none; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
-		style.textContent = '   tr.filtered {									\
-									display: none !important;					\
-								}												\
-								.filter-status {								\
-									margin-left: 6px;							\
-									position: fixed;							\
-									top: -moz-calc(0%);							\
-									left: -moz-calc(13.5%);						\
-								}												\
-								.filter-switches {								\
-									display: none;								\
-									position: fixed;							\
-									top: -moz-calc(2.5%);						\
-									left: -moz-calc(14%);						\
-								}												\
-								*:hover > .filter-switches {					\
-									display: block !important;					\
-									position: fixed;							\
-									top: -moz-calc(2.5%);						\
-									left: -moz-calc(14%);						\
-								}												\
-								.filter-on,										\
-								.filter-off {									\
-									display: block !important;					\
-									width: 105px;								\
-								}												\
-								}												\
-								.filter-switches a {							\
-									text-decoration: none !important;			\
-									color: inherit;								\
-									cursor: pointer;							\
-								}												\
-								.filter-switches a {							\
-									margin-left: 8px;							\
-									padding: 0 4px;								\
-								}												\
-								a.filter-on {									\
-									background-color: #ea6e6e;					\
-									color: #333333;								\
-									text-decoration: line-through !important	\
-								}												\
-								a.filter-off {									\
-									background-color: #6da46b;					\
-									color: #333333;								\
-		}';
+		style.textContent = `   tr.filtered {
+									display: none !important;
+								}
+								.filter-status {
+									margin-left: 6px;
+									position: fixed;
+									top: -moz-calc(0%);
+									left: -moz-calc(13.5%);
+								}
+								.filter-switches {
+									display: none;
+									position: fixed;
+									top: -moz-calc(2.5%);
+									left: -moz-calc(14%);
+								}
+								*:hover > .filter-switches {
+									display: block !important;
+									position: fixed;
+									top: -moz-calc(2.5%);
+									left: -moz-calc(14%);
+								}
+								.filter-on,
+								.filter-off {
+									display: block !important;
+									width: 105px;
+								}
+								}
+								.filter-switches a {
+									text-decoration: none !important;
+									color: inherit;
+									cursor: pointer;
+								}
+								.filter-switches a {
+									margin-left: 8px;
+									padding: 0 4px;
+								}
+								a.filter-on {
+									background-color: #ea6e6e;
+									color: #333333;
+									text-decoration: line-through !important
+								}
+								a.filter-off {
+									background-color: #6da46b;
+									color: #333333;
+		}`;
 		style.type = 'text/css';
 		document.querySelector('head').appendChild(style);
 	}
