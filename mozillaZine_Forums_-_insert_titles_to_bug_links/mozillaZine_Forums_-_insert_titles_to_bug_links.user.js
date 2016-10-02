@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace   darkred
 // @author      darkred, johnp_
@@ -38,7 +38,7 @@ for (let i = 0; i < len; i++) {
 	let n = links[i].href.match(regex);
 	let n2 = links[i].innerHTML;
 	if (n !== null &&
-		n2.match(/#[0-9]*/) === null &&
+		n2.match(/^#[0-9]*/) === null &&
 		n2.indexOf('-') === -1) {
 		let id = parseInt(n[1]);
 		if (bugIds.indexOf(id) === -1) {
