@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        RARBG - torrent and magnet links in search results
+// @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @description Adds a column in search results for direct torrent or magnet link downloading
+// @description Adds a column with torrent and magnet links in RARBG lists
 // @include     /^(https?:)?\/\/(www\.)?rarbg\.(to|com)\/(torrents\.php.*|catalog\/.*|top10)$/
 // @version     1.1.5
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
