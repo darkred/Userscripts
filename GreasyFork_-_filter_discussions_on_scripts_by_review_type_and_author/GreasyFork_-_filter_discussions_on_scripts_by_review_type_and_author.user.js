@@ -1,20 +1,24 @@
 // ==UserScript==
 // @name        GreasyFork - filter discussions on scripts by review type and author
 // @namespace   darkred
-// @description Filter discussions on scripts by review type and author
-// @include     https://greasyfork.org/en/scripts/*/feedback
+// @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
+// @include     https://greasyfork.org/en/scripts/*/feedback*
 // @include     https://greasyfork.org/en/users/*
-// @version     1
+// @version     2
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
+// @grant       GM_getResourceText
+// @resource    jquery-ui.css  http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
+// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.js
 //    This is partially based on this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
 
 
 
+// the list of discussion authors
 
 
 var allAuthorsRefs = $('#discussions > li > a:nth-child(2), #user-discussions-on-scripts-written > ul > li  a:nth-child(3)');
@@ -42,15 +46,17 @@ var filters = {
 
 
 
+
 // -----------------------------------------------------------------------------------------------------------------------
 
-
+// the filter buttons
 
 
 
 function insertStyle() {
 	var style = document.createElement('style');
-	style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: fixed; top: 209px; right: 272px; } .filter-switches { display:initial; position: fixed; top: 240px; left:  -moz-calc(79%);	background: white; right: 287px; } *:hover > .filter-switches { display:block !important; position: fixed; top: 240px; background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+	// style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: fixed; top: 209px; right: 272px; } .filter-switches { display:initial; position: fixed; top: 240px; left:  -moz-calc(79%);	background: white; right: 287px; } *:hover > .filter-switches { display:block !important; position: fixed; top: 240px; background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+	style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: fixed; top: -moz-calc(24%); left: -moz-calc(77%) } .filter-switches { display:initial; position: fixed; top: -moz-calc(26.5%); left: -moz-calc(78%);	background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
 	style.type = 'text/css';
 	document.querySelector('head').appendChild(style);
 }
@@ -213,7 +219,7 @@ observer.observe(target, config);
 
 // -----------------------------------------------------------------------------------------------------------------------
 
-
+// the hoverable dropdown menu
 
 
 
@@ -235,59 +241,69 @@ parentElement.insertBefore(div, theFirstChild);
 
 
 // the two last properties (height and oveerflow) ware adeed to the dropdown menu
-GM_addStyle('																								\
-																											\
- /* Dropdown Button */																						\
-.dropbtn {																									\
-    background-color: #4CAF50;																				\
-    color: white;																							\
-    padding: 16px;																							\
-    font-size: 16px;																						\
-    border: none;																							\
-    cursor: pointer;																						\
-}																											\
-																											\
-/* The container <div> - needed to position the dropdown content */											\
-.dropdown {																									\
-    position: relative;																						\
-    display: inline-block;																					\
-	position: fixed;				/* extra */																\
-    left:  -moz-calc(86%);			/* extra */																\
-	top: 240px;						/* extra */																\
-}																											\
-																											\
-/* Dropdown Content (Hidden by Default) */																	\
-.dropdown-content {																							\
-    display: none;																							\
-    position: absolute;																						\
-    background-color: #f9f9f9;																				\
-    min-width: 160px;																						\
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);															\
-    height: 400px;																							\
-    width: -moz-max-content;	/* extra */																	\
-    overflow: auto;																							\
-}																											\
-																											\
-/* Links inside the dropdown */																				\
-.dropdown-content a {																						\
-    color: black;																							\
- /* padding: 12px 16px;	*/																					\
-    text-decoration: none;																					\
-    display: block;																							\
-}																											\
-																											\
-/* Change color of dropdown links on hover */																\
-.dropdown-content a:hover {background-color: #f1f1f1}														\
-																											\
-/* Show the dropdown menu on hover */																		\
-.dropdown:hover .dropdown-content {																			\
-    display: block;																							\
-}																											\
-																											\
-/* Change the background color of the dropdown button when the dropdown content is shown */					\
-.dropdown:hover .dropbtn {																					\
-    background-color: #3e8e41;																				\
-}');
+GM_addStyle(`
+
+ /* Dropdown Button */
+.dropbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	position: fixed !important;
+	display: inline-block;
+	top: -moz-calc(30%);			/* extra */
+	left:  -moz-calc(86%);			/* extra */
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	height: 400px;
+	width: -moz-max-content;	/* extra */
+	overflow: auto;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+	color: black;
+ /* padding: 12px 16px;	*/
+	text-decoration: none;
+	display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+	background-color: #3e8e41;
+}
+
+div.ui-widget {
+	position: fixed !important;
+	display: inline-block;
+	position: fixed;
+	top: -moz-calc(24.2%);
+	left: -moz-calc(86%);
+}
+
+
+`);
 
 
 
@@ -345,3 +361,77 @@ function showOnly(author){
 var newScript = document.createElement('script');
 newScript.innerHTML = myF;
 document.body.appendChild(newScript);
+
+
+
+// --------------------------------------------------------------------------------------
+
+// the autocomplete searchbox
+
+
+
+
+var cssTxt  = GM_getResourceText ('jquery-ui.css');
+
+GM_addStyle (cssTxt);
+
+
+
+
+
+$('.dropdown').before(`
+<div class="ui-widget">
+<form id="myform">
+	<label for="authors">Enter an author:</label>
+	<input type="text" id="authors" name="valueId" /></p>
+</form>
+</div>
+	`);
+
+
+
+
+// allAuthorsUnique.sort();										// sort array case sensitive
+
+allAuthorsUnique.sort(function (a, b) {							// sort array case insensitive
+	return a.toLowerCase().localeCompare(b.toLowerCase());
+});
+
+
+
+$( `#authors` ).autocomplete({source: allAuthorsUnique });
+
+
+
+$('#myform').on('submit', function(e){
+	e.preventDefault();
+	showOnly($('#authors').val());
+});
+
+
+
+function showOnly(author){
+	$('.dropbtn').html('Filter by author (All)');
+	if (author === 'All'){
+		document.querySelector('.dropbtn').innerHTML = 'Filter by author (All)';
+		var a = '#discussions > li > a:nth-child(2), #user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
+		$(a).parent().show();
+
+		let nodes = $('#discussions > li, .discussion-list > li');
+		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
+		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
+		return;
+	} else {
+		$('.dropbtn').html('Filter by author (' + author + ')');
+		a = '#discussions > li > a:nth-child(2), #user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
+		$(a).parent().show();
+		a = '#discussions > li > a:nth-child(2)';
+		$(a).not(a + ':contains("' + author + '")' ).parent().hide();
+		a = '#user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
+		$(a).not(a + ':contains("' + author + '")' ).parent().hide();
+
+		let nodes = $('#discussions > li, .discussion-list > li');
+		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
+		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
+	}
+}
