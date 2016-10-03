@@ -3,11 +3,13 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     1.2.2
+// @version     1.2.3
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
-// @include     https://greasyfork.org/*/scripts*
-// @exclude     https://greasyfork.org/*/scripts/*/feedback*
+// @include     https://greasyfork.org/*/scripts
+// @include     https://greasyfork.org/*/scripts?page=*
+// @include     https://greasyfork.org/*/scripts?per_page=*
+// @include     https://greasyfork.org/*/scripts/search?*
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
@@ -61,7 +63,7 @@
 		for (var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
 			td.parentNode.className = '';
 			for (var j = 0; j < numActiveFilters; j++) {
-				if (td.textContent.match(activeFilters[j])) {
+				if (td.innerText.match(activeFilters[j])) {
 					td.parentNode.className = 'filtered';
 					numFiltered++;
 					break;
