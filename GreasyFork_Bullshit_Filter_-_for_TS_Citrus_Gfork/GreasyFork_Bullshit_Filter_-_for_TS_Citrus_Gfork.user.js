@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
 // @namespace   darkred
 // @author      kuehlschrank, darkred
