@@ -2,9 +2,9 @@
 // @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages
 // @namespace   darkred
 // @description It adds a 'send PM to user' button in Greasyfork profile pages
-// @include     https://greasyfork.org/en/users/*
-// @include     https://greasyfork.org/en/forum/messages/add
-// @version     2015.12.23
+// @include     https://greasyfork.org/*/users/*
+// @include     https://greasyfork.org/*/forum/messages/add
+// @version     2016.10.03
 // @grant       GM_getResourceURL
 // @resource    icon http://i.imgur.com/ZU0xS0c.jpg
 // ==/UserScript==
