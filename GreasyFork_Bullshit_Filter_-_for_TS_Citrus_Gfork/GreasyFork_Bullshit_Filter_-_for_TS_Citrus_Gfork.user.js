@@ -1,13 +1,15 @@
 // ==UserScript==
-// @name        GreasyFork Bullshit Filter - compatible with Citrus GFork
+// @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @version     1.3
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
-// @include     https://greasyfork.org/*/scripts*
-// @exclude     https://greasyfork.org/*/scripts/*/feedback*
+// @include     https://greasyfork.org/*/scripts
+// @include     https://greasyfork.org/*/scripts?page=*
+// @include     https://greasyfork.org/*/scripts?per_page=*
+// @include     https://greasyfork.org/*/scripts/search?*
 // @run-at      document-idle
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
@@ -24,10 +26,30 @@
 		GM_getValue = my_GM_getValue;
 		GM_setValue = my_GM_setValue;
 	}
+
+
 	insertStyle();
 	insertStatus();
 	filterScripts();
 	insertSwitches();
+
+
+	var target = document.querySelector('#script-table > tbody:nth-child(2)');
+	var observer = new MutationObserver((mutations) => {
+		insertStyle();
+		insertStatus();
+		filterScripts();
+			insertSwitches();
+	}),
+		config = {
+			childList: true,
+			subtree: true,
+		};
+	observer.observe(target, config);
+
+
+
+
 
 	// Note: you may uncomment line 37-81 and comment out line 36, in order the filtered scripts to be highlighted red -instead of hiding them- so that you can check which scripts have been filtered
 	function insertStyle() {
@@ -105,7 +127,7 @@
 			td.parentNode.parentNode.className = '';
 			for(var j = 0; j < numActiveFilters; j++) {
 				// if(td.parentNode.textContent.match(activeFilters[j])) {
-				var temp = td.parentNode.firstChild.textContent + ' ' + td.parentNode.lastChild.textContent;
+				var temp = td.parentNode.firstChild.firstChild.textContent + ' ' + td.parentNode.lastChild.textContent;
 				if(temp.match(activeFilters[j])) {
 					td.parentNode.parentNode.className = 'filtered';
 					numFiltered++;
@@ -159,3 +181,8 @@
 	}
 
 })();
+
+
+
+
+
