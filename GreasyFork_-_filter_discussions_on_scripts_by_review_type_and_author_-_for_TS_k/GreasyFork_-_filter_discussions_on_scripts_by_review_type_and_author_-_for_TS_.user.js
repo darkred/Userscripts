@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        GreasyFork - filter discussions on scripts by review type and author - for TS Citrus Gfork
 // @namespace   darkred
 // @author      darkred
