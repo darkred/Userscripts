@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        GreasyFork - filter discussions on scripts by review type and author
 // @namespace   darkred
+// @author      darkred
 // @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
-// @include     https://greasyfork.org/en/scripts/*/feedback*
-// @include     https://greasyfork.org/en/users/*
-// @version     2
+// @include     https://greasyfork.org/*/scripts/*/feedback*
+// @include     https://greasyfork.org/*/users/*
+// @version     2.0.1
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -323,6 +324,11 @@ a += '</div></div>';
 
 div.innerHTML = a;
 
+
+var el = $('#myDropdown > a:nth-child(1)');
+$(el).click(function(event) {
+	document.querySelector('#authors').value = '';/* Act on the event */
+});
 
 
 
