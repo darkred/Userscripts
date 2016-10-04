@@ -1,10 +1,10 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Firefox for desktop - list fixed bugs in Mercurial
 // @namespace   darkred
 // @authors     darkred, johnp
 // @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @version     4.2
+// @version     4.2.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
@@ -69,7 +69,7 @@ time("MozillaMercurial-REST");
 $.getJSON(rest_url, function(data) {
   timeEnd("MozillaMercurial-REST");
   data.bugs.sort(function(a, b) {
-    return (a.product + ": " + a.component) > (b.product + ": " + b.component);
+    return (a.product + ": " + a.component + ": " + a.summary) > (b.product + ": " + b.component + ": " + b.summary);
   });
   $.each(data.bugs, function(index) {
     let bug = data.bugs[index];
