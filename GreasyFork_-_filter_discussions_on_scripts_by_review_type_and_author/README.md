@@ -21,3 +21,5 @@ It also works with [[TS] Citrus GFork](https://greasyfork.org/en/scripts/4336-ts
 
 
 *Tested in Greasemonkey.*
+
+[Hosted in GitHub](https://github.com/darkred/Userscripts)
