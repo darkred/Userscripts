@@ -2,17 +2,18 @@
 // @name        GreasyFork - filter discussions on scripts by review type and author
 // @namespace   darkred
 // @author      darkred
+// @contributor decembre
 // @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
 // @include     https://greasyfork.org/*/scripts/*/feedback*
 // @include     https://greasyfork.org/*/users/*
-// @version     2.0.1
+// @version     2.0.2
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_getResourceText
 // @resource    jquery-ui.css  http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
-// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.js
+// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 //    This is partially based on this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
@@ -67,7 +68,8 @@ function insertStyle() {
 
 
 function insertStatus() {
-	var p = document.querySelector('#script-content > h3:nth-child(1)')  || document.querySelector('#user-discussions-on-scripts-written > header:nth-child(1) > h3:nth-child(1)');		// --- > working on Script discussions
+	// CITRUS TWEAK (contribution of decembre)
+	var p = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#script-content > h3:first-of-type') || document.querySelector('#user-discussions-on-scripts-written > header:nth-child(1) > h3:nth-child(1)');		// --- > working on Script discussions
 	if (p) {
 		var status = document.createElement('span');
 		status.className = 'filter-status';
@@ -85,7 +87,8 @@ function insertSwitches() {
 			span.appendChild(createSwitch(filter, GM_getValue(filter, 'on') == 'on'));
 		}
 	}
-	var k = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#control-panel > header:nth-child(1) > h3:nth-child(1)');		// --- > working on script discussions
+	// CITRUS TWEAK (contribution of decembre)
+	var k = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#script-content > h3:first-of-type')  || document.querySelector('#control-panel > header:nth-child(1) > h3:nth-child(1)');		// --- > working on script discussions
 	k.appendChild(span);
 }
 
@@ -232,12 +235,11 @@ observer.observe(target, config);
 
 
 
-
-var parentElement = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#control-panel > header:nth-child(1) > h3:nth-child(1)');
+// CITRUS TWEAK (contribution of decembre)
+var parentElement = document.querySelector('#script-content > h3:nth-child(1)')  || document.querySelector('#script-content > h3:first-of-type') || document.querySelector('#control-panel > header:nth-child(1) > h3:nth-child(1)');
 var theFirstChild = parentElement.firstChild;
 var div = document.createElement('div');
 parentElement.insertBefore(div, theFirstChild);
-
 
 
 
