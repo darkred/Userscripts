@@ -4,44 +4,29 @@
 // @description Converts torrent upload timestamps to relative time
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
-// @version     2.0.2
+// @version     2.1
 // @grant       none
-// @require     http://code.jquery.com/jquery-2.1.4.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.1/moment-timezone-with-data.min.js
+// @require     http://momentjs.com/downloads/moment.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // ==/UserScript==
 
-/* global $:false, jstz, moment */
+/* global jstz, moment */
 
-
-function getLocalTimezone() {
-	var tz = jstz.determine(); // Determines the time zone of the browser client
-	return tz.name(); // Returns the name of the time zone eg "Europe/Berlin"
-}
-
-var localTimezone = getLocalTimezone();
-var dates = $('tr.lista2 td:nth-child(3)');
-var isDST = moment().isDST();
-
+var localTimezone = jstz.determine().name();
+var serverTimezone = 'Europe/Berlin';		// GMT+1
 
 function convertDates() {
-	var temp;
+	var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
-		temp = dates[i].innerHTML;
-		temp += ' +0100';			// RARBG Timezone offset : GMT+1
-		var format0 = ('YYYY-MM-DD HH:mm:ss');
-		if (moment(dates[i].innerHTML, format0, true).isValid()) {
-			var format1 = ('YYYY-MM-DD HH:mm:ss Z');
-			var format2 = ('MM/DD/YYYY HH:mm:ss');
-			var temp2 = moment(temp, format1).tz(localTimezone);
-			if (isDST) {
-				temp2.subtract(1, 'hours');
-			} // else {
-				// temp2.fromNow();
-			// }
-			dates[i].innerHTML = temp2.fromNow();
-			dates[i].title = temp2.format(format2);
+		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
+		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {
+
+			var format = 'MM/DD/YYYY HH:mm:ss';
+			var temp2 = moment.tz(dates[i].innerText, serverTimezone).tz(localTimezone);
+
+			dates[i].innerText = temp2.fromNow();
+			dates[i].title = temp2.format(format);
 		}
 	}
 }
