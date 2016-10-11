@@ -22,12 +22,12 @@ function appendColumn(title) {
 	columnCells.attr('width', '50px');
 	columnCells.attr('align', 'center');
 
+
+	var arr1, arr2;
+
 	arr1 = $('.lista2t > tbody > tr[class="lista2"] > td:nth-child(3)');		// new column
 	arr2 = $('.lista2t > tbody > tr[class="lista2"] > td:nth-child(2)');		// old column
-}
 
-
-function addLinks(){
 	$.each(arr1, function( index ) {
 		if ((/over\/(.*)\.jpg\\/).test(arr2[index].firstChild.outerHTML)){
 			var hash = arr2[index].firstChild.outerHTML.match(/over\/(.*)\.jpg\\/)[1];
@@ -42,10 +42,7 @@ function addLinks(){
 			arr1[index].innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;';
 		}
 	});
+
 }
 
-
-var arr1, arr2;
-
 appendColumn('DL&nbsp;ML');
-addLinks();
