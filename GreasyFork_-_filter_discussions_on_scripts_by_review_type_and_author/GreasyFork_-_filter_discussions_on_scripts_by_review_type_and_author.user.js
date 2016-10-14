@@ -6,7 +6,7 @@
 // @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
 // @include     https://greasyfork.org/*/scripts/*/feedback*
 // @include     https://greasyfork.org/*/users/*
-// @version     2.0.2
+// @version     2.0.3
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -57,8 +57,8 @@ var filters = {
 
 function insertStyle() {
 	var style = document.createElement('style');
-	// style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: fixed; top: 209px; right: 272px; } .filter-switches { display:initial; position: fixed; top: 240px; left:  -moz-calc(79%);	background: white; right: 287px; } *:hover > .filter-switches { display:block !important; position: fixed; top: 240px; background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
-	style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: fixed; top: -moz-calc(24%); left: -moz-calc(77%) } .filter-switches { display:initial; position: fixed; top: -moz-calc(26.5%); left: -moz-calc(78%);	background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+	// style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: absolute; top: 209px; right: 272px; } .filter-switches { display:initial; position: absolute; top: 240px; left:  -moz-calc(79%);	background: white; right: 287px; } *:hover > .filter-switches { display:block !important; position: absolute; top: 240px; background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+	style.textContent = 'li#filtered { display:none !important; } .filter-status { margin-left: 6px; position: absolute; top: -moz-calc(24%); left: -moz-calc(77%) } .filter-switches { display:initial; position: absolute; top: -moz-calc(26.5%); left: -moz-calc(77.5%);	background: white; right: 287px; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color: white; color: #e6e6e6;   } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
 	style.type = 'text/css';
 	document.querySelector('head').appendChild(style);
 }
@@ -258,16 +258,16 @@ GM_addStyle(`
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
-	position: fixed !important;
+	position: absolute !important;
 	display: inline-block;
-	top: -moz-calc(30%);			/* extra */
+	top: -moz-calc(29%);			/* extra */
 	left:  -moz-calc(86%);			/* extra */
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
 	display: none;
-	position: absolute;
+	position: absolute !important;
 	background-color: #f9f9f9;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -298,9 +298,9 @@ GM_addStyle(`
 }
 
 div.ui-widget {
-	position: fixed !important;
+	position: absolute !important;
 	display: inline-block;
-	position: fixed;
+	position: absolute !important;
 	top: -moz-calc(24.2%);
 	left: -moz-calc(86%);
 }
