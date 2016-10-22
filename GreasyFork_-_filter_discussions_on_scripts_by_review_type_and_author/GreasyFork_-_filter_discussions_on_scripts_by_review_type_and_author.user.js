@@ -6,7 +6,7 @@
 // @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
 // @include     https://greasyfork.org/*/scripts/*/feedback*
 // @include     https://greasyfork.org/*/users/*
-// @version     2.0.3
+// @version     2.0.4
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -69,11 +69,13 @@ function insertStyle() {
 
 function insertStatus() {
 	// CITRUS TWEAK (contribution of decembre)
-	var p = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#script-content > h3:first-of-type') || document.querySelector('#user-discussions-on-scripts-written > header:nth-child(1) > h3:nth-child(1)');		// --- > working on Script discussions
+	var p = $(` #script-content > h3:nth-child(1),
+				#script-content > h3:first-of-type,
+				#user-discussions-on-scripts-written > header:nth-child(1) > h3:nth-child(1)`);		// --- > working on Script discussions
 	if (p) {
 		var status = document.createElement('span');
 		status.className = 'filter-status';
-		p.appendChild(status);
+		$(p).append(status);
 	}
 }
 
@@ -88,8 +90,10 @@ function insertSwitches() {
 		}
 	}
 	// CITRUS TWEAK (contribution of decembre)
-	var k = document.querySelector('#script-content > h3:nth-child(1)') || document.querySelector('#script-content > h3:first-of-type')  || document.querySelector('#control-panel > header:nth-child(1) > h3:nth-child(1)');		// --- > working on script discussions
-	k.appendChild(span);
+	var k = $(  `#script-content > h3:nth-child(1),	\
+				#script-content > h3:first-of-type,	\
+				#control-panel > header:nth-child(1) > h3:nth-child(1)`);
+	$(k).append(span);
 }
 
 
@@ -106,14 +110,14 @@ function createSwitch(label, isOn) {
 		if (this.innerHTML !== 'All'){
 
 
-			if (this.className == 'filter-on') {
+			if (this.className === 'filter-on') {
 				this.className = 'filter-off';
 				GM_setValue(this.textContent, 'off');
 			} else {
 				this.className = 'filter-on';
 				GM_setValue(this.textContent, 'on');
 			}
-			document.querySelector('.filter-switches > a:nth-child(1)').className = 'filter-on';
+			$('.filter-switches > a:nth-child(1)').attr('class', 'filter-on');
 			GM_setValue('All', 'on');
 			filterScripts();
 
@@ -121,20 +125,24 @@ function createSwitch(label, isOn) {
 		} else if (this.innerHTML === 'All' && this.className === 'filter-on'){
 			this.className = 'filter-off';
 			GM_setValue(this.textContent, 'off');
-			document.querySelector('.filter-switches > a:nth-child(2)').className = 'filter-off';
+			$('.filter-switches > a:nth-child(2)').attr('class', 'filter-off');
 			GM_setValue('Questions', 'off');
-			document.querySelector('.filter-switches > a:nth-child(3)').className = 'filter-off';
+			$('.filter-switches > a:nth-child(3)').attr('class', 'filter-off');
 			GM_setValue('Bad', 'off');
-			document.querySelector('.filter-switches > a:nth-child(4)').className = 'filter-off';
+			$('.filter-switches > a:nth-child(4)').attr('class', 'filter-off');
 			GM_setValue('Ok', 'off');
-			document.querySelector('.filter-switches > a:nth-child(5)').className = 'filter-off';
+			$('.filter-switches > a:nth-child(5)').attr('class', 'filter-off');
 			GM_setValue('Good', 'off');
 			var nodes = $('#discussions > li, .discussion-list > li');
 			$.each(nodes, function(index, val) {
 				$(val).attr('id', '');
 			});
 			var hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-			document.querySelector('.filter-status').textContent = (nodes.length - hidden) + ' (' + hidden + ' filtered)';
+			var nodesLength = nodes.length;
+			if (nodes[nodes.length - 1].className === 'more-discussions'){
+				--nodesLength;
+			}
+			$('.filter-status').text((nodesLength - hidden) + ' (' + hidden + ' filtered)');
 
 
 		}
@@ -170,7 +178,13 @@ function filterScripts() {
 		}
 	}
 	var hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-	document.querySelector('.filter-status').textContent = (nodes.length - hidden) + ' (' + hidden + ' filtered)';
+	var nodesLength = nodes.length;
+	if (nodes[nodes.length - 1].className === 'more-discussions'){
+		--nodesLength;
+	}
+	$('.filter-status').text((nodesLength - hidden) + ' (' + hidden + ' filtered)');
+
+
 }
 
 
@@ -192,11 +206,11 @@ var target = document.querySelector('.filter-status');
 var observer = new MutationObserver((mutations) => {
 
 
-		if (document.querySelector('.filter-switches > a:nth-child(2)').className === 'filter-off' &&
-		document.querySelector('.filter-switches > a:nth-child(3)').className === 'filter-off' &&
-		document.querySelector('.filter-switches > a:nth-child(4)').className === 'filter-off' &&
-		document.querySelector('.filter-switches > a:nth-child(5)').className === 'filter-off'){
-			document.querySelector('.filter-switches > a:nth-child(1)').className = 'filter-off';
+		if ($('.filter-switches > a:nth-child(2)').attr('class') === 'filter-off' &&
+			$('.filter-switches > a:nth-child(3)').attr('class') === 'filter-off' &&
+			$('.filter-switches > a:nth-child(4)').attr('class') === 'filter-off' &&
+			$('.filter-switches > a:nth-child(5)').attr('class') === 'filter-off'){
+			$('.filter-switches > a:nth-child(1)').attr('class', 'filter-off');
 			GM_setValue('All', 'off');
 			let nodes = $('#discussions > li, .discussion-list > li');
 			$.each(nodes, function(index, val) {
@@ -346,7 +360,11 @@ function showOnly(author){
 
 		let nodes = $('#discussions > li, .discussion-list > li');
 		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
+		let nodesLength = nodes.length;
+		if (nodes[nodes.length - 1].className === 'more-discussions'){
+			--nodesLength;
+		}
+		$('.filter-status').text((nodesLength - hidden) + ' (' + hidden + ' filtered)');
 		return;
 	} else {
 		$('.dropbtn').html('Filter by author (' + author + ')');
@@ -359,7 +377,11 @@ function showOnly(author){
 
 		let nodes = $('#discussions > li, .discussion-list > li');
 		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
+		let nodesLength = nodes.length;
+		if (nodes[nodes.length - 1].className === 'more-discussions'){
+			--nodesLength;
+		}
+		$('.filter-status').text((nodesLength - hidden) + ' (' + hidden + ' filtered)');
 	}
 }
 `;
@@ -424,11 +446,6 @@ function showOnly(author){
 		document.querySelector('.dropbtn').innerHTML = 'Filter by author (All)';
 		var a = '#discussions > li > a:nth-child(2), #user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
 		$(a).parent().show();
-
-		let nodes = $('#discussions > li, .discussion-list > li');
-		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
-		return;
 	} else {
 		$('.dropbtn').html('Filter by author (' + author + ')');
 		a = '#discussions > li > a:nth-child(2), #user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
@@ -437,9 +454,13 @@ function showOnly(author){
 		$(a).not(a + ':contains("' + author + '")' ).parent().hide();
 		a = '#user-discussions-on-scripts-written > ul > li  a:nth-child(3)';
 		$(a).not(a + ':contains("' + author + '")' ).parent().hide();
-
-		let nodes = $('#discussions > li, .discussion-list > li');
-		let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
-		$('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
 	}
+	let nodes = $('#discussions > li, .discussion-list > li');
+	let hidden = $('#discussions > li:hidden, .discussion-list > li:hidden').length;
+	// $('.filter-status').text( (nodes.length - hidden) + ' (' + hidden + ' filtered)');
+	let nodesLength = nodes.length;
+	if (nodes[nodes.length - 1].className === 'more-discussions'){
+		--nodesLength;
+	}
+	$('.filter-status').text((nodesLength - hidden) + ' (' + hidden + ' filtered)');
 }
