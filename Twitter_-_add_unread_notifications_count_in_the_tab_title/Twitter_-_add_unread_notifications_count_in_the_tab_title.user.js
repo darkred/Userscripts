@@ -1,10 +1,10 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Twitter - add unread notifications count in the tab title
 // @namespace   darkred
 // @author      darkred
 // @description Adds unread notifications count in the tab title
 // @include     https://twitter.com/*
-// @version     2016.08.20
+// @version     2016.10.22
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
@@ -12,11 +12,12 @@
 var counter;
 
 function addCounterInTitle() {
+	// alert();
 	counter = parseInt(document.querySelector('.count-inner').innerHTML);
 	if (counter > 0 && document.title.indexOf('|') === - 1) {
 		document.title = counter + ' | ' + document.title;
 	} else if (counter === 0) {
-		document.title = /[0-9]*\\|(.*)/g.exec(document.title) [1];
+		document.title = /[0-9]*\ \|\ (.*)/g.exec(document.title) [1];
 	}
 }
 
@@ -71,3 +72,19 @@ var config2 = {
 	childList: true,
 };
 observer2.observe(target2, config2);
+
+
+
+
+
+
+function resetCounter(){
+	counter = 0;
+	document.querySelector('.count-inner').innerHTML = '';
+	document.title = /[0-9]*\ \|\ (.*)/g.exec(document.title) [1];
+}
+
+/// A "click" event listener attached on the "Notifications" button:
+// if the user clicks, rightclicks or middle-clicks the button, then reset the counter and the tab title.
+var target3 = document.querySelector('.people');
+target3.addEventListener('mousedown', resetCounter, false);
