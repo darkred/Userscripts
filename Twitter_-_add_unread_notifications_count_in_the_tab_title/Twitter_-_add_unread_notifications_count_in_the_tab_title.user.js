@@ -4,7 +4,7 @@
 // @author      darkred
 // @description Adds unread notifications count in the tab title
 // @include     https://twitter.com/*
-// @version     2016.10.22
+// @version     2016.10.24
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
@@ -79,6 +79,7 @@ observer2.observe(target2, config2);
 
 
 function resetCounter(){
+	document.querySelector('.new-count').className = 'count';
 	counter = 0;
 	document.querySelector('.count-inner').innerHTML = '';
 	document.title = /[0-9]*\ \|\ (.*)/g.exec(document.title) [1];
