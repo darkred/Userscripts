@@ -31,6 +31,7 @@ var retrievals = 0;
 // if any other of our fields has focus. If this is too low, the menu
 // won't work because it will get "display: none" and its onclick
 // won't fire.
+// var BLUR_TIMEOUT = 150;
 var BLUR_TIMEOUT = 250;
 
 //http://www.bugmenot.com/view/orasisx.net
