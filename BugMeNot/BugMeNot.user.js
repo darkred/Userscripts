@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     http://bugmenot.com/*
-// @version     2016.09.17.1
+// @version     2016.10.27
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -31,7 +31,7 @@ var retrievals = 0;
 // if any other of our fields has focus. If this is too low, the menu
 // won't work because it will get "display: none" and its onclick
 // won't fire.
-var BLUR_TIMEOUT = 150;
+var BLUR_TIMEOUT = 250;
 
 //http://www.bugmenot.com/view/orasisx.net
 //phoneRegex = /(?:http://)(.*)/.*?/;
@@ -152,12 +152,18 @@ function processPasswordFields() {
 			var myprompt2 = 'Get a login from BugMeNot';
 		} else {
 			var total = JSON.parse(GM_getValue('allUsernames')).length;
-			myprompt = 'Try next login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')';
-			myprompt2 = 'Try next login';
+			if (counter < total) {
+				myprompt = 'Try next login from BugMeNot' + ' (' + (counter + 1) + '/' + total + ')';
+				myprompt2 = 'Try next login';
+			} else {
+				myprompt = 'No other logins';
+				myprompt2 = 'No other logins available';
+			}
 		}
 
 		var getLoginLink = menuLink(bmnUri, myprompt, myprompt2, getLoginLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 		var getLoginLinkWrapper = menuEntry(getLoginLink, Style.menuLinkWrapper);
+
 		if (counter > 0) {
 			var resetCounterLink = menuLink('', 'Reset login attempt counter', 'Resets the login attempt counter (reloads the page)', resetCounterLink_onclick, Style.menuLink, previousTextFieldInd, i, menuLink_onmouseover, menuLink_onmouseout);
 			var resetCounterLinkWrapper = menuEntry(resetCounterLink, Style.menuLinkWrapper);
