@@ -3,16 +3,20 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.5c
-// @date	    2016-09-26
-// @require	    http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @require     https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @version     0.9.6
+// @date        2016-11-03
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/torrent.*$/
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/tv.*$/
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/music.*$/
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/top.*$/
 // @grant       none
+// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+// @require     https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
+// @require     http://momentjs.com/downloads/moment.min.js
 // ==/UserScript==
 
 
@@ -20,6 +24,7 @@
 /* global $:false */
 /* eslint-disable no-console, no-alert*/
 /* global GM_config */
+/* global moment */
 
 
 //GM_config stuff
@@ -30,11 +35,12 @@ GM_config.init('TPB Helper settings',{
 	pm:	{label: 'Text for PM:', type: 'text', cols: 10, default: 'pm'},
 	tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
 	showYearOnTorrentPage: {label: 'Display Year On Torrent Page:', type: 'checkbox', default: false},
-	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:', section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'}
+	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:', section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'},
+	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true}
 },{
 	save: function(){location.reload();}});
 
-$('body').append("<center><a id='TimeChangerConfig'>TPB Helper settings</a></center>");
+$('body').append(`<center><a id='TimeChangerConfig'>TPB Helper settings</a></center>`);
 $('#TimeChangerConfig').click(function(){GM_config.open();}).css({'cursor': 'pointer'});
 
 var timezone = GM_config.get('timezone');
@@ -44,6 +50,7 @@ var am = GM_config.get('am');
 var pm = GM_config.get('pm');
 var showYearOnTorrentPage = GM_config.get('showYearOnTorrentPage');
 var enhanceVisibility = GM_config.get('enhanceVisibility');
+var relativeDates = GM_config.get('relativeDates');
 
 //Custom Date Handlers
 Date.prototype.addHours = function(h) {
@@ -232,8 +239,7 @@ if (url.indexOf(host + '/torrent/') != -1) {
 	torPageFullDate.addHours(-hours);
 	$('dt:contains(\'Uploaded\')').next().html(formatTime(torPageFullDate,true, showYearOnTorrentPage));
 	jQuery.noConflict(); //Need this to run last in order to fix problem with thepiratebay comments
-   }
-else {
+} else {
 	// Change the times on the browse/search pages
 	var allBody = document.body.innerHTML;
 	if (allBody.indexOf('view=s') > -1){
@@ -396,4 +402,35 @@ function highlight() {
 	});
 
 
+}
+
+
+
+
+
+
+
+function convertDates() {
+	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
+	for (var i = 0; i < dates.length; i++) {
+		if (dates[i].innerHTML.indexOf('Today') !== -1) {
+			dates[i].innerHTML = dates[i].innerHTML.replace('Today', moment().format('MM-DD'));
+		}
+		if (dates[i].innerHTML.indexOf('Y-day') !== -1) {
+			dates[i].innerHTML = dates[i].innerHTML.replace('Y-day', moment().subtract(1, "days").format('MM-DD'));
+		}
+		if (moment(dates[i].innerHTML, 'MM-DD HH:mm ', true).isValid()) {
+			var temp = dates[i].innerText;
+			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD HH:mm').fromNow();
+			dates[i].title = temp;
+		} else if (moment(dates[i].innerHTML, 'MM-DD-YYYY ', true).isValid()) {
+			let temp = dates[i].innerText;
+			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD-YYYY').fromNow();
+			dates[i].title = temp;
+		}
+	}
+}
+
+if (relativeDates === true) {
+	convertDates();
 }
