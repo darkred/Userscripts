@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6
-// @date        2016-11-03
+// @version     0.9.6b
+// @date        2016-11-05
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
@@ -191,6 +191,7 @@ function formatTime(tempDate, time_override, year_override){
 			t_output = t_output + ('0' + tempDate.getHours()).slice(-2) + ':' + ('0' + tempDate.getMinutes()).slice(-2);
 		}
 		t_output = t_output + ' ' + timezone;
+		t_output = t_output.trim();			// remove trailing spaces
 	}
 	return t_output;
 }
@@ -413,17 +414,18 @@ function highlight() {
 function convertDates() {
 	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
+		// dates[i].innerHTML = dates[i].innerHTML.trim();		// remove trailing spaces
 		if (dates[i].innerHTML.indexOf('Today') !== -1) {
 			dates[i].innerHTML = dates[i].innerHTML.replace('Today', moment().format('MM-DD'));
 		}
 		if (dates[i].innerHTML.indexOf('Y-day') !== -1) {
-			dates[i].innerHTML = dates[i].innerHTML.replace('Y-day', moment().subtract(1, "days").format('MM-DD'));
+			dates[i].innerHTML = dates[i].innerHTML.replace('Y-day', moment().subtract(1, 'days').format('MM-DD'));
 		}
-		if (moment(dates[i].innerHTML, 'MM-DD HH:mm ', true).isValid()) {
+		if (moment(dates[i].innerHTML, 'MM-DD HH:mm', true).isValid()) {
 			var temp = dates[i].innerText;
 			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD HH:mm').fromNow();
 			dates[i].title = temp;
-		} else if (moment(dates[i].innerHTML, 'MM-DD-YYYY ', true).isValid()) {
+		} else if (moment(dates[i].innerHTML, 'MM-DD-YYYY', true).isValid()) {
 			let temp = dates[i].innerText;
 			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD-YYYY').fromNow();
 			dates[i].title = temp;
