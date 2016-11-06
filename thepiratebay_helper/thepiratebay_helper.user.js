@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6b
+// @version     0.9.6c
 // @date        2016-11-05
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
@@ -414,21 +414,19 @@ function highlight() {
 function convertDates() {
 	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
-		// dates[i].innerHTML = dates[i].innerHTML.trim();		// remove trailing spaces
-		if (dates[i].innerHTML.indexOf('Today') !== -1) {
-			dates[i].innerHTML = dates[i].innerHTML.replace('Today', moment().format('MM-DD'));
+		var initial = dates[i].innerHTML;
+		var temp = initial.trim();		// remove trailing spaces
+		if (temp.indexOf('Today') !== -1) {
+			temp = temp.replace('Today', moment().format('MM-DD'));
+		} else if (temp.indexOf('Y-day') !== -1) {
+			temp = temp.replace('Y-day', moment().subtract(1, 'days').format('MM-DD'));
 		}
-		if (dates[i].innerHTML.indexOf('Y-day') !== -1) {
-			dates[i].innerHTML = dates[i].innerHTML.replace('Y-day', moment().subtract(1, 'days').format('MM-DD'));
-		}
-		if (moment(dates[i].innerHTML, 'MM-DD HH:mm', true).isValid()) {
-			var temp = dates[i].innerText;
-			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD HH:mm').fromNow();
-			dates[i].title = temp;
-		} else if (moment(dates[i].innerHTML, 'MM-DD-YYYY', true).isValid()) {
-			let temp = dates[i].innerText;
-			dates[i].innerHTML = moment(dates[i].innerHTML, 'MM-DD-YYYY').fromNow();
-			dates[i].title = temp;
+		if (moment(temp, 'MM-DD HH:mm', true).isValid()) {
+			dates[i].innerHTML = moment(temp, 'MM-DD HH:mm').fromNow();
+			dates[i].title = initial;
+		} else if (moment(temp, 'MM-DD-YYYY', true).isValid()) {
+			dates[i].innerHTML = moment(temp, 'MM-DD-YYYY').fromNow();
+			dates[i].title = initial;
 		}
 	}
 }
