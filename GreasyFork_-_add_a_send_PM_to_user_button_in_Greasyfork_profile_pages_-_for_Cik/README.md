@@ -6,7 +6,7 @@ Greasyfork profile: https://greasyfork.org/en/users/2160-darkred
 ```
 
 example:  
-![](https://i.imgur.com/62nYnl2.gif)
+![](https://i.imgur.com/LUN73U5.gif)
 
 *Notes: the button doesn't appear in your own Greasyfork profile page, 
 and it only works when you are logged in, for obvious reasons*. 
