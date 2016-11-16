@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         Google youtube search link
 // @description  Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, Youtube, News, Maps, Shopping, ...)
-// @version      2016.11.16
+// @version      2016.11.16.1
 // @author       wOxxOm, darkred
 // @namespace    darkred
 // @license      MIT License
@@ -41,7 +41,7 @@ function process(mutations) {
 							youtube.querySelector('a').href += encodeURIComponent(queryElement.value);
 						}
 					}
-				}).observe(queryElement, { attributes: true });			// monitor the textbox for changes (your typed criteria)
+				}).observe(queryElement, { attributes: true, attributeFilter: ['value'] });			// monitor the textbox for changes (your typed criteria)
 			}
 		} else if ((q = location.href.match(/^.+?(?:[#\/&?](?:q|query))=(.+?)(?:|&.+|\|.+)$/)))
 			q = q[1];
