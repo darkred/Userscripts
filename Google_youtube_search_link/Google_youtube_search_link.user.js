@@ -3,7 +3,7 @@
 // @description  Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, Youtube, News, Maps, Shopping, ...)
 // @version      1.2
 // @author       wOxxOm, darkred
-// @namespace    wOxxOm.scripts
+// @namespace    darkred
 // @license      MIT License
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
