@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         Google youtube search link
 // @description  Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, Youtube, News, Maps, Shopping, ...)
-// @version      2016.11.16.1
+// @version      2016.11.17
 // @author       wOxxOm, darkred
 // @namespace    darkred
 // @license      MIT License
@@ -9,7 +9,6 @@
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
 // @run-at       document-start
-// @require      https://code.jquery.com/jquery-3.1.1.min.js
 // ==/UserScript==
 
 process();
@@ -46,11 +45,11 @@ function process(mutations) {
 		} else if ((q = location.href.match(/^.+?(?:[#\/&?](?:q|query))=(.+?)(?:|&.+|\|.+)$/)))
 			q = q[1];
 
-		var node = $(`a[href*='tbm=vid']`);			// selector (jQuery) for the 'Videos' link (works in any Google search page language)
-		$(node.parent()).after(
-			'<div class="hdtb-mitem hdtb-imb" id="__YOUTUBE_SEARCH__">' +
-			'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">Youtube</a>' +
-			'</div>');			// insert the YouTube link (via jQuery's after() )
+		var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
+		var text =  '<div class="hdtb-mitem hdtb-imb" id="__YOUTUBE_SEARCH__">' +
+					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">Youtube</a>' +
+					'</div>';
+		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
 	}
 
 	new MutationObserver(process).observe(menuContainer, { childList: true });
