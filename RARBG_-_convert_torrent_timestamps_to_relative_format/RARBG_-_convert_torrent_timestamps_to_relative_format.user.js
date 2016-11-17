@@ -1,7 +1,7 @@
-﻿// ==UserScript==
-// @name        RARBG - convert torrent timestamps to relative time
+// ==UserScript==
+// @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @description Converts torrent upload timestamps to relative time
+// @description Converts torrent upload timestamps to relative format
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
 // @version     2.1
@@ -22,10 +22,10 @@ function convertDates() {
 		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
 		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {
 
-			var format = 'MM/DD/YYYY HH:mm:ss';
 			var temp2 = moment.tz(dates[i].innerText, serverTimezone).tz(localTimezone);
-
 			dates[i].innerText = temp2.fromNow();
+
+			var format = 'MM/DD/YYYY HH:mm:ss';
 			dates[i].title = temp2.format(format);
 		}
 	}
