@@ -29,6 +29,8 @@ And, if you type a _book_ title then the links will become:
 
 <br>
 
-_Note: The feature of the initial script to re-arrange Images, Videos, Youtube links to always be on 2nd, 3rd, 4th places,
-that was applied by default, 
-was breaking the Google's default tabs order (which takes into account the kind of search criteria that you have entered) is removed in this fork._
+_Note: The initial script was offering:_
+- _either (by default) to re-arrange links so that the Images, Videos, Youtube links to always be on 2nd, 3rd, 4th places,   
+which was breaking the Google's default tabs order (which takes into account the kind of search criteria that you have entered)   
+and is removed in this fork._
+- _or to add the YouTube link after all existing links, to the right (with some spacing in between)._
