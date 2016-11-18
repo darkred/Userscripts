@@ -3,20 +3,19 @@
 // @namespace   darkred
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
 // @include     https://www.instagram.com/*
-// @version     2016.08.02
+// @version     2016.11.18
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.0.0.min.js
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
 
-/* eslint-env jquery */
-/* eslint-disable quotes */
+
 
 
 // If you scroll down, beyond the first 12 images, then the "LOAD MORE" button(to show more images) will be automatically clicked
 $(window).scroll(function() {
 	if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-		var element = $("a:contains('Load more')")[0];
+		var element = $(`a:contains('Load more')`)[0];
 		element.click();
 	}
 });
@@ -24,8 +23,8 @@ $(window).scroll(function() {
 
 
 function showCounter() {
-	var visibleCount = $( "a[href*='taken-by']" ).length; 	// Count of visible images
-	var totalString = $("span:contains('posts')").eq(1).children().eq(0).html(); 	// The 'total' value (it's a string)
+	var visibleCount = $( `a[href*='taken-by']` ).length; 	// Count of visible images
+	var totalString = $(`span:contains('posts')`).eq(1).children().eq(0).html(); 	// The 'total' value (it's a string)
 	var total = totalString.replace(/(\d+),(?=\d{3}(\D|$))/g, '$1'); 	// Apply regex to 'total' string to strip the thousand comma seperator
 	if (visibleCount > total){
 		visibleCount = total;
@@ -91,6 +90,8 @@ $(document).arrive('article ._5axto', function() {		// 'article .5axto'
 
 
 $(document).leave('article ._5axto', function() {
-	div.remove();
-	observer1.disconnect();
+	if (!document.querySelector('article ._5axto')) {
+		div.remove();
+		observer1.disconnect();
+	}
 });
