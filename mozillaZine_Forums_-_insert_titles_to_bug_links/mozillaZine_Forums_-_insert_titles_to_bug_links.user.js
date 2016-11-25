@@ -4,7 +4,7 @@
 // @author      darkred, johnp_
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @include     http://forums.mozillazine.org/viewtopic.php*
-// @version     2.0.2
+// @version     2016.11.25
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getResourceURL
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
@@ -26,7 +26,7 @@ time('MozillaBugzilla');
 
 
 var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=([0-9]*).*$/;
-var base_url = 'https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary&id=';
+var base_url = 'https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status&id=';
 var bugIds = [];
 var bugCodes = [];
 var bugTitles = [];
@@ -100,6 +100,7 @@ $.getJSON(rest_url, function(data) {
 
 	$.each(data.bugs, function(index) {
 		let bug = data.bugs[index];
+		let status = bug.status;
 
 		log('----------------------------------------------------------------------------------------------------------------------------------');
 		log((index + 1) + '/' + numBugs); // Progression counter
@@ -142,7 +143,7 @@ $.getJSON(rest_url, function(data) {
 				timeEnd('Requesting missing bug ' + id);
 				if (error == 'Authorization Required') {
 					log('Bug ' + id + ' requires authorization!');
-					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
+					// log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
 				} else {
 					console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
 				}
@@ -162,6 +163,8 @@ $.getJSON(rest_url, function(data) {
 		// console.log(bugCodes);
 
 		for (let z=0; z < links.length; z++) {
+
+			loop2:
 			for (let yy=0; yy < bugCodes.length; yy++) {
 
 				if (regex.test(links[z].href)
@@ -170,26 +173,32 @@ $.getJSON(rest_url, function(data) {
 
 					let temp = links[z].innerHTML.match(/([Bb]ug\ [a-zA-Z]*).*[0-9]*/i);
 					var temp2 = links[z].href.match(/^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=[0-9]*(.*)$/);
+					// if (temp !== null) {
+					// 	links[z].previousSibling.textContent += temp[1] + ' ';
+					// 	links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
+					// } else {
+					// 	links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
+					// }
 					if (temp !== null) {
 						links[z].previousSibling.textContent += temp[1] + ' ';
-						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
-					} else {
-						links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
 					}
+					links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
+				
+					break loop2;
+				}
+
+			}
 
 
-					// REMOVE the spinning icon
-					links[z].nextSibling.remove();           				 // For spinning icon AFTER the link
-					// x.previousSibling.previousSibling.remove();           // For spinning icon BEFORE the link
-
+			if (links[z].nextSibling && links[z].nextSibling.src === 'greasemonkey-script:2c717c86-de72-4e29-a54b-bf8e400f006c/icon'){
+				links[z].nextSibling.remove();           				 // For REMOVE spinning icon AFTER the link
+				// x.previousSibling.previousSibling.remove();           // For REMOVE spinning icon BEFORE the link
+				if (links[z].innerHTML.indexOf('https://bugzilla.mozilla.org') !== -1  ){
+					links[z].innerHTML += ' &nbsp<i>(requires authorization)</i>';
 				}
 			}
+
 		}
-
-
-
-
-
 		log('ALL IS DONE');
 		timeEnd('MozillaBugzilla');
 	});
