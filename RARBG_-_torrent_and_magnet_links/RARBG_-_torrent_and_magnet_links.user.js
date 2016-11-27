@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
 // @description Adds a column with torrent and magnet links in RARBG lists
