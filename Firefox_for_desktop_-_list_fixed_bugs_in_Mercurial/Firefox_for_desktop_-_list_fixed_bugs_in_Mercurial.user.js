@@ -130,7 +130,7 @@ $.getJSON(rest_url, function(data) {
       promise.error(function(req, status, error) {
         timeEnd("Requesting missing bug " + id);
         if (error == "Authorization Required") {
-          // log("Bug " + id + " requires authorization!");
+          log("Bug " + id + " requires authorization!");
           log("https://bugzilla.mozilla.org/show_bug.cgi?id=" + id + " requires authorization!");
           let text = " requires authorization!<br>";
 
