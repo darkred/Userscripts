@@ -2,9 +2,9 @@
 // @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
 // @namespace   darkred
 // @description It adds a 'send PM to user' button in Greasyfork profile pages
-// @include     https://greasyfork.org/en/users/*
-// @include     https://greasyfork.org/en/forum/messages/add
-// @version     2016.11.12
+// @include     https://greasyfork.org/*/users/*
+// @include     https://greasyfork.org/*/forum/messages/add
+// @version     2016.12.16
 // @grant       GM_getResourceURL
 // @resource    icon http://i.imgur.com/ZU0xS0c.jpg
 // @run-at      document-idle
@@ -33,8 +33,9 @@ if (window.location.href.indexOf('users') !== -1 // if current URL is a profile 
 	a.setAttribute('src', GM_getResourceURL('icon'));
 	a.id = 'pmButton';
 	a.title = 'Send PM to ' + currentProfileName;
+	var lang = String(window.location).match(/^https:\/\/greasyfork\.org\/([a-zA-Z-]+)\/.*$/)[1];
 	document.getElementById('pmButton').addEventListener('click', function() {
-		window.open('https://greasyfork.org/en/forum/messages/add', '_self');
+		window.open('https://greasyfork.org/' + lang + '/forum/messages/add', '_self');
 	});
 }
 
