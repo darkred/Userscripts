@@ -5,7 +5,8 @@ Additional features:
   - highlighting trusted, 
   - hiding non trusted, or 
   - show all
-- Added a keyboard shortcut \` to toggle highlight/hide.  
+- Added a keyboard shortcut \` to toggle highlight/hide,
+- Added an option to display torrent timestamps in relative format.
 You may also click on the e.g, `7/30 torrents are currently hidden) - click to toggle`  
 to toggle highlight/hide *(and this is reflected in GM_config too)*.  
 - Changes in the relevant texts in the script due to that TPB timezone is `GMT+1` *(and not `GMT` as the site wrongly displays in torrent pages)*  
