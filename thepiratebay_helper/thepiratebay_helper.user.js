@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6c
-// @date        2016-11-05
+// @version     0.9.6d
+// @date        2017-02-14
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
@@ -415,7 +415,9 @@ function convertDates() {
 	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
 		var initial = dates[i].innerHTML;
-		var temp = initial.trim();		// remove trailing spaces
+		// var temp = initial.trim();					// remove trailing spaces
+		var temp = initial.replace(timezone, '');	// remove timezone
+		temp = temp.trim();							// remove trailing spaces
 		if (temp.indexOf('Today') !== -1) {
 			temp = temp.replace('Today', moment().format('MM-DD'));
 		} else if (temp.indexOf('Y-day') !== -1) {
