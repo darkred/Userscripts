@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @include     /^(https?:)?\/\/(www\.)?rarbg\.(to|com)\/(torrents\.php.*|catalog\/.*|top10)$/
-// @version     2016.11.17
+// @version     2017.02.16
 // @grant       none
 // ==/UserScript==
 
@@ -35,6 +35,8 @@ function appendColumn(title) {
 		for (let i = 0; i < arr1.length; i++) {
 			if ((/over\/(.*)\.jpg\\/).test(arr2[i].firstChild.outerHTML)){
 				var hash = arr2[i].firstChild.outerHTML.match(/over\/(.*)\.jpg\\/)[1];
+			} else {
+				hash = undefined;
 			}
 			let title = arr2[i].firstChild.innerText;
 			var trackers = 'http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710';
