@@ -4,7 +4,7 @@
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 // @version     0.9.6d
-// @date        2017-02-14
+// @date        2017.2.15
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
@@ -405,10 +405,24 @@ function highlight() {
 
 }
 
-
-
-
-
+// Customize the strings in the locale to display "1 minute ago" instead of "a minute ago" (https://github.com/moment/moment/issues/3764#issuecomment-279928245)
+moment.updateLocale('en', {
+	relativeTime: {
+		future: 'in %s',
+		past:   '%s ago',
+		s:  'seconds',
+		m:  '1 minute',
+		mm: '%d minutes',
+		h:  '1 hour',
+		hh: '%d hours',
+		d:  '1 day',
+		dd: '%d days',
+		M:  '1 month',
+		MM: '%d months',
+		y:  '1 year',
+		yy: '%d years'
+	}
+});
 
 
 function convertDates() {

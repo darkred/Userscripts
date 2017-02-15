@@ -4,7 +4,7 @@
 // @description Converts torrent upload timestamps to relative format
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
-// @version     2.1
+// @version     2017.2.15
 // @grant       none
 // @require     http://momentjs.com/downloads/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
@@ -12,6 +12,25 @@
 // ==/UserScript==
 
 /* global jstz, moment */
+
+// Customize the strings in the locale to display "1 minute ago" instead of "a minute ago" (https://github.com/moment/moment/issues/3764#issuecomment-279928245)
+moment.updateLocale('en', {
+	relativeTime: {
+		future: 'in %s',
+		past:   '%s ago',
+		s:  'seconds',
+		m:  '1 minute',
+		mm: '%d minutes',
+		h:  '1 hour',
+		hh: '%d hours',
+		d:  '1 day',
+		dd: '%d days',
+		M:  '1 month',
+		MM: '%d months',
+		y:  '1 year',
+		yy: '%d years'
+	}
+});
 
 var localTimezone = jstz.determine().name();
 var serverTimezone = 'Europe/Berlin';		// GMT+1
