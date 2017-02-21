@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6d
-// @date        2017.2.15
+// @version     0.9.6e
+// @date        2017.2.21
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
@@ -425,11 +425,14 @@ moment.updateLocale('en', {
 });
 
 
-function convertDates() {
+function convertDates(times) {
 	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
-		var initial = dates[i].innerHTML;
-		// var temp = initial.trim();					// remove trailing spaces
+		if (times === 1 ) {						// if it's the 1st time the function is called
+			var initial = dates[i].innerHTML;
+		} else {								// else (in consequent calls)
+			initial = dates[i].title;
+		}
 		var temp = initial.replace(timezone, '');	// remove timezone
 		temp = temp.trim();							// remove trailing spaces
 		if (temp.indexOf('Today') !== -1) {
@@ -448,5 +451,13 @@ function convertDates() {
 }
 
 if (relativeDates === true) {
-	convertDates();
+	convertDates(1);
+
+	// recalculate the timestamps in relative format every 10 sec
+	(function(){
+		convertDates(2);
+		setTimeout(arguments.callee, 1 * 10 * 1000);
+	})();
+
+
 }
