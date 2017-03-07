@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     2016.11.12
+// @version     2017.3.7
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://greasyfork.org/*/scripts
@@ -11,6 +11,7 @@
 // @include     https://greasyfork.org/*/scripts?page=*
 // @include     https://greasyfork.org/*/scripts?per_page=*
 // @include     https://greasyfork.org/*/scripts/search?*
+// @include     https://greasyfork.org/en/scripts?set=*
 // @run-at      document-idle
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
@@ -55,27 +56,27 @@
 	// Note: you may uncomment line 37-81 and comment out line 36, in order the filtered scripts to be highlighted red -instead of hiding them- so that you can check which scripts have been filtered
 	function insertStyle() {
 		var style = document.createElement('style');
-		// style.textContent = 'tr.filtered > td:nth-child(2)  {background-color:red !important;} .filter-status {margin-left:6px; position:fixed; top:-moz-calc(0%); left:-moz-calc(13.5%)} .filter-switches {display:none; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:-moz-calc(2.5%); left:-moz-calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
+		// style.textContent = 'tr.filtered > td:nth-child(2)  {background-color:red !important;} .filter-status {margin-left:6px; position:fixed; top:calc(0%); left:calc(13.5%)} .filter-switches {display:none; position:fixed; top:calc(2.5%); left:calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:calc(2.5%); left:calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
 		style.textContent = `   tr.filtered {
 									display: none !important;
 								}
 								.filter-status {
 									margin-left: 6px;
 									position: fixed;
-									top: -moz-calc(0%);
-									left: -moz-calc(13.5%);
+									top: calc(0%);
+									left: calc(13.5%);
 								}
 								.filter-switches {
 									display: none;
 									position: fixed;
-									top: -moz-calc(2.5%);
-									left: -moz-calc(14%);
+									top: calc(2.5%);
+									left: calc(14%);
 								}
 								*:hover > .filter-switches {
 									display: block !important;
 									position: fixed;
-									top: -moz-calc(2.5%);
-									left: -moz-calc(14%);
+									top: calc(2.5%);
+									left: calc(14%);
 								}
 								.filter-on,
 								.filter-off {
