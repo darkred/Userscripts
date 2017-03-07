@@ -6,7 +6,7 @@ i.e. it filters any/all of these 4 categories:
 * **Clutter**: obvious spam, titles like "asdasdasd", description = title, title < 6 characters, "just a test".  
 
 
-It's the same as [GreasyFork Bullshit Filter](https://greasyfork.org/en/scripts/12179-greasyfork-bull-filter,) now compatible with <a href="https://greasyfork.org/fr/scripts/4336-ts-citrus-gfork">[TS] Citrus GFork</a>.  
+It's the same as [GreasyFork Bullshit Filter](https://greasyfork.org/en/scripts/12179-greasyfork-bull-filter,) now compatible with <a href="https://greasyfork.org/en/scripts/4336-ts-citrus-gfork">[TS] Citrus GFork</a>.  
 Per-request [here](https://greasyfork.org/en/forum/discussion/6643/x)  
 Note: you may comment out #49 and uncomment #50 in order to change position of the filters list  
 *(the filters list appears either below the GreasyFork logo (one-line), or a bit lower,on top of the results table(multi-lines))*  
