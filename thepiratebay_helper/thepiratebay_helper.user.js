@@ -3,10 +3,11 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6e
-// @date        2017.2.21
+// @version     0.9.6f
+// @date        2017.3.9
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/torrent.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/tv.*$/
@@ -19,12 +20,11 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // ==/UserScript==
 
+/* global $:false, GM_config, moment */
 
 
-/* global $:false */
-/* eslint-disable no-console, no-alert*/
-/* global GM_config */
-/* global moment */
+$('table td').css({ 'white-space': 'nowrap' });		// In order to prevent the text in all table cells from wrapping
+$('#main-content').css({ 'overflow': 'visible' });	// Override the default rule which is 'hidden' ('#main-content' is the parent of the search results' 'table' element)
 
 
 //GM_config stuff
