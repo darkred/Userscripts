@@ -18,22 +18,22 @@
 
 
 // CSS rules in order to show 'up' and 'down' arrows in each table header
-var stylesheet = '		                                                                                                        \
-<style>												                                                                            \
-thead th {                                                                                                                      \
-    background-repeat: no-repeat;                                                                                               \
-    background-position: right center;                                                                                          \
-}                                                                                                                               \
-thead th.up {                                                                                                                   \
-    padding-right: 20px;                                                                                                        \
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);      \
-}                                                                                                                               \
-thead th.down {                                                                                                                 \
-    padding-right: 20px;                                                                                                        \
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);      \
-}                                                                                                                               \
-}												                                                                                \
-</style>';
+var stylesheet = `
+<style>
+thead th {
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+thead th.up {
+    padding-right: 20px;
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+}
+thead th.down {
+    padding-right: 20px;
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+}
+}
+</style>`;
 
 $('head').append(stylesheet);
 
