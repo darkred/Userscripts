@@ -10,9 +10,8 @@
 // @include     https://thepiratebay.org/tv/
 // @include     https://thepiratebay.org/music
 // @include     https://thepiratebay.org/top
-// @version     1.2.1
+// @version     1.2.2
 // @grant       none
-// @require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
 // ==/UserScript==
@@ -23,7 +22,8 @@ function appendColumn() {
 	var newCell;
 	var tr = tbl.tHead.children[0],
 		th = document.createElement('th');
-	th.innerHTML = 'Ratio';
+	// th.innerHTML = 'Ratio';
+	th.innerHTML = 'Rt';
 	th.className = 'ratioCol';
 	tr.appendChild(th);
 	var m, n, ratio;
@@ -63,3 +63,7 @@ function sorting() {
 
 appendColumn();
 sorting();
+
+
+// Select all Ratio values (=all last cells of all rows) an align to the text
+$('td:last-child').css('text-align', 'right');
