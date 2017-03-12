@@ -10,7 +10,7 @@
 // @include     https://thepiratebay.org/tv/
 // @include     https://thepiratebay.org/music
 // @include     https://thepiratebay.org/top
-// @version     1.2.2
+// @version     1.2.3
 // @grant       none
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
@@ -31,11 +31,11 @@ function appendColumn() {
 		m = tbl.rows[i].cells[5].innerHTML;   // Retrieve the content of the cell of the SE column and store it to variable m
 		n = tbl.rows[i].cells[6].innerHTML;   // Retrieve the content of the cell of the LE column and store it to variable n
 		ratio = m/n;
-		if (m>0 && n==0){
+		if (m > 0 && n === 0){
 			ratio=m;
 		}
-		if (m==0 && n==0){
-			ratio=0;
+		if (m === 0 && n === 0){
+			ratio = 0;
 		}
 		newCell = tbl.rows[i].insertCell(-1);
 		newCell.innerHTML = (Math.round(100 * ratio) / 100);
