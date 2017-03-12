@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Metal Archives (discography pages) - Reviews column split and sortable tables
 // @namespace   darkred
 // @author      darkred
@@ -6,8 +6,8 @@
 // @include     http://www.metal-archives.com/bands/*
 // @include     http://www.metal-archives.com/band/*
 // @version     2.0
+// @date		2017.3.12
 // @grant       none
-// @require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 //

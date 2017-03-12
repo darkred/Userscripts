@@ -10,9 +10,9 @@ http://www.metal-archives.com/bands/Kamelot/166 (DISCOGRAPHY > MAIN tab)
 -the script works in all DISCOGRAPHY tabs-
 
 Tested with Greasemonkey 3.3.
-
 <br>
-This userscript uses jQuery UI,  
+
+This userscript uses jQuery (the version that the page itself loads),  
 the jQuery plugin [tablesorter](http://mottie.github.io/tablesorter/docs/index.html) (forked by Rob Garrison (Mottie))  
 and the JavaScript library [Mutation Summary](https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein).  
 
