@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6f
-// @date        2017.3.9
+// @version     0.9.6g
+// @date        2017.3.14
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
@@ -14,10 +14,10 @@
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/music.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/top.*$/
 // @grant       none
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @require     https://openuserjs.org/src/libs/sizzle/GM_config.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.4/keypress.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.min.js
 // ==/UserScript==
 
 /* global $:false, GM_config, moment */
@@ -36,7 +36,8 @@ GM_config.init('TPB Helper settings',{
 	tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
 	showYearOnTorrentPage: {label: 'Display Year On Torrent Page:', type: 'checkbox', default: false},
 	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:', section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'},
-	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true}
+	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true},
+	sortableRtColumn: {label: 'Add a sortable Ratio column?', type: 'checkbox', default: false}
 },{
 	save: function(){location.reload();}});
 
@@ -51,6 +52,60 @@ var pm = GM_config.get('pm');
 var showYearOnTorrentPage = GM_config.get('showYearOnTorrentPage');
 var enhanceVisibility = GM_config.get('enhanceVisibility');
 var relativeDates = GM_config.get('relativeDates');
+var sortableRtColumn = GM_config.get('sortableRtColumn');
+
+
+
+
+
+
+// For the sortable Ratio column
+function appendColumn() {
+	var se, le, ratio;
+	document.querySelector('.header > th:nth-child(7)').insertAdjacentHTML('afterend', '<th><abbr title="Seeders">Rt</abbr></th>');
+	var entries = document.querySelectorAll('#searchResult > tbody:nth-child(2) > tr > td:nth-child(7)');
+	for (var i = 0; i < entries.length; i++) {
+		se = parseInt(entries[i].previousElementSibling.innerHTML);   // Retrieve the content of the cell of the SE column and store it to variable se
+		le = parseInt(entries[i].innerHTML);   // Retrieve the content of the cell of the LE column and store it to variable le
+		if (se > 0 && le === 0){
+			ratio = se;
+		} else if (se === 0 || le === 0){
+			ratio = 0;
+		} else {
+			ratio = se/le;
+		}
+		ratio = (Math.round(10 * ratio) / 10);
+		entries[i].insertAdjacentHTML('afterend', '<td>' + ratio + '</td>');
+		entries[i].nextSibling.className = 'ratioCol';
+		$('.ratioCol').css('text-align', 'right');
+	}
+
+	$('table#searchResult').tablesorter({
+		headers: {
+			0: {sorter: false},
+			1: {sorter: false},
+			2: {sorter: false},
+			3: {sorter: false},
+			4: {sorter: false},
+			5: {sorter: false},
+			6: {sorter: false},
+			7: {sorter: true}
+		}
+	});
+
+}
+
+if (sortableRtColumn === true) {
+	appendColumn();
+}
+
+
+
+
+
+
+
+
 
 //Custom Date Handlers
 Date.prototype.addHours = function(h) {

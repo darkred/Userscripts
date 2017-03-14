@@ -6,7 +6,9 @@ Additional features:
   - hiding non trusted, or 
   - show all
 - Added a keyboard shortcut \` to toggle highlight/hide,
-- Added an option to display torrent timestamps in relative format.
+- Added an option to display torrent timestamps in relative format _(enabled by default)_,
+- Added an option to add a sortable 'Ratio' (seeds/peers) column _(disabled by default)_. 
+
 You may also click on the e.g, `7/30 torrents are currently hidden) - click to toggle`  
 to toggle highlight/hide *(and this is reflected in GM_config too)*.  
 - Changes in the relevant texts in the script due to that TPB timezone is `GMT+1` *(and not `GMT` as the site wrongly displays in torrent pages)*  
