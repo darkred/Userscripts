@@ -5,7 +5,7 @@
 // @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @version     4.2.2
-// @grant       GM_xmlhttpRequest
+// @date        2017.3.25
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
 // @grant       GM_setClipboard

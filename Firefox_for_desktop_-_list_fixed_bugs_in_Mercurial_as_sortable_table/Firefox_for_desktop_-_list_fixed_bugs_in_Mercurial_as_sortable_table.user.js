@@ -4,6 +4,7 @@
 // @authors     darkred, johnp
 // @description It generates a sortable table list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @version     5.5.4
+// @date        2017.3.25
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -13,7 +14,6 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       GM_xmlhttpRequest
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
 // @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
