@@ -282,12 +282,10 @@ function convertDates() {
 		// Note: randomly, if the timestamps in browse/search lists are with in the 59 last mins (i.e. < 1 hour),
 		// then they are displayed in relative format (in bold) i.e. already in GMT+1
 		// instead of like this e.g. "Today 22:10", i.e. GMT, therefore it needs to be converted to GMT+1
-		var relativeTimestampByThePage = false;
+		// 1 min ago
 		if (temp.indexOf('mins ago') !== -1 || temp.indexOf('min ago') !== -1) {
-			// temp = moment().subtract(parseInt(temp), 'minutes').format('MM-DD-YYYY HH:mm');
-			// temp = moment(temp, 'MM-DD-YYYY HH:mm');
 			temp = moment().subtract(parseInt(temp), 'minutes');
-			relativeTimestampByThePage = true;
+			dates[i].setAttribute('relative', 'true');
 		} else if (temp.indexOf('Today') !== -1) {
 			// Today 22:10
 			temp = temp.replace('Today', moment().format('MM-DD-YYYY'));
@@ -310,18 +308,20 @@ function convertDates() {
 			temp = moment(temp, 'MM-DD-YYYY HH:mm', true);
 		}
 
-		// if the displayed timestamp (from the page itself) is in relative format
-		if (relativeTimestampByThePage !== true && dates[i].getAttribute('offset') !== 'true'){
+		// if the displayed timestamp (from the page itself) is not in relative format and the 'offset' attribute is not set to true
+		if (dates[i].getAttribute('offset') !== 'true' && dates[i].getAttribute('relative') !== 'true' ){
 			temp.add(tpboffset + 1, 'hours');			// then add the offset (+1 hour) to 'temp'
-			dates[i].setAttribute('offset', true);
+			dates[i].setAttribute('offset', 'true');
 		}
 
 
 
-		// if the produced moment 'temp' object is 22 hours  later than now
-		if (moment().diff(temp, 'hour') === -22 && dates[i].getAttribute('minus1day') !== 'true'){
+		console.log(initial);
+		// if the produced moment 'temp' object is 'more' than 21 (i.e. or 22, or 23) hours later than now,
+		// i.e if the current time is e.g. 31-03-2017 00:30, i.e. if in your timezone the new day has started, and the produced time is 31-03-2017 23:35
+		if (moment().diff(temp, 'hour') <= -21 && dates[i].getAttribute('minus1day') !== 'true'){
 			temp.subtract(1, 'days');					// then subtract 1 day from that
-			dates[i].setAttribute('minus1day', true);
+			dates[i].setAttribute('minus1day', 'true');
 		}
 
 
@@ -339,8 +339,7 @@ if (relativeDates === true) {
 	// recalculate the timestamps in relative format every 10 sec
 	(function(){
 		convertDates();
-		// setTimeout(arguments.callee, 1 * 10 * 1000);
-		setTimeout(arguments.callee, 1 * 2 * 1000);
+		setTimeout(arguments.callee, 1 * 10 * 1000);
 	})();
 
 
