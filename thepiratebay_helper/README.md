@@ -6,7 +6,8 @@ Additional features:
   - hiding non trusted, or 
   - show all
 - Added a keyboard shortcut \` to toggle highlight/hide,
-- Added an option to display torrent timestamps in relative format (and recalculates them for browse/search lists every 10 secs) _(enabled by default)_,
+- Added an option to display torrent timestamps in relative format (and recalculates them for browse/search lists every 10 secs) _(enabled by default)_,  
+_(the initial timestamps -converted to local timezone's offset- are tooltips: just hover mouse on a relative date to view)_, 
 - Added an option to add a sortable 'Ratio' (seeds/peers) column _(disabled by default)_. 
 
 You may also click on the e.g, `7/30 torrents are currently hidden) - click to toggle`  
