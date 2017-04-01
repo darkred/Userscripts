@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6h
-// @date        2017.3.31
+// @version     0.9.6i
+// @date        2017.4.2
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
@@ -316,11 +316,10 @@ function convertDates() {
 
 
 
-		console.log(initial);
-		// if the produced moment 'temp' object is 'more' than 21 (i.e. or 22, or 23) hours later than now,
-		// i.e if the current time is e.g. 31-03-2017 00:30, i.e. if in your timezone the new day has started, and the produced time is 31-03-2017 23:35
-		if (moment().diff(temp, 'hour') <= -21 && dates[i].getAttribute('minus1day') !== 'true'){
-			temp.subtract(1, 'days');					// then subtract 1 day from that
+		// if the the examined time is later than now by 1 minutes or more  (e.g. for 1 min later it's: -1 min, -2 min, etc), i.e. it refers to yesterday,
+		// if (moment().diff(temp, 'hour') <= -21 && dates[i].getAttribute('minus1day') !== 'true'){
+		if (moment().diff(temp, 'minute') < 0 && dates[i].getAttribute('minus1day') !== 'true'){
+			temp.subtract(1, 'days');					// ..then subtract 1 day from it
 			dates[i].setAttribute('minus1day', 'true');
 		}
 
