@@ -11,14 +11,16 @@
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 //
-// This userscript uses jQuery (v1.11.1, i.e. that the page itself loads from inside http://www.metal-archives.com/min/index.php?g=js ),
-// the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
-// and the JavaScript library 'Mutation Summary' (https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein)
+// This userscript uses jQuery (v1.11.1, i.e. that the page itself loads from inside:  http://www.metal-archives.com/min/index.php?g=js ),
+// the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html ,
+// and the JavaScript library 'Mutation Summary' (https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein).
 //
 // Thanks a lot to RobG, Brock Adams and Mottie for their invaluable help.
 //
 // ==/UserScript==
 
+
+/* global MutationSummary */
 
 // CSS rules in order to show 'up' and 'down' arrows in each table header
 var stylesheet = `
@@ -95,7 +97,7 @@ function appendColumn(jNode) {
 			var re2 = /<a [^>]*>([0-9]*)[^(]/ ;       // (RegEx which matches the 'Reviews' number)
 			var m = re2.exec(k);                      // (Execute the RegEx and store it to variable m)
 
-			newCell = tbl.rows[i].cells[cols];    //
+			newCell = tbl.rows[i].cells[cols];
 			newCell.innerHTML = url[1] + m[1] + '</url>'; // ...and the Reviews number (which is also a link to the Reviews)
 		}
 	}
