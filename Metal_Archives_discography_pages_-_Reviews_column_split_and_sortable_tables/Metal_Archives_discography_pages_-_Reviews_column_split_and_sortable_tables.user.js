@@ -1,19 +1,21 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
-// @author      darkred
+// @author      RobG, Brock Adams, Mottie, darkred
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @include     http://www.metal-archives.com/bands/*
 // @include     http://www.metal-archives.com/band/*
 // @version     2.0
-// @date		2017.3.13
+// @date        2017.3.13
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 //
-// This userscript uses jQuery (the version that the page itself loads),
+// This userscript uses jQuery (v1.11.1, i.e. that the page itself loads from inside http://www.metal-archives.com/min/index.php?g=js ),
 // the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
 // and the JavaScript library 'Mutation Summary' (https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein)
+//
+// Thanks a lot to RobG, Brock Adams and Mottie for their invaluable help.
 //
 // ==/UserScript==
 
