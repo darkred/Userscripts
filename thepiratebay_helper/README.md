@@ -6,8 +6,9 @@ Additional features:
   - hiding non trusted, or 
   - show all
 - Added a keyboard shortcut \` to toggle highlight/hide,
-- Added an option to display torrent timestamps in relative format (and recalculates them for browse/search lists every 10 secs) _(enabled by default)_,  
+- Added an option to display torrent timestamps in relative format (and recalculates them for browse/search lists every 10 secs) _(enabled by default)_ 
 _(the initial timestamps -converted to local timezone's offset- are tooltips: just hover mouse on a relative date to view)_, 
+- Added to swap the verified icons position with that of the comments _(enabled by default)_, 
 - Added an option to add a sortable 'Ratio' (seeds/peers) column _(disabled by default)_. 
 
 You may also click on the e.g, `7/30 torrents are currently hidden) - click to toggle`  
@@ -20,7 +21,7 @@ to toggle highlight/hide *(and this is reflected in GM_config too)*.
 
 
 <u>Screenshots</u>:  
-[![](https://i.imgur.com/UjfPtJis.jpg)](https://i.imgur.com/UjfPtJi.jpg) [![](https://i.imgur.com/LRIXDwys.jpg)](https://i.imgur.com/LRIXDwy.jpg) [![](https://s3.amazonaws.com/uso_ss/21237/thumb.jpg?1366305203)](http://s3.amazonaws.com/uso_ss/21237/large.jpg?1366305203) [![](https://i.imgur.com/lAJiCJcs.jpg)](https://i.imgur.com/lAJiCJc.jpg) [![](https://i.imgur.com/wyyJiujs.jpg)](https://i.imgur.com/wyyJiuj.jpg)
+[![](https://i.imgur.com/aElkE5Ts.jpg)](https://i.imgur.com/aElkE5T.jpg) [![](https://i.imgur.com/LRIXDwys.jpg)](https://i.imgur.com/LRIXDwy.jpg) [![](https://s3.amazonaws.com/uso_ss/21237/thumb.jpg?1366305203)](http://s3.amazonaws.com/uso_ss/21237/large.jpg?1366305203) [![](https://i.imgur.com/lAJiCJcs.jpg)](https://i.imgur.com/lAJiCJc.jpg) [![](https://i.imgur.com/wyyJiujs.jpg)](https://i.imgur.com/wyyJiuj.jpg)
 
 <br/>
 

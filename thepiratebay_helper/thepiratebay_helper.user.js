@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6i
-// @date        2017.4.2
+// @version     0.9.6j
+// @date        2017.4.21
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
@@ -61,7 +61,8 @@ GM_config.init('TPB Helper settings',{
 	tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
 	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:',	section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'},
 	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true},
-	sortableRtColumn: {label: 'Add a sortable Ratio column?', type: 'checkbox', default: false}
+	sortableRtColumn: {label: 'Add a sortable Ratio column?', type: 'checkbox', default: false},
+	swapVerifiedIconsWithComments: {label: 'Swap the verified icons with the Comments icon?', type: 'checkbox', default: true}
 },{
 	save: function(){location.reload();}
 });
@@ -74,6 +75,7 @@ var tpboffset = GM_config.get('tpboffset');
 var enhanceVisibility = GM_config.get('enhanceVisibility');
 var relativeDates = GM_config.get('relativeDates');
 var sortableRtColumn = GM_config.get('sortableRtColumn');
+var swapVerifiedIconsWithCommentsChoice = GM_config.get('swapVerifiedIconsWithComments');
 
 
 
@@ -123,7 +125,9 @@ if (sortableRtColumn === true) {
 }
 
 
-
+if (swapVerifiedIconsWithCommentsChoice === true) {
+	swapVerifiedIconsWithComments();
+}
 
 
 //Check page
@@ -207,6 +211,30 @@ function getAllTableLines(){
 
 
 
+function swapVerifiedIconsWithComments(){
+
+	// in order to swap the verified icons position with that of the comments
+	$( '[title ~= "comments."]' ).each(function() {
+		if (($(this).parent().parent().html().indexOf('title="VIP"') > -1) ||
+			($(this).parent().parent().html().indexOf('title="Trusted"') > -1) ||
+			($(this).parent().parent().html().indexOf('title="Moderator"') > -1) ||
+			($(this).parent().parent().html().indexOf('Helper') > -1) ) {
+				// $(this).next().insertBefore($(this));
+				$(this).parent().children().last().insertBefore($(this));
+		}
+	});
+
+
+	// // in order to move the verified icons before each uploader handle
+	// $('img[title="VIP"], img[title="Trusted"], img[title="Moderator"], img[title="Helper"]').each(function() {
+	// 	$(this).insertBefore($(this).parent().parent().parent().parent().children().last().children().first());
+	// 	// $(this).insertAfter($(this).parent().parent().parent().parent().children().last().children().first());
+	// });
+
+}
+
+
+
 
 
 
@@ -226,6 +254,7 @@ function hideNonTrusted() {
 			counter++;
 		}
 	});
+	// $('tr > td:nth-child(4)').css('text-align', 'right');
 
 }
 
