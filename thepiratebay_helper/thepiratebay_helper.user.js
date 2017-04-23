@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6j
-// @date        2017.4.21
+// @version     0.9.6k
+// @date        2017.4.24
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
@@ -185,9 +185,19 @@ function toggleHide() {
 			$(getAllTableLines()).each(function() {
 				$(this).children('td').show();
 			});
+
+			if (swapVerifiedIconsWithCommentsChoice === true) {
+				restoreCommentIconsPosition();
+			}
+
 			$('#TimeChangerConfig').nextAll().eq(1).html('<i>click here (or press `) to view only verified torrents</i>');
 			flagHide = false;
 		} else {
+
+			if (swapVerifiedIconsWithCommentsChoice === true) {
+				swapVerifiedIconsWithComments();
+			}
+
 			counter = 0;
 			hideNonTrusted();
 			$('#TimeChangerConfig').nextAll().eq(1).html('<i>' + counter  + ' non verified torrents hidden - click here or press ` to view all torrents</i>');
@@ -234,6 +244,17 @@ function swapVerifiedIconsWithComments(){
 }
 
 
+
+function restoreCommentIconsPosition(){
+	$( '[title ~= "comments."]' ).each(function() {
+		if (($(this).prev().html().indexOf('title="VIP"') > -1) ||
+			($(this).prev().html().indexOf('title="Trusted"') > -1) ||
+			($(this).prev().html().indexOf('title="Moderator"') > -1) ||
+			($(this).prev().html().indexOf('Helper') > -1) ) {
+				$(this).prev().insertAfter($(this));
+		}
+	});
+}
 
 
 
