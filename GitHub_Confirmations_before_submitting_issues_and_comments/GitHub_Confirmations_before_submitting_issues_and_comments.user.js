@@ -16,10 +16,10 @@
 
 		// For submitting issues in issue title textbox via Ctrl+Enter or Enter
 
-		var targArea = document.querySelector('#issue_title'); // New issue title
-		function manageKeyEvents3(zEvent) {
-			document.querySelector('#issue_title').blur();
-			document.querySelector('#issue_title').focus();
+		var targArea1 = document.querySelector('#issue_title'); // New issue title
+		function manageKeyEvents1(zEvent) {
+			targArea1.blur();
+			targArea1.focus();
 			if ((zEvent.ctrlKey && zEvent.keyCode === 13) || zEvent.keyCode === 13) {
 				if (confirm('Are you sure?') === false) {
 					zEvent.stopPropagation();
@@ -30,17 +30,17 @@
 				}
 			}
 		}
-		if (targArea !== null) {targArea.addEventListener('keydown', manageKeyEvents3);}
+		if (targArea1 !== null) {targArea1.addEventListener('keydown', manageKeyEvents1);}
 
 
 		// ------------------------------------------------------------------------------------------------
 
 
 		// For submitting issues in issue body textarea via Ctrl+Enter
-		var targArea1 = document.querySelector('#issue_body');          // New issue textarea
-		function manageKeyEvents1(zEvent) {
-			document.querySelector('#issue_body').blur();
-			document.querySelector('#issue_body').focus();
+		var targArea2 = document.querySelector('#issue_body');          // New issue textarea
+		function manageKeyEvents2(zEvent) {
+			targArea2.blur();
+			targArea2.focus();
 			if (zEvent.ctrlKey && zEvent.keyCode === 13) {
 				if (confirm('Are you sure?') === false) {
 					zEvent.stopPropagation();
@@ -51,17 +51,17 @@
 				}
 			}
 		}
-		if (targArea1 !== null) { targArea1.addEventListener('keydown', manageKeyEvents1); }
+		if (targArea2 !== null) { targArea2.addEventListener('keydown', manageKeyEvents2); }
 
 
 		// ------------------------------------------------------------------------------------------------
 
 
 		// For submitting issues in new comment textarea via Ctrl+Enter
-		var targArea2 = document.querySelector('#new_comment_field');   // New comment textarea
-		function manageKeyEvents2(zEvent) {
-			document.querySelector('#new_comment_field').blur();
-			document.querySelector('#new_comment_field').focus();
+		var targArea3 = document.querySelector('#new_comment_field');   // New comment textarea
+		function manageKeyEvents3(zEvent) {
+			targArea3.blur();
+			targArea3.focus();
 			if (zEvent.ctrlKey && zEvent.keyCode === 13) {
 				if (confirm('Are you sure?') === false) {
 					zEvent.stopPropagation();
@@ -72,7 +72,7 @@
 				}
 			}
 		}
-		if (targArea2 !== null) { targArea2.addEventListener('keydown', manageKeyEvents2); }
+		if (targArea3 !== null) { targArea3.addEventListener('keydown', manageKeyEvents3); }
 
 
 
