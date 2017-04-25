@@ -4,7 +4,7 @@
 // @author      darkred
 // @description Creates a confirmation popup whenever attempting to create an issue or post comment via Ctrl+Enter in GitHub
 // @include     https://github.com/*
-// @version     2017.4.25
+// @version     2017.4.26
 // @grant       none
 // ==/UserScript==
 
