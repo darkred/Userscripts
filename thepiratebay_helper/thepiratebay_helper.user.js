@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6k
-// @date        2017.4.24
+// @version     0.9.6l
+// @date        2017.4.30
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
@@ -23,6 +23,13 @@
 // ==/UserScript==
 
 /* global $:false, GM_config, moment */
+
+
+
+if (document.querySelector('.viewswitch > a:nth-child(1)') && document.querySelector('.viewswitch > a:nth-child(1)').outerHTML.indexOf('Single</a>') !== -1 ) {
+	$('body').append(`<center>In order thepiratebay helper to work, please switch the view mode of the search results to single-line <i>(click: 'Single' in the table header, and then reload the page (F5)</i>)</center>`);
+	throw new Error('Not in single-line view mode. The usercript exits.');
+}
 
 
 
@@ -45,7 +52,6 @@ moment.updateLocale('en', {
 		yy: '%d years'
 	}
 });
-
 
 
 
