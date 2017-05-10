@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     2016.11.12
+// @version     2017.5.11
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://greasyfork.org/*/scripts
@@ -36,8 +36,7 @@
 	// Note: you may uncomment line 35 (and comment out line 36), in order the filtered scripts to be highlighted khaki -instead of hiding them- so that you can check which scripts have been filtered
 	function insertStyle() {
 		var style = document.createElement('style');
-		// style.textContent = 'article.filtered { background-color:khaki; !important;} .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:block !important; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333; text-decoration:line-through !important } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
-		style.textContent = 'article.filtered { display:none !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:block !important; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333; text-decoration:line-through !important } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
+		style.textContent = 'li.filtered { display:none !important; } .filter-status { margin-left: 6px; } .filter-switches { display:none; } *:hover > .filter-switches { display:block !important; } .filter-on, .filter-off {display:block !important; width: 97px;}} .filter-switches a { text-decoration:none !important; color:inherit; cursor:pointer; } .filter-switches a { margin-left: 8px; padding: 0 4px; } a.filter-on { background-color:#ffcccc; color:#333333; text-decoration:line-through !important } a.filter-off { background-color:#ccffcc; color:#333333 }  ';
 		style.type = 'text/css';
 		document.querySelector('head').appendChild(style);
 	}
@@ -62,10 +61,10 @@
 			numActiveFilters = activeFilters.length,
 			numFiltered = 0;
 		for (var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
-			td.parentNode.className = '';
+			td.parentNode.parentNode.className = '';
 			for (var j = 0; j < numActiveFilters; j++) {
 				if (td.innerText.match(activeFilters[j])) {
-					td.parentNode.className = 'filtered';
+					td.parentNode.parentNode.className = 'filtered';
 					numFiltered++;
 					break;
 				}
