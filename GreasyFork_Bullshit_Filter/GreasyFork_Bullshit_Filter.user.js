@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
-// @version     2017.5.15
+// @version     2017.5.16
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://greasyfork.org/*/scripts
@@ -13,9 +13,12 @@
 // @include     https://greasyfork.org/*/scripts/search?*
 // @include     https://greasyfork.org/*/scripts?set=*
 // @include     https://greasyfork.org/*/scripts?sort=*
-// @include     https://greasyfork.org/en/scripts?utf8=*
+// @include     https://greasyfork.org/*/scripts?q=*
+// @include     https://greasyfork.org/*/scripts?utf8=*
 // @include     https://greasyfork.org/*/forum/
+// @include     https://greasyfork.org/*/forum/discussions
 // @include     https://greasyfork.org/*/forum/discussions/*
+// @include     https://greasyfork.org/*/forum/categories/*
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
