@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @author      kuehlschrank, darkred
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
-// @version     2017.5.16.1
+// @version     2017.5.18
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 // @grant       none
 // @include     https://greasyfork.org/*/scripts*
@@ -11,7 +11,7 @@
 // @exclude     https://greasyfork.org/*/scripts/by-site
 // @exclude     https://greasyfork.org/*/scripts/by-site?*
 // @include     https://greasyfork.org/*/forum*
-// @exclude     https://greasyfork.org/*/forum/discussion*
+// @exclude     https://greasyfork.org/*/forum/discussion/*
 // @exclude     https://greasyfork.org/*/forum/profile*
 // @exclude     https://greasyfork.org/*/forum/messages*
 // @exclude     https://greasyfork.org/*/forum/categories
