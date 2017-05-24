@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
 // @author      RobG, Brock Adams, Mottie, darkred
@@ -6,7 +6,7 @@
 // @include     http://www.metal-archives.com/bands/*
 // @include     http://www.metal-archives.com/band/*
 // @version     2.0
-// @date        2017.3.13
+// @date        2017.5.24
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
@@ -113,17 +113,16 @@ function appendColumn(jNode) {
 }
 
 
-
-var muteObserver = new MutationSummary ( {
-	callback: handleDiscographyChanges,
-	rootNode: $('#band_disco')[0],
-	queries: [ {element: '.discog'} ]
-} );
-
-
 function handleDiscographyChanges (muteSummaries) {
 	var mSummary    = muteSummaries[0];
 	if (mSummary.added.length) {
 		appendColumn ( $(mSummary.added[0]) );
 	}
 }
+
+
+new MutationSummary ( {
+	callback: handleDiscographyChanges,
+	rootNode: $('#band_disco')[0],
+	queries: [ {element: '.discog'} ]
+} );
