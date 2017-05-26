@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name        SunXDCC - normalize values
 // @namespace   darkred
+// @author      darkred
+// @description It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
 // @include     http://sunxdcc.com/#search
 // @include     https://sunxdcc.com/#search
 // @include     https://sunxdcc.com/?searchterm=*

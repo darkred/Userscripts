@@ -3,6 +3,7 @@
 // @include     /https?:\/\/(www\.)?ixirc\.com\/\?(q|cid)=.*/
 // @namespace   darkred
 // @author      darkred, Mottie
+// description  Makes the search results sortable
 // @grant       none
 // @run-at      document-idle
 // @require     http://code.jquery.com/jquery-3.2.1.min.js
