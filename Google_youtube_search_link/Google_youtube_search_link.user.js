@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Google YouTube search link
-// @description  Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, Youtube, News, Maps, Shopping, ...)
+// @description  Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
 // @version      2017.6.8
 // @author       wOxxOm, darkred
 // @namespace    darkred
