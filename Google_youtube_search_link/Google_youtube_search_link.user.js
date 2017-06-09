@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Google YouTube search link
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2017.6.8
+// @version      2017.6.9
 // @author       wOxxOm, darkred
 // @namespace    darkred
 // @license      MIT License
@@ -47,7 +47,7 @@ function process(mutations) {
 
 		var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
 		var text =  '<div class="hdtb-mitem hdtb-imb" id="__YOUTUBE_SEARCH__">' +
-					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">Youtube</a>' +
+					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">YouTube</a>' +
 					'</div>';
 		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
 	}
