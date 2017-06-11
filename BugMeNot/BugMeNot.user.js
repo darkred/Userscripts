@@ -6,7 +6,7 @@
 // @include     http://*
 // @include     https://*
 // @exclude     http://bugmenot.com/*
-// @version     2016.10.27
+// @version     2017.06.09
 // @grant       GM_xmlhttpRequest
 // @grant       GM_setValue
 // @grant       GM_getValue
@@ -49,7 +49,7 @@ var domainname = myString.match(domainnameRE);
 domainname = domainname[2];
 
 // If the current domain name doesn't match the stored lastURL, then reset the counter
-if (GM_getValue('lastURL').indexOf(domainname) == -1){
+if (GM_getValue('lastURL', '').indexOf(domainname) == -1){
 	var counter = 0;
 	GM_setValue('counter', 0);
 } else {
