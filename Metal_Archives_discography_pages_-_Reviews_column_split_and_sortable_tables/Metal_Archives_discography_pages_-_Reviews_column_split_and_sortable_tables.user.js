@@ -3,10 +3,9 @@
 // @namespace   darkred
 // @author      RobG, Brock Adams, Mottie, darkred
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
-// @include     http://www.metal-archives.com/bands/*
-// @include     http://www.metal-archives.com/band/*
-// @version     2.0
-// @date        2017.5.24
+// @include     /^https?:\/\/www\.metal-archives\.com/bands?/.*$/
+// @version     2.0.1
+// @date        2017.6.11
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
