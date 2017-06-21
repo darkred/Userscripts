@@ -4,15 +4,8 @@
 // @authors     emptyparad0x, darkred
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 // @version     0.9.6l
-// @date        2017.4.30
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/search.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/browse/.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/user/.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/recent.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/torrent.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/tv.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/music.*$/
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/top.*$/
+// @date        2017.6.21
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|tv|music|top).*$/
 // @grant       none
 // @run-at      document-idle
 // @require     https://code.jquery.com/jquery-3.2.0.min.js
