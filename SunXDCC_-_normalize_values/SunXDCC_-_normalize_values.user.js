@@ -3,8 +3,10 @@
 // @namespace   darkred
 // @author      darkred
 // @description It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
-// @include     /^https?:\/\/(www\.)?sunxdcc\.com.*/
-// @version     2017.6.2
+// @include     http://sunxdcc.com/#search
+// @include     https://sunxdcc.com/#search
+// @include     https://sunxdcc.com/?searchterm=*
+// @version     1
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // ==/UserScript==
@@ -51,5 +53,4 @@ new MutationSummary({
 	callback: normalizeValues,
 	rootNode: document.querySelector('#content'),
 	queries: [{ element: '.table' }],
-	// queries: [{ element: '.results > .table:first-child' }],
 });
