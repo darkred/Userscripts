@@ -1,4 +1,9 @@
-This script applies to rarbg.com. It converts torrent timestamps to relative time.  
-(Since v.2 the timestamps converted to local timezone are also available as tooltips: just hover mouse on a relative date to view).  
+This script applies to rarbg.to.  
 
-It uses [moment.js](http://momentjs.com/), [moment-timezone.js](http://momentjs.com/timezone/) and [jsTimezoneDetect](https://bitbucket.org/pellepim/jstimezonedetect)
+It converts torrent timestamps to relative format.  
+
+*Note: if you use it in conjunction with my script: [RARBG - torrent and magnet links](https://greasyfork.org/scripts/23493)  
+make sure in your script manager that that this script runs* **before** *that one*.
+
+
+It uses [moment.js](http://momentjs.com/), [moment-timezone.js](http://momentjs.com/timezone/) and [jsTimezoneDetect](https://bitbucket.org/pellepim/jstimezonedetect) 
