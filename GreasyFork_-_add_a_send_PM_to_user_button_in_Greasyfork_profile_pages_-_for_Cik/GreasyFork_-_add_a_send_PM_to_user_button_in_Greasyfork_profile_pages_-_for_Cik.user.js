@@ -4,7 +4,7 @@
 // @description It adds a 'send PM to user' button in Greasyfork profile pages
 // @include     https://greasyfork.org/*/users/*
 // @include     https://greasyfork.org/*/forum/messages/add
-// @version     2016.12.16
+// @version     2017.11.4
 // @grant       GM_getResourceURL
 // @resource    icon http://i.imgur.com/ZU0xS0c.jpg
 // @run-at      document-idle
@@ -19,20 +19,21 @@
 if (document.querySelector('.user-profile-link > a:nth-child(1)') !== null) {
 	var yourProfileName = document.querySelector('.user-profile-link > a:nth-child(1)').innerHTML;
 }
-if (document.querySelector('#user-profile > h1:nth-child(1)') !== null) {
-	var currentProfileName = document.querySelector('#user-profile > h1:nth-child(1)').textContent.replace('\'s Profile', '');
+if (document.querySelector('.text-content > h2:nth-child(1)') !== null) {
+	var targetProfileName = document.querySelector('.text-content > h2:nth-child(1)').textContent.replace('\'s Profile', '');
 }
 if (window.location.href.indexOf('users') !== -1 // if current URL is a profile page
-	&& yourProfileName !== currentProfileName) { // ... and this profile page is not yours
-	sessionStorage.setItem('recipient', currentProfileName); // store in sessionStorage the profileName (it will be inserted in the 'Recipients' textbox ) -after you press the button-
-	var referenceNode = document.querySelector('#user-profile > h1:nth-child(1)');
+	&& yourProfileName !== targetProfileName) { // ... and this profile page is not yours
+	sessionStorage.setItem('recipient', targetProfileName); // store in sessionStorage the profileName (it will be inserted in the 'Recipients' textbox ) -after you press the button-
+	var referenceNode = document.querySelector('.text-content > h2:nth-child(1)');
 	var a = document.createElement('input');
 	referenceNode.appendChild(a);
 	a.style.padding = '0px 12px';
 	a.setAttribute('type', 'image');
-	a.setAttribute('src', GM_getResourceURL('icon'));
+	// a.setAttribute('src', GM_getResourceURL('icon'));	// the GM_getResourceURL('icon') results in displaying a "Submit Query" text, instead of the pm icon in GM 3.17 (https://github.com/greasemonkey/greasemonkey/issues/2341)
+	a.setAttribute('src', 'http://i.imgur.com/ZU0xS0c.jpg');
 	a.id = 'pmButton';
-	a.title = 'Send PM to ' + currentProfileName;
+	a.title = 'Send PM to ' + targetProfileName;
 	var lang = String(window.location).match(/^https:\/\/greasyfork\.org\/([a-zA-Z-]+)\/.*$/)[1];
 	document.getElementById('pmButton').addEventListener('click', function() {
 		window.open('https://greasyfork.org/' + lang + '/forum/messages/add', '_self');
