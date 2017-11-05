@@ -3,12 +3,20 @@
 // @namespace   darkred
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
 // @include     https://www.instagram.com/*
-// @version     2016.11.18
-// @grant       none
-// @require     https://code.jquery.com/jquery-3.0.0.min.js
+// @version     2017.11.5
+// @grant       GM_addStyle
+// @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
 
+
+GM_addStyle(`
+
+.counter {
+    color: #D9D9D9 !important;
+  }
+
+`);
 
 
 
@@ -44,6 +52,7 @@ function createDiv(){
 	div.style.top = '1px';
 	div.style.right = '1px';
 	div.style.position = 'fixed';
+	div.className = 'counter';
 }
 
 
@@ -82,15 +91,15 @@ if (document.URL !== 'https://www.instagram.com/' &&
 
 
 
-$(document).arrive('article ._5axto', function() {		// 'article .5axto'
+$(document).arrive('article._mesn5', function() {		// the avatar in the profile page
 	createDiv();
 	observer();
 });
 
 
 
-$(document).leave('article ._5axto', function() {
-	if (!document.querySelector('article ._5axto')) {
+$(document).leave('article._mesn5', function() {
+	if (!document.querySelector('article._mesn5')) {
 		div.remove();
 		observer1.disconnect();
 	}
