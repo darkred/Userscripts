@@ -11,7 +11,7 @@
 
 // cases for the selectors:
 // 1. https://www.opensubtitles.org/en/search/subs
-// 2.https://www.opensubtitles.org/en/search/sublanguageid-all/idmovie-513313
+// 2. https://www.opensubtitles.org/en/search/sublanguageid-all/idmovie-513313
 // 3. https://www.opensubtitles.website/en/opensubtitles-player.subtitles-download/subtitles/7150264
 
 var allLinks = document.querySelectorAll(`
