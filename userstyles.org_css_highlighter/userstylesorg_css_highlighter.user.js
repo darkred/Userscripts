@@ -2,7 +2,7 @@
 // @name        userstyles.org css highlighter
 // @namespace   trespassersW
 // @version     2017.10.21
-// @description Formats and highlights CSS code shown after [Show CSS] clicking.
+// @description Formats and highlights CSS code shown after [Show CSS] clicking. (works with the new userstyles.org layout).
 // @author      trespassersW
 // @contributor darkred
 //
