@@ -4,9 +4,8 @@
 // @description Converts the subtitles download links to direct ones, in order to avoid the redirection to download pages that display ads.
 // @include     https://www.opensubtitles.org/*/search/*
 // @include     https://www.opensubtitles.org/*/subtitles/*
-// @version     1
+// @version     2017.11.6
 // @grant       none
-// @require     https://code.jquery.com/jquery-3.2.1.min.js
 // ==/UserScript==
 
 
@@ -35,9 +34,9 @@ if (old_element){
 
 // in order to avoid the redirections when you click the "Download" button on a subtitle page.
 document.querySelector('#bt-dwl-bt').addEventListener('click', function(){
-	$('#bt-dwl-bt').off();
+	$('#bt-dwl-bt').off();		// the script uses the page's jQuery, v1.12.2 (https://static.opensubtitles.org/libs/js/jquery/jquery.min.js)
 });
 
-$('#bt-dwl-bt').on('click', function(){
+document.querySelector('#bt-dwl-bt').addEventListener('click', function(){
 	window.location.href = document.querySelector('#bt-dwl-bt').href;
 });
