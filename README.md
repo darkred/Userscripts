@@ -5,7 +5,7 @@ This repo contains my userscripts.
 ### Userscripts
 
 - [Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles](https://github.com/darkred/Userscripts/tree/master/Bugzilla_-_reveal_the_Depends%2C_Blocks%2C_See_Also_and_Duplicates_bug_titles#readme) - Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts.
-- [BugMeNot](https://github.com/darkred/Userscripts/blob/master/BugMeNot/README.md) - It fetches logins from bugmenot.com and autofills the login form.
+- [BugMeNot](https://github.com/darkred/Userscripts/tree/master/BugMeNot/README.md) - It fetches logins from bugmenot.com and autofills the login form.
 - [Firefox for desktop - list fixed bugs in Mercurial](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial#readme) - It generates lists of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
 - [Firefox for desktop - list fixed bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_as_sortable_table#readme) - It generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
 - [Firefox for desktop - list modified bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_modified_bugs_in_Mercurial_as_sortable_table#readme) - It generates lists of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs.
@@ -21,17 +21,19 @@ This repo contains my userscripts.
 - [Markdown toolbar for reddit.com](https://github.com/darkred/Userscripts/tree/master/Markdown_toolbar_for_reddit.com#readme) - Creates a Markdown toolbar whenever you make/edit text posts or comments in reddit.com.
 - [Metal Archives (discography pages) - Reviews column split and sortable tables](https://github.com/darkred/Userscripts/tree/master/Metal_Archives_discography_pages_-_Reviews_column_split_and_sortable_tables#readme) - Splits the Reviews column into Reviews(count) - and Ratings and makes the tables in all discography tabs sortable.
 - [mozillaZine Forums - insert titles to bug links](https://github.com/darkred/Userscripts/tree/master/mozillaZine_Forums_-_insert_titles_to_bug_links#readme) - Inserts titles to bug links that are plain URLs, in forums.mozillazine.org.
+- [OpenSubtitles - direct download links](https://github.com/darkred/Userscripts/tree/master/OpenSubtitles_-_direct_download_links#readme) - Converts the subtitles download links to direct ones, in order to avoid the redirection to download pages that display ads.
 - [OpenUserJS Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/OpenUserJS_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 - [RARBG - convert torrent timestamps to relative format](https://github.com/darkred/Userscripts/tree/master/RARBG_-_convert_torrent_timestamps_to_relative_format#readme) - Convert torrent upload timestamps to local timezone or to relative format.
 - [RARBG - torrent and magnet links](https://github.com/darkred/Userscripts/tree/master/RARBG_-_torrent_and_magnet_links#readme) - Adds a column in search results for direct torrent or magnet link downloading. 
 - [Reddit Infinite Scrolling](https://github.com/darkred/Userscripts/tree/master/Reddit_Infinite_Scrolling#readme) - Adds infinite scrolling to subreddits and to comments.
 - [Rotten Tomatoes Decimal Rating](https://github.com/darkred/Userscripts/tree/master/Rotten_Tomatoes_Decimal_Rating#readme) - Changes base-5 Rating of Rotten Tomatoes to base-10.
 - [StackExchange sites - convert dates to local timezone](https://github.com/darkred/Userscripts/tree/master/StackExchange_sites_-_convert_dates_to_local_timezone#readme) - Converts dates to your local timezone.
-- [SunXDCC - normalize values](https://github.com/darkred/Userscripts/blob/master/SunXDCC_-_normalize_values#readme) - It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
+- [SunXDCC - normalize values](https://github.com/darkred/Userscripts/tree/master/SunXDCC_-_normalize_values#readme) - It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
 - [thepiratebay - add a sortable Ratio column](https://github.com/darkred/Userscripts/tree/master/thepiratebay_-_add_a_sortable_Ratio_column#readme) - Adds a sortable "Ratio" column.
 - [thepiratebay helper](https://github.com/darkred/Userscripts/tree/master/thepiratebay_helper#readme) - Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether.
 - [Twitter - add unread notifications count in the tab title](https://github.com/darkred/Userscripts/tree/master/Twitter_-_add_unread_notifications_count_in_the_tab_title#readme) - Adds unread notifications count in the tab title.
 - [Userstyles Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/Userstyles_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
+- [userstyles.org css highlighter](https://github.com/darkred/Userscripts/blob/master/userstyles.org_css_highlighter/README.md) - Formats and highlights CSS code shown after [Show CSS] clicking *(It's modified version of https://greasyfork.org/en/scripts/41-userstyles-org-css-highlighter (by trespassersW) in order to work with the new userstyles.org layout)*.
 
 ## External profiles
 
