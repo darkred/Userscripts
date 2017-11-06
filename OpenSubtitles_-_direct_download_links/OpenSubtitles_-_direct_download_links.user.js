@@ -35,8 +35,5 @@ if (old_element){
 // in order to avoid the redirections when you click the "Download" button on a subtitle page.
 document.querySelector('#bt-dwl-bt').addEventListener('click', function(){
 	$('#bt-dwl-bt').off();		// the script uses the page's jQuery, v1.12.2 (https://static.opensubtitles.org/libs/js/jquery/jquery.min.js)
-});
-
-document.querySelector('#bt-dwl-bt').addEventListener('click', function(){
 	window.location.href = document.querySelector('#bt-dwl-bt').href;
 });
