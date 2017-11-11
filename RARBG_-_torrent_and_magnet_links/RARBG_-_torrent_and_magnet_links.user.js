@@ -1,9 +1,9 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @include     /^(https?:)?\/\/(www\.)?rarbg\.(to|com)\/(torrents\.php.*|catalog\/.*|top10)$/
-// @version     2017.10.28
+// @version     2017.11.11
 // @grant       none
 // ==/UserScript==
 
@@ -49,7 +49,7 @@ function appendColumn(title) {
 			// else generate it via an ajax request
 			let href = oldColumn[i].firstChild.href;
 			newColumn[i].innerHTML += '&nbsp;<a class="xhrMagnetLink" data-href="' + href + '" href="#"><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
-			newColumn[i].lastChild.title = 'ML generated via an ajax request';
+			newColumn[i].lastChild.title = 'ML via XHR';
 		}
 	}
 }
