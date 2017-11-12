@@ -4,8 +4,8 @@
 // @authors     emptyparad0x, darkred
 // @license     MIT
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6l
-// @date        2017.6.21
+// @version     0.9.6m
+// @date        2017.11.13
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|tv|music|top).*$/
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.0.min.js
@@ -60,9 +60,10 @@ GM_config.init('TPB Helper settings',{
 	// timezone: {label: 'Text for Timezone:', type: 'text', cols: 10, default: 'EST'},
 	tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
 	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:',	section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'},
+	keepNonTrustedWithComments: {label: '...when toggle, include those non-trusted which have comments:', type: 'checkbox', default: true},
 	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true},
-	sortableRtColumn: {label: 'Add a sortable Ratio column?', type: 'checkbox', default: false},
-	swapVerifiedIconsWithComments: {label: 'Swap the verified icons with the Comments icon?', type: 'checkbox', default: true}
+	swapVerifiedIconsWithComments: {label: 'Swap the verified icons with the Comments icon:', type: 'checkbox', default: true},
+	sortableRtColumn: {label: 'Add a sortable Ratio column?', type: 'checkbox', default: true}
 },{
 	save: function(){location.reload();}
 });
@@ -73,6 +74,7 @@ $('#TimeChangerConfig').click(function(){GM_config.open();}).css({'cursor': 'poi
 // var timezone = GM_config.get('timezone');
 var tpboffset = GM_config.get('tpboffset');
 var enhanceVisibility = GM_config.get('enhanceVisibility');
+var keepNonTrustedWithComments = GM_config.get('keepNonTrustedWithComments');
 var relativeDates = GM_config.get('relativeDates');
 var sortableRtColumn = GM_config.get('sortableRtColumn');
 var swapVerifiedIconsWithCommentsChoice = GM_config.get('swapVerifiedIconsWithComments');
@@ -152,20 +154,27 @@ if (url.indexOf(host + '/torrent/') !== -1) {
 	if (enhanceVisibility === 'Hide') {
 
 		hideNonTrusted();
-		//     alert (counter);
 		if (counter > 0) {
-			document.querySelector('#TimeChangerConfig').insertAdjacentHTML('afterend', '<br><i>' + counter  + ' non verified torrents hidden - click here or press ` to view all torrents</i>');
+			document.querySelector('#TimeChangerConfig').insertAdjacentHTML('afterend', '<br><i>' + counter  + ' non verified torrents hidden <br/> click here or press ` to view all torrents with comments, <br/> or press ~ to view all</i>');
 		}
 		var flagHide = true;
 
 
 		$('#TimeChangerConfig').nextAll().eq(1).on('click', toggleHide);
-		// $('#TimeChangerConfig').nextAll().eq(1).on('click', hideNonTrusted);
+
+		var listener1 = new window.keypress.Listener();
+		listener1.simple_combo('`', function() {
+			toggleHide();
+		});
 
 		var listener2 = new window.keypress.Listener();
-		listener2.simple_combo('`', function() {
-			toggleHide();
-			// hideNonTrusted();
+		listener2.simple_combo('~', function() {
+			$(getAllTableLines()).each(function() {
+				$(this).show();
+			});
+			// if (swapVerifiedIconsWithCommentsChoice === true) {
+			// 	restoreCommentIconsPosition();
+			// }
 		});
 
 
@@ -173,33 +182,43 @@ if (url.indexOf(host + '/torrent/') !== -1) {
 	}
 
 
-
-
-
 }
 
 
-function toggleHide() {
-	if (counter > 0) {
-		if (flagHide === true) {
-			$(getAllTableLines()).each(function() {
-				$(this).children('td').show();
-			});
 
-			if (swapVerifiedIconsWithCommentsChoice === true) {
-				restoreCommentIconsPosition();
+
+
+
+function toggleHide() {
+
+	if (counter > 0) {
+
+		$(getAllTableLines()).each(function() {
+			$(this).show();
+		});
+
+		if (swapVerifiedIconsWithCommentsChoice === true) {
+			swapVerifiedIconsWithComments();
+		}
+
+
+		if (flagHide === true) {
+
+			if (keepNonTrustedWithComments === true){
+				hideNonTrustedAndWithoutComments();
+			} else {
+				hideNonTrusted();
 			}
 
 			$('#TimeChangerConfig').nextAll().eq(1).html('<i>click here (or press `) to view only verified torrents</i>');
 			flagHide = false;
+
 		} else {
 
-			if (swapVerifiedIconsWithCommentsChoice === true) {
-				swapVerifiedIconsWithComments();
-			}
-
 			counter = 0;
+
 			hideNonTrusted();
+
 			$('#TimeChangerConfig').nextAll().eq(1).html('<i>' + counter  + ' non verified torrents hidden - click here or press ` to view all torrents</i>');
 			flagHide = true;
 		}
@@ -210,8 +229,8 @@ function toggleHide() {
 
 
 function getAllTableLines(){
-	if (  ($('#searchResult > TBODY > TR:last-child td a:last-child img').attr('alt') === 'Next')) {	// if there's a Next button, i.e. the search results are multi plage
-		return $('table#searchResult tbody tr').not('#searchResult > TBODY > TR:last-child');			// then ignore the last row of the table (the navigation links)
+	if (  ($('#searchResult > tbody > tr:last-child td a:last-child img').attr('alt') === 'Next')) {	// if there's a Next button, i.e. the search results are multi plage
+		return $('table#searchResult tbody tr').not('#searchResult > tbody > tr:last-child');			// then ignore the last row of the table (the navigation links)
 	} else {
 		return $('table#searchResult tbody tr');
 	}
@@ -229,8 +248,7 @@ function swapVerifiedIconsWithComments(){
 			($(this).parent().parent().html().indexOf('title="Trusted"') > -1) ||
 			($(this).parent().parent().html().indexOf('title="Moderator"') > -1) ||
 			($(this).parent().parent().html().indexOf('Helper') > -1) ) {
-				// $(this).next().insertBefore($(this));
-				$(this).parent().children().last().insertBefore($(this));
+			$(this).parent().children().last().insertBefore($(this));
 		}
 	});
 
@@ -245,17 +263,16 @@ function swapVerifiedIconsWithComments(){
 
 
 
-function restoreCommentIconsPosition(){
-	$( '[title ~= "comments."]' ).each(function() {
-		if (($(this).prev().html().indexOf('title="VIP"') > -1) ||
-			($(this).prev().html().indexOf('title="Trusted"') > -1) ||
-			($(this).prev().html().indexOf('title="Moderator"') > -1) ||
-			($(this).prev().html().indexOf('Helper') > -1) ) {
-				$(this).prev().insertAfter($(this));
-		}
-	});
-}
-
+// function restoreCommentIconsPosition(){
+// 	$( '[title ~= "comments."]' ).each(function() {
+// 		if (($(this).prev().html().indexOf('title="VIP"') > -1) ||
+// 			($(this).prev().html().indexOf('title="Trusted"') > -1) ||
+// 			($(this).prev().html().indexOf('title="Moderator"') > -1) ||
+// 			($(this).prev().html().indexOf('Helper') > -1) ) {
+// 			$(this).prev().insertAfter($(this));
+// 		}
+// 	});
+// }
 
 
 
@@ -263,21 +280,33 @@ function restoreCommentIconsPosition(){
 
 function hideNonTrusted() {
 	$(getAllTableLines()).each(function() {
-		if (($(this).html().indexOf('title="VIP"') > -1) ||
-			($(this).html().indexOf('title="Trusted"') > -1) ||
-			($(this).html().indexOf('title="Moderator"') > -1) ||
-			($(this).html().indexOf('Helper') > -1) ||
-			($(this).html().indexOf('src="https://piratebay.org/img/next.gif"') > -1)) {
-			//do nothing
-		} else {
-			// $(this).children('td').hide();
-			$(this).children('td').toggle();
+		if (   ($(this).html().indexOf('title="VIP"') === -1) &&
+			($(this).html().indexOf('title="Trusted"') === -1) && ($(this).html().indexOf('title="Moderator"') === -1) &&
+			($(this).html().indexOf('Helper') === -1) ){
+			$(this).hide();
 			counter++;
 		}
 	});
-	// $('tr > td:nth-child(4)').css('text-align', 'right');
-
 }
+
+
+
+
+function hideNonTrustedAndWithoutComments() {
+	$(getAllTableLines()).each(function() {
+		if (($(this).html().indexOf('title="VIP"') === -1) &&
+			($(this).html().indexOf('title="Trusted"') === -1) &&
+			($(this).html().indexOf('title="Moderator"') === -1) &&
+			($(this).html().indexOf('Helper') === -1) &&
+			($(this).html().indexOf('icon_comment.gif') === -1) ){
+			$(this).hide();
+			counter++;
+		}
+	});
+}
+
+
+
 
 
 
@@ -286,28 +315,28 @@ function highlight() {
 	// $('table#searchResult tbody tr').each(function() {
 	$(getAllTableLines()).each(function() {
 		if ($(this).html().indexOf('title="VIP"') > -1) {
-			$(this).children('td').css({
+			$(this).css({
 				'background-color': '#CFFECD'
 			});
 		} else if ($(this).html().indexOf('title="Trusted"') > -1) {
-			$(this).children('td').css({
+			$(this).css({
 				'background-color': '#F9D5DB'
 			}); // (initially it was FECDFE)   and then FECDD9
 		} else if ($(this).html().indexOf('title="Moderator"') > -1) {
-			$(this).children('td').css({
+			$(this).css({
 				'background-color': '#DCDCDC'
 			});
 		} else if ($(this).html().indexOf('Helper') > -1) { // Extra line
-			$(this).children('td').css({
+			$(this).css({
 				'background-color': '#33CCCC'
 			});
 		} else if ($(this).html().indexOf('src="https://piratebay.org/img/next.gif"') > -1) {
 			//do nothing
 		} else {
-			$(this).children('td').css({
+			$(this).css({
 				'opacity': '0.5'
 			});
-			$(this).children('td').css({
+			$(this).css({
 				'background-color': 'white'
 			});
 		}
@@ -320,7 +349,7 @@ function highlight() {
 
 function convertDates() {
 	// alert();
-	var dates = document.querySelectorAll('#searchResult > TBODY > TR > TD:nth-child(3)');
+	var dates = document.querySelectorAll('#searchResult > tbody > tr > td:nth-child(3)');
 	for (var i = 0; i < dates.length; i++) {
 		if (dates[i].title === '' ) {		// if it's the 1st time the function is called
 			var initial = dates[i].innerHTML.replace(/&nbsp;/g, ' ').replace(/<\/?b>/g, '');
@@ -367,7 +396,6 @@ function convertDates() {
 
 
 		// if the the examined time is later than now by 1 minutes or more  (e.g. for 1 min later it's: -1 min, -2 min, etc), i.e. it refers to yesterday,
-		// if (moment().diff(temp, 'hour') <= -21 && dates[i].getAttribute('minus1day') !== 'true'){
 		if (moment().diff(temp, 'minute') < 0 && dates[i].getAttribute('minus1day') !== 'true'){
 			temp.subtract(1, 'days');					// ..then subtract 1 day from it
 			dates[i].setAttribute('minus1day', 'true');
@@ -376,22 +404,17 @@ function convertDates() {
 
 		dates[i].innerHTML = temp.fromNow();
 		dates[i].title = temp.format('MM-DD-YYYY HH:mm');
-		// dates[i].title = initial;
 
 
 	}
 }
 
 if (relativeDates === true) {
-	// convertDates();
-
 	// recalculate the timestamps in relative format every 10 sec
 	(function(){
 		convertDates();
 		setTimeout(arguments.callee, 1 * 10 * 1000);
 	})();
-
-
 }
 
 function convertDatesInTorrentPage(){

@@ -3,13 +3,15 @@ It's a modified version of [PirateBay Time Changer](http://userscripts-mirror.or
 Additional features:
 - Now you may may choose in Settings via a dropdown menu between: 
   - highlighting trusted, 
-  - hiding non trusted, or 
+  - hiding non trusted, (optionally combined with the checkbox: `...when toggle, include those non-trusted which have comments`)
   - show all
-- Added a keyboard shortcut \` to toggle highlight/hide,
+- Added two keyboard shortcuts ( \` and \~ ) to toggle between: 
+  - view trusted only, and view trusted incl. non-trusted with comments
+  - view all
 - Added an option to display torrent timestamps in relative format (and recalculates them for browse/search lists every 10 secs) _(enabled by default)_ 
 _(the initial timestamps -converted to local timezone's offset- are tooltips: just hover mouse on a relative date to view)_, 
 - Added to swap the verified icons position with that of the comments _(enabled by default)_, 
-- Added an option to add a sortable 'Ratio' (seeds/peers) column _(disabled by default)_. 
+- Added an option to add a sortable 'Ratio' (seeds/peers) column _(enabled by default)_. 
 
 You may also click on the e.g, `7/30 torrents are currently hidden) - click to toggle`  
 to toggle highlight/hide *(and this is reflected in GM_config too)*.  
