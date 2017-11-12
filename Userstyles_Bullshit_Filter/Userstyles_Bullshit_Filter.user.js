@@ -2,13 +2,14 @@
 // @name        Userstyles Bullshit Filter
 // @namespace   darkred
 // @author      kuehlschrank, darkred
+// @license     MIT
 // @description Hides styles for popular browser games and social networks, styles that use "foreign" characters in descriptions as well as styles that have no screenshots.
 // @version     1.1
-// @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @include     https://userstyles.org/styles/browse*
 // @grant       GM_addStyle
 // @grant       GM_setValue
 // @grant       GM_getValue
-// @include     https://userstyles.org/styles/browse*
+// @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==
