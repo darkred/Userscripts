@@ -1,19 +1,20 @@
 // ==UserScript==
-// @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
-// @namespace   darkred
-// @description It adds a 'send PM to user' button in Greasyfork profile pages
-// @include     https://greasyfork.org/*/users/*
-// @include     https://greasyfork.org/*/forum/messages/add
-// @version     2017.11.4
-// @grant       GM_getResourceURL
-// @resource    icon http://i.imgur.com/ZU0xS0c.jpg
-// @run-at      document-idle
-// @require     https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
-// @require     https://code.jquery.com/jquery-3.1.1.min.js
-// @require     https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
-// @require     https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
-// @require     https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
+// @namespace    darkred
+// @license      MIT
+// @description  It adds a 'send PM to user' button in Greasyfork profile pages
+// @version      2017.11.4
+// @include      https://greasyfork.org/*/users/*
+// @include      https://greasyfork.org/*/forum/messages/add
+// @grant        GM_getResourceURL
+// @require      https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
+// @require      https://code.jquery.com/jquery-3.1.1.min.js
+// @require      https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
+// @require      https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
+// @require      https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
+// @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @resource     icon http://i.imgur.com/ZU0xS0c.jpg
+// @run-at       document-idle
 // ==/UserScript==
 
 if (document.querySelector('.user-profile-link > a:nth-child(1)') !== null) {

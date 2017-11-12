@@ -2,17 +2,18 @@
 // @name        thepiratebay helper
 // @namespace   darkred
 // @authors     emptyparad0x, darkred
+// @license     MIT
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 // @version     0.9.6l
 // @date        2017.6.21
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|tv|music|top).*$/
 // @grant       none
-// @run-at      document-idle
 // @require     https://code.jquery.com/jquery-3.2.0.min.js
 // @require     https://greasyfork.org/scripts/28536-gm-config/code/GM_config.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.4/keypress.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.min.js
+// @run-at      document-idle
 // ==/UserScript==
 
 /* global $:false, GM_config, moment */

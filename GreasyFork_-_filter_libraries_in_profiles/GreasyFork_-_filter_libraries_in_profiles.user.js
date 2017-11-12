@@ -1,10 +1,11 @@
 ﻿// ==UserScript==
-// @name        GreasyFork - filter libraries in profiles
-// @namespace   darkred
-// @description Filters libraries in GreasyFork profiles
-// @include     https://greasyfork.org/*/users/*
-// @version     1
-// @grant       none
+// @name         GreasyFork - filter libraries in profiles
+// @namespace    darkred
+// @license      MIT
+// @description  Filters libraries in GreasyFork profiles
+// @version      1
+// @include      https://greasyfork.org/*/users/*
+// @grant        none
 // ==/UserScript==
 
 var all = document.querySelectorAll('article').length;

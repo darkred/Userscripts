@@ -1,13 +1,14 @@
 // ==UserScript==
-// @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages
-// @namespace   darkred
-// @description It adds a 'send PM to user' button in Greasyfork profile pages
-// @include     https://greasyfork.org/*/users/*
-// @include     https://greasyfork.org/*/forum/messages/add
-// @version     2016.11.4
-// @grant       GM.getResourceUrl
-// @resource    icon http://i.imgur.com/ZU0xS0c.jpg
-// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages
+// @namespace    darkred
+// @license      MIT
+// @description  It adds a 'send PM to user' button in Greasyfork profile pages
+// @version      2016.11.4
+// @include      https://greasyfork.org/*/users/*
+// @include      https://greasyfork.org/*/forum/messages/add
+// @grant        GM.getResourceUrl
+// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+// @resource     icon http://i.imgur.com/ZU0xS0c.jpg
 // ==/UserScript==
 
 if (window.location.href.indexOf('users') > -1 // if current URL is a profile page

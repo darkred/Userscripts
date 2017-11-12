@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        OpenSubtitles - direct download links
 // @namespace   darkred
+// @license     MIT
 // @description Converts the subtitles download links to direct ones, in order to avoid redirection to download pages that display ads.
+// @version     2017.11.6
 // @include     https://www.opensubtitles.org/*/search/*
 // @include     https://www.opensubtitles.org/*/subtitles/*
-// @version     2017.11.6
 // @grant       none
 // ==/UserScript==
 

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Google YouTube search link
+// @namespace    darkred
+// @author       wOxxOm, darkred
+// @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
 // @version      2017.6.9
-// @author       wOxxOm, darkred
-// @namespace    darkred
-// @license      MIT License
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none

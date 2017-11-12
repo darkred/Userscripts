@@ -1,19 +1,20 @@
 ﻿// ==UserScript==
-// @name        GreasyFork - filter discussions on scripts by review type and author
-// @namespace   darkred
-// @author      darkred
-// @contributor decembre
-// @description Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
-// @include     https://greasyfork.org/*/scripts/*/feedback*
-// @include     https://greasyfork.org/*/users/*
-// @version     2017.4.19
-// @grant       GM_addStyle
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @grant       GM_getResourceText
-// @resource    jquery-ui.css  http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
-// @require     https://code.jquery.com/jquery-3.1.1.min.js
-// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+// @name         GreasyFork - filter discussions on scripts by review type and author
+// @namespace    darkred
+// @author       darkred
+// @contributor  decembre
+// @license      MIT
+// @description  Filter discussions on scripts by review type and author via filter buttons, a hoverable dropdown menu or an autocomplete searchbox
+// @version      2017.4.19
+// @include      https://greasyfork.org/*/scripts/*/feedback*
+// @include      https://greasyfork.org/*/users/*
+// @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_getResourceText
+// @require      https://code.jquery.com/jquery-3.1.1.min.js
+// @require      https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+// @resource     jquery-ui.css  http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 //    This is partially based on this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==

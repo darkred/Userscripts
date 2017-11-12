@@ -2,11 +2,11 @@
 // @name        userstyles.org css highlighter
 // @namespace   trespassersW
 // @version     2017.10.21
+// @license     MIT
 // @description Formats and highlights CSS code shown after [Show CSS] clicking. (works with the new userstyles.org layout).
 // @author      trespassersW
 // @contributor darkred
 //
-// @license     MIT License
 // @released    2013-11-20
 // @updated     2017-10-20
 //

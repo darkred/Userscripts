@@ -1,20 +1,30 @@
 // ==UserScript==
-// @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
-// @namespace   darkred
-// @author      kuehlschrank, darkred
-// @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
-// @version     2017.5.18
-// @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @name         GreasyFork Bullshit Filter - for TS Citrus Gfork
+// @namespace    darkred
+// @author       kuehlschrank, darkred
+// @license      MIT
+// @description  Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
+// @version      2017.5.18
+// @icon         https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @include      https://greasyfork.org/*/scripts*
+// @exclude      /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
+// @exclude      https://greasyfork.org/*/scripts/by-site
+// @exclude      https://greasyfork.org/*/scripts/by-site?*
+// @include      https://greasyfork.org/*/forum*
+// @exclude      https://greasyfork.org/*/forum/discussion/*
+// @exclude      https://greasyfork.org/*/forum/profile*
+// @exclude      https://greasyfork.org/*/forum/messages*
+// @exclude      https://greasyfork.org/*/forum/categories
+// @include      https://sleazyfork.org/*/scripts*
+// @exclude      /^https:\/\/sleazyfork.org\/.*\/scripts\/\d+.*/
+// @exclude      https://sleazyfork.org/*/scripts/by-site
+// @exclude      https://sleazyfork.org/*/scripts/by-site?*
+// @include      https://sleazyfork.org/*/forum*
+// @exclude      https://sleazyfork.org/*/forum/discussion/*
+// @exclude      https://sleazyfork.org/*/forum/profile*
+// @exclude      https://sleazyfork.org/*/forum/messages*
+// @exclude      https://sleazyfork.org/*/forum/categories
 // @grant       none
-// @include     https://greasyfork.org/*/scripts*
-// @exclude     /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
-// @exclude     https://greasyfork.org/*/scripts/by-site
-// @exclude     https://greasyfork.org/*/scripts/by-site?*
-// @include     https://greasyfork.org/*/forum*
-// @exclude     https://greasyfork.org/*/forum/discussion/*
-// @exclude     https://greasyfork.org/*/forum/profile*
-// @exclude     https://greasyfork.org/*/forum/messages*
-// @exclude     https://greasyfork.org/*/forum/categories
 // @run-at      document-idle
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.

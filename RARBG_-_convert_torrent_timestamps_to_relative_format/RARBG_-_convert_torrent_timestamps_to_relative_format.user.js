@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
+// @license     MIT
 // @description Converts torrent upload timestamps to relative format
+// @version     2017.2.15
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
-// @version     2017.2.15
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js

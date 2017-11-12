@@ -1,9 +1,10 @@
 ﻿// ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
+// @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @include     https://www.instagram.com/*
 // @version     2017.11.5
+// @include     https://www.instagram.com/*
 // @grant       GM_addStyle
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586

@@ -2,7 +2,9 @@
 // @name        thepiratebay - add a sortable Ratio column
 // @namespace   darkred
 // @author      darkred
+// @license     MIT
 // @description Adds a sortable "Ratio" column
+// @version     1.2.3
 // @include     https://thepiratebay.org/search/*
 // @include     https://thepiratebay.org/browse/*
 // @include     https://thepiratebay.org/recent
@@ -10,7 +12,6 @@
 // @include     https://thepiratebay.org/tv/
 // @include     https://thepiratebay.org/music
 // @include     https://thepiratebay.org/top
-// @version     1.2.3
 // @grant       none
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html

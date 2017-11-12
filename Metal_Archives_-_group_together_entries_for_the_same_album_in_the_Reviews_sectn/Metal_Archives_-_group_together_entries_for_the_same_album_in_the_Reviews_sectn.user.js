@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        Metal Archives - group together entries for the same album in the Reviews section
 // @namespace   darkred
+// @license     MIT
 // @description Groups together entries for the same album in the Reviews section
-// @include     http://www.metal-archives.com/review/browse*
 // @version     1
+// @include     http://www.metal-archives.com/review/browse*
 // @grant       GM_addStyle
-// @run-at      document-idle
 // @require     https://code.jquery.com/jquery-3.1.1.min.js
+// @run-at      document-idle
 // ==/UserScript==
 
 

@@ -2,30 +2,40 @@
 // @name        Twitter - add unread notifications count in the tab title
 // @namespace   darkred
 // @author      darkred
+// @license     MIT
 // @description Adds unread notifications count in the tab title
+// @version     2017.07.13
 // @include     https://twitter.com/*
-// @version     2017.02.07
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
 
 
-var counter;
+
+// .count > .count-inner
+// Notifications counter
+
+// .dm-new > .count-inner
+// DM counter
+
+
+var notificationsCounter;
 
 function addCounterInTitle() {
 	// alert(0);
-	counter = parseInt(document.querySelector('.count-inner').innerHTML);					// the Notifications counter value
+	// counter = parseInt(document.querySelector('.count-inner').innerHTML);									// the Notifications counter value
+	notificationsCounter = parseInt(document.querySelector('.count > .count-inner').innerHTML);					// the Notifications counter value
 	// if (counter > 0 && document.title.indexOf('|') > 3) {		// if the '|' symbol is the default separator of username and 'Twitter' when viewing profiles, e.g.:  Twitter Support (@Support) | Twitter. In here the position of `|` is 27.
-	if (counter > 0) {		// if the '|' symbol is the default separator of username and 'Twitter' when viewing profiles, e.g.:  Twitter Support (@Support) | Twitter. In here the position of `|` is 27.
+	if (notificationsCounter > 0) {		// if the '|' symbol is the default separator of username and 'Twitter' when viewing profiles, e.g.:  Twitter Support (@Support) | Twitter. In here the position of `|` is 27.
 		if (/[0-9]+\ \|\ .*/.test(document.title)){			// if our counter is already added to title
 			var defaultTitle = document.title.match(/[0-9]+\ \|\ (.*)/)[1];
-			document.title = counter + ' | ' + defaultTitle;
+			document.title = notificationsCounter + ' | ' + defaultTitle;
 			return;
 		} else {
-			document.title = counter + ' | ' + document.title;				// add the counter to the title
+			document.title = notificationsCounter + ' | ' + document.title;				// add the counter to the title
 			return;
 		}
-	} else if (counter === 0) {
+	} else if (notificationsCounter === 0) {
 		document.title = /[0-9]+\ \|\ (.*)/g.exec(document.title)[1];		// remove title's added counter
 	}
 }
@@ -62,8 +72,9 @@ document.leave('.new-tweets-bar', function () {
 
 // Whenever viewing the 'Notifications' tab
 document.arrive('.NotificationsHeadingContent', function () {
-	document.querySelector('.count-inner').innerHTML = 0;			// ..reset the counter..
-	counter = 0;
+	// document.querySelector('.count-inner').innerHTML = 0;			// ..reset the counter..
+	document.querySelector('.count > .count-inner').innerHTML = 0;			// ..reset the counter..
+	notificationsCounter = 0;
 	document.title = document.title.match(/[0-9]+\ \|\ (.*)/)[1];	// ..and the tab title
 });
 
@@ -86,7 +97,7 @@ observer2.observe(target2, config2);
 
 function resetCounter(){
 	// document.querySelector('.new-count').className = 'count';
-	counter = 0;
+	notificationsCounter = 0;
 	document.querySelector('.count-inner').innerHTML = '';
 	document.title = /[0-9]+\ \|\ (.*)/g.exec(document.title)[1];
 }

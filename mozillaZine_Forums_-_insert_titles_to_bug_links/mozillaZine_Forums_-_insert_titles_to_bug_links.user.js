@@ -2,9 +2,10 @@
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace   darkred
 // @author      darkred, johnp_
+// @license     MIT
 // @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
-// @include     http://forums.mozillazine.org/viewtopic.php*
 // @version     2016.11.25
+// @include     http://forums.mozillazine.org/viewtopic.php*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getResourceURL
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
@@ -183,7 +184,7 @@ $.getJSON(rest_url, function(data) {
 						links[z].previousSibling.textContent += temp[1] + ' ';
 					}
 					links[z].innerHTML = bugCodes[yy] + ' - ' + bugTitles[yy] + temp2[1];
-				
+
 					break loop2;
 				}
 

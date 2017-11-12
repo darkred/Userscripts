@@ -1,14 +1,15 @@
 ﻿// ==UserScript==
-// @name          Rotten Tomatoes Decimal Rating
-// @author        wOxxOm
-// @description   Changes base-5 Rating of Rotten Tomatoes to base-10
-// @include       http://www.rottentomatoes.com/*
-// @include       https://www.rottentomatoes.com/*
-// @grant         none
-// @version       3.0.1
-// @run-at        document-start
-// @require       https://greasyfork.org/scripts/12228/code/setMutationHandler.js
-// @namespace     https://greasyfork.org/users/2160
+// @name        Rotten Tomatoes Decimal Rating
+// @namespace   darkred
+// @author      wOxxOm
+// @license     MIT
+// @description Changes base-5 Rating of Rotten Tomatoes to base-10
+// @version     3.0.1
+// @include     http://www.rottentomatoes.com/*
+// @include     https://www.rottentomatoes.com/*
+// @grant       none
+// @require     https://greasyfork.org/scripts/12228/code/setMutationHandler.js
+// @run-at      document-start
 // ==/UserScript==
 /* --------- Note ---------
 	This script changes the Base 5 rating of Rotten Tomatoes to Base 10.

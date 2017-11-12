@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name        StackExchange sites - convert dates to local timezone
 // @namespace   darkred
+// @license     MIT
 // @description Converts dates to your local timezone
+// @version     2016.10.16
 // @match       *://*.stackoverflow.com/*
 // @match       *://*.stackexchange.com/*
 // @match       *://*.superuser.com/*
@@ -9,7 +11,6 @@
 // @match       *://*.askubuntu.com/*
 // @match       *://*.mathoverflow.net/*
 // @match       *://*.serverfault.com/*
-// @version     2016.10.16
 // @grant       none
 // @require     http://momentjs.com/downloads/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
