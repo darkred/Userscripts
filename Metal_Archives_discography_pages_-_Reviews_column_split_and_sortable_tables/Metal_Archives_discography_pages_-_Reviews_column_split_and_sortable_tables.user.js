@@ -4,10 +4,11 @@
 // @author      RobG, Brock Adams, Mottie, darkred
 // @license     MIT
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
-// @version     2.0.1
-// @date        2017.6.11
+// @version     2.0.2
+// @date        2017.11.13
 // @include     /^https?:\/\/www\.metal-archives\.com/bands?/.*$/
 // @grant       none
+// @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js?version=70722
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
 //
@@ -26,17 +27,16 @@
 var stylesheet = `
 <style>
 thead th {
-    background-repeat: no-repeat;
-    background-position: right center;
+	background-repeat: no-repeat;
+	background-position: right center;
 }
 thead th.up {
-    padding-right: 20px;
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	padding-right: 20px;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
 }
 thead th.down {
-    padding-right: 20px;
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
-}
+	padding-right: 20px;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
 }
 </style>`;
 
@@ -48,11 +48,11 @@ $('head').append(stylesheet);
 
 function appendColumn(jNode) {
 
-    // STEP 1+2: SPLIT THE 'REVIEWS' COLUMN INTO A 'REVIEWS' COLUMN AND A 'RATINGS' COLUMN
+	// STEP 1+2: SPLIT THE 'REVIEWS' COLUMN INTO A 'REVIEWS' COLUMN AND A 'RATINGS' COLUMN
 	var tbl = jNode[0];     // table reference
 
 
-    // If you have logged in (therefore the column 'Tools' exists in the discography table)
+	// If you have logged in (therefore the column 'Tools' exists in the discography table)
 	if (document.getElementsByClassName('member_name').length >0){
 		tbl.rows[0].cells[1].width = '45%';            // In order the column 'Name'(it's the 2nd) to have enough(in fact fixed) width
 	} else {
@@ -61,7 +61,7 @@ function appendColumn(jNode) {
 
 
 
-    // If the current sub-table has no data, then stop the execution of the function
+	// If the current sub-table has no data, then stop the execution of the function
 	if (tbl.rows[1].cells[0].innerHTML === '<em>Nothing entered yet. Please add the releases, if applicable. </em>') {
 		return;
 	}
@@ -102,7 +102,7 @@ function appendColumn(jNode) {
 		}
 	}
 
-    //  STEP 3: MAKE THE DISCOGRAPHY TABLE SORTABLE  (using the jQuery plugin "tablesorter")
+	//  STEP 3: MAKE THE DISCOGRAPHY TABLE SORTABLE  (using the jQuery plugin "tablesorter")
 	$(tbl).tablesorter ( {
 		cssAsc: 'up',
 		cssDesc: 'down',

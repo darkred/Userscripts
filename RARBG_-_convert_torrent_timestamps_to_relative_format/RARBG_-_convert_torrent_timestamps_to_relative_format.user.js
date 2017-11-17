@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Converts torrent upload timestamps to relative format
-// @version     2017.2.15
+// @version     2017.16.11
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?rarbg\.(to|com)\/top10$/
 // @grant       none
@@ -37,7 +37,8 @@ var localTimezone = jstz.determine().name();
 var serverTimezone = 'Europe/Berlin';		// GMT+1
 
 function convertDates() {
-	var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
+	// var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
+  var dates = document.querySelectorAll('td[width="150px"]');
 	for (var i = 0; i < dates.length; i++) {
 		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
 		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {

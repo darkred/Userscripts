@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        userstyles.org css highlighter
-// @namespace   trespassersW
-// @version     2017.10.21
+// @namespace   darkred
+// @version     2017.16.11
 // @license     MIT
 // @description Formats and highlights CSS code shown after [Show CSS] clicking. (works with the new userstyles.org layout).
 // @author      trespassersW
@@ -20,10 +20,10 @@
 //
 // @include     http://userstyles.org/styles/*
 // @include     https://userstyles.org/styles/*
-// /include     file:///E:/userscripts.org/styles/*
 // @include     http://web.archive.org/web/20170222172435/https://userstyles.org/styles/118959/darksearch-for-google
+// @grant       GM.setClipboard
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
-// @grant       GM_setClipboard
+// @require     https://cdn.rawgit.com/greasemonkey/gm4-polyfill/d58c4f6fbe5702dbf849a04d12bca2f5d635862d/gm4-polyfill.js
 // ==/UserScript==
 
 /* globals Prism, cssbeautify */
@@ -193,7 +193,7 @@ document.arrive('#button_middle > .css_button', function() {
 				e.preventDefault(), e.stopPropagation();
 				if (e.shiftKey || e.altKey) return;
 				if (e.ctrlKey) { // 2016-01-04
-					GM_setClipboard(sc.textContent);
+					GM.setClipboard(sc.textContent);
 					window.status = 'CSS copied to clipboard';
 					return;
 				}

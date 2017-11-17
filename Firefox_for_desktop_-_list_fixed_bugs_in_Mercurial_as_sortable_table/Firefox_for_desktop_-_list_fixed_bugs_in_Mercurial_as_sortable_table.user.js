@@ -4,11 +4,10 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     5.5.4
-// @date        2017.3.25
+// @version     5.5.5
+// @date        2017.11.16
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       GM_addStyle
-// @grant       GM_getResourceText
+// @grant       none
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -17,9 +16,7 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
-// @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
 // ==/UserScript==
-
 
 /* global $:false, jstz, moment */
 
@@ -46,41 +43,48 @@ $('head').append(stylesheet);
 
 
 
-// in order to highlight hovered table row
-GM_addStyle('#tbl tr:hover{ background:#F6E6C6 !important;}');
-
-// in order the table headers to be larger and bold
-GM_addStyle('#tbl th {text-align: -moz-center !important; font-size: larger; font-weight: bold; }');
-
-// in order to remove unnecessairy space between rows
-GM_addStyle('#dialog > div > table > tbody {line-height: 14px;}');
+var stylesheet2 =
+`<style>
 
 
-GM_addStyle('#tbl > thead > tr > th {border-bottom: solid 1px};}');
+/* in order to highlight hovered table row */
+#tbl tr:hover{ background:#F6E6C6 !important;}
+
+/* in order the table headers to be larger and bold */
+#tbl th {text-align: -moz-center !important; font-size: larger; font-weight: bold; }
+
+/* in order to remove unnecessairy space between rows */
+#dialog > div > table > tbody {line-height: 14px;}
 
 
-GM_addStyle('#tbl td:nth-child(1) {text-align: -moz-right;}');
+#tbl > thead > tr > th {border-bottom: solid 1px};}
 
 
-// in order the 'product/component' to be aligned to the left
-GM_addStyle('#tbl td:nth-child(2) {text-align: -moz-left;}');
-
-// in order the 'Product/Component' cells to appear truncated
-GM_addStyle('#tbl td:nth-child(2) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:280px;}');   // initially it was max-width:1px;
-
-// in order the 'Modified' cells to have fixed width (via being displayed truncated but with max-width:100px)  (in order to avoid having to display "Modified__")
-GM_addStyle('#tbl td:nth-child(3) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:700px;}');   // initially it was max-width:1px;
-
-// in order the 'Modified' cells to have fixed width (via being displayed truncated but with max-width:100px)  (in order to avoid having to display "Modified__")
-GM_addStyle('#tbl td:nth-child(4) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:100px;}');   // initially it was max-width:1px;
+#tbl td:nth-child(1) {text-align: -moz-right;}
 
 
+/* in order the 'product/component' to be aligned to the left */
+#tbl td:nth-child(2) {text-align: -moz-left;}
+
+/* in order the 'Product/Component' cells to appear truncated */
+#tbl td:nth-child(2) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:280px;}   /* initially it was max-width:1px; */
+
+/* in order the 'Modified' cells to have fixed width (via being displayed truncated but with max-width:100px)  (in order to avoid having to display "Modified__") */
+#tbl td:nth-child(3) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:700px;}   /* initially it was max-width:1px; */
+
+/* in order the 'Modified' cells to have fixed width (via being displayed truncated but with max-width:100px)  (in order to avoid having to display "Modified__") */
+#tbl td:nth-child(4) {white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:100px;}   /* initially it was max-width:1px; */
+
+/* in order the bug list to have width 1500px */
+.ui-dialog {width:1200px !important;}
+
+</style>`;
+$('head').append(stylesheet2);
 
 
 
 
-// in order the bug list to have width 1500px
-GM_addStyle('.ui-dialog {width:1200px !important;}');
+
 
 
 
@@ -111,8 +115,14 @@ String.prototype.escapeHTML = function() {
 //     // 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" ' +                 // uncomment this line (and comment line 89)  in order to change theme
 //     'rel="stylesheet" type="text/css">'
 // );
-var newCSS = GM_getResourceText ('customCSS');
-GM_addStyle (newCSS);
+// var newCSS = GM_getResourceText ('customCSS');
+// GM_addStyle (newCSS);
+$.ajax({
+	url:'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css',
+	success:function(data){
+		$('<style></style>').appendTo('head').html(data);
+	}
+});
 
 var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
 var base_url = 'https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,product,component,op_sys,platform,whiteboard,last_change_time&id=';

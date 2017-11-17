@@ -3,22 +3,21 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2017.11.5
+// @version     2017.11.14
 // @include     https://www.instagram.com/*
-// @grant       GM_addStyle
+// @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
 // ==/UserScript==
 
 
-GM_addStyle(`
-
+var stylesheet =
+`<style>
 .counter {
     color: #D9D9D9 !important;
-  }
-
-`);
-
+}
+</style>`;
+$('head').append(stylesheet);
 
 
 // If you scroll down, beyond the first 12 images, then the "LOAD MORE" button(to show more images) will be automatically clicked

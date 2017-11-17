@@ -4,11 +4,10 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @version     5.5.4
-// @date        2017.3.25
+// @version     5.5.5
+// @date        2017.11.16
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       GM_addStyle
-// @grant       GM_getResourceText
+// @grant       none
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -17,10 +16,7 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
-// @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
 // ==/UserScript==
-
-
 
 
 // CSS rules in order to show 'up' and 'down' arrows in each table header
@@ -44,32 +40,35 @@ thead th.down {                                                                 
 $('head').append(stylesheet);
 
 
+var stylesheet2 =
+`<style>
 
-// in order to highlight hovered table row
-GM_addStyle('#tbl tr:hover{ background:#F6E6C6 !important;}');
+/* in order to highlight hovered table row */
+#tbl tr:hover{ background:#F6E6C6 !important;}
 
-// in order the table headers to be larger and bold
-GM_addStyle('#tbl th {text-align: -moz-center !important; font-size: larger; font-weight: bold; }');
+/* in order the table headers to be larger and bold */
+#tbl th {text-align: -moz-center !important; font-size: larger; font-weight: bold; }
 
-// in order to remove unnecessairy space between rows
-GM_addStyle('#dialog > div > table > tbody {line-height: 14px;}');
-
-
-GM_addStyle('#tbl > thead > tr > th {border-bottom: solid 1px};}');
-
-
-GM_addStyle('#tbl td:nth-child(1) {text-align: -moz-right;}');
-
-// in order the 'product/component' to be aligned to the right
-GM_addStyle('#tbl td:nth-child(2) {text-align: -moz-right;}');
+/* in order to remove unnecessairy space between rows */
+#dialog > div > table > tbody {line-height: 14px;}
 
 
+#tbl > thead > tr > th {border-bottom: solid 1px};}
 
 
-// in order the bug list to have width 1500px    // it was 1500 and then 1600
-GM_addStyle('.ui-dialog {\
-    width:1700px !important;\
-}');
+#tbl td:nth-child(1) {text-align: -moz-right;}
+
+/* in order the 'product/component' to be aligned to the right */
+#tbl td:nth-child(2) {text-align: -moz-right;}
+
+/* in order the bug list to have width 1500px    // it was 1500 and then 1600 */
+.ui-dialog {
+    width:1700px !important;
+}
+
+</style>`;
+$('head').append(stylesheet2);
+
 
 
 
@@ -100,8 +99,14 @@ String.prototype.escapeHTML = function() {
 //     // 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" ' +                 // uncomment this line (and comment line 89)  in order to change theme
 //     'rel="stylesheet" type="text/css">'
 // );
-var newCSS = GM_getResourceText ('customCSS');
-GM_addStyle (newCSS);
+// var newCSS = GM_getResourceText ('customCSS');
+// GM_addStyle (newCSS);
+$.ajax({
+	url:'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css',
+	success:function(data){
+		$('<style></style>').appendTo('head').html(data);
+	}
+});
 
 
 var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
