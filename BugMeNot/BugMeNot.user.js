@@ -401,10 +401,9 @@ function getLogin(uri, usernameInputIndex, passwordInputIndex) {
 
 		counter = parseInt(counter);
 		counter++;                                          // (after all is done..)
-		// (async function() {
 		GM.setValue('counter', counter);                    // .. store just increased counter and..
 		GM.setValue('lastURL', String(window.location));    // .. store current location as lastURL
-	// })();
+
 
 
 	})();
@@ -717,12 +716,10 @@ var counter ;
 
 
 // If the current domain name doesn't match the stored lastURL, then reset the counter
-// GM.getValue('lastURL', '666');
-
 var lastURL;
 (async function() {
 	lastURL = await GM.getValue('lastURL', '');
-	console.log('lastURL: ' + lastURL);
+	// console.log('lastURL: ' + lastURL);
 	if (lastURL.indexOf(domainname) === -1){
 		counter = 0;
 		GM.setValue('counter', 0);
