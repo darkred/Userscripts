@@ -3,18 +3,18 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2017.11.14
+// @version     2017.11.21
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=198809
 // ==/UserScript==
 
 
 var stylesheet =
 `<style>
 .counter {
-    color: #D9D9D9 !important;
+		color: #D9D9D9 !important;
 }
 </style>`;
 $('head').append(stylesheet);
@@ -31,15 +31,17 @@ $(window).scroll(function() {
 
 
 function showCounter() {
-	var visibleCount = $( `a[href*='taken-by']` ).length; 	// Count of visible images
-	var totalString = $(`span:contains('posts')`).eq(1).children().eq(0).html(); 	// The 'total' value (it's a string)
-	var total = totalString.replace(/(\d+),(?=\d{3}(\D|$))/g, '$1'); 	// Apply regex to 'total' string to strip the thousand comma seperator
+
+	var totalString = $(`span:contains('posts'):last-child > span`).html();	// The 'total' value (it's a string)
+	var total = totalString.replace(',', ''); 	// Apply regex to 'total' string to strip the thousand comma seperator
+	var visibleCount = document.querySelectorAll( `a[href*='taken-by']` ).length;
 	if (visibleCount > total){
 		visibleCount = total;
 	}
 	var visiblePercent = ((visibleCount / total) * 100).toFixed(1); // Visible images as percentage
 	var counter = visibleCount + ' / ' + totalString + ' that is ' + visiblePercent + '%';
 	return counter;
+
 }
 
 
@@ -83,23 +85,25 @@ function observer(){
 var div = document.createElement('div');	// global variable
 var observer1;                              // global variable
 
+
 if (document.URL !== 'https://www.instagram.com/' &&
 	document.URL.indexOf('https://www.instagram.com/p/') === -1 ){
-	createDiv();
-	observer();
+
+
+	if ( document.querySelector('._l8yre._qdmzb') ) {
+		createDiv();
+		observer();
+	} else {
+		$(document).arrive('._l8yre._qdmzb', function() {		// the avatar in the profile page
+			createDiv();
+			observer();
+		});
+	}
 }
 
 
-
-$(document).arrive('article._mesn5', function() {		// the avatar in the profile page
-	createDiv();
-	observer();
-});
-
-
-
-$(document).leave('article._mesn5', function() {
-	if (!document.querySelector('article._mesn5')) {
+$(document).leave('._l8yre._qdmzb', function() {
+	if (!document.querySelector('._l8yre._qdmzb')) {
 		div.remove();
 		observer1.disconnect();
 	}
