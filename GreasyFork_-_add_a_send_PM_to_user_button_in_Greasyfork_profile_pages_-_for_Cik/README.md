@@ -8,8 +8,9 @@ Greasyfork profile: https://greasyfork.org/en/users/2160-darkred
 example:  
 ![](https://i.imgur.com/LUN73U5.gif)
 
-*Notes: the button doesn't appear in your own Greasyfork profile page, 
-and it only works when you are logged in, for obvious reasons*. 
+*Notes: the button doesn't appear in your own Greasyfork profile page,  
+and it only works when you are logged in, for obvious reasons  
+Also, it works even with Citrus GFork disabled.*. 
 <br>
 
 **<u>Update 11/12/2016</u>**:
