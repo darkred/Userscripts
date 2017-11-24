@@ -3,12 +3,10 @@
 // @namespace    darkred
 // @license      MIT
 // @description  It adds a 'send PM to user' button in Greasyfork profile pages
-// @version      2016.11.4
+// @version      2017.11.24
 // @include      https://greasyfork.org/*/users/*
 // @include      https://greasyfork.org/*/forum/messages/add
-// @grant        GM.getResourceUrl
-// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
-// @resource     icon http://i.imgur.com/ZU0xS0c.jpg
+// @grant        none
 // ==/UserScript==
 
 if (window.location.href.indexOf('users') > -1 // if current URL is a profile page
@@ -24,9 +22,8 @@ if (window.location.href.indexOf('users') > -1 // if current URL is a profile pa
 	a.setAttribute('type', 'image');
 	a.id = 'pmButton';
 	a.title = 'Send PM to ' + profileName;
-	(async function() {
-	  a.src = await GM.getResourceUrl('icon');
-	})();
+	// http://i.imgur.com/ZU0xS0c.jpg
+	a.setAttribute('src', 'data:image/jpeg;base64,/9j/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAATABcDAREAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwAICf/EACgQAAEEAQMCBQUAAAAAAAAAAAECAwQFEQAGEgcIEyEiMUEUNmGl4//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDof1i6ryOlkCHIi0YvlvJdccjpl+A4203x5OAcFFQHMZx7A59skAMDvnyfsj9t/DQPnS/fUnqDtxyxmVQpJbb5YdgGT462jxSoBZ4p4qIWDxIyMjPn5ADTuZg3ibzZN1R0c+7kVf1q0twoy3gh1QZDZcCQfTkFWD5K4lPzoAqDXblqLJq7r+kVoxuFDiXA85AkOQ0KBBKm43h+lR/KylOfSkYGA0f2x0s6m2demdVz6gzLt+W1Gsm1oeCFNM+/IAqwQpPL5450DBoLQWg//9k=');
 	referenceNode.appendChild(a);
 
 

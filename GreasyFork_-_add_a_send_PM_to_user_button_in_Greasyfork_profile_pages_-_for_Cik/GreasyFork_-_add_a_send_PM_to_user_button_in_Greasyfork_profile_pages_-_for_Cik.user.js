@@ -3,18 +3,17 @@
 // @namespace    darkred
 // @license      MIT
 // @description  It adds a 'send PM to user' button in Greasyfork profile pages
-// @version      2017.11.4
+// @version      2017.11.24
 // @include      https://greasyfork.org/*/users/*
 // @include      https://greasyfork.org/*/forum/messages/add
-// @grant        GM_getResourceURL
 // @require      https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
 // @require      https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
 // @require      https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
 // @require      https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
 // @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
-// @resource     icon http://i.imgur.com/ZU0xS0c.jpg
 // @run-at       document-idle
+// @grant        none
 // ==/UserScript==
 
 if (document.querySelector('.user-profile-link > a:nth-child(1)') !== null) {
@@ -31,8 +30,8 @@ if (window.location.href.indexOf('users') !== -1 // if current URL is a profile 
 	referenceNode.appendChild(a);
 	a.style.padding = '0px 12px';
 	a.setAttribute('type', 'image');
-	// a.setAttribute('src', GM_getResourceURL('icon'));	// the GM_getResourceURL('icon') results in displaying a "Submit Query" text, instead of the pm icon in GM 3.17 (https://github.com/greasemonkey/greasemonkey/issues/2341)
-	a.setAttribute('src', 'http://i.imgur.com/ZU0xS0c.jpg');
+	// http://i.imgur.com/ZU0xS0c.jpg
+	a.setAttribute('src', 'data:image/jpeg;base64,/9j/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAATABcDAREAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwAICf/EACgQAAEEAQMCBQUAAAAAAAAAAAECAwQFEQAGEgcIEyEiMUEUNmGl4//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDof1i6ryOlkCHIi0YvlvJdccjpl+A4203x5OAcFFQHMZx7A59skAMDvnyfsj9t/DQPnS/fUnqDtxyxmVQpJbb5YdgGT462jxSoBZ4p4qIWDxIyMjPn5ADTuZg3ibzZN1R0c+7kVf1q0twoy3gh1QZDZcCQfTkFWD5K4lPzoAqDXblqLJq7r+kVoxuFDiXA85AkOQ0KBBKm43h+lR/KylOfSkYGA0f2x0s6m2demdVz6gzLt+W1Gsm1oeCFNM+/IAqwQpPL5450DBoLQWg//9k=');
 	a.id = 'pmButton';
 	a.title = 'Send PM to ' + targetProfileName;
 	var lang = String(window.location).match(/^https:\/\/greasyfork\.org\/([a-zA-Z-]+)\/.*$/)[1];
