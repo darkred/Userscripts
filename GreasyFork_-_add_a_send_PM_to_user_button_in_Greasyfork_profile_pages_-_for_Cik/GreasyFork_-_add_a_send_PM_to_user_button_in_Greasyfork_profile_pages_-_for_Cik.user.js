@@ -2,10 +2,12 @@
 // @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
 // @namespace    darkred
 // @license      MIT
-// @description  It adds a 'send PM to user' button in Greasyfork profile pages
-// @version      2017.11.24
+// @description  It adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
+// @version      2017.11.30
 // @include      https://greasyfork.org/*/users/*
 // @include      https://greasyfork.org/*/forum/messages/add
+// @include      https://sleazyfork.org/*/users/*
+// @include      https://sleazyfork.org/*/forum/messages/add
 // @require      https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
 // @require      https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
