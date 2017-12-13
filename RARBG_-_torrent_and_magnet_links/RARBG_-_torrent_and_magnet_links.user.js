@@ -4,7 +4,7 @@
 // @license     MIT
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @version     2017.12.13
-// @include     /^(https?:)?\/\/(www\.)?(rarbg|rarbgaccess|rarbgproxy)\.(to|com|org)\/(torrents\.php.*|catalog\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org)\/(torrents\.php.*|catalog\/.*|top10)$/
 // @grant       none
 // ==/UserScript==
 
