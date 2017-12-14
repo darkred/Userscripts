@@ -3,8 +3,8 @@
 // @namespace   darkred
 // @license     MIT
 // @description Adds a column with torrent and magnet links in RARBG lists
-// @version     2017.12.13
-// @include     /^(https?:)?\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org)\/(torrents\.php.*|catalog\/.*|top10)$/
+// @version     2017.12.14
+// @include     /^(https?:)?\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org|is)\/(torrents\.php.*|catalog\/.*|top10)$/
 // @grant       none
 // ==/UserScript==
 

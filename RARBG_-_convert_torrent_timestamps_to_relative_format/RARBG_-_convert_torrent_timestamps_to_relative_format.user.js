@@ -3,9 +3,9 @@
 // @namespace   darkred
 // @license     MIT
 // @description Converts torrent upload timestamps to relative format
-// @version     2017.12.13
-// @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org)\/torrents.php.*/
-// @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org)\/top10$/
+// @version     2017.12.14
+// @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org|is)\/torrents.php.*/
+// @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess)\.(to|com|org|is)\/top10$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
