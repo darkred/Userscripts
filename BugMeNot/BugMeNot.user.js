@@ -4,7 +4,7 @@
 // @authors     hosts, Matt McCarthy, darkred
 // @license     MIT
 // @description It integrates BugMeNot into any login form  (it retrieves all matching logins from bugmenot.com and autofills the login form)
-// @version     2017.11.18
+// @version     2017.12.15
 // @include     http://*
 // @include     https://*
 // @exclude     http://bugmenot.com/*
@@ -16,7 +16,7 @@
 // @grant       GM_openInTab
 // @grant       GM.xmlHttpRequest
 // @grant       GM_xmlhttpRequest
-// @require     https://cdn.rawgit.com/greasemonkey/gm4-polyfill/d58c4f6fbe5702dbf849a04d12bca2f5d635862d/gm4-polyfill.js
+// @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @noframes
 // @run-at      document-idle
 // ==/UserScript==

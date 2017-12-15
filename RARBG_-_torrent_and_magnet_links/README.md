@@ -12,4 +12,4 @@ Notes:
 initially the ML links will have as its destination(`href`) the current page's URL with a `#` in its end (e.g. `https://rarbg.to/torrents.php#` )  
 and as you mouseover on any such ML icon, the following tooltip will be displayed: "`ML via XHR`", and the relevant target page will be retrieved via XHR in the background.  
 So at the time you click the ML icon (or just move the mouse away and re-mouseover), it will now have the magnet link.  
-*(thanks for sxe [for the suggestion](https://greasyfork.org/en/forum/discussion/30691/x))*.
+*(thanks to sxe [for the suggestion](https://greasyfork.org/en/forum/discussion/30691/x))*.
