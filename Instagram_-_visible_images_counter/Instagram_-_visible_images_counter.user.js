@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2017.11.21
+// @version     2018.2.13
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -29,12 +29,25 @@ $(window).scroll(function() {
 });
 
 
+var hrefs = [];
 
 function showCounter() {
 
 	var totalString = $(`span:contains('posts'):last-child > span`).html();	// The 'total' value (it's a string)
-	var total = totalString.replace(',', ''); 	// Apply regex to 'total' string to strip the thousand comma seperator
-	var visibleCount = document.querySelectorAll( `a[href*='taken-by']` ).length;
+	var total = totalString.replace(',', ''); 	// strip the thousand comma seperator
+
+
+	// var visibleCount = document.querySelectorAll( `a[href*='taken-by']` ).length;
+	var hrefselems = document.querySelectorAll( `a[href*='taken-by']` );
+	$.each(hrefselems, function(index, value) {
+		// hrefs.indexOf(String(value)) === -1 ? hrefs.push(String(value)) : console.log("This item already exists"); // https://stackoverflow.com/a/36683363
+		if (hrefs.indexOf(String(value)) === -1){	// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
+			hrefs.push(String(value));
+		}
+	});
+
+	var visibleCount = hrefs.length;
+
 	if (visibleCount > total){
 		visibleCount = total;
 	}
@@ -66,13 +79,15 @@ function observer(){
 	/// ---------------------------------
 	observer1 = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
-			div.innerHTML = showCounter(); 						// In each infinite scrolling event, re-calculate counter
+			div.innerHTML = showCounter(); 						// On each infinite scrolling event, re-calculate counter
 		});
-	}).observe($('article').children().eq(1).children()[0], 	// target of the observer
+	// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
+	}).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 		{
-			// attributes: true,
+			attributes: true,
 			childList: true,
 			// characterData: true,
+			// subtree: true,
 		}); // config of the observer
 
 }
