@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.2.13
+// @version     2018.2.16
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -30,11 +30,13 @@ $(window).scroll(function() {
 
 
 var hrefs = [];
+var total;
 
 function showCounter() {
 
 	var totalString = $(`span:contains('posts'):last-child > span`).html();	// The 'total' value (it's a string)
-	var total = totalString.replace(',', ''); 	// strip the thousand comma seperator
+	// var total = totalString.replace(',', ''); 	// strip the thousand comma seperator
+	total = totalString.replace(',', ''); 	// strip the thousand comma seperator
 
 
 	// var visibleCount = document.querySelectorAll( `a[href*='taken-by']` ).length;
@@ -79,13 +81,15 @@ function observer(){
 	/// ---------------------------------
 	observer1 = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
-			div.innerHTML = showCounter(); 						// On each infinite scrolling event, re-calculate counter
+			if (div.innerHTML.indexOf(total + ' / ' + total) === -1){
+				div.innerHTML = showCounter(); 						// On each infinite scrolling event, re-calculate counter
+			}
 		});
 	// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
 	}).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 		{
 			attributes: true,
-			childList: true,
+			// childList: true,
 			// characterData: true,
 			// subtree: true,
 		}); // config of the observer
