@@ -3,7 +3,7 @@
 // @namespace    darkred
 // @license      MIT
 // @description  It adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
-// @version      2017.11.30
+// @version      2018.2.27
 // @include      https://greasyfork.org/*/users/*
 // @include      https://greasyfork.org/*/forum/messages/add
 // @include      https://sleazyfork.org/*/users/*
@@ -13,7 +13,7 @@
 // @require      https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
 // @require      https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
 // @require      https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
-// @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @run-at       document-idle
 // @grant        none
 // ==/UserScript==

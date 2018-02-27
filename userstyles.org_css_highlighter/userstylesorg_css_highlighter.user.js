@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        userstyles.org css highlighter
 // @namespace   darkred
-// @version     2017.12.15
+// @version     2018.2.27
 // @license     MIT
 // @description Formats and highlights CSS code shown after [Show CSS] clicking. (works with the new userstyles.org layout).
 // @author      trespassersW
 // @contributor darkred
 //
 // @released    2013-11-20
-// @updated     2017-10-20
+// @updated     2018-2-27
 //
 // 17.10.19 Modified by darkred to work in the new userstyles.org layout.
 // 16.08.28 + keeps highliting status between sessions; 16.08.28.1 - some instead of each
@@ -22,7 +22,7 @@
 // @include     https://userstyles.org/styles/*
 // @include     http://web.archive.org/web/20170222172435/https://userstyles.org/styles/118959/darksearch-for-google
 // @grant       GM.setClipboard
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // ==/UserScript==
 

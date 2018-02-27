@@ -4,10 +4,10 @@
 // @author      darkred
 // @license     MIT
 // @description Adds unread notifications count in the tab title
-// @version     2017.07.13
+// @version     2018.2.27
 // @include     https://twitter.com/*
 // @grant       none
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=139586
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // ==/UserScript==
 
 

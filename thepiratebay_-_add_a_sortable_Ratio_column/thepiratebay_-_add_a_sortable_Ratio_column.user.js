@@ -5,6 +5,7 @@
 // @license     MIT
 // @description Adds a sortable "Ratio" column
 // @version     1.2.3
+// @date        2018.2.27
 // @include     https://thepiratebay.org/search/*
 // @include     https://thepiratebay.org/browse/*
 // @include     https://thepiratebay.org/recent
@@ -13,7 +14,7 @@
 // @include     https://thepiratebay.org/music
 // @include     https://thepiratebay.org/top
 // @grant       none
-// @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js?version=21758
+// @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
 // ==/UserScript==
 

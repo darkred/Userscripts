@@ -3,11 +3,11 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.2.16
+// @version     2018.2.27
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js?version=198809
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // ==/UserScript==
 
 
