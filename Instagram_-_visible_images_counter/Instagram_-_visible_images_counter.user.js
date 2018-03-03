@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.2.27
+// @version     2018.3.3
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -104,16 +104,17 @@ function observer(){
 var div = document.createElement('div');	// global variable
 var observer1;                              // global variable
 
+var avatarSelector = 'span[style="width: 152px; height: 152px;"]';
 
 if (document.URL !== 'https://www.instagram.com/' &&
 	document.URL.indexOf('https://www.instagram.com/p/') === -1 ){
 
 
-	if ( document.querySelector('._l8yre._qdmzb') ) {
+	if ( document.querySelector(avatarSelector) ) {
 		createDiv();
 		observer();
 	} else {
-		$(document).arrive('._l8yre._qdmzb', function() {		// the avatar in the profile page
+		$(document).arrive(avatarSelector, function() {		// the avatar in the profile page
 			createDiv();
 			observer();
 		});
@@ -121,8 +122,8 @@ if (document.URL !== 'https://www.instagram.com/' &&
 }
 
 
-$(document).leave('._l8yre._qdmzb', function() {
-	if (!document.querySelector('._l8yre._qdmzb')) {
+$(document).leave(avatarSelector, function() {
+	if (!document.querySelector(avatarSelector)) {
 		div.remove();
 		observer1.disconnect();
 	}
