@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.3.4
+// @version     2018.3.4.1
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -12,10 +12,10 @@
 
 
 var stylesheet =
-	`<style>
-.counter {
+`<style>
+	.counter {
 		color: #D9D9D9 !important;
-}
+	}
 </style>`;
 $('head').append(stylesheet);
 
@@ -29,6 +29,7 @@ $(window).scroll(function() {
 });
 
 
+var hrefselems = [];
 var hrefs = [];
 var total;
 
@@ -38,7 +39,7 @@ function showCounter() {
 	total = totalString.replace(',', ''); // strip the thousand comma seperator
 
 
-	var hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
+	hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
 	$.each(hrefselems, function(index, value) {
 		// hrefs.indexOf(String(value)) === -1 ? hrefs.push(String(value)) : console.log("This item already exists"); // https://stackoverflow.com/a/36683363
 		if (hrefs.indexOf(String(value)) === -1) { 		// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
@@ -48,10 +49,8 @@ function showCounter() {
 
 	var visibleCount = hrefs.length;
 
-	if (visibleCount > total) {
-		visibleCount = total;
-	}
-	var visiblePercent = ((visibleCount / total) * 100).toFixed(1); // Visible images as percentage
+	var visiblePercent = ((visibleCount / total) * 100).toFixed(1); // Visible images count as percentage
+
 	var counter = visibleCount + ' / ' + totalString + ' that is ' + visiblePercent + '%';
 	return counter;
 
@@ -77,17 +76,15 @@ function createObserver() {
 	/// ---------------------------------
 	/// mutation observer -monitors the Posts grid for infinite scrolling event-.
 	/// ---------------------------------
-	observer = new MutationObserver(function(mutations) {
-		mutations.forEach(function() {
-			if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
-				div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
-			}
-		});
-		// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
+	observer = new MutationObserver(function() {
+		if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
+			div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
+		}
+	// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
 	}).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 		{
-			attributes: true,
-			// childList: true,
+			// attributes: true,
+			childList: true,
 			// characterData: true,
 			// subtree: true,
 		}); // config of the observer
@@ -123,5 +120,7 @@ document.arrive(avatarSelector, function() { // the avatar in the profile page
 
 document.leave(avatarSelector, function() {
 	div.remove();
+	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
+	hrefs.length = 0;
 	observer.disconnect();
 });
