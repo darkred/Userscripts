@@ -72,12 +72,12 @@ function createDiv() {
 
 
 
-function observer() {
+function createObserver() {
 
 	/// ---------------------------------
 	/// mutation observer -monitors the Posts grid for infinite scrolling event-.
 	/// ---------------------------------
-	observer1 = new MutationObserver(function(mutations) {
+	observer = new MutationObserver(function(mutations) {
 		mutations.forEach(function() {
 			if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
 				div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
@@ -100,7 +100,7 @@ function observer() {
 
 
 var div = document.createElement('div');
-var observer1;
+var observer;
 
 // var avatarSelector = 'span[style="width: 152px; height: 152px;"]';   // the profile's photo/avatar element
 // var avatarSelector = '._mainc';//                                    // the profile's bio area element
@@ -110,18 +110,18 @@ var avatarSelector = 'h1.notranslate';                                  // the p
 
 if (document.querySelector(avatarSelector)) {
 	createDiv();
-	observer();
+	createObserver();
 }
 
 
 document.arrive(avatarSelector, function() { // the avatar in the profile page
 	createDiv();
-	observer();
+	createObserver();
 });
 
 
 
 document.leave(avatarSelector, function() {
 	div.remove();
-	observer1.disconnect();
+	observer.disconnect();
 });
