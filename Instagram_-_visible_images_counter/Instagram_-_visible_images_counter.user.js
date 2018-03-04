@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.3.3
+// @version     2018.3.4
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -12,7 +12,7 @@
 
 
 var stylesheet =
-`<style>
+	`<style>
 .counter {
 		color: #D9D9D9 !important;
 }
@@ -34,23 +34,21 @@ var total;
 
 function showCounter() {
 
-	var totalString = $(`span:contains('posts'):last-child > span`).html();	// The 'total' value (it's a string)
-	// var total = totalString.replace(',', ''); 	// strip the thousand comma seperator
-	total = totalString.replace(',', ''); 	// strip the thousand comma seperator
+	var totalString = $(`span:contains('posts'):last-child > span`).html(); // The 'total' value (it's a string)
+	total = totalString.replace(',', ''); // strip the thousand comma seperator
 
 
-	// var visibleCount = document.querySelectorAll( `a[href*='taken-by']` ).length;
-	var hrefselems = document.querySelectorAll( `a[href*='taken-by']` );
+	var hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
 	$.each(hrefselems, function(index, value) {
 		// hrefs.indexOf(String(value)) === -1 ? hrefs.push(String(value)) : console.log("This item already exists"); // https://stackoverflow.com/a/36683363
-		if (hrefs.indexOf(String(value)) === -1){	// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
+		if (hrefs.indexOf(String(value)) === -1) { 		// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
 			hrefs.push(String(value));
 		}
 	});
 
 	var visibleCount = hrefs.length;
 
-	if (visibleCount > total){
+	if (visibleCount > total) {
 		visibleCount = total;
 	}
 	var visiblePercent = ((visibleCount / total) * 100).toFixed(1); // Visible images as percentage
@@ -62,10 +60,10 @@ function showCounter() {
 
 
 
-function createDiv(){
+function createDiv() {
 	// Creation of the counter element
 	document.body.appendChild(div);
-	div.innerHTML = showCounter(); 		// Initial display of the counter
+	div.innerHTML = showCounter(); 	// Initial display of the counter
 	div.style.top = '1px';
 	div.style.right = '1px';
 	div.style.position = 'fixed';
@@ -74,18 +72,18 @@ function createDiv(){
 
 
 
-function observer(){
+function observer() {
 
 	/// ---------------------------------
 	/// mutation observer -monitors the Posts grid for infinite scrolling event-.
 	/// ---------------------------------
 	observer1 = new MutationObserver(function(mutations) {
-		mutations.forEach(function(mutation) {
-			if (div.innerHTML.indexOf(total + ' / ' + total) === -1){
-				div.innerHTML = showCounter(); 						// On each infinite scrolling event, re-calculate counter
+		mutations.forEach(function() {
+			if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
+				div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
 			}
 		});
-	// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
+		// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
 	}).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 		{
 			attributes: true,
@@ -101,30 +99,29 @@ function observer(){
 
 
 
-var div = document.createElement('div');	// global variable
-var observer1;                              // global variable
+var div = document.createElement('div');
+var observer1;
 
-var avatarSelector = 'span[style="width: 152px; height: 152px;"]';
+// var avatarSelector = 'span[style="width: 152px; height: 152px;"]';   // the profile's photo/avatar element
+// var avatarSelector = '._mainc';//                                    // the profile's bio area element
+var avatarSelector = 'h1.notranslate';                                  // the profile name element
 
-if (document.URL !== 'https://www.instagram.com/' &&
-	document.URL.indexOf('https://www.instagram.com/p/') === -1 ){
 
 
-	if ( document.querySelector(avatarSelector) ) {
-		createDiv();
-		observer();
-	} else {
-		$(document).arrive(avatarSelector, function() {		// the avatar in the profile page
-			createDiv();
-			observer();
-		});
-	}
+if (document.querySelector(avatarSelector)) {
+	createDiv();
+	observer();
 }
 
 
-$(document).leave(avatarSelector, function() {
-	if (!document.querySelector(avatarSelector)) {
-		div.remove();
-		observer1.disconnect();
-	}
+document.arrive(avatarSelector, function() { // the avatar in the profile page
+	createDiv();
+	observer();
+});
+
+
+
+document.leave(avatarSelector, function() {
+	div.remove();
+	observer1.disconnect();
 });
