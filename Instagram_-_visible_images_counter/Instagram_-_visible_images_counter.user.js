@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.3.4.1
+// @version     2018.4.3
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -80,8 +80,8 @@ function createObserver() {
 		if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
 			div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
 		}
-	// }).observe($('article').children().eq(1).children()[0], 	// target of the observer
-	}).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
+	// }).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
+	}).observe(document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 		{
 			// attributes: true,
 			childList: true,
