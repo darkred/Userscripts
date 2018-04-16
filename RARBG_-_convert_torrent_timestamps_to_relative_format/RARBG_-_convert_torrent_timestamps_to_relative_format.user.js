@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Converts torrent upload timestamps to relative format
-// @version     2018.3.23
+// @version     2018.4.16
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/top10$/
 // @grant       none
@@ -38,7 +38,7 @@ var serverTimezone = 'Europe/Berlin';		// GMT+1
 
 function convertDates() {
 	// var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
-  var dates = document.querySelectorAll('td[width="150px"]');
+	var dates = document.querySelectorAll('td[width="150px"]');
 	for (var i = 0; i < dates.length; i++) {
 		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
 		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {
@@ -46,10 +46,28 @@ function convertDates() {
 			var temp2 = moment.tz(dates[i].innerText, serverTimezone).tz(localTimezone);
 			dates[i].innerText = temp2.fromNow();
 
-			var format = 'MM/DD/YYYY HH:mm:ss';
-			dates[i].title = temp2.format(format);
+
+			// var format = 'MM/DD/YYYY HH:mm:ss';
+
+			// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
+			// dates[i].title = temp2.toISOString();
+			dates[i].title = temp2.format();
+
 		}
 	}
 }
 
 convertDates();
+
+
+
+// recalculate the relative times every 10 sec
+
+(function(){
+	var dates = document.querySelectorAll('td[width="150px"]');
+	for (var i = 0; i < dates.length; i++) {
+		dates[i].innerText = moment(dates[i].title).fromNow();
+	}
+
+	setTimeout(arguments.callee, 1 * 60 * 1000);
+})();
