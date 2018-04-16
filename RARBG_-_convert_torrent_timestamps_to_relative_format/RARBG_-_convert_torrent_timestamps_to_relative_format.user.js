@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Converts torrent upload timestamps to relative format
-// @version     2018.4.16
+// @version     2018.4.16.1
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/top10$/
 // @grant       none
@@ -48,10 +48,12 @@ function convertDates() {
 
 
 			// var format = 'MM/DD/YYYY HH:mm:ss';
+			var format = 'YYYY-MM-DD HH:mm:ss';
+			dates[i].title = temp2.format(format);
 
 			// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
 			// dates[i].title = temp2.toISOString();
-			dates[i].title = temp2.format();
+			// dates[i].title = temp2.format();
 
 		}
 	}
