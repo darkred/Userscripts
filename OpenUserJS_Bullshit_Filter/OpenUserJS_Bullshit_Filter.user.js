@@ -4,12 +4,12 @@
 // @author      kuehlschrank, darkred
 // @license     MIT
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     1.2.3
+// @version     2018.4.24
 // @include     https://openuserjs.org/
 // @include     https://openuserjs.org/?*p=*
 // @include     https://openuserjs.org/?*q=*
 // @grant       none
-// @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/OpenUserJS_Bullshit_Filter/large.png
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==

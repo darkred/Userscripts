@@ -4,8 +4,8 @@
 // @author       kuehlschrank, darkred
 // @license      MIT
 // @description  Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
-// @version      2017.5.18
-// @icon         https://s3.amazonaws.com/uso_ss/icon/97145/large.png
+// @version      2018.4.24
+// @icon         https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter/large.png
 // @include      https://greasyfork.org/*/scripts*
 // @exclude      /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
 // @exclude      https://greasyfork.org/*/scripts/by-site
