@@ -9,10 +9,11 @@ Example *(see screenshots below)* :
 http://www.metal-archives.com/bands/Kamelot/166 (DISCOGRAPHY > MAIN tab)  
 -the script works in all DISCOGRAPHY tabs-
 
-Tested with Greasemonkey 3.3.
+Tested with Greasemonkey and Tampermonkey.
 <br>
 
-This userscript the jQuery plugin [tablesorter](http://mottie.github.io/tablesorter/docs/index.html) (forked by Rob Garrison (Mottie))  
+This userscript makes use of the page's jQuery 1.11.1 (because of the script's '@grant none' imperative), located inside the combined jQuery libraries file http://www.metal-archives.com/min/index.php?g=js,
+the jQuery plugin [tablesorter](http://mottie.github.io/tablesorter/docs/index.html) (forked by Rob Garrison (Mottie))  
 and the JavaScript library [Mutation Summary](https://github.com/rafaelw/mutation-summary) (by Rafael Weinstein).  
 
 Thanks a lot to Rob Garrison and Brock Adams for their invaluable help  ([1](http://stackoverflow.com/questions/26331773/javascript-in-an-html-table-how-to-select-part-of-text-matching-some-regex-f), [2](http://stackoverflow.com/questions/26416049/greasemonkey-using-the-waitforkeyelements-utility-how-to-call-a-function-aft), [3](https://github.com/Mottie/tablesorter/issues/990), [4](http://stackoverflow.com/questions/32233895/using-waitforkeyelements-is-it-possible-to-prevent-the-key-element-from-being-d))
