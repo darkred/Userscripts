@@ -4,8 +4,9 @@
 // @author      darkred
 // @license     MIT
 // @description Adds infinite scrolling to subreddits and to comments.
-// @version     2018.2.27
+// @version     2018.4.25
 // @include     https://www.reddit.com/*
+// @include     https://old.reddit.com/*
 // @grant       unsafeWindow
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://greasyfork.org/scripts/11636-jscroll/code/jScroll.js
