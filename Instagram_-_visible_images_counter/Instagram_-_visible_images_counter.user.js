@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
-// @version     2018.4.3
+// @version     2018.4.28
 // @include     https://www.instagram.com/*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
@@ -20,6 +20,8 @@ var stylesheet =
 $('head').append(stylesheet);
 
 
+// Not needed anymore
+/*
 // If you scroll down, beyond the first 12 images, then the "LOAD MORE" button(to show more images) will be automatically clicked
 $(window).scroll(function() {
 	if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
@@ -27,7 +29,7 @@ $(window).scroll(function() {
 		element.click();
 	}
 });
-
+*/
 
 var hrefselems = [];
 var hrefs = [];
@@ -73,6 +75,8 @@ function createDiv() {
 
 function createObserver() {
 
+	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
+	hrefs.length = 0;
 	/// ---------------------------------
 	/// mutation observer -monitors the Posts grid for infinite scrolling event-.
 	/// ---------------------------------
@@ -102,6 +106,9 @@ var observer;
 // var avatarSelector = 'span[style="width: 152px; height: 152px;"]';   // the profile's photo/avatar element
 // var avatarSelector = '._mainc';//                                    // the profile's bio area element
 var avatarSelector = 'h1.notranslate';                                  // the profile name element
+// var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
+// var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
+
 
 
 
@@ -119,8 +126,10 @@ document.arrive(avatarSelector, function() { // the avatar in the profile page
 
 
 document.leave(avatarSelector, function() {
-	div.remove();
-	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
-	hrefs.length = 0;
-	observer.disconnect();
+	if (!document.querySelector('h1.notranslate')){
+		div.remove();
+		hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
+		hrefs.length = 0;
+		observer.disconnect();
+	}
 });
