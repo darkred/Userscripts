@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         IMDb User Reviews - as many star icons as the ratings
+// @name         IMDb User Reviews pages - as many star icons as the ratings
 // @namespace    darkred
 // @license      MIT
 // @description  In IMDb User Reviews pages, display as many star icons as the ratings (in yellow) compared to the max rating, 10 (in black).
@@ -35,7 +35,8 @@ for (let i = 0; i < stars.length; i++) {
 
 	for (let j = 0; j < 10; j++) {
 		if (j > rating-1 ) {
-			stars[i].parentNode.children[j].children[1].setAttribute('style', 'fill: black;');
+			// stars[i].parentNode.children[j].children[1].setAttribute('style', 'fill: black;'); 	// for use with this style: https://userstyles.org/styles/98447/imdb-com-nightmode
+			stars[i].parentNode.children[j].children[1].setAttribute('style', 'fill: #e8e7e7;'); 	// almost white
 		}
 
 	}
