@@ -19,7 +19,6 @@ module.exports = {
 		}
 	},
 	"rules": {
-		"complexity": ["warn", 3],
 		"eqeqeq": "warn",
 		"func-style": "off",
 		"indent": ["warn","tab"],
