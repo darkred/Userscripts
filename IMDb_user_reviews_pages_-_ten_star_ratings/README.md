@@ -1,4 +1,4 @@
-This userscript applies to IMDb User Reviews pages. It display as many star icons as the ratings (in yellow) compared to the max rating, 10 (in black).
+This userscript applies to IMDb User Reviews pages. It displays the ratings with 10 stars, instead of just 1.
 
 Screenshot from e.g. https://www.imdb.com/title/tt0076759/reviews
 Intial:  
