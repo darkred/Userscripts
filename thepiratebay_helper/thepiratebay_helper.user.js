@@ -4,8 +4,8 @@
 // @authors     emptyparad0x, darkred
 // @license     MIT
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
-// @version     0.9.6m
-// @date        2017.11.13
+// @version     0.9.6n
+// @date        2018.5.4
 // @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|tv|music|top).*$/
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.0.min.js
@@ -135,11 +135,11 @@ if (swapVerifiedIconsWithCommentsChoice === true) {
 //Check page
 var url = window.location.href;
 var host = window.location.host;
-if (url.indexOf(host + '/torrent/') !== -1) {
+if (url.indexOf(host + '/torrent/') !== -1) { 	// if current is a torrent page
 	if (relativeDates === true) {
 		convertDatesInTorrentPage();
 	}
-} else {
+} else {										// if current is search results
 
 
 	// Enhance trusted torrents
@@ -153,9 +153,9 @@ if (url.indexOf(host + '/torrent/') !== -1) {
 	var counter = 0;
 	if (enhanceVisibility === 'Hide') {
 
-		hideNonTrusted();
+		hideNonTrusted();	// the value of 'counter' increases inside the hideNonTrusted function execution
 		if (counter > 0) {
-			document.querySelector('#TimeChangerConfig').insertAdjacentHTML('afterend', '<br><i>' + counter  + ' non verified torrents hidden <br/> click here or press ` to view all torrents with comments, <br/> or press ~ to view all</i>');
+			document.querySelector('#TimeChangerConfig').insertAdjacentHTML('afterend', '<br><i>' + counter  + ' non verified torrents hidden <br/> click here (or press `) to view all torrents with comments, <br/> or press ~ to view all</i>');
 		}
 		var flagHide = true;
 
@@ -172,6 +172,7 @@ if (url.indexOf(host + '/torrent/') !== -1) {
 			$(getAllTableLines()).each(function() {
 				$(this).show();
 			});
+			$('#TimeChangerConfig').nextAll().eq(1).html('<i>click here (or press `) to view only verified torrents</i>');
 			// if (swapVerifiedIconsWithCommentsChoice === true) {
 			// 	restoreCommentIconsPosition();
 			// }
@@ -210,7 +211,7 @@ function toggleHide() {
 				hideNonTrusted();
 			}
 
-			$('#TimeChangerConfig').nextAll().eq(1).html('<i>click here (or press `) to view only verified torrents</i>');
+			$('#TimeChangerConfig').nextAll().eq(1).html('<i>' + $('tbody > tr[style="display: none;"]').length  + '  torrents without comments hidden <br/>  click here (or press `) to view only verified torrents <br/> or press ~ to view all</i>');
 			flagHide = false;
 
 		} else {
@@ -219,7 +220,7 @@ function toggleHide() {
 
 			hideNonTrusted();
 
-			$('#TimeChangerConfig').nextAll().eq(1).html('<i>' + counter  + ' non verified torrents hidden - click here or press ` to view all torrents</i>');
+			$('#TimeChangerConfig').nextAll().eq(1).html('<i>' + counter  + ' non verified torrents hidden <br/> click here (or press `) to view all torrents with comments, <br/> or press ~ to view all</i>');
 			flagHide = true;
 		}
 	}
