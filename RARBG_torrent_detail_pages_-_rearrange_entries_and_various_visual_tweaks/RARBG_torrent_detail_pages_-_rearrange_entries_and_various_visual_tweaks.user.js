@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
-// @version     2018.5.7
+// @version     2018.5.8
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -29,6 +29,12 @@ var votes = text.match(regex)[2] * 2;
 var rest = text.match(regex)[3];
 
 node.innerHTML = '  Rating: <strong>' + average + '</strong>/' + votes + rest;
+
+
+// for ten star rating (instead of five star)
+document.querySelector('.unit-rating').style.width = document.querySelector('.unit-rating').style.width.replace('px','') * 2 + 'px';
+document.querySelector('.current-rating').style.width = document.querySelector('.current-rating').style.width.replace('px','') * 2 + 'px';
+document.querySelector('.current-rating').innerHTML = document.querySelector('.current-rating').innerHTML.replace('Currently ', '').replace(/([\d.]+)\/([\d.]+)/, function(m, s1, s2) { return 2 * s1 +  '/' + 2 * s2;});
 
 // ---------------------------------------------------------
 
