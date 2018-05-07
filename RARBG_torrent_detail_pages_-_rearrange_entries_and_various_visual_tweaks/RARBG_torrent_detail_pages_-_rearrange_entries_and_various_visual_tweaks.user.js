@@ -2,8 +2,8 @@
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
 // @license     MIT
-// @description Rearranges various entries, displays in bold the various rating values, remames a few entries more suitably and use decimal rating for the users' ratings
-// @version     2018.5.6
+// @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
+// @version     2018.5.7
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -37,9 +37,9 @@ node.innerHTML = '  Rating: <strong>' + average + '</strong>/' + votes + rest;
 // The main script
 
 var title = $(".header2:contains('Title')").parent().text().replace('Title:','');
-
 $( "a[href*='imdb.com']" ).html(title);
-$(".header2:contains('Title')").parent().remove();
+// $(".header2:contains('Title')").parent().remove();
+
 
 var trailer = $(".header2:contains('Trailer:')").parent();
 var imdbLink = $( "a[href*='imdb.com']" ).parent().parent();
@@ -47,16 +47,6 @@ var imdbRating = $(".header2:contains('IMDB Rating:')").parent();
 var userRating = $(".header2:contains('Rating:')").filter(function() {
 	return $.trim($(this).text()) === "Rating:";
 }).parent();
-// var target = $(".header2:contains('Rotten Rating:')").parent();
-// if (target.length === 0) {
-// 	target = $(".header2:contains('Genres:')").parent();
-// }
-// var target = $(".header2:contains('Genres:')").parent();
-
-// $(trailer).insertBefore(target);
-// $(imdbLink).insertBefore(target);
-// $(imdbRating).insertBefore(target);
-// $(userRating).insertBefore(target);
 
 
 var target = $(".header2:contains('Added:')").parent();
@@ -85,7 +75,7 @@ $(imdbRatingNode).html($(imdbRatingNode).html().replace(/(.*)(\/.*)/, function(m
 
 var rtTomatometerNode = $(".header2:contains('RT Tomatometer:')").next();
 if (rtTomatometerNode.length !== 0)
-	$(rtTomatometerNode).html($(rtTomatometerNode).html().replace(/(.*)\ ([\d]+%)(.*)\ ([\d]+%)/, function(m, s1, s2, s3, s4) { return s1 + '<strong>'+ s2 + '</strong>' + s3 + '<strong>'+ s4 + '</strong>' ;}));
+	$(rtTomatometerNode).html($(rtTomatometerNode).html().replace(/(.*) ([\d]+%)(.*)s ([\d]+%)/, function(m, s1, s2, s3, s4) { return s1 + '<strong>'+ s2 + '</strong>' + s3 + '<strong>'+ s4 + '</strong>' ;}));
 
 
 var rtCriticsAvgNode = $(".header2:contains('RT Critics Avg:')").next();
@@ -113,5 +103,26 @@ $(".header2:contains('Rotten Plot:')").html('RT Critics Consensus:');
 $(".header2:contains('IMDB Rating:')").html('IMDb Rating:');
 
 
-$(".header2:contains('Plot:')").parent().insertAfter($(".header2:contains('IMDb Rating:')").parent());
+$(".header2:contains('Plot:')").parent().insertBefore($(".header2:contains('IMDb Rating:')").parent());
 $(".header2:contains('Plot:')").html('IMDb Summary:');
+
+
+$(".header2:contains('Genres:')").parent().insertAfter($('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent());
+$(".header2:contains('Actors:')").parent().insertAfter($(".header2:contains('Genres:')").parent());
+
+$(".header2:contains('IMDB Runtime:')").html('IMDb Runtime:');
+$(".header2:contains('IMDb Runtime:')").parent().insertAfter($(".header2:contains('IMDb Summary:')").parent());
+
+$(".header2:contains('Year:')").parent().insertAfter($('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent());
+
+$(".header2:contains('Director:')").parent().insertBefore($(".header2:contains('Actors:')").parent());
+
+$(".header2:contains('Show/Hide NFO:')").parent().insertAfter($(".header2:contains('Release name:')").parent());
+
+$(".header2:contains('Release name:')").parent().insertBefore($(".header2:contains('Category:')").parent());
+
+$(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Year:')").parent());
+
+$('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
+
+$(".header2:contains('Trailer:')").parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
