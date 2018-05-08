@@ -4,21 +4,20 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     4.2.3
-// @date        2017.11.16
+// @version     4.2.5
+// @date        2018.5.8
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       none
+// @grant       GM_addStyle
+// @grant       GM_getResourceText
+// @grant       GM_setClipboard
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
+// @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
+// Thanks a lot to: johnp (your contribution is most appreciated!), wOxxOm and Brock Adams.
 // ==/UserScript==
 
-// // @grant       GM_addStyle
-// // @grant       GM_getResourceText
-/// // @grant       GM.setClipboard
-// // @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
 
-/* global $:false */
-/* eslint-disable no-console */
+/* eslint-disable no-console, indent, no-mixed-spaces-and-tabs, complexity */
 
 
 var silent = false;
@@ -45,18 +44,8 @@ String.prototype.escapeHTML = function() {
 //     // 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" ' +                 // uncomment this (and comment #19)  in order to change theme
 //     'rel="stylesheet" type="text/css">'
 // );
-
-// var newCSS = GM_getResourceText ('customCSS');
-// GM_addStyle (newCSS);
-// $('head').append(stylesheet);
-// $('head').append('<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css" type="text/css" />');
-$.ajax({
-	url:'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css',
-	success:function(data){
-		$('<style></style>').appendTo('head').html(data);
-	}
-});
-
+var newCSS = GM_getResourceText ('customCSS');
+GM_addStyle (newCSS);
 
 
 var regex = /^https:\/\/bugzilla\.mozilla\.org\/show_bug\.cgi\?id=(.*)$/;
@@ -85,31 +74,31 @@ time('MozillaMercurial-REST');
 $.getJSON(rest_url, function(data) {
 	timeEnd('MozillaMercurial-REST');
 	data.bugs.sort(function(a, b) {
-		return (a.product + ': ' + a.component + ': ' + a.summary) > (b.product + ': ' + b.component + ': ' + b.summary);
+		return (a.product + ': ' + a.component + ': ' + a.summary).localeCompare(b.product + ': ' + b.component + ': ' + b.summary);
 	});
 	$.each(data.bugs, function(index) {
 		let bug = data.bugs[index];
-	// process bug (let "shorthands" just to simplify things during refactoring)
+		// process bug (let "shorthands" just to simplify things during refactoring)
 		let status = bug.status;
 		if (bug.resolution !== '') {status += ' ' + bug.resolution;}
 		let product = bug.product;
 		let component = bug.component;
 		let platform = bug.platform;
-		if (platform == 'Unspecified') {
+		if (platform === 'Unspecified') {
 			platform = 'Uns';
 		}
 		if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
 			platform += '/' + bug.op_sys;
 		}
 		let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
-	// todo: message???
+		// todo: message???
 
 		log('----------------------------------------------------------------------------------------------------------------------------------');
 		log((index + 1) + '/' + numBugs); // Progression counter
 		log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
 
 		if (isRelevant(bug)) {
-	  // add html code for this bug
+			// add html code for this bug
 			bugsComplete.push('<a href="'
 						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">#'
 						+ bug.id
@@ -118,13 +107,13 @@ $.getJSON(rest_url, function(data) {
 						+ bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '<br>');
 		}
 		counter++; // increase counter
-	// remove processed bug from bugIds
+		// remove processed bug from bugIds
 		let i = bugIds.indexOf(bug.id);
 		if (i !== -1) {bugIds[i] = null;}
 	});
 	log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
 
-  // process remaining bugs one-by-one
+	// process remaining bugs one-by-one
 	var requests = [];
 	time('MozillaMercurial-missing');
 	$.each(bugIds, function(index) {
@@ -133,19 +122,15 @@ $.getJSON(rest_url, function(data) {
 			time('Requesting missing bug ' + id);
 			let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
 				function(json) {
-		// I've not end up here yet, so cry if we do
-	console.error('Request succeeded unexpectedly!');
-	console.error('Please submit this information to the script authors:');
-	timeEnd('Requesting missing bug ' + id);
-	console.log(json);
-	let bug = json.bugs[0];
-	console.log(bug);
-		// TODO: display as much information as possible
-});
-	  // Actually, we usually get an error
-			promise.error(function(req, status, error) {
-				timeEnd('Requesting missing bug ' + id);
-				if (error == 'Authorization Required') {
+					// I've not end up here yet, so cry if we do
+					console.error('Request for bug ' + id + ' succeeded unexpectedly!');
+					timeEnd('Requesting missing bug ' + id);
+					console.error(json);
+			});
+			// Actually, we usually get an '401 Authorization Required' error
+		promise.fail(function(req, status, error) {
+			timeEnd('Requesting missing bug ' + id);
+			if (error === 'Authorization Required') {
 					log('Bug ' + id + ' requires authorization!');
 					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
 					let text = ' requires authorization!<br>';
@@ -160,22 +145,22 @@ $.getJSON(rest_url, function(data) {
 			requests.push(promise);
 		}
 	});
-  // wait for all requests to be settled, then join them together
-  // Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
+	// wait for all requests to be settled, then join them together
+	// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
 	$.when.apply($, $.map(requests, function(p) {
 		return p.then(null, function() {
 			return $.Deferred().resolveWith(this, arguments);
 		});
 	})).always(function() {
 		timeEnd('MozillaMercurial-missing');
-	// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
+		// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
 		var docu = '';
 		docu = bugsComplete.join('');
 
 		var div = document.createElement('div');
 		$('div.page_footer').append(div);
 		div.id = 'dialog';
-	// GM_setClipboard (docu);            // This line stores the list content HTML code to clipboard (aimed for MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer)
+		// GM_setClipboard (docu);            // This line stores the list content HTML code to clipboard (aimed for MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer)
 		docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
 		div.innerHTML = docu;
 		$('#dialog').hide();
@@ -194,38 +179,39 @@ $.getJSON(rest_url, function(data) {
 
 function isRelevant(bug) {
 	if (!bug.id) {return false;}
-	if (bug.status && bug.status != 'RESOLVED' && bug.status != 'VERIFIED') {
+	if (bug.status && bug.status !== 'RESOLVED' && bug.status !== 'VERIFIED') {
 		log('    IRRELEVANT because of it\'s Status --> ' + bug.status);
 
 		return false;
 	}
-	if (bug.component && bug.product && bug.component == 'Build Config' && (bug.product == 'Toolkit' || bug.product == 'Firefox')) {
+	if (bug.component && bug.product && bug.component === 'Build Config' && (bug.product === 'Toolkit' || bug.product === 'Firefox')) {
 		log('    IRRELEVANT because of it\'s Product --> ' + bug.product + 'having component --> ' + bug.component);
 
 		return false;
 	}
-	if (bug.product && bug.product != 'Add-on SDK'  &&
-			  bug.product != 'Cloud Services'       &&
-			  bug.product != 'Core'                 &&
-			  bug.product != 'Firefox'              &&
-			  bug.product != 'Hello (Loop)'         &&
-			  bug.product != 'Toolkit') {
+	if (      bug.product                       &&
+			  bug.product !== 'Add-on SDK'      &&
+			  bug.product !== 'Cloud Services'  &&
+			  bug.product !== 'Core'            &&
+			  bug.product !== 'Firefox'         &&
+			  bug.product !== 'Hello (Loop)'    &&
+			  bug.product !== 'Toolkit') {
 		log('    IRRELEVANT because of it\'s Product --> ' + bug.product);
 
 		return false;
 	}
-	if (bug.component && bug.component == 'AutoConfig'       ||
-			   bug.component == 'Build Config'               ||
-			   bug.component == 'DMD'                        ||
-			   bug.component == 'Embedding: GRE Core'        ||
-			   bug.component == 'Embedding: Mac'             ||
-			   bug.component == 'Embedding: MFC Embed'       ||
-			   bug.component == 'Embedding: Packaging'       ||
-			   bug.component == 'Hardware Abstraction Layer' ||
-			   bug.component == 'mach'                       ||
-			   bug.component == 'Nanojit'                    ||
-			   bug.component == 'QuickLaunch'                ||
-			   bug.component == 'Widget: Gonk') {
+	if (bug.component && bug.component === 'AutoConfig'       ||
+			   bug.component === 'Build Config'               ||
+			   bug.component === 'DMD'                        ||
+			   bug.component === 'Embedding: GRE Core'        ||
+			   bug.component === 'Embedding: Mac'             ||
+			   bug.component === 'Embedding: MFC Embed'       ||
+			   bug.component === 'Embedding: Packaging'       ||
+			   bug.component === 'Hardware Abstraction Layer' ||
+			   bug.component === 'mach'                       ||
+			   bug.component === 'Nanojit'                    ||
+			   bug.component === 'QuickLaunch'                ||
+			   bug.component === 'Widget: Gonk') {
 		log('    IRRELEVANT because of it\'s Component --> ' + bug.component);
 
 		return false;

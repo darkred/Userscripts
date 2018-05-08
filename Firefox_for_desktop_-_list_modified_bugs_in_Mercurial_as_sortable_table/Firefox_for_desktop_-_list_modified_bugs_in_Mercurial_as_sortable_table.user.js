@@ -4,10 +4,11 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @version     5.5.5
-// @date        2017.12.15
+// @version     5.5.6
+// @date        2018.5.8
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       none
+// @grant       GM_addStyle
+// @grant       GM_getResourceText
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -16,23 +17,39 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
+// @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
+// Thanks a lot to: johnp (your contribution is most appreciated!), wOxxOm and Brock Adams.
 // ==/UserScript==
+
+
+/* eslint-disable no-console, indent, no-mixed-spaces-and-tabs, complexity */
+/* global jstz, moment */
+
+
+
+var silent = false;
+var debug = false;
+
+time('MozillaMercurial');
+
+
+
 
 
 // CSS rules in order to show 'up' and 'down' arrows in each table header
 var stylesheet = `
 <style>
 thead th {
-    background-repeat: no-repeat;
-    background-position: right center;
+	background-repeat: no-repeat;
+	background-position: right center;
 }
 thead th.up {
-    padding-right: 20px;
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	padding-right: 20px;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
 }
 thead th.down {
-    padding-right: 20px;
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	padding-right: 20px;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
 }
 </style>`;
 
@@ -62,7 +79,7 @@ var stylesheet2 =
 
 /* in order the bug list to have width 1500px    // it was 1500 and then 1600 */
 .ui-dialog {
-    width:1700px !important;
+	width:1700px !important;
 }
 
 </style>`;
@@ -70,15 +87,20 @@ $('head').append(stylesheet2);
 
 
 
+// theme for the jQuery dialog
+// $("head").append(
+//     '<link ' +
+//     'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css" ' +
+//     // 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" ' +                 // uncomment this (and comment #19)  in order to change theme
+//     'rel="stylesheet" type="text/css">'
+// );
+var newCSS = GM_getResourceText ('customCSS');
+GM_addStyle (newCSS);
 
 
 
 
 
-var silent = false;
-var debug = false;
-
-time('MozillaMercurial');
 
 String.prototype.escapeHTML = function() {
 	var tagsToReplace = {
@@ -142,26 +164,26 @@ $.getJSON(rest_url, function(data) {
 	timeEnd('MozillaMercurial-REST');
 	$.each(data.bugs, function(index) {
 		let bug = data.bugs[index];
-    // process bug (let "shorthands" just to simplify things during refactoring)
+		// process bug (let "shorthands" just to simplify things during refactoring)
 		let status = bug.status;
 		if (bug.resolution !== '') {status += ' ' + bug.resolution;}
 		let product = bug.product;
 		let component = bug.component;
 		let platform = bug.platform;
-		if (platform == 'Unspecified') {
+		if (platform === 'Unspecified') {
 			platform = 'Uns';
 		}
 		if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
 			platform += '/' + bug.op_sys;
 		}
 		let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
-    // todo: message???
+		// todo: message???
 
 
 
 
 
-    // 2015-11-09T14:40:41Z
+		// 2015-11-09T14:40:41Z
 		function toRelativeTime(time, zone) {
 			var format2 = ('YYYY-MM-DD HH:mm:ss Z');
 			return moment(time, format2).tz(zone).fromNow();
@@ -181,12 +203,12 @@ $.getJSON(rest_url, function(data) {
 
 		if (bug.last_change_time !== '') {
 			var temp = toRelativeTime(bug.last_change_time, localTimezone);
-			if (temp.match(/(an?)\ .*/)) {
+			if (temp.match(/(an?) .*/)) {
 				changetime = temp.replace(/an?/, 1);
 			} else {
 				changetime = temp;
 			}
-        // changetime
+		// changetime
 		} else {
 			changetime = '';
 		}
@@ -203,18 +225,18 @@ $.getJSON(rest_url, function(data) {
 		log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
 
 		if (isRelevant(bug)) {
-      // add html code for this bug
+			// add html code for this bug
 			bugsComplete.push('<tr><td><a href="'
-                        + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
-                        + bug.id
-                        + '</a></td>'
-                        + '<td nowrap>(' + product + ': ' + component + ') </td>'
-                        + '<td>'+bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '</td>'
-                        + '<td>' + changetime + '</td>'
-                        + '<td>' + status  + '</td></tr>');  // previously had a <br> at the end;
+						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
+						+ bug.id
+						+ '</a></td>'
+						+ '<td nowrap>(' + product + ': ' + component + ') </td>'
+						+ '<td>'+bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '</td>'
+						+ '<td>' + changetime + '</td>'
+						+ '<td>' + status  + '</td></tr>');  // previously had a <br> at the end;
 		}
 		counter++; // increase counter
-    // remove processed bug from bugIds
+		// remove processed bug from bugIds
 		let i = bugIds.indexOf(bug.id);
 		if (i !== -1) {bugIds[i] = null;}
 	});
@@ -223,7 +245,7 @@ $.getJSON(rest_url, function(data) {
 
 
 
-  // process remaining bugs one-by-one
+	// process remaining bugs one-by-one
 	var requests = [];
 	time('MozillaMercurial-missing');
 	$.each(bugIds, function(index) {
@@ -231,27 +253,24 @@ $.getJSON(rest_url, function(data) {
 		if (id !== null) {
 			time('Requesting missing bug ' + id);
 			let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
-                function(json) {
-        // I've not end up here yet, so cry if we do
-	console.error('Request succeeded unexpectedly!');
-	console.error('Please submit this information to the script authors:');
-	timeEnd('Requesting missing bug ' + id);
-	console.log(json);
-	let bug = json.bugs[0];
-	console.log(bug);
-        // TODO: display as much information as possible
-});
-      // Actually, we usually get an error
-			promise.error(function(req, status, error) {
+				function(json) {
+					// I've not end up here yet, so cry if we do
+					console.error('Request for bug ' + id + ' succeeded unexpectedly!');
+					timeEnd('Requesting missing bug ' + id);
+					console.error(json);
+				});
+			// Actually, we usually get an '401 Authorization Required' error
+			promise.fail(function(req, status, error) {
 				timeEnd('Requesting missing bug ' + id);
-				if (error == 'Authorization Required') {
-          // log("Bug " + id + " requires authorization!");
+				if (error === 'Authorization Required') {
+
+					// log("Bug " + id + " requires authorization!");
 					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
 					let text = ' requires authorization!<br>';
 
 					bugsComplete.push('<a href="'
-                        + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
-                        + id + '</a>' + text);
+						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
+						+ id + '</a>' + text);
 				} else {
 					console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
 				}
@@ -259,26 +278,26 @@ $.getJSON(rest_url, function(data) {
 			requests.push(promise);
 		}
 	});
-  // wait for all requests to be settled, then join them together
-  // Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
+	// wait for all requests to be settled, then join them together
+	// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
 	$.when.apply($, $.map(requests, function(p) {
 		return p.then(null, function() {
 			return $.Deferred().resolveWith(this, arguments);
 		});
 	})).always(function() {
 		timeEnd('MozillaMercurial-missing');
-    // Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
+		// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
 		var docu = '';
 		docu = bugsComplete.join('');
-		docu = ' <table id="tbl" style="width:100%">' +
-             '<thead>' +
-             '<tr><th>BugNo</th>' +
-             '<th>Product/Component</th>' +
-             '<th>Summary</th>' +
-             '<th>Modified___</th>' +
-             '<th>Status____________</th></tr>' +
-             '</thead>' +
-             '<tbody>' + docu + '</tbody></table>';
+		docu = '<table id="tbl" style="width:100%">' +
+				'<thead>' +
+				'<tr><th>BugNo</th>' +
+				'<th>Product/Component</th>' +
+				'<th>Summary</th>' +
+				'<th>Modified___</th>' +
+				'<th>Status____________</th></tr>' +
+				'</thead>' +
+				'<tbody>' + docu + '</tbody></table>';
 
 
 
@@ -302,21 +321,21 @@ $.getJSON(rest_url, function(data) {
 
 
 
-// THE CUSTOM PARSER MUST BE PUT BEFORE '$('#tbl').tablesorter ( {'' or else it wont work !!!!
-// add parser through the tablesorter addParser method  (for the "Last modified" column)
+		// THE CUSTOM PARSER MUST BE PUT BEFORE '$('#tbl').tablesorter ( {'' or else it wont work !!!!
+		// add parser through the tablesorter addParser method  (for the "Last modified" column)
 		$.tablesorter.addParser({
-    // set a unique id
+			// set a unique id
 			id: 'dates',
 			is: function(s) {
 				return false;                                // return false so this parser is not auto detected
 			},
 			format: function(s) {
-      // format your data for normalization
+				// format your data for normalization
 				if (s !== ''){
 					var number1, number2;
 
-        // format your data for normalization
-					number1 = Number((/(.{1,2})\ .*/).exec(s)[1]);
+					// format your data for normalization
+					number1 = Number((/(.{1,2}) .*/).exec(s)[1]);
 
 
 					if (s.match(/A few seconds ago/)) { number2 = 0;}
@@ -330,13 +349,13 @@ $.getJSON(rest_url, function(data) {
 
 				}
 			},
-    // set type, either numeric or text
+			// set type, either numeric or text
 			type: 'numeric'
 		});
 
 
 
-// make table sortable
+		// make table sortable
 		$('#tbl').tablesorter({
 			cssAsc: 'up',
 			cssDesc: 'down',
@@ -345,7 +364,7 @@ $.getJSON(rest_url, function(data) {
 			initialized: function() {
 				var mytable = document.getElementById('tbl');
 				for (var i = 2, j = mytable.rows.length + 1; i < j; i++) {
-					if (mytable.rows[i].cells[3].innerHTML != mytable.rows[i - 1].cells[3].innerHTML) {
+					if (mytable.rows[i].cells[3].innerHTML !== mytable.rows[i - 1].cells[3].innerHTML) {
 						for (var k = 0; k < 5; k++) {
 							mytable.rows[i - 1].cells[k].style.borderBottom = '1px black dotted';
 						}
@@ -376,13 +395,13 @@ var flag = 1;
 // bind keypress of ` so that when pressed, the separators between groups of the same timestamps to be removed, in order to sort manually
 var listener = new window.keypress.Listener();
 listener.simple_combo('`', function() {
-    // console.log('You pressed `');
+	// console.log('You pressed `');
 	if (flag === 1) {
 		flag = 0;
-        // remove seperators
+		// remove seperators
 		var mytable = document.getElementById('tbl');
-		for (var i = 2, j = mytable.rows.length + 1; i < j; i++) {
-			for (var k = 0; k < 5; k++) {
+		for (let i = 2, j = mytable.rows.length + 1; i < j; i++) {
+			for (let k = 0; k < 5; k++) {
 				mytable.rows[i - 1].cells[k].style.borderBottom = 'none';
 			}
 		}
@@ -391,13 +410,13 @@ listener.simple_combo('`', function() {
 	} else {
 		if (flag === 0) {
 			flag = 1;
-            // console.log('You pressed ~');
-			var sorting = [[3, 0], [1, 0], [2, 0]]; // sort by column 3 'Modified Date, then by '1 'Product/Component' and then by column 2 'Summary'
+			// console.log('You pressed ~');
+			sorting = [[3, 0], [1, 0], [2, 0]]; // sort by column 3 'Modified Date, then by '1 'Product/Component' and then by column 2 'Summary'
 			$('#tbl').trigger('sorton', [sorting]);
-			var mytable = document.getElementById('tbl');
-			for (var i = 2, j = mytable.rows.length + 1; i < j; i++) {
-				if (mytable.rows[i].cells[3].innerHTML != mytable.rows[i - 1].cells[3].innerHTML) {
-					for (var k = 0; k < 5; k++) {
+			mytable = document.getElementById('tbl');
+			for (let i = 2, j = mytable.rows.length + 1; i < j; i++) {
+				if (mytable.rows[i].cells[3].innerHTML !== mytable.rows[i - 1].cells[3].innerHTML) {
+					for (let k = 0; k < 5; k++) {
 						mytable.rows[i - 1].cells[k].style.borderBottom = '1px black dotted';
 					}
 				}
@@ -413,35 +432,37 @@ listener.simple_combo('`', function() {
 
 function isRelevant(bug) {
 	if (!bug.id) {return false;}
-    // if (bug.status && bug.status != 'RESOLVED' && bug.status != 'VERIFIED') {
-    //    log('    IRRELEVANT because of it\'s Status --> ' + bug.status);
-    //    return false;
-    // }
-	if (bug.component && bug.product && bug.component == 'Build Config' && (bug.product == 'Toolkit' || bug.product == 'Firefox')) {
+	// if (bug.status && bug.status !== 'RESOLVED' && bug.status !== 'VERIFIED') {
+	//    log('    IRRELEVANT because of it\'s Status --> ' + bug.status);
+	//    return false;
+	// }
+	if (bug.component && bug.product && bug.component === 'Build Config' && (bug.product === 'Toolkit' || bug.product === 'Firefox')) {
 		log('    IRRELEVANT because of it\'s Product --> ' + bug.product + 'having component --> ' + bug.component);
 		return false;
 	}
-	if (bug.product && bug.product != 'Add-on SDK'      &&
-                       bug.product != 'Cloud Services'  &&
-                       bug.product != 'Core'            &&
-                       bug.product != 'Firefox'         &&
-                       bug.product != 'Hello (Loop)'    &&
-                       bug.product != 'Toolkit') {
+	if (bug.product &&
+		bug.product !== 'Add-on SDK'      &&
+		bug.product !== 'Cloud Services'  &&
+		bug.product !== 'Core'            &&
+		bug.product !== 'Firefox'         &&
+		bug.product !== 'Hello (Loop)'    &&
+		bug.product !== 'Toolkit') {
 		log('    IRRELEVANT because of it\'s Product --> ' + bug.product);
 		return false;
 	}
-	if (bug.component && bug.component == 'AutoConfig'                 ||
-                         bug.component == 'Build Config'               ||
-                         bug.component == 'DMD'                        ||
-                         bug.component == 'Embedding: GRE Core'        ||
-                         bug.component == 'Embedding: Mac'             ||
-                         bug.component == 'Embedding: MFC Embed'       ||
-                         bug.component == 'Embedding: Packaging'       ||
-                         bug.component == 'Hardware Abstraction Layer' ||
-                         bug.component == 'mach'                       ||
-                         bug.component == 'Nanojit'                    ||
-                         bug.component == 'QuickLaunch'                ||
-                         bug.component == 'Widget: Gonk') {
+	if (bug.component &&
+		bug.component === 'AutoConfig'                 ||
+		bug.component === 'Build Config'               ||
+		bug.component === 'DMD'                        ||
+		bug.component === 'Embedding: GRE Core'        ||
+		bug.component === 'Embedding: Mac'             ||
+		bug.component === 'Embedding: MFC Embed'       ||
+		bug.component === 'Embedding: Packaging'       ||
+		bug.component === 'Hardware Abstraction Layer' ||
+		bug.component === 'mach'                       ||
+		bug.component === 'Nanojit'                    ||
+		bug.component === 'QuickLaunch'                ||
+		bug.component === 'Widget: Gonk') {
 		log('    IRRELEVANT because of it\'s Component --> ' + bug.component);
 		return false;
 	}
@@ -471,7 +492,6 @@ function timeEnd(str) {
 	}
 }
 
-// $(function() {
 $('#dialog').dialog({
 	modal: false,
 	title: 'Draggable, sizeable dialog',
@@ -481,10 +501,10 @@ $('#dialog').dialog({
 		of: document,
 		collision: 'none'
 	},
-        // width: 1500,               // not working
+	// width: 1500,               // not working
 	zIndex: 3666
 })
-    .dialog('widget').draggable('option', 'containment', 'none');
+	.dialog('widget').draggable('option', 'containment', 'none');
 
 //-- Fix crazy bug in FF! ...
 $('#dialog').parent().css({
