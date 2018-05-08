@@ -74,7 +74,7 @@ time('MozillaMercurial-REST');
 $.getJSON(rest_url, function(data) {
 	timeEnd('MozillaMercurial-REST');
 	data.bugs.sort(function(a, b) {
-		return (a.product + ': ' + a.component + ': ' + a.summary).localeCompare(b.product + ': ' + b.component + ': ' + b.summary);
+		return (a.product + ': ' + a.component + ': ' + a.summary).localeCompare(b.product + ': ' + b.component + ': ' + b.summary);	// had to change '>' with '.localeCompare' because the sorting wasn't applied when run with Tampermonkey
 	});
 	$.each(data.bugs, function(index) {
 		let bug = data.bugs[index];
