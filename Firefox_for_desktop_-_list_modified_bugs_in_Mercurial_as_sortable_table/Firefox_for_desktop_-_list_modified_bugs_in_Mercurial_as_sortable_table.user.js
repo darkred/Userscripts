@@ -4,8 +4,8 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @version     5.5.6
-// @date        2018.5.8
+// @version     5.5.7
+// @date        2018.5.11
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
@@ -227,7 +227,8 @@ $.getJSON(rest_url, function(data) {
 		if (isRelevant(bug)) {
 			// add html code for this bug
 			bugsComplete.push('<tr><td><a href="'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
+						// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
+						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
 						+ bug.id
 						+ '</a></td>'
 						+ '<td nowrap>(' + product + ': ' + component + ') </td>'
@@ -305,7 +306,7 @@ $.getJSON(rest_url, function(data) {
 		var div = document.createElement('div');
 		$('div.page_footer').append(div);
 		div.id = 'dialog';
-		docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
+		docu = '<div id="dialog_content">' + docu + '</div>';
 		div.innerHTML = docu;
 		$('#dialog').hide();
 

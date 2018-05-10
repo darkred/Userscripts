@@ -4,8 +4,8 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     4.2.5
-// @date        2018.5.8
+// @version     4.2.6
+// @date        2018.5.11
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
@@ -99,8 +99,10 @@ $.getJSON(rest_url, function(data) {
 
 		if (isRelevant(bug)) {
 			// add html code for this bug
+			// console.log(typeof bug.summary)
 			bugsComplete.push('<a href="'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">#'
+						// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' (' + product + ': ' + component + ') ' +  bug.summary + '">#'
+						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
 						+ bug.id
 						+ '</a>'
 						+ ' (' + product + ': ' + component + ') '
@@ -161,7 +163,8 @@ $.getJSON(rest_url, function(data) {
 		$('div.page_footer').append(div);
 		div.id = 'dialog';
 		// GM_setClipboard (docu);            // This line stores the list content HTML code to clipboard (aimed for MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer)
-		docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
+		// docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
+		docu = '<div id="dialog_content">' + docu + '</div>';
 		div.innerHTML = docu;
 		$('#dialog').hide();
 
