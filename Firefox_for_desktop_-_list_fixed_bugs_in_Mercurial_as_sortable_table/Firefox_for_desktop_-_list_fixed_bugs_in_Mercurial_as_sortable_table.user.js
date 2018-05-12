@@ -4,8 +4,8 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     5.5.7
-// @date        2018.5.11
+// @version     5.5.8
+// @date        2018.5.12
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
@@ -25,6 +25,15 @@
 /* esli nt-disable no-console, indent, no-mixed-spaces-and-tabs, complexity */
 /* eslint-disable no-console, complexity */
 /* global jstz, moment */
+
+
+var silent = false;
+var debug = false;
+
+time('MozillaMercurial');
+
+
+
 
 
 // CSS rules in order to show 'up' and 'down' arrows in each table header
@@ -88,38 +97,30 @@ $('head').append(stylesheet2);
 
 
 
+
+
+
+
+// the dialog will only be opened after all these promises have finished
+var requests = [];
+
+
 // theme for the jQuery dialog
-// $("head").append(
-//     '<link ' +
-//     'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css" ' +
-//     // 'href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" ' +                 // uncomment this (and comment #19)  in order to change theme
-//     'rel="stylesheet" type="text/css">'
-// );
-var newCSS = GM_getResourceText ('customCSS');
-GM_addStyle (newCSS);
-
-
-
-
-
-
-
-
-var silent = false;
-var debug = false;
-
-time('MozillaMercurial');
-
-String.prototype.escapeHTML = function() {
-	var tagsToReplace = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;'
-	};
-	return this.replace(/[&<>]/g, function(tag) {
-		return tagsToReplace[tag] || tag;
+if (typeof(GM_getResourceText) !== 'undefined' && typeof(GM_addStyle) !== 'undefined') {
+	let newCSS = GM_getResourceText('customCSS');
+	GM_addStyle(newCSS);
+} else { // e.g. Greasemonkey: https://github.com/greasemonkey/greasemonkey/issues/2548
+	// load jquery-ui css dynamically to bypass Content-Security-Policy restrictions
+	let loadCss = $.get('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css', function(css) {
+		$('head').append('<style>' + css + '</style>');
 	});
-};
+	requests.push(loadCss); // prevent a possible race condition where the dialog is opened before the css is loaded
+}
+
+
+
+
+
 
 // theme for the jQuery dialog
 // $('head').append(
@@ -159,11 +160,21 @@ var numBugs = bugIds.length;
 var counter = 0;
 
 var rest_url = base_url + bugIds.join();
+
+
+String.prototype.escapeHTML = function() {
+	var tagsToReplace = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;'
+	};
+	return this.replace(/[&<>]/g, function(tag) {
+		return tagsToReplace[tag] || tag;
+	});
+};
+
+
 time('MozillaMercurial-REST');
-
-
-
-
 
 
 
@@ -253,7 +264,6 @@ $.getJSON(rest_url, function(data) {
 
 
 	// process remaining bugs one-by-one
-	var requests = [];
 	time('MozillaMercurial-missing');
 	$.each(bugIds, function(index) {
 		let id = bugIds[index];
