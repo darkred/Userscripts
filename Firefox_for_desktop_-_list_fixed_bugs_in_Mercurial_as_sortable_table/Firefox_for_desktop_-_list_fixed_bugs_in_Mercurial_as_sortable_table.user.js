@@ -4,11 +4,12 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     5.5.8
-// @date        2018.5.12
+// @version     5.5.9
+// @date        2018.5.13
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
-// @grant       GM_addStyle
+// @grant       GM_getResourceURL
 // @grant       GM_getResourceText
+// @grant       GM_addStyle
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -18,6 +19,13 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
 // @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
+// @resource    IconSet1  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_glass_75_d0e5f5_1x400.png
+// @resource    IconSet2  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_glass_85_dfeffc_1x400.png
+// @resource    IconSet3  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_gloss-wave_55_5c9ccc_500x100.png
+// @resource    IconSet4  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_inset-hard_100_fcfdfd_1x100.png
+// @resource    IconSet5  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-icons_217bc0_256x240.png
+// @resource    IconSet6  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-icons_469bdd_256x240.png
+// @resource    IconSet7  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-icons_6da8d5_256x240.png
 // Thanks a lot to: johnp (your contribution is most appreciated!), wOxxOm and Brock Adams.
 // ==/UserScript==
 
@@ -107,8 +115,30 @@ var requests = [];
 
 // theme for the jQuery dialog
 if (typeof(GM_getResourceText) !== 'undefined' && typeof(GM_addStyle) !== 'undefined') {
-	let newCSS = GM_getResourceText('customCSS');
-	GM_addStyle(newCSS);
+
+
+	// https://stackoverflow.com/a/11532646/ , i.e. https://stackoverflow.com/a/11532646/3231411  (By Brock Adams)
+	// Themes files URLs: https://cdnjs.com/libraries/jqueryui
+	let iconSet1    = GM_getResourceURL ('IconSet1');
+	let iconSet2    = GM_getResourceURL ('IconSet2');
+	let iconSet3    = GM_getResourceURL ('IconSet3');
+	let iconSet4    = GM_getResourceURL ('IconSet4');
+	let iconSet5    = GM_getResourceURL ('IconSet5');
+	let iconSet6    = GM_getResourceURL ('IconSet6');
+	let iconSet7    = GM_getResourceURL ('IconSet7');
+	let jqUI_CssSrc = GM_getResourceText ('jqUI_CSS');
+	// jqUI_CssSrc     = jqUI_CssSrc.replace (/url\(images\/ui\-bg_.*00\.png\)/g, '');
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-bg_glass_75_d0e5f5_1x400\.png/g,         iconSet1);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-bg_glass_85_dfeffc_1x400\.png/g,         iconSet2);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-bg_gloss-wave_55_5c9ccc_500x100\.png/g,  iconSet3);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-bg_inset-hard_100_fcfdfd_1x100\.png/g,   iconSet4);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-icons_217bc0_256x240\.png/g,             iconSet5);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-icons_469bdd_256x240\.png/g,             iconSet6);
+	jqUI_CssSrc     = jqUI_CssSrc.replace (/images\/ui-icons_6da8d5_256x240\.png/g,             iconSet7);
+
+	GM_addStyle (jqUI_CssSrc);
+
+
 } else { // e.g. Greasemonkey: https://github.com/greasemonkey/greasemonkey/issues/2548
 	// load jquery-ui css dynamically to bypass Content-Security-Policy restrictions
 	let loadCss = $.get('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css', function(css) {
