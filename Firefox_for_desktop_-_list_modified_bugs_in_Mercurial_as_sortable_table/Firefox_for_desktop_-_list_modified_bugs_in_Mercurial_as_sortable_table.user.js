@@ -4,8 +4,8 @@
 // @authors     darkred, johnp
 // @license     MIT
 // @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @version     5.5.9
-// @date        2018.5.13
+// @version     5.5.9.1
+// @date        2018.5.16
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL
 // @grant       GM_getResourceText
@@ -18,7 +18,7 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
-// @resource    customCSS http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
+// @resource    jqUI_CSS  http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css
 // @resource    IconSet1  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_glass_75_d0e5f5_1x400.png
 // @resource    IconSet2  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_glass_85_dfeffc_1x400.png
 // @resource    IconSet3  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-bg_gloss-wave_55_5c9ccc_500x100.png
