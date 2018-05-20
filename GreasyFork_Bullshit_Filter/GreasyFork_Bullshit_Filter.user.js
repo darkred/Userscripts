@@ -1,21 +1,21 @@
 // ==UserScript==
-// @name         GreasyFork Bullshit Filter
-// @namespace    darkred
-// @author       kuehlschrank, darkred
-// @license      MIT
-// @description  Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
-// @version      2018.4.24
-// @icon         https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter/large.png
-// @include      https://greasyfork.org/*/scripts*
-// @exclude      /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
-// @exclude      https://greasyfork.org/*/scripts/by-site
-// @exclude      https://greasyfork.org/*/scripts/by-site?*
-// @include      https://greasyfork.org/*/forum*
-// @exclude      https://greasyfork.org/*/forum/discussion/*
-// @exclude      https://greasyfork.org/*/forum/profile*
-// @exclude      https://greasyfork.org/*/forum/messages*
-// @exclude      https://greasyfork.org/*/forum/categories
-// @grant        none
+// @name        GreasyFork Bullshit Filter
+// @namespace   darkred
+// @version     2018.4.24
+// @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
+// @author      kuehlschrank, darkred
+// @license     MIT
+// @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter/large.png
+// @include     https://greasyfork.org/*/scripts*
+// @exclude     /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
+// @exclude     https://greasyfork.org/*/scripts/by-site
+// @exclude     https://greasyfork.org/*/scripts/by-site?*
+// @include     https://greasyfork.org/*/forum*
+// @exclude     https://greasyfork.org/*/forum/discussion/*
+// @exclude     https://greasyfork.org/*/forum/profile*
+// @exclude     https://greasyfork.org/*/forum/messages*
+// @exclude     https://greasyfork.org/*/forum/categories
+// @grant       none
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
 // ==/UserScript==

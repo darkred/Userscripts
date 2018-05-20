@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name        StackExchange sites - convert dates to local timezone
 // @namespace   darkred
-// @license     MIT
-// @description Converts dates to your local timezone
 // @version     2016.10.16
+// @description Converts dates to your local timezone
+// @author      darkred
+// @license     MIT
 // @match       *://*.stackoverflow.com/*
 // @match       *://*.stackexchange.com/*
 // @match       *://*.superuser.com/*

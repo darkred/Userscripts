@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name        GitHub - Confirmations before submitting issues and comments
 // @namespace   darkred
+// @version     2017.4.26
+// @description Creates a confirmation popup whenever attempting to create an issue or post comment via Ctrl+Enter in GitHub
 // @author      darkred
 // @license     MIT
-// @description Creates a confirmation popup whenever attempting to create an issue or post comment via Ctrl+Enter in GitHub
-// @version     2017.4.26
 // @include     https://github.com/*
 // @grant       none
 // ==/UserScript==

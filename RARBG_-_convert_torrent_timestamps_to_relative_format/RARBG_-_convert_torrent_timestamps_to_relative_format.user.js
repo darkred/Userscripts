@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @license     MIT
-// @description Converts torrent upload timestamps to relative format
 // @version     2018.4.16.1
+// @description Converts torrent upload timestamps to relative format
+// @author      darkred
+// @license     MIT
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrents.php.*/
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/top10$/
 // @grant       none

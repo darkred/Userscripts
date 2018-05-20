@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
-// @author      RobG, Brock Adams, Mottie, darkred
-// @license     MIT
-// @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @version     2.0.3
 // @date        2018.4.24
+// @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
+// @author      RobG, Brock Adams, Mottie, darkred
+// @license     MIT
 // @include     /^https?:\/\/www\.metal-archives\.com/bands?/.*$/
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js

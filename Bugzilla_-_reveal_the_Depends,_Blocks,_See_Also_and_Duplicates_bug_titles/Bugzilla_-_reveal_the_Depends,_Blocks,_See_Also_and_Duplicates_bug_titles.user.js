@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name        Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles
 // @namespace   darkred
-// @license     MIT
-// @description Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
-// @include     https://bugzilla.mozilla.org/show_bug.cgi?id=*
 // @version     2017.16.11
+// @description Reveal the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts
+// @license     MIT
+// @include     https://bugzilla.mozilla.org/show_bug.cgi?id=*
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js

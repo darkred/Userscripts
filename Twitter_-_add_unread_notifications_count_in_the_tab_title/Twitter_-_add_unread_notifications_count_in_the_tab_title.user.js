@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Twitter - add unread notifications count in the tab title
 // @namespace   darkred
+// @version     2018.2.27
+// @description Adds unread notifications count in the tab title
 // @author      darkred
 // @license     MIT
-// @description Adds unread notifications count in the tab title
-// @version     2018.2.27
 // @include     https://twitter.com/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js

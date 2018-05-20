@@ -1,11 +1,12 @@
 ﻿// ==UserScript==
-// @name         GreasyFork - filter libraries in profiles
-// @namespace    darkred
-// @license      MIT
-// @description  Filters libraries in GreasyFork profiles
-// @version      1
-// @include      https://greasyfork.org/*/users/*
-// @grant        none
+// @name        GreasyFork - filter libraries in profiles
+// @namespace   darkred
+// @version     1
+// @description Filters libraries in GreasyFork profiles
+// @author      darkred
+// @license     MIT
+// @include     https://greasyfork.org/*/users/*
+// @grant       none
 // ==/UserScript==
 
 var all = document.querySelectorAll('article').length;
@@ -17,15 +18,15 @@ var parentElement = document.querySelector('#script-list-sort');
 
 var theFirstChild = parentElement.firstChild;
 
-var div = document.createElement("div");
+var div = document.createElement('div');
 parentElement.insertBefore(div, theFirstChild);
 
 
-div.style.position = "fixed";
-div.style.background = "white";
+div.style.position = 'fixed';
+div.style.background = 'white';
 
-div.style.top = "150px";
-div.style.right = "287px";
+div.style.top = '150px';
+div.style.right = '287px';
 
 
 
@@ -52,23 +53,23 @@ c.onclick = toggleLibraries;
 b.click();
 
 function toggleAll(){
-  a.style.fontWeight = "bold"; b.style.fontWeight = "normal"; c.style.fontWeight = "normal";
-  $('article').show();
-  $('.script-type').parent().parent().show();
+	a.style.fontWeight = 'bold'; b.style.fontWeight = 'normal'; c.style.fontWeight = 'normal';
+	$('article').show();
+	$('.script-type').parent().parent().show();
 }
 
 
 function toggleScripts(){
-  a.style.fontWeight = "normal"; b.style.fontWeight = "bold"; c.style.fontWeight = "normal";
-  $('article').show();
-  $('.script-type').parent().parent().hide();
+	a.style.fontWeight = 'normal'; b.style.fontWeight = 'bold'; c.style.fontWeight = 'normal';
+	$('article').show();
+	$('.script-type').parent().parent().hide();
 }
 
 
 function toggleLibraries(){
-  a.style.fontWeight = "normal"; b.style.fontWeight = "normal"; c.style.fontWeight = "bold";
-  $('article').hide();
-  $('.script-type').parent().parent().show();
+	a.style.fontWeight = 'normal'; b.style.fontWeight = 'normal'; c.style.fontWeight = 'bold';
+	$('article').hide();
+	$('.script-type').parent().parent().show();
 
 
 }

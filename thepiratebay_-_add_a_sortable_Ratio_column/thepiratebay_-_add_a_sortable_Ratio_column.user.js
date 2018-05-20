@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        thepiratebay - add a sortable Ratio column
 // @namespace   darkred
-// @author      darkred
-// @license     MIT
-// @description Adds a sortable "Ratio" column
 // @version     1.2.3
 // @date        2018.2.27
+// @description Adds a sortable "Ratio" column
+// @author      darkred
+// @license     MIT
 // @include     https://thepiratebay.org/search/*
 // @include     https://thepiratebay.org/browse/*
 // @include     https://thepiratebay.org/recent

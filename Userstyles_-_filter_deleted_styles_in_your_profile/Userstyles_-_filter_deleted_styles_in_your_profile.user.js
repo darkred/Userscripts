@@ -1,9 +1,11 @@
 ﻿// ==UserScript==
 // @name        Userstyles - filter deleted styles in your profile
 // @namespace   darkred
-// @include     /^https:\/\/userstyles.org\/users\/[0-9]*/
-// @description Filters deleted styles in your profile in userstyles.org
 // @version     1
+// @description Filters deleted styles in your profile in userstyles.org
+// @author      darkred
+// @license     MIT
+// @include     /^https:\/\/userstyles.org\/users\/[0-9]*/
 // @grant       none
 // ==/UserScript==
 

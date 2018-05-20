@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name        SunXDCC - normalize values
 // @namespace   darkred
-// @author      darkred
-// @description It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
-// @include     /^https?:\/\/(www\.)?sunxdcc\.com.*/
 // @version     2018.2.27
+// @description It converts the values: in the 'Record' column from B/s to kB/s, and in the 'Size' column from e.g. G to GB. Also adds a space between the value and the unit, in both cases.
+// @author      darkred
+// @license     MIT
+// @include     /^https?:\/\/(www\.)?sunxdcc\.com.*/
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js
 // ==/UserScript==

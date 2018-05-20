@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name        ixIRC - sortable search results
-// @include     /https?:\/\/(www\.)?ixirc\.com\/\?(q|cid)=.*/
 // @namespace   darkred
-// @author      darkred, Mottie
-// description  Makes the search results sortable
+// @version     1
+// @description Makes the search results sortable
+// @authors     darkred, Mottie
+// @license     MIT
+// @include     /https?:\/\/(www\.)?ixirc\.com\/\?(q|cid)=.*/
 // @grant       none
-// @run-at      document-idle
 // @require     http://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.10/js/jquery.tablesorter.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js
 // @require     https://cdn.rawgit.com/Mottie/tablesorter/master/js/parsers/parser-metric.js
 // @require     http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.13.1/math.min.js
+// @run-at      document-idle
 // 	Thanks a lot to Mottie for his help on using DateJs in a custom parser
 // ==/UserScript==
 
@@ -51,7 +53,7 @@ $('head').append(stylesheet);
 	// jQuery fix for tables lacking a thead (http://aaron.jorb.in/blog/2010/03/jquery-fix-for-tables-lacking-a-thead/)
 	$('#results-table')
 		.prepend($('<thead></thead>')
-		.append($('#results-table tr:first').remove()));
+			.append($('#results-table tr:first').remove()));
 
 
 	// thanks a lot to Mottie for his help on this custom parser ( https://github.com/Mottie/tablesorter/issues/1402#issuecomment-302744234 )
@@ -62,10 +64,10 @@ $('head').append(stylesheet);
 		},
 		format: function(s) {
 			var str = s
-				.replace('hr', 'hour')
-				.replace('min', 'minute')
-				.replace('sec', 'seconds')
-				.replace('ago', ''),
+					.replace('hr', 'hour')
+					.replace('min', 'minute')
+					.replace('sec', 'seconds')
+					.replace('ago', ''),
 				date = Date.parse ? Date.parse('-' + str) : s ? new Date(str) : s;
 			return date instanceof Date && isFinite(date) ? date.getTime() : s;
 		},

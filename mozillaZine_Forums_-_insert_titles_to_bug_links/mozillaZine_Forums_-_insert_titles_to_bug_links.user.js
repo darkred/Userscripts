@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        mozillaZine Forums - insert titles to bug links
 // @namespace   darkred
+// @version     2017.11.16
+// @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
 // @author      darkred, johnp_
 // @license     MIT
-// @description Inserts titles to bug links that are plain URLs, in forums.mozillazine.org
-// @version     2017.11.16
 // @include     http://forums.mozillazine.org/viewtopic.php*
 // @grant       none
 // @require     https://code.jquery.com/jquery-2.1.4.min.js

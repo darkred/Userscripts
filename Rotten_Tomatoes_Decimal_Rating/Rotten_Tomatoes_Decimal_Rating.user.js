@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
+// @version     3.0.1
+// @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm
 // @license     MIT
-// @description Changes base-5 Rating of Rotten Tomatoes to base-10
-// @version     3.0.1
 // @include     http://www.rottentomatoes.com/*
 // @include     https://www.rottentomatoes.com/*
 // @grant       none

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Firefox for desktop - list fixed bugs in Mercurial
 // @namespace   darkred
+// @version     4.2.8
+// @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @authors     darkred, johnp
 // @license     MIT
-// @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @version     4.2.8
 // @date        2018.5.13
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL

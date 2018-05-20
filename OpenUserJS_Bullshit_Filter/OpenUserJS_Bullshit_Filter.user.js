@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace   darkred
+// @version     2018.4.24
+// @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @author      kuehlschrank, darkred
 // @license     MIT
-// @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
-// @version     2018.4.24
 // @include     https://openuserjs.org/
 // @include     https://openuserjs.org/?*p=*
 // @include     https://openuserjs.org/?*q=*

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Firefox for desktop - list modified bugs in Mercurial as sortable table
 // @namespace   darkred
+// @version     5.5.9.1
+// @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
 // @authors     darkred, johnp
 // @license     MIT
-// @description It generates a sortable table list of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @version     5.5.9.1
 // @date        2018.5.16
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL

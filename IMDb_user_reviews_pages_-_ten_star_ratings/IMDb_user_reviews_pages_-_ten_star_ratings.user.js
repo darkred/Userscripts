@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name         IMDb user reviews pages - ten star ratings
-// @namespace    darkred
-// @license      MIT
-// @description  In IMDb user reviews pages, display the ratings with 10 stars, instead of just 1
-// @version      2018.4.30
-// @match        https://www.imdb.com/title/*/reviews*
-// @grant        GM_addStyle
+// @name        IMDb user reviews pages - ten star ratings
+// @namespace   darkred
+// @version     2018.4.30
+// @description In IMDb user reviews pages, display the ratings with 10 stars, instead of just 1
+// @author      darkred
+// @license     MIT
+// @match       https://www.imdb.com/title/*/reviews*
+// @grant       GM_addStyle
 // ==/UserScript==
 
 

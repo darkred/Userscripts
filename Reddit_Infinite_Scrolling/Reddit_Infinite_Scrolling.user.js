@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name        Reddit Infinite Scrolling
 // @namespace   darkred
+// @version     2018.4.25
+// @description Adds infinite scrolling to subreddits and to comments.
 // @author      darkred
 // @license     MIT
-// @description Adds infinite scrolling to subreddits and to comments.
-// @version     2018.4.25
 // @include     https://www.reddit.com/*
 // @include     https://old.reddit.com/*
 // @grant       unsafeWindow
