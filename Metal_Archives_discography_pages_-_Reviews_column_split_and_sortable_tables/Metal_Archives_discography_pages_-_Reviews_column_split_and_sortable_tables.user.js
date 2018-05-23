@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
-// @version     2.0.3
-// @date        2018.4.24
+// @version     2.0.4
+// @date        2018.5.23
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @author      RobG, Brock Adams, Mottie, darkred
 // @license     MIT
@@ -105,9 +105,9 @@ function appendColumn(jNode) {
 	$(tbl).tablesorter ( {
 		cssAsc: 'up',
 		cssDesc: 'down',
-		headers: {
-			0: {sorter: false}
-		}
+		// headers: {
+			// 0: {sorter: false}
+		// }
 	} );
 }
 
