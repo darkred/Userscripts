@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @license     MIT
-// @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @version     1
+// @description Removes the forced ProtonMail signature from the 'New message' textboxes
+// @author      darkred
+// @license     MIT
 // @include     https://mail.protonmail.com/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
