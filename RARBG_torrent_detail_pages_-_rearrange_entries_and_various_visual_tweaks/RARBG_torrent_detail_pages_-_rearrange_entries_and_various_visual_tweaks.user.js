@@ -2,9 +2,8 @@
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
 // @license     MIT
-// @version     2018.5.8
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
-// @author      darkred
+// @version     2018.6.2
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -43,8 +42,9 @@ document.querySelector('.current-rating').innerHTML = document.querySelector('.c
 
 // The main script
 
-var title = $(".header2:contains('Title')").parent().text().replace('Title:','');
-$( "a[href*='imdb.com']" ).html(title);
+var title = $(".header2:contains('Title')").parent();
+var titleText = $(title).text().replace('Title:','');
+$( "a[href*='imdb.com']" ).html(titleText);
 // $(".header2:contains('Title')").parent().remove();
 
 
@@ -59,12 +59,14 @@ var userRating = $(".header2:contains('Rating:')").filter(function() {
 var target = $(".header2:contains('Added:')").parent();
 
 $(imdbRating).insertAfter(target);
-$(imdbLink).insertAfter(target);
-$(trailer).insertAfter(target);
+// $(imdbLink).insertAfter(target);
+$(imdbLink).insertAfter(title);
+// $(trailer).insertAfter(target);
+$(trailer).hide();
 // $(userRating).insertAfter(target);
 
-var target2 = $(".header2:contains('Genres:')").parent();
-$(userRating).insertBefore(target2);
+var genres = $(".header2:contains('Genres:')").parent();
+$(userRating).insertBefore(genres);
 
 
 
@@ -128,8 +130,12 @@ $(".header2:contains('Show/Hide NFO:')").parent().insertAfter($(".header2:contai
 
 $(".header2:contains('Release name:')").parent().insertBefore($(".header2:contains('Category:')").parent());
 
-$(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Year:')").parent());
+// $(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Year:')").parent());
+
+$(".header2:contains('Trailer:')").parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
+// $(".header2:contains('Trailer:')").parent().insertBefore($( "a[href*='imdb.com']" ).parent().parent());
 
 $('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
 
-$(".header2:contains('Trailer:')").parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
+// $(".header2:contains('Title:')").parent().insertBefore($( "a[href*='imdb.com']" ).parent().parent());
+$(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Trailer:')").parent());
