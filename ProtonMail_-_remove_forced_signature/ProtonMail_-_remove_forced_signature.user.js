@@ -6,7 +6,8 @@
 // @version     1
 // @include     https://mail.protonmail.com/*
 // @grant       none
-// @require     https://github.com/uzairfarooq/arrive/raw/master/minified/arrive.min.js
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
+
 // ==/UserScript==
 
 // wait for the formatting toolbar element to be created
