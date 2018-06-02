@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
-// @version     2018.6.2.1
+// @version     2018.6.2.2
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -29,10 +29,6 @@ var votes = text.match(regex)[2] * 2;
 var rest = text.match(regex)[3];
 
 node.innerHTML = '  Rating: <strong>' + average + '</strong>/' + votes + rest;
-
-$(".header2:contains('Metacritic:')").next().find(">:first-child").css("font-weight","Bold");
-$(".header2:contains('RottenTomatoes:')").next().css("font-weight","Bold");
-
 
 // for ten star rating (instead of five star)
 document.querySelector('.unit-rating').style.width = document.querySelector('.unit-rating').style.width.replace('px','') * 2 + 'px';
@@ -84,6 +80,8 @@ $(".header2:contains('RT Tomatometer:')").parent().insertBefore($(".header2:cont
 // MAKING BOLD
 var imdbRatingNode = $(".header2:contains('IMDB Rating:')").next();
 $(imdbRatingNode).html($(imdbRatingNode).html().replace(/(.*)(\/.*)/, function(m, s1, s2) { return '<strong>'+ s1 + '</strong>' + s2;}));
+$(".header2:contains('Metacritic:')").next().find(">:first-child").css("font-weight","Bold");
+$(".header2:contains('RT Tomatometer:')").next().css("font-weight","Bold");
 
 
 var rtTomatometerNode = $(".header2:contains('RT Tomatometer:')").next();
@@ -134,16 +132,11 @@ $(".header2:contains('Show/Hide NFO:')").parent().insertAfter($(".header2:contai
 
 $(".header2:contains('Release name:')").parent().insertBefore($(".header2:contains('Category:')").parent());
 
-// $(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Year:')").parent());
-
 $(".header2:contains('Trailer:')").parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
-// $(".header2:contains('Trailer:')").parent().insertBefore($( "a[href*='imdb.com']" ).parent().parent());
 
-$('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent().insertBefore($(".header2:contains('IMDb Summary:')").parent());
-
-// $(".header2:contains('Title:')").parent().insertBefore($( "a[href*='imdb.com']" ).parent().parent());
 $(".header2:contains('Title:')").parent().insertBefore($(".header2:contains('Trailer:')").parent());
 
 $(".header2:contains('IMDb Rating:')").parent().insertAfter($(".header2:contains('PG Rating:')").parent());
+$('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent().insertBefore($(".header2:contains('IMDb Rating:')").parent());
 
 $(".header2:contains('Metacritic:')").parent().insertAfter($(".header2:contains('RT Critics Consensus:')").parent());
