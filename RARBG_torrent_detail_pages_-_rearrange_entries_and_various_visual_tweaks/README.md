@@ -3,9 +3,9 @@ It rearranges various entries, displays in bold the various rating values, renam
 
 Screenshot comparison:  
 Initial:  
-[![](https://i.imgur.com/5swjuZul.jpg)](https://i.imgur.com/5swjuZu.jpg)
+[![](https://i.imgur.com/IyXjtxGl.jpg)](https://i.imgur.com/IyXjtxG.jpg)
 
 With the script:  
-[![](https://i.imgur.com/lGB0Po1l.jpg)](https://i.imgur.com/lGB0Po1.jpg)
+[![](https://i.imgur.com/XydAE2nl.jpg)](https://i.imgur.com/XydAE2n.jpg)
 
 The script makes use of the page's jQuery 1.11.3.

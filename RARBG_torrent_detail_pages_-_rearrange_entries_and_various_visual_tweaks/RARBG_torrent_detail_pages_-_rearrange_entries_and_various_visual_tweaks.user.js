@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
-// @version     2018.6.8
+// @version     2018.6.9
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -14,6 +14,23 @@
 
 // The userscript makes use of the page's jQuery 1.11.3
 // Unneeded:  require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
+
+
+
+
+$(".header2:contains('Rotten Rating:')")    .html('RT Critics Avg:');
+$(".header2:contains('RottenTomatoes:')")   .html('RT Tomatometer:');
+$(".header2:contains('Rotten Plot:')")      .html('RT Critics Consensus:');
+$(".header2:contains('IMDB Rating:')")      .html('IMDb Rating:');
+$(".header2:contains('Plot:')")             .html('IMDb Summary:');
+$(".header2:contains('IMDB Runtime:')")     .html('IMDb Runtime:');
+
+
+
+
+
+
+
 
 
 // Rating by users - decimal rating
@@ -37,6 +54,15 @@ document.querySelector('.current-rating').innerHTML = document.querySelector('.c
 
 
 
+function minsToHoursMins(totalMin) {
+	var hours = Math.floor( totalMin / 60);
+	var minutes = totalMin % 60;
+	return hours + 'h ' + minutes + 'min'  ;
+}
+
+var duration = $(".header2:contains('IMDb Runtime:')").next().html();
+$(".header2:contains('IMDb Runtime:')").next().html(minsToHoursMins(duration));
+
 
 
 // Add the title text to the IMDb link
@@ -50,13 +76,19 @@ $(".header2:contains('Trailer:')").parent().hide();
 
 
 
+// move PG Rating inside IMDb Summary
+var pg = $(".header2:contains('PG Rating:')").next().html();
+$(".header2:contains('PG Rating:')").parent().hide();
+var summary = $(".header2:contains('IMDb Summary:')").next().html();
+$(".header2:contains('IMDb Summary:')").next().html(summary + ' [ ' + pg + ' ]');
 
-$(".header2:contains('Rotten Rating:')")	.html('RT Critics Avg:');
-$(".header2:contains('RottenTomatoes:')")	.html('RT Tomatometer:');
-$(".header2:contains('Rotten Plot:')")		.html('RT Critics Consensus:');
-$(".header2:contains('IMDB Rating:')")		.html('IMDb Rating:');
-$(".header2:contains('Plot:')")				.html('IMDb Summary:');
-$(".header2:contains('IMDB Runtime:')")		.html('IMDb Runtime:');
+
+// move Runtime inside IMDb Summary
+var runtime = $(".header2:contains('IMDb Runtime:')").next().html();
+$(".header2:contains('IMDb Runtime:')").parent().hide();
+summary = $(".header2:contains('IMDb Summary:')").next().html();
+$(".header2:contains('IMDb Summary:')").next().html(summary + ' ( ' + runtime + ' )');
+
 
 
 
@@ -65,7 +97,7 @@ $(".header2:contains('IMDB Runtime:')")		.html('IMDb Runtime:');
 // MAKING BOLD (start)
 ratingByUsersElement.innerHTML = '  Rating: <strong>' + average + '</strong>/' + votes + rest;
 
-var imdbRatingNode = $(".header2:contains('IMDB Rating:')").next();
+var imdbRatingNode = $(".header2:contains('IMDb Rating:')").next();
 if (imdbRatingNode.length > 0){
 	$(imdbRatingNode).html($(imdbRatingNode).html().replace(/(.*)(\/.*)/, function(m, s1, s2) { return '<strong>'+ s1 + '</strong>' + s2;}));
 }
@@ -102,31 +134,33 @@ $(userRating).replaceWith(function() {
 
 
 // 'Trailer' element already removed
-var imdbLink = 		$('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
+var imdbLink =      $('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
 var ratingByUsers = $('.ratingblock').parent().parent();
-var category = 		$(".header2:contains('Category:')").parent();
-var size = 			$(".header2:contains('Size:')").parent();
+var category =      $(".header2:contains('Category:')").parent();
+var size =          $(".header2:contains('Size:')").parent();
 var showHideFiles = $(".header2:contains('Show/Hide Files:')").parent();
-var added = 		$(".header2:contains('Added:')").parent();
-var title = 		$(".header2:contains('Title:')[align='right']").parent();
-var pgRating = 		$(".header2:contains('PG Rating:')").parent();
-var imdbRating =	$(".header2:contains('IMDb Rating:')").parent();
-var metacritic = 	$(".header2:contains('Metacritic:')").parent();
-var RTCriticsAvg = 	$(".header2:contains('RT Critics Avg:')").parent();
+var added =         $(".header2:contains('Added:')").parent();
+var title =         $(".header2:contains('Title:')[align='right']").parent();
+// var pgRating =      $(".header2:contains('PG Rating:')").parent();
+var imdbRating =    $(".header2:contains('IMDb Rating:')").parent();
+var metacritic =    $(".header2:contains('Metacritic:')").parent();
+var RTCriticsAvg =  $(".header2:contains('RT Critics Avg:')").parent();
 var RTTomatometer = $(".header2:contains('RT Tomatometer:')").parent();
-var genres = 		$(".header2:contains('Genres:')").parent();
-var actors = 		$(".header2:contains('Actors:')").parent();
-var director = 		$(".header2:contains('Director:')").parent();
-var imdbRuntime = 	$(".header2:contains('IMDb Runtime:')").parent();
-var year = 			$(".header2:contains('Year:')").parent();
-var imdbSummary = 	$(".header2:contains('IMDb Summary:')").parent();
+var genres =        $(".header2:contains('Genres:')").parent();
+var actors =        $(".header2:contains('Actors:')").parent();
+var director =      $(".header2:contains('Director:')").parent();
+// var imdbRuntime =   $(".header2:contains('IMDb Runtime:')").parent();
+var year =          $(".header2:contains('Year:')").parent();
+var imdbSummary =   $(".header2:contains('IMDb Summary:')").parent();
 var RTCriticsCons = $(".header2:contains('RT Critics Consensus:')").parent();
-var hits =  		$(".header2:contains('Hits:')").parent();
-var peers =  		$(".header2:contains('Peers:')").parent();
-var hitAndRun =  	$(".header2:contains('Hit&Run:')").parent();
-var tags =  		$(".header2:contains('Tags')").parent();
-var releaseName = 	$(".header2:contains('Release name:')").parent();
+var hits =          $(".header2:contains('Hits:')").parent();
+var peers =         $(".header2:contains('Peers:')").parent();
+var hitAndRun =     $(".header2:contains('Hit&Run:')").parent();
+var tags =          $(".header2:contains('Tags')").parent();
+var releaseName =   $(".header2:contains('Release name:')").parent();
 
+
+year.hide();
 
 
 function tableLastRow(){
@@ -134,27 +168,27 @@ function tableLastRow(){
 }
 
 
-releaseName		.insertAfter(tableLastRow());
-category		.insertAfter(tableLastRow());
-size			.insertAfter(tableLastRow());
-showHideFiles	.insertAfter(tableLastRow());
-added			.insertAfter(tableLastRow());
-title			.insertAfter(tableLastRow());
-imdbSummary		.insertAfter(tableLastRow());
-imdbRuntime		.insertAfter(tableLastRow());
-year			.insertAfter(tableLastRow());
-genres			.insertAfter(tableLastRow());
-director		.insertAfter(tableLastRow());
-actors			.insertAfter(tableLastRow());
-pgRating		.insertAfter(tableLastRow());
-imdbLink		.insertAfter(tableLastRow());
-imdbRating		.insertAfter(tableLastRow());
-RTTomatometer	.insertAfter(tableLastRow());
-RTCriticsAvg	.insertAfter(tableLastRow());
-RTCriticsCons	.insertAfter(tableLastRow());
-metacritic		.insertAfter(tableLastRow());
-ratingByUsers	.insertAfter(tableLastRow());
-hits			.insertAfter(tableLastRow());
-peers			.insertAfter(tableLastRow());
-hitAndRun		.insertAfter(tableLastRow());
-tags			.insertAfter(tableLastRow());
+releaseName     .insertAfter(tableLastRow());
+category        .insertAfter(tableLastRow());
+size            .insertAfter(tableLastRow());
+showHideFiles   .insertAfter(tableLastRow());
+added           .insertAfter(tableLastRow());
+title           .insertAfter(tableLastRow());
+// year            .insertAfter(tableLastRow());
+// imdbRuntime     .insertAfter(tableLastRow());
+genres          .insertAfter(tableLastRow());
+director        .insertAfter(tableLastRow());
+actors          .insertAfter(tableLastRow());
+// pgRating        .insertAfter(tableLastRow());
+imdbLink        .insertAfter(tableLastRow());
+imdbSummary     .insertAfter(tableLastRow());
+imdbRating      .insertAfter(tableLastRow());
+RTTomatometer   .insertAfter(tableLastRow());
+RTCriticsAvg    .insertAfter(tableLastRow());
+RTCriticsCons   .insertAfter(tableLastRow());
+metacritic      .insertAfter(tableLastRow());
+ratingByUsers   .insertAfter(tableLastRow());
+hits            .insertAfter(tableLastRow());
+peers           .insertAfter(tableLastRow());
+hitAndRun       .insertAfter(tableLastRow());
+tags            .insertAfter(tableLastRow());
