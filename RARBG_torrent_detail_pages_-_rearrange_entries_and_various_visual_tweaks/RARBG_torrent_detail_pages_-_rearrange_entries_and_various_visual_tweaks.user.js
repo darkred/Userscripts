@@ -3,7 +3,7 @@
 // @namespace   darkred
 // @license     MIT
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
-// @version     2018.6.9
+// @version     2018.6.17
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
@@ -76,21 +76,22 @@ $(".header2:contains('Trailer:')").parent().hide();
 
 
 
-// move PG Rating inside IMDb Summary
-var pg = $(".header2:contains('PG Rating:')").next().html();
-$(".header2:contains('PG Rating:')").parent().hide();
-var summary = $(".header2:contains('IMDb Summary:')").next().html();
-$(".header2:contains('IMDb Summary:')").next().html(summary + ' [ ' + pg + ' ]');
-
 
 // move Runtime inside IMDb Summary
 var runtime = $(".header2:contains('IMDb Runtime:')").next().html();
 $(".header2:contains('IMDb Runtime:')").parent().hide();
 summary = $(".header2:contains('IMDb Summary:')").next().html();
-$(".header2:contains('IMDb Summary:')").next().html(summary + ' ( ' + runtime + ' )');
+if (runtime !== undefined) {
+	$(".header2:contains('IMDb Summary:')").next().html(summary + ' ( ' + runtime + ' )');
+}
 
-
-
+// move PG Rating inside IMDb Summary
+var pg = $(".header2:contains('PG Rating:')").next().html();
+$(".header2:contains('PG Rating:')").parent().hide();
+var summary = $(".header2:contains('IMDb Summary:')").next().html();
+if (pg !== undefined) {
+	$(".header2:contains('IMDb Summary:')").next().html(summary + ' [ ' + pg + ' ]');
+}
 
 
 
