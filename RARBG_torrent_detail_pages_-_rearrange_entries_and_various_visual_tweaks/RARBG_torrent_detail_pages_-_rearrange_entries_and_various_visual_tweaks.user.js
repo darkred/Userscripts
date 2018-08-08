@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @license     MIT
-// @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @version     2018.6.17
+// @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
+// @author      darkred
+// @license     MIT
 // @include     /^https?:\/\/(www\.)?(rarbg|rarbgproxy|rarbgaccess|rarbgmirror|rarbgto)\.(to|com|org|is)\/torrent\/.*$/
 // @grant       none
 // ==/UserScript==
