@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2018.4.28
+// @version     2018.8.8
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
 // @author      darkred
 // @license     MIT
@@ -38,8 +38,8 @@ var total;
 
 function showCounter() {
 
-	var totalString = $(`span:contains('posts'):last-child > span`).html(); // The 'total' value (it's a string)
-	total = totalString.replace(',', ''); // strip the thousand comma seperator
+	var totalString = $(`span:contains('posts'):last-child > span, .g47SY`).html(); // The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
+	total = totalString.replace(',', '').replace('.', ''); // strip the thousand comma/dot seperator
 
 
 	hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
