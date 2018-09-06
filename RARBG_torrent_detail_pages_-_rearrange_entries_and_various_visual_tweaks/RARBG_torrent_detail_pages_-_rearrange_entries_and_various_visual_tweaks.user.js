@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2018.6.17
+// @version     2018.9.6
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -72,10 +72,6 @@ var titleText = $(titleElement).text().replace('Title:','');
 $( "a[href*='imdb.com']" ).html(titleText);
 
 
-// The 'Trailers' row is now hidden because https://rarbgproxy.org/trailers.php is blocked by default in uBO, therefore it's useless.
-$(".header2:contains('Trailer:')").parent().hide();
-
-
 
 
 // move Runtime inside IMDb Summary
@@ -134,8 +130,8 @@ $(userRating).replaceWith(function() {
 
 
 
-
-// 'Trailer' element already removed
+var vpn =           $(".header2:contains('VPN:')").parent();
+var trailer =       $(".header2:contains('Trailer:')").parent()
 var imdbLink =      $('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
 var ratingByUsers = $('.ratingblock').parent().parent();
 var category =      $(".header2:contains('Category:')").parent();
@@ -162,7 +158,10 @@ var tags =          $(".header2:contains('Tags')").parent();
 var releaseName =   $(".header2:contains('Release name:')").parent();
 
 
-year.hide();
+
+year.hide();	// The 'Year' row is hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
+trailer.hide(); // The 'Trailer' row is hidden because https://rarbgproxy.org/trailers.php is blocked by default in uBlock Origin (via EasyList), therefore it's pointless to keep.
+vpn.hide();		// The 'VPN' row is hidden because it's an ad.
 
 
 function tableLastRow(){
