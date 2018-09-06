@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2018.9.6
+// @version     2018.9.6.1
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -131,12 +131,12 @@ $(userRating).replaceWith(function() {
 
 
 var vpn =           $(".header2:contains('VPN:')").parent();
-var trailer =       $(".header2:contains('Trailer:')").parent()
-var imdbLink =      $('img[src="//dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
+var trailer =       $(".header2:contains('Trailer:')").parent();
+var imdbLink =      $('img[src="https://dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
 var ratingByUsers = $('.ratingblock').parent().parent();
 var category =      $(".header2:contains('Category:')").parent();
 var size =          $(".header2:contains('Size:')").parent();
-var showHideFiles = $(".header2:contains('Show/Hide Files:')").parent();
+var showHideFiles = $(".header2:contains('Show Files »')").parent();
 var added =         $(".header2:contains('Added:')").parent();
 var title =         $(".header2:contains('Title:')[align='right']").parent();
 // var pgRating =      $(".header2:contains('PG Rating:')").parent();
@@ -159,9 +159,9 @@ var releaseName =   $(".header2:contains('Release name:')").parent();
 
 
 
-year.hide();	// The 'Year' row is hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
-trailer.hide(); // The 'Trailer' row is hidden because https://rarbgproxy.org/trailers.php is blocked by default in uBlock Origin (via EasyList), therefore it's pointless to keep.
-vpn.hide();		// The 'VPN' row is hidden because it's an ad.
+vpn.hide();  // The 'VPN' row is hidden because it's an ad.
+// trailer.hide(); // For reference: https://rarbgproxy.org/trailers.php is blocked by default in uBlock Origin (via EasyList)
+year.hide(); // The 'Year' row is hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
 
 
 function tableLastRow(){
@@ -182,6 +182,7 @@ director        .insertAfter(tableLastRow());
 actors          .insertAfter(tableLastRow());
 // pgRating        .insertAfter(tableLastRow());
 imdbLink        .insertAfter(tableLastRow());
+trailer         .insertAfter(tableLastRow());
 imdbSummary     .insertAfter(tableLastRow());
 imdbRating      .insertAfter(tableLastRow());
 RTTomatometer   .insertAfter(tableLastRow());
