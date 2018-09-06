@@ -1,17 +1,19 @@
 ﻿// ==UserScript==
 // @name        GreasyFork - filter libraries in profiles
 // @namespace   darkred
-// @version     1
+// @version     2018.9.6
 // @description Filters libraries in GreasyFork profiles
 // @author      darkred
 // @license     MIT
 // @include     https://greasyfork.org/*/users/*
+// @require     https://code.jquery.com/jquery-3.3.1.min.js
 // @grant       none
 // ==/UserScript==
 
-var all = document.querySelectorAll('article').length;
-var libraries = document.getElementsByClassName('script-type').length;
-var scripts = document.querySelectorAll('article').length - libraries;
+
+var all = document.querySelectorAll('li[data-script-type="public"], li[data-script-type="library"]').length;
+var libraries = document.querySelectorAll('li[data-script-type="library"]').length;
+var scripts = all - libraries;
 
 
 var parentElement = document.querySelector('#script-list-sort');
@@ -46,7 +48,7 @@ b.onclick = toggleScripts;
 
 var c = document.createElement('a');
 div.appendChild(c);
-c.innerHTML = '<span style="width:70px;float:left;">' + 'Libraries:  ' + '</span>' + '<span style="float:right;">' + libraries  + '</span>' + "<br/>";
+c.innerHTML = '<span style="width:70px;float:left;">' + 'Libraries:  ' + '</span>' + '<span style="float:right;">' + libraries  + '</span>' + '<br/>';
 c.onclick = toggleLibraries;
 
 
@@ -54,22 +56,19 @@ b.click();
 
 function toggleAll(){
 	a.style.fontWeight = 'bold'; b.style.fontWeight = 'normal'; c.style.fontWeight = 'normal';
-	$('article').show();
-	$('.script-type').parent().parent().show();
+	$('li[data-script-type="public"], li[data-script-type="library"]').show();
 }
 
 
 function toggleScripts(){
 	a.style.fontWeight = 'normal'; b.style.fontWeight = 'bold'; c.style.fontWeight = 'normal';
-	$('article').show();
-	$('.script-type').parent().parent().hide();
+	$('li[data-script-type="public"], li[data-script-type="library"]').hide();
+	$('li[data-script-type="public"]').show();
 }
 
 
 function toggleLibraries(){
 	a.style.fontWeight = 'normal'; b.style.fontWeight = 'normal'; c.style.fontWeight = 'bold';
-	$('article').hide();
-	$('.script-type').parent().parent().show();
-
-
+	$('li[data-script-type="public"], li[data-script-type="library"]').hide();
+	$('li[data-script-type="library"]').show();
 }
