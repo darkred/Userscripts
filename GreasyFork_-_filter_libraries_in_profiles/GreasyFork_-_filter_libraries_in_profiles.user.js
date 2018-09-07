@@ -4,6 +4,7 @@
 // @version     2018.9.6
 // @description Filters libraries in GreasyFork profiles
 // @author      darkred
+// @contributor Skej
 // @license     MIT
 // @include     https://greasyfork.org/*/users/*
 // @require     https://code.jquery.com/jquery-3.3.1.min.js
