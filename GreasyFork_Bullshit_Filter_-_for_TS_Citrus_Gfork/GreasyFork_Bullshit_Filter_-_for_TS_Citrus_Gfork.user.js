@@ -1,27 +1,27 @@
 // ==UserScript==
 // @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
 // @namespace   darkred
-// @version     2018.9.8
+// @version     2018.9.8.1
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
 // @author      kuehlschrank, darkred
 // @license     MIT
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter_-_for_TS_Citrus_Gfork/large.png
 //
 // @include     https://greasyfork.org/*/scripts*
+// @include     https://greasyfork.org/*/forum*
 // @exclude     /^https:\/\/greasyfork.org\/.*\/scripts\/\d+.*/
 // @exclude     https://greasyfork.org/*/scripts/by-site
 // @exclude     https://greasyfork.org/*/scripts/by-site?*
-// @include     https://greasyfork.org/*/forum*
 // @exclude     https://greasyfork.org/*/forum/discussion/*
 // @exclude     https://greasyfork.org/*/forum/profile*
 // @exclude     https://greasyfork.org/*/forum/messages*
 // @exclude     https://greasyfork.org/*/forum/categories
 //
 // @include     https://sleazyfork.org/*/scripts*
+// @include     https://sleazyfork.org/*/forum*
 // @exclude     /^https:\/\/sleazyfork.org\/.*\/scripts\/\d+.*/
 // @exclude     https://sleazyfork.org/*/scripts/by-site
 // @exclude     https://sleazyfork.org/*/scripts/by-site?*
-// @include     https://sleazyfork.org/*/forum*
 // @exclude     https://sleazyfork.org/*/forum/discussion/*
 // @exclude     https://sleazyfork.org/*/forum/profile*
 // @exclude     https://sleazyfork.org/*/forum/messages*
@@ -57,9 +57,15 @@ if (window.location.href.indexOf('forum') === -1) {
 		var target = document.querySelector('#script-table > tbody:nth-child(2)');
 		var observer = new MutationObserver((mutations) => {
 				insertStyle();
-				insertStatus();
+				// insertStatus();
+				if (!document.querySelector('.filter-status')){
+					insertStatus();
+				}
 				filterScripts();
-				insertSwitches();
+				// insertSwitches();
+				if (!document.querySelector('.filter-switches')){
+					insertSwitches();
+				}
 			}),
 			config = {
 				childList: true,
@@ -83,24 +89,24 @@ if (window.location.href.indexOf('forum') === -1) {
 										position: fixed;
 										top: calc(0%);
 										left: calc(13.5%);
+										color: #787878;
 									}
 									.filter-switches {
 										display: none;
 										position: fixed;
-										top: calc(2.5%);
+										top: calc(2.0%);
 										left: calc(14%);
 									}
 									*:hover > .filter-switches {
 										display: block !important;
 										position: fixed;
-										top: calc(2.5%);
+										top: calc(2.0%);
 										left: calc(14%);
 									}
 									.filter-on,
 									.filter-off {
 										display: block !important;
 										width: 105px;
-									}
 									}
 									.filter-switches a {
 										text-decoration: none !important;
@@ -119,7 +125,8 @@ if (window.location.href.indexOf('forum') === -1) {
 									a.filter-off {
 										background-color: #6da46b;
 										color: #333333;
-			}`;
+									}
+			`;
 			style.type = 'text/css';
 			document.querySelector('head').appendChild(style);
 		}
@@ -251,24 +258,24 @@ if (window.location.href.indexOf('forum') === -1) {
 										position: fixed;
 										top: calc(0%);
 										left: calc(13.5%);
+										color: #787878;
 									}
 									.filter-switches {
 										display: none;
 										position: fixed;
-										top: calc(2.5%);
+										top: calc(2.0%);
 										left: calc(14%);
 									}
 									*:hover > .filter-switches {
 										display: block !important;
 										position: fixed;
-										top: calc(2.5%);
+										top: calc(2.0%);
 										left: calc(14%);
 									}
 									.filter-on,
 									.filter-off {
 										display: block !important;
 										width: 105px;
-									}
 									}
 									.filter-switches a {
 										text-decoration: none !important;
@@ -287,7 +294,8 @@ if (window.location.href.indexOf('forum') === -1) {
 									a.filter-off {
 										background-color: #6da46b;
 										color: #333333;
-			}`;
+									}
+			`;
 			style.type = 'text/css';
 			document.querySelector('head').appendChild(style);
 		}
