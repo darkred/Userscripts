@@ -14,4 +14,4 @@ Notes:
 - The `Runtime` and `PG rating` rows info is appended to the end of the 'IMDb summary' row text (the 'Runtime' info is converted from: e.g. '118' to: 1h 58min).
 - The `Year` row becomes hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
 - The `VPN` row *(not shown in the 'initial' screenshot)* becomes hidden because it's an ad.
-- Regarding the `Trailer` row: when using ad-blocking extensions, https://rarbgproxy.org/trailers.php is blocked by default via EasyList. So, in previous script versions the 'Trailer' row was getting hidden by the script. Since v2018.9.6.2 it's been restored (per https://greasyfork.org/en/forum/discussion/42158/x ) .
+- Regarding the `Trailer` row: when using ad-blocking extensions, https://rarbgproxy.org/trailers.php is blocked by default (via EasyList). So, in previous script versions the 'Trailer' row was getting hidden by the script. Since v2018.9.6.2 it's been restored (per https://greasyfork.org/en/forum/discussion/42158/x ) .
