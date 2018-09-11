@@ -3,7 +3,7 @@ i.e. it filters any/all of these 4 categories:
 * **Games**: scripts for browser games like Kingdoms of Camelot, Mafia Wars and Ikariam  
 * **Social Networks**: scripts for general purpose social networking sites like Facebook, studiVZ and VKontakte  
 * **Non-ASCII**: scripts that use non-English characters in description (accents, umlauts, cyrillic letters, ...)  
-* **Clutter**: obvious spam, titles like "asdasdasd", description = title, title < 6 characters, "just a test".  
+* **Clutter**: obvious spam, titles like "asdasdasd", description = title, title < 6 characters, "just a test", styles that offer themes/dark/night mode.  
 
 
 It's the same as [GreasyFork Bullshit Filter](https://greasyfork.org/en/scripts/12179-greasyfork-bull-filter,) now compatible with <a href="https://greasyfork.org/en/scripts/4336-ts-citrus-gfork">[TS] Citrus GFork</a>.  
