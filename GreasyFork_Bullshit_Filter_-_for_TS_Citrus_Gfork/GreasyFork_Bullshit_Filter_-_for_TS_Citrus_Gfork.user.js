@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
 // @namespace   darkred
-// @version     2018.9.12.3
+// @version     2018.9.13.1
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
 // @author      kuehlschrank, darkred
 // @license     MIT
@@ -40,7 +40,7 @@ if (window.location.href.indexOf('forum') === -1) {
 			'Non-ASCII':/[^\x00-\x7F\s]+/iu,
 			'Games': /AntiGame|Agar|agar\.io|alis\.io|angel\.io|ExtencionRipXChetoMalo|AposBot|DFxLite|ZTx-Lite|AposFeedingBot|AposLoader|Blah Blah|Orc Clan Script|Astro\s*Empires|^\s*Attack|^\s*Battle|BiteFight|Blood\s*Wars|Bots|Bots4|Brawler|\bBvS\b|Business\s*Tycoon|Castle\s*Age|City\s*Ville|chopcoin\.io|Comunio|Conquer\s*Club|CosmoPulse|cursors\.io|Dark\s*Orbit|Dead\s*Frontier|Diep\.io|\bDOA\b|doblons\.io|DotD|Dossergame|Dragons\s*of\s*Atlantis|driftin\.io|Dugout|\bDS[a-z]+\n|elites\.io|Empire\s*Board|eRep(ublik)?|Epicmafia|Epic.*War|ExoPlanet|Falcon Tools|Feuerwache|Farming|FarmVille|Fightinfo|Frontier\s*Ville|Ghost\s*Trapper|Gladiatus|Goalline|Gondal|gota\.io|Grepolis|Hobopolis|\bhwm(\b|_)|Ikariam|\bIT2\b|Jellyneo|Kapi\s*Hospital|Kings\s*Age|Kingdoms?\s*of|knastv(ö|oe)gel|Knight\s*Fight|\b(Power)?KoC(Atta?ck)?\b|\bKOL\b|Kongregate|Last\s*Emperor|Legends?\s*of|Light\s*Rising|lite\.ext\.io|Lockerz|\bLoU\b|Mafia\s*(Wars|Mofo)|Menelgame|Mob\s*Wars|Mouse\s*Hunt|Molehill\s*Empire|NeoQuest|MyFreeFarm|narwhale\.io|Neopets|Nemexia|\bOGame\b|Ogar(io)?|Pardus|Pennergame|Pigskin\s*Empire|PlayerScripts|pokeradar\.io|Popmundo|Po?we?r\s*(Bot|Tools)|PsicoTSI|Ravenwood|Schulterglatze|slither\.io|slitherplus\.io|slitheriogameplay|SpaceWars|splix\.io|\bSW_[a-z]+\n|\bSnP\b|The\s*Crims|The\s*West|torto\.io|Travian|Treasure\s*Isl(and|e)|Tribal\s*Wars|TW.?PRO|Vampire\s*Wars|vertix\.io|War\s*of\s*Ninja|World\s*of\s*Tanks|West\s*Wars|wings\.io|\bWoD\b|World\s*of\s*Dungeons|wtf\s*battles|Wurzelimperium/iu,
 			'Social Networks': /Face\s*book|Google(\+| Plus)|\bHabbo|Kaskus|\bLepra|Leprosorium|MySpace|meinVZ|odnoklassniki|Одноклассники|Orkut|sch(ue|ü)ler(VZ|\.cc)?|studiVZ|Unfriend|Valenth|VK|vkontakte|ВКонтакте|Qzone|Twitter|TweetDeck/iu,
-			'Clutter':/^\s*(.{1,3})\1+\n|^\s*(.+?)\n+\2\n*$|^\s*.{1,5}\n|do\s*n('|o)?t (install|download)|nicht installieren|just(\s*a)?\s*test|^\s*.{0,4}test.{0,4}\n|\ntest(ing)?\s*|^\s*(\{@|Smolka|Hacks)|\[\d{4,5}\]|free\s*download|theme|(night|dark) ?(mode)?/iu
+			'Clutter':/^\s*(.{1,3})\1+\n|^\s*(.+?)\n+\2\n*$|^\s*.{1,5}\n|do\s*n('|o)?t (install|download)|nicht installieren|(just)?(\s*a)?\s*test|^\s*.{0,4}test.{0,4}\n|\ntest(ing)?\s*|^\s*(\{@|Smolka|Hacks)|\[\d{4,5}\]|free\s*download|theme|(night|dark) ?(mode)?/iu
 		};
 		if(typeof GM_getValue === 'undefined' || (typeof GM_getValue.toString === 'function' && GM_getValue.toString().indexOf('not supported') > -1)) {
 			GM_getValue = my_GM_getValue;
@@ -80,7 +80,7 @@ if (window.location.href.indexOf('forum') === -1) {
 		// Note: you may uncomment line 37-81 and comment out line 36, in order the filtered scripts to be highlighted red -instead of hiding them- so that you can check which scripts have been filtered
 		function insertStyle() {
 			var style = document.createElement('style');
-			// style.textContent = ` tr.filtered td, li.filtered  {background-color:khaki !important;} .filter-status {margin-left:6px; position:fixed; top:calc(0%); left:calc(13.5%)} .filter-switches {display:none; position:fixed; top:calc(2.5%); left:calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:calc(2.5%); left:calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; `;
+			// style.textContent = ` tr.filtered td, li.filtered  {background-color:khaki !important;} .filter-status {margin-left:6px; position:fixed; top:calc(0%); left:calc(13.5%)} .filter-switches {display:none;} *:hover > .filter-switches {display:block !important; position:fixed; top:calc(1.7%); left:calc(14%)} .filter-on,.filter-off {display:block !important; width:105px} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; `;
 			style.textContent = `   tr.filtered, li.filtered {
 										display: none !important;
 									}
@@ -93,14 +93,11 @@ if (window.location.href.indexOf('forum') === -1) {
 									}
 									.filter-switches {
 										display: none;
-										position: fixed;
-										top: calc(2.0%);
-										left: calc(14%);
 									}
 									*:hover > .filter-switches {
 										display: block !important;
 										position: fixed;
-										top: calc(2.0%);
+										top: calc(1.7%);
 										left: calc(14%);
 									}
 									.filter-on,
@@ -230,7 +227,7 @@ if (window.location.href.indexOf('forum') === -1) {
 			'Non-ASCII':/[^\x00-\x7F\s]+/iu,
 			'Games': /AntiGame|Agar|agar\.io|alis\.io|angel\.io|ExtencionRipXChetoMalo|AposBot|DFxLite|ZTx-Lite|AposFeedingBot|AposLoader|Blah Blah|Orc Clan Script|Astro\s*Empires|^\s*Attack|^\s*Battle|BiteFight|Blood\s*Wars|Bots|Bots4|Brawler|\bBvS\b|Business\s*Tycoon|Castle\s*Age|City\s*Ville|chopcoin\.io|Comunio|Conquer\s*Club|CosmoPulse|cursors\.io|Dark\s*Orbit|Dead\s*Frontier|Diep\.io|\bDOA\b|doblons\.io|DotD|Dossergame|Dragons\s*of\s*Atlantis|driftin\.io|Dugout|\bDS[a-z]+\n|elites\.io|Empire\s*Board|eRep(ublik)?|Epic.*War|ExoPlanet|Falcon Tools|Feuerwache|Farming|FarmVille|Fightinfo|Frontier\s*Ville|Ghost\s*Trapper|Gladiatus|Goalline|Gondal|gota\.io|Grepolis|Hobopolis|\bhwm(\b|_)|Ikariam|\bIT2\b|Jellyneo|Kapi\s*Hospital|Kings\s*Age|Kingdoms?\s*of|knastv(ö|oe)gel|Knight\s*Fight|\b(Power)?KoC(Atta?ck)?\b|\bKOL\b|Kongregate|Last\s*Emperor|Legends?\s*of|Light\s*Rising|lite\.ext\.io|Lockerz|\bLoU\b|Mafia\s*(Wars|Mofo)|Menelgame|Mob\s*Wars|Mouse\s*Hunt|Molehill\s*Empire|NeoQuest|MyFreeFarm|narwhale\.io|Neopets|Nemexia|\bOGame\b|Ogar(io)?|Pardus|Pennergame|Pigskin\s*Empire|PlayerScripts|pokeradar\.io|Popmundo|Po?we?r\s*(Bot|Tools)|PsicoTSI|Ravenwood|Schulterglatze|slither\.io|slitherplus\.io|slitheriogameplay|SpaceWars|splix\.io|\bSW_[a-z]+\n|\bSnP\b|The\s*Crims|The\s*West|torto\.io|Travian|Treasure\s*Isl(and|e)|Tribal\s*Wars|TW.?PRO|Vampire\s*Wars|vertix\.io|War\s*of\s*Ninja|West\s*Wars|wings\.io|\bWoD\b|World\s*of\s*Dungeons|wtf\s*battles|Wurzelimperium/iu,
 			'Social Networks': /Face\s*book|Google(\+| Plus)|\bHabbo|Kaskus|\bLepra|Leprosorium|MySpace|meinVZ|odnoklassniki|Одноклассники|Orkut|sch(ue|ü)ler(VZ|\.cc)?|studiVZ|Unfriend|Valenth|VK|vkontakte|ВКонтакте|Qzone|Twitter|TweetDeck/iu,
-			'Clutter':/^\s*(.{1,3})\1+\n|^\s*(.+?)\n+\2\n*$|^\s*.{1,5}\n|do\s*n('|o)?t (install|download)|nicht installieren|just(\s*a)?\s*test|^\s*.{0,4}test.{0,4}\n|\ntest(ing)?\s*|^\s*(\{@|Smolka|Hacks)|\[\d{4,5}\]|free\s*download/iu
+			'Clutter':/^\s*(.{1,3})\1+\n|^\s*(.+?)\n+\2\n*$|^\s*.{1,5}\n|do\s*n('|o)?t (install|download)|nicht installieren|(just)?(\s*a)?\s*test|^\s*.{0,4}test.{0,4}\n|\ntest(ing)?\s*|^\s*(\{@|Smolka|Hacks)|\[\d{4,5}\]|free\s*download/iu
 		};
 		if(typeof GM_getValue === 'undefined' || (typeof GM_getValue.toString === 'function' && GM_getValue.toString().indexOf('not supported') > -1)) {
 			GM_getValue = my_GM_getValue;
@@ -249,7 +246,7 @@ if (window.location.href.indexOf('forum') === -1) {
 		// Note: you may uncomment line 37-81 and comment out line 36, in order the filtered scripts to be highlighted red -instead of hiding them- so that you can check which scripts have been filtered
 		function insertStyle() {
 			var style = document.createElement('style');
-			// style.textContent = '.ItemDiscussion.filtered {background-color:khaki !important;} .filter-status {margin-left:6px; position:fixed; top:calc(0%); left:calc(13.5%)} .filter-switches {display:none; position:fixed; top:calc(2.5%); left:calc(14%)} *:hover > .filter-switches {display:block !important; position:fixed; top:calc(2.5%); left:calc(14%)} .filter-on,.filter-off {display:block !important; width:105px}} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
+			// style.textContent = '.ItemDiscussion.filtered {background-color:khaki !important;} .filter-status {margin-left:6px; position:fixed; top:calc(0%); left:calc(13.5%)} .filter-switches {display:none;} *:hover > .filter-switches {display:block !important; position:fixed; top:calc(1.7%); left:calc(14%)} .filter-on,.filter-off {display:block !important; width:105px} .filter-switches a {text-decoration:none !important; color:inherit; cursor:pointer} .filter-switches a {margin-left:8px; padding:0 4px} a.filter-on {background-color:#ff6161; color:#333333; text-decoration:line-through !important} a.filter-off {background-color:#97ca97;color:#333333; ';
 			style.textContent = `   .ItemDiscussion.filtered {
 										display: none !important;
 									}
@@ -262,14 +259,11 @@ if (window.location.href.indexOf('forum') === -1) {
 									}
 									.filter-switches {
 										display: none;
-										position: fixed;
-										top: calc(2.0%);
-										left: calc(14%);
 									}
 									*:hover > .filter-switches {
 										display: block !important;
 										position: fixed;
-										top: calc(2.0%);
+										top: calc(1.7%);
 										left: calc(14%);
 									}
 									.filter-on,
