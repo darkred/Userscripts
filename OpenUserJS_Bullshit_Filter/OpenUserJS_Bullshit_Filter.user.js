@@ -1,17 +1,11 @@
 ﻿// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace   darkred
-// @version     2018.9.13.1
+// @version     2018.9.14
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @author      kuehlschrank, darkred
 // @license     MIT
-// @include     https://openuserjs.org/
-// @include     https://openuserjs.org/?*p=*
-// @include     https://openuserjs.org/?*q=*
-// @include     https://openuserjs.org/?orderBy=*
-// @include     https://openuserjs.org/group/*
-// @include     https://openuserjs.org/?library=true*
-// @include     https://openuserjs.org/users/*/scripts
+// @include     /^https:\/\/openuserjs\.org\/(\?(q|p|orderBy|library)=.*|group\/.*|users\/.*\/scripts)?$/
 // @grant       none
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/OpenUserJS_Bullshit_Filter/large.png
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
@@ -65,7 +59,9 @@
 		for (var i = 0, numNodes = nodes.length, td = null; i < numNodes && (td = nodes[i]); i++) {
 			td.className = '';
 			for(var j = 0; j < numActiveFilters; j++) {
-				if (td.innerText.match(activeFilters[j]) ) {
+				// if (td.innerText.match(activeFilters[j]) ) {
+				var textToFilter = td.firstElementChild.querySelector('a.tr-link-a').innerText + ' ' + td.firstElementChild.lastElementChild.innerText ;	// Script title + description
+				if (textToFilter.match(activeFilters[j]) ) {
 					td.className = 'filtered';
 					numFiltered++;
 					break;
