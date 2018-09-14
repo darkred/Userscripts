@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @version     2018.9.11
+// @version     2018.9.14
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor sxe
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror|rarbgproxy|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|top10)$/
 // @grant       none
 // ==/UserScript==
 
