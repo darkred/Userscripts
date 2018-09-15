@@ -1,11 +1,11 @@
 ﻿// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace   darkred
-// @version     2018.9.14
+// @version     2018.9.15
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
 // @author      kuehlschrank, darkred
 // @license     MIT
-// @include     /^https:\/\/openuserjs\.org\/(\?(q|p|orderBy|library)=.*|group\/.*|users\/.*\/scripts)?$/
+// @include     /^https:\/\/openuserjs\.org\/(\?(q|p|orderBy|library)=.*|group\/.*|users\/.*\/scripts.*)?$/
 // @grant       none
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/OpenUserJS_Bullshit_Filter/large.png
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
