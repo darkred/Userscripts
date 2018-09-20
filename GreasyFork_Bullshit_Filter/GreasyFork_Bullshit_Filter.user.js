@@ -81,8 +81,8 @@
 			el.classList.remove('filtered');
 		};
 		site.applyFilter = function(el, activeFilter) {
-			let temp = el.children[1].firstElementChild.innerText;
-			if(temp && temp.match(activeFilter)) {
+			const temp = el.children[1].firstElementChild.innerText;
+			if (temp && temp.match(activeFilter)) {
 				el.classList.add('filtered');
 				return true;
 			}
