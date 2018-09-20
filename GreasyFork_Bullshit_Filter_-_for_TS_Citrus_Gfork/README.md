@@ -15,3 +15,4 @@ Note: you may comment out #49 and uncomment #50 in order to change position of t
 
 This is a modified version of this script: [userscripts.org Bullshit Filter](http://userscripts-mirror.org/scripts/show/97145) (by kuehlschrank).  
 Thanks a lot to kuehlschrank for making another great script.  
+Thanks a lot to valacar for [the refactoring](https://greasyfork.org/en/forum/discussion/42803/refactored).
