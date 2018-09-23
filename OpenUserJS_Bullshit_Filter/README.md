@@ -6,7 +6,7 @@ i.e. it filters any/all of these 4 categories:
 * **Clutter**: obvious spam, titles like "asdasdasd", description = title, title < 6 characters, "just a test", scripts for themes/dark/night mode (because they are, in effect, userstyles).  
 
 The filters list appears just below the "Announcements" table (i.e. on the right).  
-![image](https://i.imgur.com/BYQ5WfA.gif)
+![screenshot](https://i.imgur.com/uPvFcSS.gif)
 
 *<u>Note</u>: you may uncomment line 37 (and comment out line 38), in order the filtered scripts to be highlighted khaki -instead of hiding them- so that you can check which scripts have been filtered.*  
 
