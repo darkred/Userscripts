@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2018.9.14
+// @version     2018.9.28
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -75,21 +75,31 @@ $( "a[href*='imdb.com']" ).html(titleText);
 
 
 // move Runtime inside IMDb Summary
-var runtime = $(".header2:contains('IMDb Runtime:')").next().html();
-$(".header2:contains('IMDb Runtime:')").parent().hide();
-summary = $(".header2:contains('IMDb Summary:')").next().html();
+var runtimeNode = $(".header2:contains('IMDb Runtime:')");
+runtimeNode.parent().hide();
+var runtime = runtimeNode.next().html();
+var summaryNode = $(".header2:contains('IMDb Summary:')");
 if (runtime !== undefined) {
-	$(".header2:contains('IMDb Summary:')").next().html(summary + ' ( ' + runtime + ' )');
+	summaryNode.next().text(function( index, string ) {
+		return string + ' ( ' + runtime + ' )';
+	});
 }
+
+
+// remove all '|' from the IMDb summary text
+$(".header2:contains('IMDb Summary:')").next().text(function( index,string ) {
+	return string.replace(/\|/g,'');
+});
+
 
 // move PG Rating inside IMDb Summary
-var pg = $(".header2:contains('PG Rating:')").next().html();
-$(".header2:contains('PG Rating:')").parent().hide();
-var summary = $(".header2:contains('IMDb Summary:')").next().html();
+var pgNode = $(".header2:contains('PG Rating:')");
+pgNode.parent().hide();
+var pg = pgNode.next().html();
+var summary = summaryNode.next().text();
 if (pg !== undefined) {
-	$(".header2:contains('IMDb Summary:')").next().html(summary + ' [ ' + pg + ' ]');
+	summaryNode.next().text(summary + ' [ ' + pg + ' ]');
 }
-
 
 
 // MAKING BOLD (start)
