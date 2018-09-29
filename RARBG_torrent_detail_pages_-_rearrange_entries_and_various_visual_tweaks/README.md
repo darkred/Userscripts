@@ -1,15 +1,16 @@
 This userscript applies to RARBG torrent detail pages.  
-It rearranges various entries, displays in bold the various rating values, renames a few entries more suitably and use decimal rating for the users' ratings.
+It rearranges various entries, displays in bold the various rating values, renames a few entries more suitably and uses decimal rating for the users' ratings.
 
 Screenshot comparison:  
 Initial:  
-[![](https://i.imgur.com/fCmbgmol.jpg)](https://i.imgur.com/fCmbgmo.jpg)
+[![](https://i.imgur.com/T2pb0tHl.jpg)](https://i.imgur.com/T2pb0tH.jpg)
 
 With the script:  
-[![](https://i.imgur.com/eDQB7M4l.jpg)](https://i.imgur.com/eDQB7M4.jpg)
+[![](https://i.imgur.com/iBJt3Hwl.jpg)](https://i.imgur.com/iBJt3Hw.jpg)
 
 Notes:  
 - The script makes use of the page's jQuery 1.11.3.
+- The `Size` row gets duplicated below the 'Torrent' row.
 - Regarding the `Rating` row: the five star rating is converted to ten star, both the stars themselves and the text value, but, if you hover the mouse over the stars to click to rate the movie, still only the first five stars are clickable, i.e. it's actually still five star rating.
 - The `Runtime` and `PG rating` rows info is appended to the end of the 'IMDb summary' row text (the 'Runtime' info is converted from: e.g. '118' to: 1h 58min).
 - The `Year` row becomes hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
