@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2018.9.28
+// @version     2018.9.29
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -141,12 +141,13 @@ $(userRating).replaceWith(function() {
 
 
 var vpn =           $(".header2:contains('VPN:')").parent();
+var mediaInfo =     $(".header2:contains('MediaInfo »')").parent();
 var trailer =       $(".header2:contains('Trailer:')").parent();
 var imdbLink =      $('img[src="https://dyncdn.me/static/20/img/imdb3.png"]').parent().parent();
 var ratingByUsers = $('.ratingblock').parent().parent();
 var category =      $(".header2:contains('Category:')").parent();
 var size =          $(".header2:contains('Size:')").parent();
-var showHideFiles = $(".header2:contains('Show Files »')").parent();
+var showFiles =     $(".header2:contains('Show Files »')").parent();
 var added =         $(".header2:contains('Added:')").parent();
 var title =         $(".header2:contains('Title:')[align='right']").parent();
 // var pgRating =      $(".header2:contains('PG Rating:')").parent();
@@ -161,12 +162,17 @@ var director =      $(".header2:contains('Director:')").parent();
 var year =          $(".header2:contains('Year:')").parent();
 var imdbSummary =   $(".header2:contains('IMDb Summary:')").parent();
 var RTCriticsCons = $(".header2:contains('RT Critics Consensus:')").parent();
+var showNFO =       $(".header2:contains('Show NFO »')").parent();				// example URL where the NFO is provided: https://rarbgproxy.org/torrent/fmzeqtk
 var hits =          $(".header2:contains('Hits:')").parent();
 var peers =         $(".header2:contains('Peers:')").parent();
 var hitAndRun =     $(".header2:contains('Hit&Run:')").parent();
 var tags =          $(".header2:contains('Tags')").parent();
 var releaseName =   $(".header2:contains('Release name:')").parent();
 
+
+// duplicate the 'Size' row right after the 'Title' row
+var sizeClone = size.clone();
+sizeClone.insertAfter( $(".header2:contains('Torrent:')").parent() );
 
 
 vpn.hide();  // The 'VPN' row is hidden because it's an ad.
@@ -179,10 +185,12 @@ function tableLastRow(){
 }
 
 
-releaseName     .insertAfter(tableLastRow());
 category        .insertAfter(tableLastRow());
+releaseName     .insertAfter(tableLastRow());
+showNFO         .insertAfter(tableLastRow());
 size            .insertAfter(tableLastRow());
-showHideFiles   .insertAfter(tableLastRow());
+showFiles       .insertAfter(tableLastRow());
+mediaInfo       .insertAfter(tableLastRow());
 added           .insertAfter(tableLastRow());
 title           .insertAfter(tableLastRow());
 // year            .insertAfter(tableLastRow());
