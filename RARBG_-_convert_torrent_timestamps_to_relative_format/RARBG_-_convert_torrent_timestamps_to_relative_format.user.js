@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2018.9.14
+// @version     2018.10.19
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -40,11 +40,11 @@ function convertDates() {
 	// var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
 	var dates = document.querySelectorAll('td[width="150px"]');
 	for (var i = 0; i < dates.length; i++) {
-		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
-		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {
+		// if (moment(dates[i].textContent, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
+		if (moment(dates[i].textContent, 'YYYY-MM-DD HH:mm:ss').isValid()) {
 
-			var temp2 = moment.tz(dates[i].innerText, serverTimezone).tz(localTimezone);
-			dates[i].innerText = temp2.fromNow();
+			var temp2 = moment.tz(dates[i].textContent, serverTimezone).tz(localTimezone);
+			dates[i].textContent = temp2.fromNow();
 
 
 			// var format = 'MM/DD/YYYY HH:mm:ss';
@@ -68,7 +68,7 @@ convertDates();
 (function(){
 	var dates = document.querySelectorAll('td[width="150px"]');
 	for (var i = 0; i < dates.length; i++) {
-		dates[i].innerText = moment(dates[i].title).fromNow();
+		dates[i].textContent = moment(dates[i].title).fromNow();
 	}
 
 	setTimeout(arguments.callee, 1 * 60 * 1000);
