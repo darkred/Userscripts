@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2018.10.19.1
+// @version     2018.10.20
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -35,7 +35,7 @@ moment.updateLocale('en', {
 });
 
 
-function convertToLocalTimezone() {
+function convertToLocalTimezone(timestamps) {
 	const localTimezone = jstz.determine().name();
 	const serverTimezone = 'Europe/Berlin';		// GMT+1
 	for (let i = 0; i < timestamps.length; i++) {
