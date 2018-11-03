@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2018.9.8
+// @version     2018.11.3
 // @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
 // @author      darkred
 // @license     MIT
@@ -44,7 +44,8 @@ function showCounter() {
 	total = totalString.replace(',', '').replace('.', ''); // strip the thousand comma/dot seperator
 
 
-	hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
+	// hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
+	hrefselems = document.querySelectorAll(`.v1Nh3.kIKUG._bz0w > a`);
 	$.each(hrefselems, function(index, value) {
 		// hrefs.indexOf(String(value)) === -1 ? hrefs.push(String(value)) : console.log("This item already exists"); // https://stackoverflow.com/a/36683363
 		if (hrefs.indexOf(String(value)) === -1) { 		// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
