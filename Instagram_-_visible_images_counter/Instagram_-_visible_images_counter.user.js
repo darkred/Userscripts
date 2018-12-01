@@ -1,8 +1,8 @@
 ﻿// ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2018.11.3
-// @description Shows (in instagram profile pages) how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page
+// @version     2018.12.2
+// @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
 // @include     https://www.instagram.com/*
@@ -108,8 +108,9 @@ var div = document.createElement('div');
 var observer;
 
 // var avatarSelector = 'span[style="width: 152px; height: 152px;"]';   // the profile's photo/avatar element
-// var avatarSelector = '._mainc';//                                    // the profile's bio area element
-var avatarSelector = 'h1.notranslate';                                  // the profile name element
+// var avatarSelector = '._mainc';                                      // the profile's bio area element
+// var avatarSelector = 'h1.notranslate';                               // the profile name element
+var avatarSelector = 'h1.rhpdm';                                  // the profile name element
 // var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
 // var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
 
@@ -119,6 +120,8 @@ var avatarSelector = 'h1.notranslate';                                  // the p
 if (document.querySelector(avatarSelector)) {
 	createDiv();
 	createObserver();
+} else {
+        console.log('ERROR: Cannot create the Counter element, the avatarSelector element ( ' + avatarSelector + ' ) doesnt exist !!');
 }
 
 
