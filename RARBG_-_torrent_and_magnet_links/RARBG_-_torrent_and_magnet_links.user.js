@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @version     2018.9.14
+// @version     2019.2.1
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor sxe
@@ -34,62 +34,71 @@ function appendColumn(title) {
 	var newColumn = document.querySelectorAll('.lista2t > tbody > tr[class="lista2"] > td:nth-child(3)');       // new column
 	var oldColumn = document.querySelectorAll('.lista2t > tbody > tr[class="lista2"] > td:nth-child(2)');       // old column
 
-	// populate the cells in the new column with DL and ML links
+
 	for (let i = 0; i < newColumn.length; i++) {
-		if ((/over\/(.*)\.jpg\\/).test(oldColumn[i].firstChild.outerHTML)){
-			var hash = oldColumn[i].firstChild.outerHTML.match(/over\/(.*)\.jpg\\/)[1];
-		} else {
-			hash = undefined;
-		}
-		let title = oldColumn[i].firstChild.innerText;
-		var trackers = 'http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710';
-		newColumn[i].innerHTML = '<a href="' + oldColumn[i].firstChild.href.replace('torrent/', 'download.php?id=') + '&f=' + oldColumn[i].firstChild.innerText + '-[rarbg.com].torrent"><img src="https://dyncdn.me/static/20/img/16x16/download.png"">' + '</>';
-		// if the torrent hash is contained in the filenames of the thumbnail image
-		if (hash !== undefined){
-			// then generate magnet link from preview thumbnail if available
-			newColumn[i].innerHTML += '&nbsp;<a href="magnet:?xt=urn:btih:' + hash + '&dn=' + title + '&tr=' + trackers + ' "><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
-		} else {
-			// else generate it via an ajax request
-			let href = oldColumn[i].firstChild.href;
-			newColumn[i].innerHTML += '&nbsp;<a class="xhrMagnetLink" data-href="' + href + '" href="#"><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
-			newColumn[i].lastChild.title = 'ML via XHR';
-		}
+
+		let href = oldColumn[i].firstChild.href;
+
+		newColumn[i].innerHTML =        '<a class="xhrDownloadLink" data-href="' + href + '" href="#"><img src="https://dyncdn.me/static/20/img/16x16/download.png""></>';
+		newColumn[i].lastChild.title = 'DL via XHR';
+
+		newColumn[i].innerHTML += '&nbsp;<a class="xhrMagnetLink" data-href="' + href + '" href="#"><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
+		newColumn[i].lastChild.title = 'ML via XHR';
+
 	}
 }
 
-appendColumn('DL&nbsp;ML');
 
-var xhrMagnetLinks = document.querySelectorAll('.xhrMagnetLink');
+function addMouseoverListeners(links, type){
 
-for(let i=0; i < xhrMagnetLinks.length; i++) {
+	for(let i=0; i < links.length; i++) {
 
-	xhrMagnetLinks[i].addEventListener('mouseover', function(event){
 
-		event.preventDefault();
-		let href = this.getAttribute('href');
-		if (href === '#') {
-			let tLink = this.getAttribute('data-href');
+		links[i].addEventListener('mouseover', function(event){
 
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
-			xhr.onload = function () {
+			event.preventDefault();
+			let href = this.getAttribute('href');
+			if (href === '#') {
+				let tLink = this.getAttribute('data-href');
 
-				let container = document.implementation.createHTMLDocument().documentElement;
-				container.innerHTML = xhr.responseText;
-				let magnetLink = container.querySelector('a[href^="magnet:"]');		// the 'magnet link' element in the retrieved page
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
+				xhr.onload = function () {
 
-				if (magnetLink) {
-					let magnetHref = magnetLink.href;
-					this.href = magnetHref;
-					let currentMagnetLink = document.querySelector('a[data-href^="' + tLink + '"]');	// the current magnet link element
-					currentMagnetLink.setAttribute('href', magnetHref);
-				}
+					let container = document.implementation.createHTMLDocument().documentElement;
+					container.innerHTML = xhr.responseText;
 
-			};
-			xhr.send();
+					let retrievedLink;
+					if (type === 'dl'){
+						retrievedLink = container.querySelector('a[href^="/download.php"]');		// the 'magnet link' element in the retrieved page
+					} else {
+						retrievedLink = container.querySelector('a[href^="magnet:"]');		// the 'magnet link' element in the retrieved page
+					}
 
-		}
 
-	}, false);
+					if (retrievedLink) {
+						links[i].setAttribute('href', retrievedLink.href);
+					}
+
+
+
+				};
+				xhr.send();
+
+			}
+
+		}, false);
+
+	}
 
 }
+
+
+appendColumn('DL&nbsp;ML');
+
+
+var xhrDownloadLinks = document.querySelectorAll('.xhrDownloadLink');
+var xhrMagnetLinks = document.querySelectorAll('.xhrMagnetLink');
+
+addMouseoverListeners(xhrDownloadLinks, 'dl' );
+addMouseoverListeners(xhrMagnetLinks, 'ml' );
