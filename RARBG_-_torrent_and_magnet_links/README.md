@@ -4,8 +4,9 @@ Adds a column with torrent and magnet links in RARBG lists:
 Notes: 
 
 - the script generates the magnet links in two ways: 
-  - for most torrent entries, it generates it directly from the current page  
-  *(i.e. from the filename of the thumbnail image that appears when you mouseover on the torrent title, and that's because these filenames are the same as the relevant torrent hash)* .  
+  - <strike>for most torrent entries, it generates it directly from the current page  
+  *(i.e. from the filename of the thumbnail image that appears when you mouseover on the torrent title, and that's because these filenames are the same as the relevant torrent hash)* </strike>.  
+  Update 2/1/2019: DL links are now also retrieved via XHR, because unfortunately they cannot be generated from the page anymore, due to the latest site HTML changes.  
   - For some torrent entries however, the thumbnail filename is generic (i.e. it doesn't contain the torrent hash),  
   therefore the magnet link cannot be generated directly.  
   In such cases, in order to get the magnet link, the target torrent page is retrieved via XHR :  
