@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2019.5.1
+// @version     2019.5.2
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrent|torrents\.php)\/.*$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrent\/|torrents\.php).*$/
 // @grant       none
 // ==/UserScript==
 
@@ -15,10 +15,6 @@
 
 // The userscript makes use of the page's jQuery 1.11.3
 // Unneeded:  require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
-
-
-
-const isOnTorrentListPage = window.location.href.includes('torrents.php');
 
 
 function minsToHoursMins(totalMin) {
@@ -34,6 +30,7 @@ function tableLastRow(){
 
 
 
+const isOnTorrentListPage = window.location.href.includes('torrents.php');
 
 if (!isOnTorrentListPage) {
 
@@ -229,7 +226,6 @@ if (!isOnTorrentListPage) {
 
 } else {
 
-
 	var links = document.querySelectorAll('a[onmouseover~="return"]');
 
 	for(let i = 0; i < 8; i++) {
@@ -253,7 +249,7 @@ if (!isOnTorrentListPage) {
 				if (retrievedLink) {
 					let currentDomainName = window.location.hostname;
 					// https://rarbgproxy.org/torrents.php?imdb=tt7605074
-					links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?search=' + retrievedLink);
+					links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);
 				}
 
 			};
