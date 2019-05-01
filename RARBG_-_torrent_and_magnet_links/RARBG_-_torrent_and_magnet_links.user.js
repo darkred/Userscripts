@@ -74,7 +74,7 @@ function addMouseoverListeners(links, type){
 
 					let retrievedLink;
 					if (type === 'dl'){
-						retrievedLink = container.querySelector('a[href^="/download.php"]');		// the 'magnet link' element in the retrieved page
+						retrievedLink = container.querySelector('a[href^="/download.php"]');		// the 'download link' element in the retrieved page
 					} else {
 						retrievedLink = container.querySelector('a[href^="magnet:"]');		// the 'magnet link' element in the retrieved page
 					}
