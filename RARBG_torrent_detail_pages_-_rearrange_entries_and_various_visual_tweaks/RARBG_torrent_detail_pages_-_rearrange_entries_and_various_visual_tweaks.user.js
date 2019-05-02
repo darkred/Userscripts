@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2019.5.2.1
+// @version     2019.5.3
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -234,26 +234,27 @@ if (!isOnTorrentListPage) {
 
 			event.preventDefault();
 			let tLink = this.getAttribute('href');
+			if (!tLink.includes('imdb=')){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
+				// xhr.open('GET', tLink, false);
+				xhr.onload = function () {
 
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
-			// xhr.open('GET', tLink, false);
-			xhr.onload = function () {
+					let container = document.implementation.createHTMLDocument().documentElement;
+					container.innerHTML = xhr.responseText;
 
-				let container = document.implementation.createHTMLDocument().documentElement;
-				container.innerHTML = xhr.responseText;
+					let retrievedLink;
+					retrievedLink = container.querySelector('.lista>a[href*="www.imdb.com"]').href;		// the 'download link' element in the retrieved page
 
-				let retrievedLink;
-				retrievedLink = container.querySelector('.lista>a[href*="www.imdb.com"]').href;		// the 'download link' element in the retrieved page
+					if (retrievedLink) {
+						let currentDomainName = window.location.hostname;
+						// https://rarbgproxy.org/torrents.php?imdb=tt7605074
+						links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);
+					}
 
-				if (retrievedLink) {
-					let currentDomainName = window.location.hostname;
-					// https://rarbgproxy.org/torrents.php?imdb=tt7605074
-					links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);
-				}
-
-			};
-			xhr.send();
+				};
+				xhr.send();
+			}
 
 		}, false);
 
