@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2019.5.3
+// @version     2019.5.3.1
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -236,8 +236,8 @@ if (!isOnTorrentListPage) {
 			let tLink = this.getAttribute('href');
 			if (!tLink.includes('imdb=')){
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
-				// xhr.open('GET', tLink, false);
+				// xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
+				xhr.open('GET', tLink, false);
 				xhr.onload = function () {
 
 					let container = document.implementation.createHTMLDocument().documentElement;
