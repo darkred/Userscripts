@@ -1,16 +1,17 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2019.5.5
+// @version     2019.5.5.1
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror(ed)?|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess|rarbgget|rarbgmirror(ed)?|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // ==/UserScript==
+
 
 /* global jstz, moment */
 
@@ -33,43 +34,34 @@ moment.updateLocale('en', {
 	}
 });
 
-var localTimezone = jstz.determine().name();
-var serverTimezone = 'Europe/Berlin';		// GMT+1
 
-function convertDates() {
-	// var dates = document.querySelectorAll('tr.lista2 td:nth-child(3)');
-	var dates = document.querySelectorAll('td[width="150px"]');
-	for (var i = 0; i < dates.length; i++) {
-		// if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
-		if (moment(dates[i].innerText, 'YYYY-MM-DD HH:mm:ss').isValid()) {
-
-			var temp2 = moment.tz(dates[i].innerText, serverTimezone).tz(localTimezone);
-			dates[i].innerText = temp2.fromNow();
-
-
-			// var format = 'MM/DD/YYYY HH:mm:ss';
-			var format = 'YYYY-MM-DD HH:mm:ss';
-			dates[i].title = temp2.format(format);
-
-			// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
-			// dates[i].title = temp2.toISOString();
-			// dates[i].title = temp2.format();
-
+function convertToLocalTimezone(timestamps) {
+	const localTimezone = jstz.determine().name();
+	const serverTimezone = 'Europe/Berlin';		// GMT+1
+	for (let i = 0; i < timestamps.length; i++) {
+		let initialTimestamp = timestamps[i].textContent;
+		// if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss').isValid()) {
+		if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
+			let convertedToLocalTimezone = moment.tz(initialTimestamp, serverTimezone).tz(localTimezone);
+			timestamps[i].textContent = convertedToLocalTimezone.fromNow();
+			// let format = 'MM/DD/YYYY HH:mm:ss';
+			let format = 'YYYY-MM-DD HH:mm:ss';
+			timestamps[i].title = convertedToLocalTimezone.format(format);
+			// timestamps[i].title = convertedToLocalTimezone.toISOString(); // 			// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
+			// timestamps[i].title = convertedToLocalTimezone.format();
 		}
 	}
+
+	// recalculate the relative times every 10 sec
+	(function(){
+		for (let i = 0; i < timestamps.length; i++) {
+			timestamps[i].textContent = moment(timestamps[i].title).fromNow();
+		}
+		setTimeout(arguments.callee, 1 * 60 * 1000);
+	})();
+
 }
 
-convertDates();
-
-
-
-// recalculate the relative times every 10 sec
-
-(function(){
-	var dates = document.querySelectorAll('td[width="150px"]');
-	for (var i = 0; i < dates.length; i++) {
-		dates[i].innerText = moment(dates[i].title).fromNow();
-	}
-
-	setTimeout(arguments.callee, 1 * 60 * 1000);
-})();
+// const timestamps = document.querySelectorAll('tr.lista2 td:nth-child(3)');
+const timestamps = document.querySelectorAll('td[width="150px"]');
+convertToLocalTimezone(timestamps);
