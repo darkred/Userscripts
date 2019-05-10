@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2019.5.5
+// @version     2019.5.10
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -259,5 +259,23 @@ if (!isOnTorrentListPage) {
 		}, false);
 
 	}
+
+}
+
+
+
+const isOnSearchbyIMDbTorrentPage = window.location.href.includes('/torrents.php?imdb=');
+if (isOnSearchbyIMDbTorrentPage) {
+
+	// <h1 class="black">tt0448115</h1>
+	// CORRECT --> <h1><a href="#">heading</a></h1>
+	// http://www.imdb.com/title/tt0478970/
+
+	// let imdbIdTextElement = document.querySelector('h1.black');
+	// imdbIdTextElement.outerHTML = '<h1 class="black"><a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">' + imdbIdTextElement.textContent + '</a></h1>';
+
+	let imdbIdTextElement = document.querySelector('h1.black');
+	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
+	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDB</a> Rating:');
 
 }
