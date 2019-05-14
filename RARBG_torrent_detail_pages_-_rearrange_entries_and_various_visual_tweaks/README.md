@@ -16,4 +16,5 @@ Notes:
 - The `Year` row becomes hidden because that info is still contained in various other rows ('Release Name', 'IMDb' link title, 'Title')
 - The `VPN` row *(not shown in the 'initial' screenshot)* becomes hidden because it's an ad.
 - Regarding the `Trailer` row: when using ad-blocking extensions, https://rarbgproxy.org/trailers.php is blocked by default (via EasyList). So, in previous script versions the 'Trailer' row was getting hidden by the script. Since v2018.9.6.2 it's been restored (per https://greasyfork.org/en/forum/discussion/42158/x ) 
-- The Recommended section (in torrent listings) would link to each torrent page. Now it links to search by IMDb id (per request: https://github.com/darkred/Userscripts/issues/8).
+- The Recommended section (in torrent listings) would link to each torrent page. Now it links to search by IMDb id (per request: https://github.com/darkred/Userscripts/issues/8). 
+Also now, in search-by-IMDb-id pages (e.g. https://rarbgproxy.org/torrents.php?imdb=tt0448115) , the "IMDb" in "IMDb Rating" becomes a link to relevant IMDb movie page. Also, now, below it, the IMDb plot summary is displayed (retrieved from the relevant RARBG torrent page).

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
 // @namespace   darkred
-// @version     2019.5.10
+// @version     2019.5.15
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -224,7 +224,7 @@ if (!isOnTorrentListPage) {
 
 
 
-} else {
+} else {	// i.e. if isOnTorrentListPage === true
 
 	var links = document.querySelectorAll('a[onmouseover~="return"]');
 
@@ -236,21 +236,27 @@ if (!isOnTorrentListPage) {
 			let tLink = this.getAttribute('href');
 			if (!tLink.includes('imdb=')){
 				var xhr = new XMLHttpRequest();
-				// xhr.open('GET', tLink, true);	// XMLHttpRequest.open(method, url, async)
-				xhr.open('GET', tLink, false);
+				xhr.open('GET', tLink, false);		// XMLHttpRequest.open(method, url, async)
 				xhr.onload = function () {
 
 					let container = document.implementation.createHTMLDocument().documentElement;
 					container.innerHTML = xhr.responseText;
 
-					let retrievedLink;
-					retrievedLink = container.querySelector('.lista>a[href*="www.imdb.com"]').href;		// the 'download link' element in the retrieved page
+					let retrievedLink = container.querySelector('.lista>a[href*="www.imdb.com"]').href;		// the 'IMDB link' element in the retrieved page
 
 					if (retrievedLink) {
 						let currentDomainName = window.location.hostname;
-						// https://rarbgproxy.org/torrents.php?imdb=tt7605074
-						links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);
+						links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);  // example URL: https://rarbgproxy.org/torrents.php?imdb=tt7605074
 					}
+
+
+					links[i].addEventListener('click', function(event){
+
+						let IMDBSummary = $(container).find(".header2:contains('Plot:')").next().text();   // https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+						// console.log(IMDBSummary);
+						sessionStorage.setItem("plot", IMDBSummary);
+
+					}, false);
 
 				};
 				xhr.send();
@@ -267,15 +273,10 @@ if (!isOnTorrentListPage) {
 const isOnSearchbyIMDbTorrentPage = window.location.href.includes('/torrents.php?imdb=');
 if (isOnSearchbyIMDbTorrentPage) {
 
-	// <h1 class="black">tt0448115</h1>
-	// CORRECT --> <h1><a href="#">heading</a></h1>
-	// http://www.imdb.com/title/tt0478970/
-
-	// let imdbIdTextElement = document.querySelector('h1.black');
-	// imdbIdTextElement.outerHTML = '<h1 class="black"><a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">' + imdbIdTextElement.textContent + '</a></h1>';
-
 	let imdbIdTextElement = document.querySelector('h1.black');
 	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
-	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDB</a> Rating:');
+	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
+
+	$(imdbIdRatingElement).next().after("<b>IMDb Summary:</b> " + sessionStorage.getItem("plot"));  // https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
 }
