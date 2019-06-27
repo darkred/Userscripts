@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        RARBG torrent detail pages - rearrange entries and various visual tweaks
+// @name        RARBG torrent detail pages - various tweaks
 // @namespace   darkred
-// @version     2019.5.28
+// @version     2019.6.27
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -99,7 +99,7 @@ if (!isOnTorrentListPage) {
 	}
 
 
-	// remove all '|' from the IMDb summary text
+	// remove all '|' from the IMDb Summary text
 	$(".header2:contains('IMDb Summary:')").next().text(function( index,string ) {
 		return string.replace(/\|/g,'');
 	});
@@ -252,9 +252,8 @@ if (!isOnTorrentListPage) {
 
 					links[i].addEventListener('click', function(event){
 
-						let IMDBSummary = $(container).find(".header2:contains('Plot:')").next().text();   // https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
-						// console.log(IMDBSummary);
-						sessionStorage.setItem("plot", IMDBSummary);
+						let imdbPlot = $(container).find(".header2:contains('Plot:')").next().text();   // https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+						sessionStorage.setItem("plot", imdbPlot);
 
 					}, false);
 
@@ -271,12 +270,13 @@ if (!isOnTorrentListPage) {
 
 
 const isOnSearchbyIMDbTorrentPage = window.location.href.includes('/torrents.php?imdb=');
-if (isOnSearchbyIMDbTorrentPage) {
+let plotStored = sessionStorage.getItem("plot");
+if (isOnSearchbyIMDbTorrentPage && plotStored) {
 
 	let imdbIdTextElement = document.querySelector('h1.black');
 	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
 	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
 
-	$(imdbIdRatingElement).next().after("<b>IMDb Summary:</b> " + sessionStorage.getItem("plot"));  // https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+	$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored);  // https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
 }
