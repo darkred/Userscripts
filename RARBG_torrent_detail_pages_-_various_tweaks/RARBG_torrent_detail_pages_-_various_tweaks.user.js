@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG torrent detail pages - various tweaks
 // @namespace   darkred
-// @version     2019.6.27
+// @version     2019.6.28
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -277,6 +277,7 @@ if (isOnSearchbyIMDbTorrentPage && plotStored) {
 	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
 	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
 
-	$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored);  // https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+	plotStored = plotStored.replace(/\|/g,'');		// remove all '|'
+	$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored);		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
 }
