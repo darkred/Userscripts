@@ -1,21 +1,18 @@
 module.exports = {
 	"env": {
 		"browser": true,
-		// "es6": true,
+		"es6": true,
 		"greasemonkey": true,
 		"jquery": true,
 		"node": true,
 	},
 	"extends": "eslint:recommended",
-	// "extends": "eslint:all",
 	"parserOptions": {
-		"ecmaVersion": 9,
+		"ecmaVersion": 10,
 		"sourceType": "script",
 		"ecmaFeatures": {
 			"globalReturn ": true,
 			"impliedStrict": true,
-			// "jsx": true,
-			// "experimentalObjectRestSpread": true
 		},
 	},
 	"rules": {
@@ -34,7 +31,6 @@ module.exports = {
 		"no-magic-numbers": "off",
 		"no-misleading-character-class": "warn",
 		"no-mixed-spaces-and-tabs": "warn",
-		// "no-var": "off",
 		"no-multiple-empty-lines": "off",
 		"no-tabs": "off",
 		"no-unused-labels": "warn",
@@ -43,7 +39,6 @@ module.exports = {
 		"padded-blocks": "off",
 		"quotes": ["warn", "single", { "allowTemplateLiterals": true }] ,
 		"require-jsdoc": "off",
-		"require-unicode-regexp": "warn",
 		"semi": ["warn","always"],
 		"space-before-function-paren": "off",
 		"unicode-bom": ["warn", "never"]
