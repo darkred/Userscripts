@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        RARBG torrent detail pages - various tweaks
+// @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.7.8
+// @version     2019.8.6
 // @description Rearranges various entries, displays in bold the various rating values, renames more suitably a few entries and uses decimal rating for the users' ratings
 // @author      darkred
 // @license     MIT
@@ -250,7 +250,7 @@ if (!isOnTorrentListPage) {
 					}
 
 
-					links[i].addEventListener('click', function(event){
+					links[i].addEventListener('click', function(){
 
 						let imdbPlot = $(container).find(".header2:contains('Plot:')").next().text();   // https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 						sessionStorage.setItem("plot", imdbPlot);
@@ -271,13 +271,15 @@ if (!isOnTorrentListPage) {
 
 const isOnSearchbyIMDbTorrentPage = window.location.href.includes('/torrents.php?imdb=');
 let plotStored = sessionStorage.getItem("plot");
-if (isOnSearchbyIMDbTorrentPage && plotStored) {
+if (isOnSearchbyIMDbTorrentPage) {
 
 	let imdbIdTextElement = document.querySelector('h1.black');
 	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
 	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
 
-	plotStored = plotStored.replace(/\|/g,'');		// remove all '|'
-	$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored);		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+	if (plotStored) {
+		plotStored = plotStored.replace(/\|/g,'');		// remove all '|'
+		$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored);		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+	}
 
 }
