@@ -1,38 +1,34 @@
 ﻿// ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     3.0.1
+// @version     4
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm
 // @license     MIT
-// @include     http://www.rottentomatoes.com/*
-// @include     https://www.rottentomatoes.com/*
+// @match       https://*.rottentomatoes.com/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/12228/code/setMutationHandler.js
 // @run-at      document-start
 // ==/UserScript==
-/* --------- Note ---------
-	This script changes the Base 5 rating of Rotten Tomatoes to Base 10.
-	Thanks a lot to wOxxOm:
-	he initially wrote it: https://greasyfork.org/en/forum/discussion/comment/5975/#Comment_5975
-	and he also offered improvement: http://stackoverflow.com/questions/32412900/modify-elements-immediately-after-they-are-displayed-not-after-page-completely
-	and https://greasyfork.org/en/forum/discussion/7583/x
-*/
 
+// Monitor mutations on the "AUDIENCE SCORE Average Rating" stars selector
+setMutationHandler(document, '#js-tomatometer-overlay .star-display', function (nodes) {
+	// this.disconnect();
 
+	// "AUDIENCE SCORE > Average Rating" score - Multiply x2
+	var audienceScoreStars = nodes[0].nextElementSibling;
+	audienceScoreStars.textContent *= 2;
+	audienceScoreStars.textContent += '/10';
 
-// Monitor mutations on the "AUDIENCE SCORE Average Rating" selector
-setMutationHandler(document, '.audience-info div:first-child', function(nodes) {
-	this.disconnect();
+	// The 1st is for TOMATOMETER, the 2nd is for AUDIENCE SCORE
+	var theTwoDescriptiveTexts = document.querySelectorAll('li.score-modal__dets');
 
-	// for "AUDIENCE SCORE Average Rating"
-	nodes[0].innerHTML = nodes[0].innerHTML.replace(/[\d.]+/g, function(m) { return 2*m;});
+	// "TOMATOMETER" descriptive text - Append '(=6 stars or higher)'
+	theTwoDescriptiveTexts[0].innerHTML = theTwoDescriptiveTexts[0].innerHTML.replace('review.', 'review (=6 stars or higher).');
 
-	// for mouseover on "TOMATOMETER (?)"
-	document.querySelector('h3.scoreTitle:nth-child(2) > span:nth-child(1)').title += ' (=6 stars or higher)';
-
-	// for mouseover on "AUDIENCE SCORE (?) / WANT TO SEE (?)"
-	var node = document.querySelector('h3.scoreTitle:nth-child(1) > span:nth-child(1)');
-	node.title = node.title.replace(/([\d.]+)( stars)/, function(m, s1, s2) { return 2 * s1 + s2;});
+	// "AUDIENCE SCORE" descriptive text - modify in the text, from '3.5 stars or higher' to '7 stars or higher'
+	theTwoDescriptiveTexts[1].innerHTML = theTwoDescriptiveTexts[1].innerHTML.replace(/([\d.]+)( stars)/, function (m, s1, s2) {
+		return 2 * s1 + s2;
+	});
 
 });
