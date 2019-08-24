@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.8.24
+// @version     2019.8.25
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -12,9 +12,7 @@
 
 /* eslint-disable quotes */
 
-
-// The userscript makes use of the page's jQuery 1.11.3
-// Unneeded:  require     http://code.jquery.com/ui/1.9.1/jquery-ui.min.js
+'use strict';
 
 
 function minsToHoursMins(totalMin) {
@@ -254,9 +252,15 @@ if (!isOnTorrentListPage) {
 
 						event2.preventDefault();
 
-						let imdbPlot = $(container).find(".header2:contains('Plot:')").next().text();   // https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+						let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+							return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
+						}).next().text();
 						imdbPlot = imdbPlot.replace(/\|/g,'');		// remove all '|'
-						sessionStorage.setItem("plot", imdbPlot);
+						sessionStorage.setItem("imdbPlot", imdbPlot);
+
+						let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().text();
+						rtPlot = rtPlot.replace(/\|/g,'');		// remove all '|'
+						sessionStorage.setItem("rtPlot", rtPlot);
 
 						window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
 
@@ -274,41 +278,14 @@ if (!isOnTorrentListPage) {
 
 
 
-const isOnSearchbyIMDbPage = window.location.href.includes('/torrents.php?imdb=');
-let plotStored = sessionStorage.getItem("plot");
-if (isOnSearchbyIMDbPage) {
+const isOnSearchbyIMDbIdPage = window.location.href.includes('/torrents.php?imdb=');
+let imdbPlotStored = sessionStorage.getItem("imdbPlot");
+let rtPlotStored = sessionStorage.getItem("rtPlot");
+if (isOnSearchbyIMDbIdPage) {
 
 	let imdbIdTextElement = document.querySelector('h1.black');
-	let imdbIdRatingElement = $("b:contains('IMDB Rating:')");
-	imdbIdRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
-
-	if (plotStored) {
-		plotStored = plotStored.replace(/\|/g,'');		// remove all '|'
-		$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + plotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
-	// new xhr for when plot is not already retrieved (=when opening a link from the Recomended area in a new tab)
-	} else if (document.querySelector('.lista2t').rows.length > 1) {  	// if searchbyIMDbResultsTableLength has results
-
-		let tLink = document.querySelector('.lista2t').rows[1].cells[1].children[0].href; 		// the URL in the first result row
-
-		let xhr = new XMLHttpRequest();
-		xhr.open('GET', tLink, false);		// XMLHttpRequest.open(method, url, async)
-		xhr.onload = function () {
-
-			let container = document.implementation.createHTMLDocument().documentElement;
-			container.innerHTML = xhr.responseText;
-
-			let imdbPlot = $(container).find(".header2:contains('Plot:')").next().text();
-			imdbPlot = imdbPlot.replace(/\|/g,'');		// remove all '|'
-			sessionStorage.setItem("plot", imdbPlot);
-
-			let imdbIdRatingElement = $("b:contains('IMDb Rating:')");
-			$(imdbIdRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlot + '<br>');
-
-		};
-		xhr.send();
-
-	}
-
+	let imdbRatingElement = $("b:contains('IMDB Rating:')");
+	imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
 
 	RTTomatometer = $("b:contains('Rotten Rating:')");
 	if ( RTTomatometer.length > 0 ) {
@@ -317,6 +294,52 @@ if (isOnSearchbyIMDbPage) {
 	RTCriticsAvg =  $("b:contains('RottenTomatoes:')");
 	if ( RTCriticsAvg.length > 0 ) {
 		RTCriticsAvg.html(RTCriticsAvg.html().replace('RottenTomatoes:', 'RT Tomatometer:'));
+	}
+
+	if (imdbPlotStored) {
+		imdbPlotStored = imdbPlotStored.replace(/\|/g,'');		// remove all '|'
+		$(imdbRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+
+		if (rtPlotStored) {
+			let rtRatingElement = $("b:contains('RT Tomatometer:')");
+			$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlotStored + '<br>');  // This is the best way to insert text node after text node in jQuery (don't try with after() or append() )
+		}
+
+
+	// new xhr for when plot is not already retrieved (=when opening a link from the Recomended area in a new tab)
+	} else if (document.querySelector('.lista2t').rows.length > 1) {  	// if searchbyIMDbResultsTableLength has results
+
+		let tLink = document.querySelector('.lista2t').rows[1].cells[1].children[0].href; 		// the URL in the results table first row
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', tLink, false);		// XMLHttpRequest.open(method, url, async)
+		xhr.onload = function () {
+
+			let container = document.implementation.createHTMLDocument().documentElement;
+			container.innerHTML = xhr.responseText;
+
+			let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+				return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522 (in order to only select IMDb's plain "Plot", not "Rotten Plot", too )
+			}).next().text();
+			imdbPlot = imdbPlot.replace(/\|/g,'');		// remove all '|'
+			sessionStorage.setItem("imdbPlot", imdbPlot);
+
+			let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().text();
+			rtPlot = rtPlot.replace(/\|/g,'');		// remove all '|'
+			sessionStorage.setItem("rtPlot", rtPlot);
+
+			let imdbRatingElement = $("b:contains('IMDb Rating:')");
+			$(imdbRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlot + '<br>');
+
+			if (!rtPlotStored) {
+				let rtRatingElement = $("b:contains('RT Tomatometer:')");
+				$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlot + '<br>');
+			}
+
+
+		};
+		xhr.send();
+
 	}
 
 
