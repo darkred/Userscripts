@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.8.25
+// @version     2019.8.26
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -9,10 +9,10 @@
 // @grant       none
 // ==/UserScript==
 
+'use strict';
 
 /* eslint-disable quotes */
 
-'use strict';
 
 
 function minsToHoursMins(totalMin) {
@@ -254,12 +254,12 @@ if (!isOnTorrentListPage) {
 
 						let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 							return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
-						}).next().text();
-						imdbPlot = imdbPlot.replace(/\|/g,'');		// remove all '|'
+						}).next().html();
+						imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
 						sessionStorage.setItem("imdbPlot", imdbPlot);
 
-						let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().text();
-						rtPlot = rtPlot.replace(/\|/g,'');		// remove all '|'
+						let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
+						rtPlot = removePipesLinebreaks(rtPlot);
 						sessionStorage.setItem("rtPlot", rtPlot);
 
 						window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
@@ -274,6 +274,18 @@ if (!isOnTorrentListPage) {
 
 	}
 
+}
+
+
+function removePipesLinebreaks(s){
+	if (s) {
+		return s.replace(/\|/g,'').replace(/<br>/g,' ');
+	}
+}
+
+
+function makeBold(s, regex){
+	return s.replace(regex, function(m, s1, s2, s3) { return s1 + '<b>'+ s2 + '</b>' + s3  ;});
 }
 
 
@@ -297,12 +309,13 @@ if (isOnSearchbyIMDbIdPage) {
 	}
 
 	if (imdbPlotStored) {
-		imdbPlotStored = imdbPlotStored.replace(/\|/g,'');		// remove all '|'
+		imdbPlotStored = removePipesLinebreaks(imdbPlotStored);
 		$(imdbRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
 		if (rtPlotStored) {
+			rtPlotStored = removePipesLinebreaks(rtPlotStored);
 			let rtRatingElement = $("b:contains('RT Tomatometer:')");
-			$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlotStored + '<br>');  // This is the best way to insert text node after text node in jQuery (don't try with after() or append() )
+			$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlotStored + '<br>');  // This is the best way to insert text node after text node in jQuery (don't try after() or append() or .siblings().last()[0].nextSibling )
 		}
 
 
@@ -320,12 +333,12 @@ if (isOnSearchbyIMDbIdPage) {
 
 			let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 				return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522 (in order to only select IMDb's plain "Plot", not "Rotten Plot", too )
-			}).next().text();
-			imdbPlot = imdbPlot.replace(/\|/g,'');		// remove all '|'
+			}).next().html();
+			imdbPlot = removePipesLinebreaks(imdbPlot);
 			sessionStorage.setItem("imdbPlot", imdbPlot);
 
-			let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().text();
-			rtPlot = rtPlot.replace(/\|/g,'');		// remove all '|'
+			let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
+			rtPlot = removePipesLinebreaks(rtPlot);
 			sessionStorage.setItem("rtPlot", rtPlot);
 
 			let imdbRatingElement = $("b:contains('IMDb Rating:')");
@@ -341,6 +354,22 @@ if (isOnSearchbyIMDbIdPage) {
 		xhr.send();
 
 	}
+
+
+
+	// make bold  (example URL: https://rarbgproxy.org/torrents.php?imdb=tt6146586)
+	let imdbRefRatingElement = $("b:contains('IMDb Rating:')").parent();
+	let imdbRatingBoldRegex = /(.*IMDb<\/a> Rating:<\/b> )([0-9.]+)(\/.*)/;
+	let rtCriticsBoldRegex =  /(.*RT Critics Avg:<\/b> )([0-9.]+)(\/.*)/;
+	let rtTomatometerBoldRegex =  /(.*<b>RT Tomatometer:<\/b> <img.*> )([\d]+%.*[\d]+%)(.*)/;
+	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), imdbRatingBoldRegex));
+	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), rtCriticsBoldRegex));
+	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), rtTomatometerBoldRegex));
+
+
+	// duration from min to h and min
+	let durationRegex = /(.*<b>Runtime:<\/b> )([\d]+)(.*)/;
+	imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
 
 
 }
