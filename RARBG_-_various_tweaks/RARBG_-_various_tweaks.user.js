@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.8.26
+// @version     2019.8.27
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -37,7 +37,7 @@ if (!isOnTorrentListPage) {
 
 
 	$(".header2:contains('Rotten Rating:')")    .html('RT Critics Avg:');
-	$(".header2:contains('RottenTomatoes:')")   .html('RT Tomatometer:');
+	$(".header2:contains('RottenTomatoes:')")   .html('RT Tomatometer, Audience Score:');
 	$(".header2:contains('Rotten Plot:')")      .html('RT Critics Consensus:');
 	$(".header2:contains('IMDB Rating:')")      .html('IMDb Rating:');
 	$(".header2:contains('Plot:')")             .html('IMDb Summary:');
@@ -123,10 +123,10 @@ if (!isOnTorrentListPage) {
 
 
 	$(".header2:contains('Metacritic:')").next().find(">:first-child").css("font-weight","Bold");
-	$(".header2:contains('RT Tomatometer:')").next().css("font-weight","Bold");
+	$(".header2:contains('RT Tomatometer, Audience Score:')").next().css("font-weight","Bold");
 
 
-	var rtTomatometerNode = $(".header2:contains('RT Tomatometer:')").next();
+	var rtTomatometerNode = $(".header2:contains('RT Tomatometer, Audience Score:')").next();
 	if (rtTomatometerNode.length !== 0)
 		$(rtTomatometerNode).html($(rtTomatometerNode).html().replace(/(.*) ([\d]+%)(.*)s ([\d]+%)/, function(m, s1, s2, s3, s4) { return s1 + '<strong>'+ s2 + '</strong>' + s3 + '<strong>'+ s4 + '</strong>' ;}));
 
@@ -165,7 +165,7 @@ if (!isOnTorrentListPage) {
 	var imdbRating =    $(".header2:contains('IMDb Rating:')").parent();
 	var metacritic =    $(".header2:contains('Metacritic:')").parent();
 	var RTCriticsAvg =  $(".header2:contains('RT Critics Avg:')").parent();
-	var RTTomatometer = $(".header2:contains('RT Tomatometer:')").parent();
+	var RTTomatometer = $(".header2:contains('RT Tomatometer, Audience Score:')").parent();
 	var genres =        $(".header2:contains('Genres:')").parent();
 	var actors =        $(".header2:contains('Actors:')").parent();
 	var director =      $(".header2:contains('Director:')").parent();
@@ -310,7 +310,7 @@ if (isOnSearchbyIMDbIdPage) {
 
 	if (imdbPlotStored) {
 		imdbPlotStored = removePipesLinebreaks(imdbPlotStored);
-		$(imdbRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
+		$(imdbRatingElement).next().after("<b>IMDb Summary:</b> " + imdbPlotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
 		if (rtPlotStored) {
 			rtPlotStored = removePipesLinebreaks(rtPlotStored);
@@ -342,7 +342,7 @@ if (isOnSearchbyIMDbIdPage) {
 			sessionStorage.setItem("rtPlot", rtPlot);
 
 			let imdbRatingElement = $("b:contains('IMDb Rating:')");
-			$(imdbRatingElement).next().after("<b>IMDb Plot:</b> " + imdbPlot + '<br>');
+			$(imdbRatingElement).next().after("<b>IMDb Summary:</b> " + imdbPlot + '<br>');
 
 			if (!rtPlotStored) {
 				let rtRatingElement = $("b:contains('RT Tomatometer:')");
@@ -367,9 +367,14 @@ if (isOnSearchbyIMDbIdPage) {
 	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), rtTomatometerBoldRegex));
 
 
-	// duration from min to h and min
+	// duration from min to h:mm
 	let durationRegex = /(.*<b>Runtime:<\/b> )([\d]+)(.*)/;
 	imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
+
+
+	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
+	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*\/10<br>)(<b>IMDb Summary:<\/b>.*<\/span><br>)(.*>\/10<br>)( <b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus.*)?/;
+	imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
 
 
 }
