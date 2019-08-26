@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.8.27
+// @version     2019.8.27.1
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -12,6 +12,14 @@
 'use strict';
 
 /* eslint-disable quotes */
+
+
+// Automatically redirect e.g.
+// https://rarbgproxy.org/torrents.php?search=tt6139732 to
+// https://rarbgproxy.org/torrents.php?imdb=tt6139732
+if (/torrents\.php\?search=tt[0-9]+/.test(window.location.href)) {
+	window.location.href = window.location.href.replace('?search=', '?imdb=');
+}
 
 
 
