@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        StackExchange sites - convert dates to local timezone
 // @namespace   darkred
-// @version     2019.8.26
+// @version     2019.8.27
 // @description Converts dates to your local timezone
 // @author      darkred
 // @license     MIT
@@ -12,29 +12,64 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
 // ==/UserScript==
 
-
+/* eslint-disable quotes, no-console */
 /* global jstz, moment */
 
 
 var localTimezone = jstz.determine().name();
 var serverTimezone = 'Europe/Berlin';		// GMT+1
 
-
-function convertDates() {
-	var dates = document.querySelectorAll('.relativetime, .rep-time');
-	var temp;
+function convertDates(dates) {
+	// var dates = document.querySelectorAll('.relativetime, .rep-time');
+	var temp, temp2;
 	for (var i = 0; i < dates.length; i++) {
+
+		// 2019-08-24 03:26:50Z
 		temp = moment(dates[i].title, 'YYYY-MM-DD HH:mm:ssZ', true);
 		if (temp.isValid()) {
 			dates[i].title = moment.tz(dates[i].title, serverTimezone).tz(localTimezone);
+		}
+
+		// Example URLS:
+		// older, but of the same year:  https://stackoverflow.com/questions?tab=newest&page=1200
+		// older, of previous years:     https://stackoverflow.com/questions?tab=newest&page=120000
+		// Example timestamps:
+		// Aug 7 at 6:45
+		// Aug 24 at 12:23
+		// Oct 24 '18 at 9:56
+		// Oct 24 '18 at 13:57
+		temp2 = dates[i].innerHTML.replace('at ', '').replace('\'', '') + ' Z';
+
+		var formatNoYear = 'MMM D H:mm Z';
+		var formatWithYear = 'MMM D YY H:mm Z';
+
+		var newMoment1 = moment(temp2, formatNoYear, true);
+		var newMoment2 = moment(temp2, formatWithYear, true);
+
+		if (newMoment1.isValid()){
+			dates[i].innerHTML = moment.tz(newMoment1, serverTimezone).tz(localTimezone).format('MMM D [at] H:mm');
+		} else if (newMoment2.isValid()){
+			dates[i].innerHTML = moment.tz(newMoment2, serverTimezone).tz(localTimezone).format("MMM D [']YY [at] H:mm");
 		}
 	}
 }
 
 
-convertDates();
+var dates = document.querySelectorAll('.relativetime, .rep-time');
+convertDates(dates);
 
-var target = document.querySelectorAll('#question-mini-list, .rep-breakdown')[0],
+
+// The part below is pointless to enable because the site's built-in feature that "the relative timestamps being increased every 1 min" becomes broken when this script is running
+/*
+// recalculate the relative times every 10 sec
+(function(){
+	convertDates(dates);
+	setTimeout(arguments.callee, 1 * 60 * 1000);
+})();
+*/
+
+
+var target = document.querySelectorAll('#question-mini-list, #questions, .rep-breakdown')[0],
 	observer = new MutationObserver(function (mutations) {
 		convertDates();
 	}),
