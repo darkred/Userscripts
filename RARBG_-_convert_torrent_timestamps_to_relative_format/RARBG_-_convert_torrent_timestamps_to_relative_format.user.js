@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2019.8.13
+// @version     2019.9.17
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg|rbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess(ed)?|rarbgget|rarbgmirror(ed)?|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|rarbgenter|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg|rbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess(ed)?|rarbgcore|rarbgget|rarbgmirror(ed)?|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|rarbgenter|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
