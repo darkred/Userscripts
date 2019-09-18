@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.9.17
+// @version     2019.9.19
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -236,9 +236,8 @@ if (!isOnTorrentListPage) {
 
 	for(let i = 0; i < 8; i++) {
 
-		links[i].addEventListener('mouseover', function(event){
+		links[i].addEventListener('click', function(event){
 
-			event.preventDefault();
 			let tLink = this.getAttribute('href');
 			if (!tLink.includes('imdb=')){
 				var xhr = new XMLHttpRequest();
