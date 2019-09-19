@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.9.19
+// @version     2019.9.19.1
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -238,6 +238,8 @@ if (!isOnTorrentListPage) {
 
 		links[i].addEventListener('click', function(event){
 
+			event.preventDefault();
+
 			let tLink = this.getAttribute('href');
 			if (!tLink.includes('imdb=')){
 				var xhr = new XMLHttpRequest();
@@ -255,23 +257,17 @@ if (!isOnTorrentListPage) {
 					}
 
 
-					links[i].addEventListener('click', function(event2){
+					let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
+						return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
+					}).next().html();
+					imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
+					sessionStorage.setItem("imdbPlot", imdbPlot);
 
-						event2.preventDefault();
+					let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
+					rtPlot = removePipesLinebreaks(rtPlot);
+					sessionStorage.setItem("rtPlot", rtPlot);
 
-						let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
-							return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
-						}).next().html();
-						imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
-						sessionStorage.setItem("imdbPlot", imdbPlot);
-
-						let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
-						rtPlot = removePipesLinebreaks(rtPlot);
-						sessionStorage.setItem("rtPlot", rtPlot);
-
-						window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
-
-					}, false);
+					window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
 
 				};
 				xhr.send();
