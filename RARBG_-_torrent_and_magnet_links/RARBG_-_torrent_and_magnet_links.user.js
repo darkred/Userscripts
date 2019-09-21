@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @version     2019.9.17.1
+// @version     2019.9.21
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor sxe, dandyclubs
@@ -43,10 +43,10 @@ function appendColumn(elem) {
 
 		let href = oldColumn[i].firstChild.href;
 
-		newColumn[i].innerHTML =        '<a class="xhrDownloadLink" data-href="' + href + '" href="javascript:void(0);"><img src="https://dyncdn.me/static/20/img/16x16/download.png""></>';
+		newColumn[i].innerHTML =        '<a class="xhrDownloadLink" data-href="' + href + '" href="javascript:void(0)"><img src="https://dyncdn.me/static/20/img/16x16/download.png""></>';
 		newColumn[i].lastChild.title = 'DL via XHR';
 
-		newColumn[i].innerHTML += '&nbsp;<a class="xhrMagnetLink" data-href="' + href + '" href="javascript:void(0);"><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
+		newColumn[i].innerHTML += '&nbsp;<a class="xhrMagnetLink" data-href="' + href + '" href="javascript:void(0)"><img src="https://dyncdn.me/static/20/img/magnet.gif""></>';
 		newColumn[i].lastChild.title = 'ML via XHR';
 
 	}
