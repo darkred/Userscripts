@@ -2,16 +2,11 @@ Adds a column with torrent and magnet links in RARBG lists:
 ![](https://i.imgur.com/JpNCgIe.jpg)
 
 Notes: 
-
-- the script generates the magnet links in two ways: 
-  - <strike>for most torrent entries, it generates it directly from the current page  
-  *(i.e. from the filename of the thumbnail image that appears when you mouseover on the torrent title, and that's because these filenames are the same as the relevant torrent hash)* </strike>.  
-  Update 2/1/2019: DL links are now also retrieved via XHR, because unfortunately they cannot be generated from the page anymore, due to the latest site HTML changes.  
-  - For some torrent entries however, the thumbnail filename is generic (i.e. it doesn't contain the torrent hash),  
-  therefore the magnet link cannot be generated directly.  
-  In such cases, in order to get the magnet link, the target torrent page is retrieved via XHR :  
-initially the ML links will have as its destination(`href`) the current page's URL with a `#` in its end (e.g. `https://rarbg.to/torrents.php#` )  
-and as you mouseover on any such ML icon, the following tooltip will be displayed: "`ML via XHR`", and the relevant target page will be retrieved via XHR in the background.  
-So at the time you click the ML icon (or just move the mouse away and re-mouseover), it will now have the magnet link.  
-*(thanks to sxe [for the suggestion](https://greasyfork.org/en/forum/discussion/30691/x))*.
+- *(Initialy most of the ML links could be generated from the page itself ((i.e. from the filename of the thumbnail image that appeared when you mouseover on the torrent title, and that's because these filenames were the same as the relevant torrent hash)* ). Since 2/1/2019 that's no longer possible, due to the site's latest HTML changes).
+- So, from now on, the script generates all links via XHR:
+  - The DL/ML links will have: 
+    - initially, as its destination (`href`) a: `javascript:void(0)` *(to avoid taking the user back to the top of the page, something that previously occured when I had a `#` as href, instead)*, 
+    - as tooltip: "`DL/ML via XHR`".
+  - As you click a DL/ML icon, the relevant target page will be retrieved via XHR in the background (so, after clicking an icon, it will now have the magnet link).  
+  *(thanks to sxe [for the initial suggestion](https://greasyfork.org/en/forum/discussion/30691/x))*.
 - Since 4/27/2019 it uses the [arrive.js](https://github.com/uzairfarooq/arrive) library in order to work in TV Browser pages too.
