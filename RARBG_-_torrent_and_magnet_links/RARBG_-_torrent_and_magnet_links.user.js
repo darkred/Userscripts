@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @version     2019.9.21
+// @version     2019.9.22
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor sxe, dandyclubs
@@ -61,7 +61,7 @@ function addClickListeners(links, type){
 		links[i].addEventListener('click', function(event){
 
 			let href = this.getAttribute('href');
-			if (href === 'javascript:void(0);') {
+			if (href === 'javascript:void(0)') {
 				let tLink = this.getAttribute('data-href');
 
 				var xhr = new XMLHttpRequest();
