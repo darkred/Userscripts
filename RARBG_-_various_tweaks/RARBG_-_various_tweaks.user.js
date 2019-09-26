@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2019.9.19.1
+// @version     2019.9.27
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -288,7 +288,9 @@ function removePipesLinebreaks(s){
 
 
 function makeBold(s, regex){
-	return s.replace(regex, function(m, s1, s2, s3) { return s1 + '<b>'+ s2 + '</b>' + s3  ;});
+	if (regex.test(s)) {
+		return s.replace(regex, function(m, s1, s2, s3) { return s1 + '<b>'+ s2 + '</b>' + s3  ;});
+	}
 }
 
 
@@ -372,12 +374,16 @@ if (isOnSearchbyIMDbIdPage) {
 
 	// duration from min to h:mm
 	let durationRegex = /(.*<b>Runtime:<\/b> )([\d]+)(.*)/;
-	imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
+	if (durationRegex.test(imdbRefRatingElement.html())){
+		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
+	}
 
 
 	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
-	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*\/10<br>)(<b>IMDb Summary:<\/b>.*<\/span><br>)(.*>\/10<br>)( <b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus.*)?/;
-	imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
+	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*10<br>)(<b>IMDb Summary:<\/b>.*<\/span><br>)[\s]*(<b>RT Critics Avg:.*10<br>)?[\s]*(<b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus:.*)?/;
+	if (rearrangeRegex.test(imdbRefRatingElement.html())){
+		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s4) s4=''; if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
+	}
 
 
 }
