@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2019.10.11
+// @version      2019.10.17
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -80,3 +80,18 @@ function process(mutations) {
 
 	new MutationObserver(process).observe(menuContainer, { childList: true });
 }
+
+
+function addCss(cssString) {
+	var head = document.getElementsByTagName('head')[0];
+	var newCss = document.createElement('style');
+	newCss.type = 'text/css';
+	newCss.innerHTML = cssString;
+	head.appendChild(newCss);
+}
+
+addCss(`
+ svg {
+	filter: invert(100%);
+ }
+`);
