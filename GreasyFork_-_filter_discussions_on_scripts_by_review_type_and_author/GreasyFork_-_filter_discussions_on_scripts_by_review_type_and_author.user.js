@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        GreasyFork - filter discussions on scripts by review type and author
 // @namespace   darkred
 // @version     2017.4.19

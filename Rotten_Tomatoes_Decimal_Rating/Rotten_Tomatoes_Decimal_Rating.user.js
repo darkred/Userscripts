@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
 // @version     4

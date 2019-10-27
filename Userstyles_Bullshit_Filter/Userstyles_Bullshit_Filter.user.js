@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Userstyles Bullshit Filter
 // @namespace   darkred
 // @version     1.1

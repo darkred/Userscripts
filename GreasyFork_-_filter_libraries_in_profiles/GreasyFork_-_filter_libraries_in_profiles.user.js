@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        GreasyFork - filter libraries in profiles
 // @namespace   darkred
 // @version     2018.9.6

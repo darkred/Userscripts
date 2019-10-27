@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        OpenUserJS Bullshit Filter
 // @namespace   darkred
 // @version     2018.9.20

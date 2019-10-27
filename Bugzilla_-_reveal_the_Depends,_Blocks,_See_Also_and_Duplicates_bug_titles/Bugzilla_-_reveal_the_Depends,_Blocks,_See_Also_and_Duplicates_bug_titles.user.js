@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles
 // @namespace   darkred
 // @version     2017.16.11

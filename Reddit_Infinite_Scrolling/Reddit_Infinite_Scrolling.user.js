@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Reddit Infinite Scrolling
 // @namespace   darkred
 // @version     2018.4.25

@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Userstyles - filter deleted styles in your profile
 // @namespace   darkred
 // @version     1

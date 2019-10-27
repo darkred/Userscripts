@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
 // @version     2019.4.28
