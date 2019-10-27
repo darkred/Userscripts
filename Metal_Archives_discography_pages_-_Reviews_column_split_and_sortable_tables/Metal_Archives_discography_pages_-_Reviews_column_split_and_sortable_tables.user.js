@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
-// @version     2.0.5
+// @version     2.0.6
 // @date        2019.10.27
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @author      RobG, Brock Adams, Mottie, darkred
@@ -31,12 +31,13 @@ thead th {
 	background-position: right center;
 }
 thead th.up {
-	padding-right: 20px;
 	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
 }
 thead th.down {
-	padding-right: 20px;
 	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+}
+.discog th:nth-child(5), .discog th:nth-child(6){
+	width: 35px;
 }
 </style>`;
 
