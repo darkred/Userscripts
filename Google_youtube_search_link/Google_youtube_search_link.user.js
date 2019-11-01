@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2019.10.17
+// @version      2019.11.1
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -45,19 +45,11 @@ function process(mutations) {
 		} else if ((q = location.href.match(/^.+?(?:[#/&?](?:q|query))=(.+?)(?:|&.+|\|.+)$/)))
 			q = q[1];
 
-		var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
-		var text =  '<div class="hdtb-mitem hdtb-imb" id="__YOUTUBE_SEARCH__">' +
-					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">YouTube</a>' +
-					'</div>';
-		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
-
-
 		// Source URL: https://upload.wikimedia.org/wikipedia/commons/c/c9/YouTube_play_buttom_dark_icon_%282013-2017%29.svg
-		// Line 60 initially:   y="0px" viewBox="0 0 1024 721" enable-background="new 0 0 1024 721" xml:space="preserve">
-		var svg =
-		`
+		// No change is done to its source code (the only thing applied to it is the CSS below)
+		var svg = `
 		<svg version="1.1" id="YouTube_Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-			 y="0px" viewBox="0 -150 1024 721" width="16" height="16" preserveAspectRatio="xMidYMid meet" enable-background="new 0 -150 1024 721" xml:space="preserve">
+			 y="0px" viewBox="0 0 1024 721" enable-background="new 0 0 1024 721" xml:space="preserve">
 		<path id="Triangle" fill="#FFFFFF" d="M407,493l276-143L407,206V493z"/>
 		<path id="The_Sharpness" opacity="0.12" fill-rule="evenodd" clip-rule="evenodd" d="M407,206l242,161.6l34-17.6L407,206z"/>
 		<g id="Lozenge">
@@ -72,9 +64,13 @@ function process(mutations) {
 		</svg>
 		`;
 
-		document.querySelector('#__YOUTUBE_SEARCH__ > a').insertAdjacentHTML('beforebegin', svg);
+		var text =  '<div class="hdtb-mitem hdtb-imb" aria-selected="false" role="tab" id="__YOUTUBE_SEARCH__">' +
+					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">' +
+					'<span class="HF9Klc iJddsb" style="height:16px;width:16px">' + svg + '</span>YouTube' +
+					'</a></div>';
 
-
+		var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
+		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
 
 	}
 
@@ -91,7 +87,7 @@ function addCss(cssString) {
 }
 
 addCss(`
- svg {
+ #__YOUTUBE_SEARCH__ svg {
 	filter: invert(100%);
  }
 `);
