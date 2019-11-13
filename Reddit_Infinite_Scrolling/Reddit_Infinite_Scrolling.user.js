@@ -9,7 +9,7 @@
 // @include     https://old.reddit.com/*
 // @grant       unsafeWindow
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
-// @require     https://greasyfork.org/scripts/11636-jscroll/code/jScroll.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js
 // ==/UserScript==
 
 // Jscroll code
