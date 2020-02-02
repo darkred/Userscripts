@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.02.01
+// @version     2020.02.02
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg|rbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess(ed)?|rarbgcore|rarbgdata|rarbgenter|rarbgget|rarbggo|rarbgmirror(ed)?|rarbgp2p|rarbgproxy|rarbgproxied|rarbgprx|rarbgs|rarbgto|rarbgunblock|rarbgway|rarbgweb|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrent\/.*|torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(rarbg|rbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess(ed)?|rarbgcore|rarbgdata|rarbgenter|rarbgget|rarbgindex|rarbggo|rarbgmirror(ed)?|rarbgp2p|rarbgproxy|rarbgproxied|rarbgproxies|rarbgprx|rarbgs|rarbgto|rarbgunblock|rarbgway|rarbgweb|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrent\/.*|torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
 // @grant       none
 // ==/UserScript==
 
