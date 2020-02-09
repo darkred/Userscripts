@@ -5,7 +5,7 @@
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(rarbg|rbg(\.(bypassed|unblockall|unblocked))?|rarbgaccess(ed)?|rarbgcore|rarbgdata|rarbgenter|rarbgget|rarbgindex|rarbggo|rarbgmirror(ed)?|rarbgp2p|rarbgproxy|rarbgproxied|rarbgproxies|rarbgprx|rarbgs|rarbgto|rarbgunblock|rarbgway|rarbgweb|proxyrarbg|unblocktorrent)\.(to|com|org|is|xyz|lol|vc|link)\/(rarbg-proxy-unblock\/)?(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
