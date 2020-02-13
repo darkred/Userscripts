@@ -1,13 +1,10 @@
-*By default RottenTomatoes pages uses base 10 rating for TOMATOMETER and base-5 for AUDIENCE SCORE.*
-This script changes the latter's base-5 to base-10, and modifies both relevant tooltips, in order to be perceived more easily.
-It modifies these 3 elements:
+*By default RottenTomatoes pages uses base 10 rating for TOMATOMETER and base-5 for AUDIENCE SCORE.*  
+This script changes the latter's base-5 to base-10, and modifies both relevant tooltips, in order to be perceived more easily.  
+It modifies the following 3 elements inside the modal that is displayed after clicking "See score details":
 
-- multiplies `x2` the AUDIENCE SCORE **Average Ratings**,
-- appends `(=6 stars or higher)` to the TOMATOMETER **descriptive text**,
-- modifies`3.5 stars or higher` to `7 stars or higher`, in the AUDIENCE SCORE **descriptive text**.
-
-*Note 1: this script uses the [setMutationHandler](https://greasyfork.org/en/scripts/12228-setmutationhandler) function (by wOxxOm)
-Note 2: after the new rottentomatoes.com layout (Feb. 25, 2019), since v4 the `// @run-at      document-start` rule is no longer needed.*
+- multiplies `x2` the Audience Rating **Avg Rating**,
+- appends `(=6 stars or higher)` to the Tomatometer **descriptive text**,
+- modifies`3.5 stars or higher` to `7 stars or higher`, in the Audience Score **descriptive text**.
 
 &nbsp;
 
