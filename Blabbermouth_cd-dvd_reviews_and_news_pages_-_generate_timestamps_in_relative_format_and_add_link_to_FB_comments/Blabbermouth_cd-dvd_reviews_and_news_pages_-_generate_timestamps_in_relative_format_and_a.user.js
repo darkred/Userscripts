@@ -3,7 +3,8 @@
 // @namespace   http://tampermonkey.net/
 // @version     darkred
 // @description Generates timestamps in relative format in cd/dvd reviews pages and news pages and adds link to the FB comments area.
-// @author      You
+// @author      darkred
+// @license     MIT
 // @match       https://www.blabbermouth.net/news
 // @match       https://www.blabbermouth.net/news/*
 // @match       https://www.blabbermouth.net/cdreviews/*
