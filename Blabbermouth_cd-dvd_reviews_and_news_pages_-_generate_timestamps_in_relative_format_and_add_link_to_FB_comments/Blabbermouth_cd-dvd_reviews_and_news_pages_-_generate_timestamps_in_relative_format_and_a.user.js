@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Blabbermouth cd/dvd reviews and news pages - generate timestamps in relative format and add link to the FB comments area
 // @namespace   http://tampermonkey.net/
-// @version     darkred
+// @version     1
 // @description Generates timestamps in relative format in cd/dvd reviews pages and news pages and adds link to the FB comments area.
 // @author      darkred
 // @license     MIT
@@ -81,16 +81,41 @@ function recalc(timestamp, format, notitle) {
 // if (window.top === window.self) return;
 // console.log ('Script start...');
 
-/*
-if (window.location.href === 'https://www.blabbermouth.net/news') {
+// Example for 'diff'
+// var a = moment([2007, 0, 29]);
+// var b = moment([2007, 0, 28]);
+// a.diff(b, 'days') // 1
+
+if (window.location.href === 'https://www.blabbermouth.net'
+	|| window.location.href === ('https://www.blabbermouth.net/news')
+	|| window.location.href === ('https://www.blabbermouth.net/news/')
+	|| window.location.href.startsWith('https://www.blabbermouth.net/news/page')) {
 	var allTimestamps = document.querySelectorAll('.date-time');
 	// February 22, 2020
 	allTimestamps.forEach(function(item) {
-    item.innerText = moment(item.innerText.trim()).fromNow();
+		var initial = item.innerText.trim();
+		var now = moment();
+		// diff() - The supported measurements are: years, months, weeks, days
+		var interval = now.diff(moment(item.innerText.trim()), 'days');
+		if (interval === 0) {
+			item.innerText = 'Today';
+		} else if (interval < 7){
+			item.innerText = interval + ' days ago';
+		} else if (interval < 30) {
+			item.innerText = now.diff(moment(item.innerText.trim()), 'weeks') + ' weeks ago';
+		} else if  (interval < 365) {
+			item.innerText = now.diff(moment(item.innerText.trim()), 'months') + ' months ago';
+		} else {
+			item.innerText = now.diff(moment(item.innerText.trim()), 'years') + ' years ago';
+		}
+		if (interval === 1 || interval === 7 || interval === 30 || interval === 365 ){
+			item.innerText = item.innerText.replace('s ', ' ');
+		}
+		item.title = initial;
 		recalc(item, 'MMMM DD, YYYY', true);
 	});
 
-} else */ if (
+} else  if (
 	window.location.href.includes('blabbermouth.net/news/')
 ) {
 
@@ -120,6 +145,7 @@ if (window.location.href === 'https://www.blabbermouth.net/news') {
 	if (/blabbermouth\.net/i.test(location.host)) {
 		console.log('Userscript is in the MAIN page.');
 
+		// 2019-10-17T15:32:18.000Z
 		if (
 			document.querySelector(
 				'meta[property="article:published_time"]'
