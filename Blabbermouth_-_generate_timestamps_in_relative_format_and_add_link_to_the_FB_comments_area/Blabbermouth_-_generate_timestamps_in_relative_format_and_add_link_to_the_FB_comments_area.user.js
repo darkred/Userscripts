@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Blabbermouth cd/dvd reviews and news pages - generate timestamps in relative format and add link to the FB comments area
+// @name        Blabbermouth - generate timestamps in relative format and add link to the FB comments area
 // @namespace   http://tampermonkey.net/
 // @version     1
 // @description Generates timestamps in relative format in cd/dvd reviews pages and news pages and adds link to the FB comments area.
