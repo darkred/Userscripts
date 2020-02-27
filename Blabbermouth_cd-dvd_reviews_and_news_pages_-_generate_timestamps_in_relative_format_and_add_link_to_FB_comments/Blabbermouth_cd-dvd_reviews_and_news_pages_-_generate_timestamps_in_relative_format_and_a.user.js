@@ -5,11 +5,11 @@
 // @description Generates timestamps in relative format in cd/dvd reviews pages and news pages and adds link to the FB comments area.
 // @author      darkred
 // @license     MIT
-// @match       https://www.blabbermouth.net/news
-// @match       https://www.blabbermouth.net/news/*
-// @match       https://www.blabbermouth.net/cdreviews/*
-// @match       https://www.blabbermouth.net/dvdreviews/*
-// @match       https://www.facebook.com/plugins/feedback.php*
+// @include     https://www.blabbermouth.net/
+// @include     https://www.blabbermouth.net/news*
+// @include     https://www.blabbermouth.net/cdreviews*
+// @include     https://www.blabbermouth.net/dvdreviews*
+// @include     https://www.facebook.com/plugins/feedback.php*
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
@@ -56,14 +56,7 @@ function convertToLocalTimezone(timestamp) {
 function recalc(timestamp, format, notitle) {
 	// repeat every 1 minute
 	setInterval(function() {
-		if (
-			timestamp &&
-			moment(
-				timestamp.title,
-				format,
-				true
-			).isValid()
-		) {
+		if (timestamp && moment(timestamp.title, format, true).isValid()) {
 			timestamp.textContent = moment(timestamp.title).fromNow();
 		} else if (notitle === true) {
 			timestamp.innerText = moment(timestamp.innerText.trim()).fromNow();
@@ -72,24 +65,11 @@ function recalc(timestamp, format, notitle) {
 }
 
 
-
-
-
-
-
-
-// if (window.top === window.self) return;
-// console.log ('Script start...');
-
-// Example for 'diff'
-// var a = moment([2007, 0, 29]);
-// var b = moment([2007, 0, 28]);
-// a.diff(b, 'days') // 1
-
-if (window.location.href === 'https://www.blabbermouth.net'
-	|| window.location.href === ('https://www.blabbermouth.net/news')
-	|| window.location.href === ('https://www.blabbermouth.net/news/')
-	|| window.location.href.startsWith('https://www.blabbermouth.net/news/page')) {
+if (
+	window.location.href === 'https://www.blabbermouth.net/' ||
+	window.location.href === 'https://www.blabbermouth.net/news' ||
+	window.location.href.startsWith('https://www.blabbermouth.net/news/page')
+) {
 	var allTimestamps = document.querySelectorAll('.date-time');
 	// February 22, 2020
 	allTimestamps.forEach(function(item) {
@@ -99,27 +79,31 @@ if (window.location.href === 'https://www.blabbermouth.net'
 		var interval = now.diff(moment(item.innerText.trim()), 'days');
 		if (interval === 0) {
 			item.innerText = 'Today';
-		} else if (interval < 7){
+		} else if (interval < 7) {
 			item.innerText = interval + ' days ago';
 		} else if (interval < 30) {
-			item.innerText = now.diff(moment(item.innerText.trim()), 'weeks') + ' weeks ago';
-		} else if  (interval < 365) {
-			item.innerText = now.diff(moment(item.innerText.trim()), 'months') + ' months ago';
+			item.innerText =
+				now.diff(moment(item.innerText.trim()), 'weeks') + ' weeks ago';
+		} else if (interval < 365) {
+			item.innerText =
+				now.diff(moment(item.innerText.trim()), 'months') +
+				' months ago';
 		} else {
-			item.innerText = now.diff(moment(item.innerText.trim()), 'years') + ' years ago';
+			item.innerText =
+				now.diff(moment(item.innerText.trim()), 'years') + ' years ago';
 		}
-		if (interval === 1 || interval === 7 || interval === 30 || interval === 365 ){
+		if (
+			interval === 1 ||
+			interval === 7 ||
+			interval === 30 ||
+			interval === 365
+		) {
 			item.innerText = item.innerText.replace('s ', ' ');
 		}
 		item.title = initial;
 		recalc(item, 'MMMM DD, YYYY', true);
 	});
-
-} else  if (
-	window.location.href.includes('blabbermouth.net/news/')
-) {
-
-	// if there's a timestamp inside the page
+} else if (window.location.href.includes('blabbermouth.net/news/')) {
 	if (
 		document.querySelector('meta[property="article:published_time"]') !==
 		null
@@ -139,13 +123,16 @@ if (window.location.href === 'https://www.blabbermouth.net'
 	document.querySelector('.date-time').textContent = publishedTimeLTZ;
 	document.querySelector('.date-time').title = publishedTimeLTZtitle;
 } else if (
-	window.location.href.includes('blabbermouth.net/cdreviews') ||
-	window.location.href.includes('blabbermouth.net/dvdreviews')
+	(window.location.href.includes('blabbermouth.net/cdreviews') ||
+	window.location.href.includes('blabbermouth.net/dvdreviews')) &&
+	!window.location.href.includes('/page/')
 ) {
+	//--- Double-check that this iframe is on the expected domain:
 	if (/blabbermouth\.net/i.test(location.host)) {
 		console.log('Userscript is in the MAIN page.');
 
 		// 2019-10-17T15:32:18.000Z
+
 		if (
 			document.querySelector(
 				'meta[property="article:published_time"]'
@@ -166,15 +153,9 @@ if (window.location.href === 'https://www.blabbermouth.net'
 
 		var HTML = `
 <p class="byline-single vcard">
-<span class="date-time">
-${publishedTimeLTZ}
-</span>
+<span class="date-time">${publishedTimeLTZ}</span>
 <span class="date-comments">
-<a data-permalink="
-${currentURL}
-" href="#comments">
-${commentcount}
-</a>
+<a data-permalink="${currentURL}" href="#comments">${commentcount}</a>
 <a href="#comments">
 Comments
 </a>
@@ -196,38 +177,27 @@ Comments
 		window.addEventListener(
 			'message',
 			function addFbCounter(e) {
-				if (e.data.indexOf(' Comment') !== -1) {
-					document.querySelector(
-						'#main > article > p > span.date-comments > a:nth-child(2)'
-					).innerText =
-						e.data;
-					window.removeEventListener('message', addFbCounter);
+				// something from an unknown domain, or doesn't contain the string "Comment" let's ignore it
+				if (e.origin != 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
+					return;
 				}
+				console.log("Received message: " + e.data);
+				document.querySelector(
+					'#main > article > p > span.date-comments > a:nth-child(1)'
+				).innerText = e.data.replace(/\ Comments?/i,'');
+				window.removeEventListener('message', addFbCounter);
 			},
 			false
 		);
 		console.log('Waiting for Message 1, from iframe...');
 	}
-} else if (window.location.href.includes('facebook.com')) {
+}  else if (window.location.href.includes('facebook.com')) {
+
 	console.log('Userscript is in the FRAMED page.');
 
-	var observer = new MutationObserver(function(mutations) {
-		mutations.forEach(function(mutation) {
-			if (!mutation.addedNodes) return;
-
-			for (var i = 0; i < mutation.addedNodes.length; i++) {
-				var selector = '._50f7';
-				if (document.body.contains(document.querySelector(selector))) {
-					observer.disconnect();
-					// Send message from iframe
-					window.top.postMessage (document.querySelector(selector).innerText, '*');
-				}
-			}
-		});
-	});
-
-	observer.observe(document.body, {
-		childList: true,
-		subtree: true
-	});
+	var selector = '._50f7';
+	window.parent.postMessage(
+		document.querySelector(selector).innerText,
+		'https://www.blabbermouth.net/cdreviews/'
+	);
 }
