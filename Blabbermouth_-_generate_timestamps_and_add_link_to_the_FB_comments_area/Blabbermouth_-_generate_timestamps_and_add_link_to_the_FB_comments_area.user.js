@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Blabbermouth - generate timestamps in relative format and add link to the FB comments area
-// @namespace   http://tampermonkey.net/
+// @name        Blabbermouth - generate timestamps and add link to the fb comments area
+// @namespace   darkred
 // @version     1
-// @description Generates timestamps in relative format in cd/dvd reviews pages and news pages and adds link to the FB comments area.
+// @description (blabbermouth cd/dvd reviews and news pages) generates the missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
 // @include     https://www.blabbermouth.net/
@@ -101,7 +101,6 @@ if (
 			item.innerText = item.innerText.replace('s ', ' ');
 		}
 		item.title = initial;
-		recalc(item, 'MMMM DD, YYYY', true);
 	});
 } else if (window.location.href.includes('blabbermouth.net/news/')) {
 	if (
