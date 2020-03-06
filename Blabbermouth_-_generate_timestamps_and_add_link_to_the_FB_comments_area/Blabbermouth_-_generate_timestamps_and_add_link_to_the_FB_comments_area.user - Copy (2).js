@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.0.1
+// @version     1
 // @description (blabbermouth cd/dvd reviews and news pages) generates the missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -41,16 +41,36 @@ moment.updateLocale('en', {
 });
 
 function convertToLocalTimezone(timestamp) {
+	// alert(timestamp)
 	const localTimezone = jstz.determine().name();
+	const serverTimezone = 'Europe/Berlin'; // GMT+1
+	// const serverTimezone = 'Africa/Lagos'; // GMT+1
+
 	// (the timestamp is in ISO 8601 format and its trailing Z means that it's in UTC )
 	// 2020-03-05T15:40:38.000Z
+
 	let initialTimestamp = timestamp;
+	// if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {
 	if (moment(initialTimestamp, moment.ISO_8601, true).isValid()) {
-		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ')		// the server's timezone is GMT-5
-			.tz(localTimezone);
-		publishedTimeLTZ = convertedToLocalTimezone.fromNow();
-		let format = 'YYYY-MM-DD HH:mm:ss';
-		publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
+	// alert(initialTimestamp.replace('Z',''))
+	// alert(moment(initialTimestamp).format('Z'))
+	let convertedToLocalTimezone = moment
+		// .tz(initialTimestamp, moment.ISO_8601, serverTimezone)
+		// .tz(initialTimestamp, moment.ISO_8601, 'UTC')
+		// (initialTimestamp, moment.ISO_8601)
+		(initialTimestamp.replace('Z','')  + "-05:00", 'YYYY-MM-DDTHH:mm:ssZ')
+		// .tz('UTC+5')
+		// .tz('America/Sao_Paulo')
+		// .tz('America/Danmarkshavn')
+		// .tz(initialTimestamp, 'YYYY-MM-DDTHH:mm:ssZ', serverTimezone)
+		// .tz(initialTimestamp, moment.ISO_8601)
+		.tz(localTimezone);
+	console.log('convertedToLocalTimezone :' + convertedToLocalTimezone.format())
+	publishedTimeLTZ = convertedToLocalTimezone.fromNow();
+	// alert(publishedTimeLTZ)
+	let format = 'YYYY-MM-DD HH:mm:ss';
+	publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
+	// alert(publishedTimeLTZtitle)
 	}
 }
 
@@ -178,13 +198,13 @@ Comments
 			'message',
 			function addFbCounter(e) {
 				// something from an unknown domain, or doesn't contain the string "Comment" let's ignore it
-				if (e.origin !== 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
+				if (e.origin != 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
 					return;
 				}
-				console.log('Received message: ' + e.data);
+				console.log("Received message: " + e.data);
 				document.querySelector(
 					'#main > article > p > span.date-comments > a:nth-child(1)'
-				).innerText = e.data.replace(/ Comments?/i,'');
+				).innerText = e.data.replace(/\ Comments?/i,'');
 				window.removeEventListener('message', addFbCounter);
 			},
 			false
