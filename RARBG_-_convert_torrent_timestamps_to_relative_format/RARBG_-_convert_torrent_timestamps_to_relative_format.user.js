@@ -1,19 +1,17 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.02.02
+// @version     2020.03.06
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
 // @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
 // @grant       none
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.6/moment-timezone-with-data-2010-2020.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
 // ==/UserScript==
 
 
-/* global jstz, moment */
+/* global moment */
 
 // Customize the strings in the locale to display "1 minute ago" instead of "a minute ago" (https://github.com/moment/moment/issues/3764#issuecomment-279928245)
 moment.updateLocale('en', {
@@ -36,13 +34,11 @@ moment.updateLocale('en', {
 
 
 function convertToLocalTimezone(timestamps) {
-	const localTimezone = jstz.determine().name();
-	const serverTimezone = 'Europe/Berlin';		// GMT+1
 	for (let i = 0; i < timestamps.length; i++) {
 		let initialTimestamp = timestamps[i].textContent;
 		// if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss').isValid()) {
 		if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
-			let convertedToLocalTimezone = moment.tz(initialTimestamp, serverTimezone).tz(localTimezone);
+			let convertedToLocalTimezone = moment(initialTimestamp + '+01:00', 'YYYY-MM-DD HH:mm:ss Z');	// The server time is GMT+1
 			timestamps[i].textContent = convertedToLocalTimezone.fromNow();
 			// let format = 'MM/DD/YYYY HH:mm:ss';
 			let format = 'YYYY-MM-DD HH:mm:ss';

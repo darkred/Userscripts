@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.0.1
+// @version     1.0.2
 // @description (blabbermouth cd/dvd reviews and news pages) generates the missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -12,12 +12,10 @@
 // @include     https://www.facebook.com/plugins/feedback.php*
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data-1970-2030.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.7/jstz.min.js
 // ==/UserScript==
 
 
-/* global jstz, moment */
+/* global moment */
 'use strict';
 
 
@@ -41,13 +39,12 @@ moment.updateLocale('en', {
 });
 
 function convertToLocalTimezone(timestamp) {
-	const localTimezone = jstz.determine().name();
 	// (the timestamp is in ISO 8601 format and its trailing Z means that it's in UTC )
 	// 2020-03-05T15:40:38.000Z
 	let initialTimestamp = timestamp;
 	if (moment(initialTimestamp, moment.ISO_8601, true).isValid()) {
-		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ')		// the server's timezone is GMT-5
-			.tz(localTimezone);
+		// let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ');		// The server's timezone is GMT-5
+		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-04:54', 'YYYY-MM-DDTHH:mm:ssZ');		// The server's timezone is GMT-5 (6 min less, according to the relevant post timestamps in both Twitter and FB blabbbermouth pages)
 		publishedTimeLTZ = convertedToLocalTimezone.fromNow();
 		let format = 'YYYY-MM-DD HH:mm:ss';
 		publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
