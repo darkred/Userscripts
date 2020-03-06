@@ -44,7 +44,7 @@ function convertToLocalTimezone(timestamp) {
 	let initialTimestamp = timestamp;
 	if (moment(initialTimestamp, moment.ISO_8601, true).isValid()) {
 		// let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ');		// The server's timezone is GMT-5
-		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-04:54', 'YYYY-MM-DDTHH:mm:ssZ');		// The server's timezone is GMT-5 (6 min less, according to the relevant post timestamps in both Twitter and FB blabbbermouth pages)
+		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-04:54', 'YYYY-MM-DDTHH:mm:ssZ');		// The server's timezone is GMT-5 (6 min less, according to the relevant post timestamps in both https://www.facebook.com/Blabbermouth.net and https://twitter.com/BLABBERMOUTHNET
 		publishedTimeLTZ = convertedToLocalTimezone.fromNow();
 		let format = 'YYYY-MM-DD HH:mm:ss';
 		publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
