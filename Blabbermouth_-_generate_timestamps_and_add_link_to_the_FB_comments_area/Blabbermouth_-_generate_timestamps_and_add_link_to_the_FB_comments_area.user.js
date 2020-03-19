@@ -5,10 +5,8 @@
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
-// @include     https://www.blabbermouth.net/
-// @include     https://www.blabbermouth.net/news*
-// @include     https://www.blabbermouth.net/cdreviews*
-// @include     https://www.blabbermouth.net/dvdreviews*
+// @include     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/(news|cdreviews|dvdreviews)?/
+// @exclude     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/(cdreviews|dvdreviews)(\/page|$)/
 // @include     https://www.facebook.com/plugins/feedback.php*
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
@@ -63,9 +61,9 @@ function recalc(existingTimestampElement, format, notitle) {
 
 
 if (
-	window.location.href === 'https://www.blabbermouth.net/' ||
-	window.location.href === 'https://www.blabbermouth.net/news' ||
-	window.location.href.startsWith('https://www.blabbermouth.net/news/page')
+	window.location.href.endsWith('blabbermouth.net/') ||
+	window.location.href.endsWith('blabbermouth.net/news') ||
+	window.location.href.includes('blabbermouth.net/news/page/')
 ) {
 
 	let options = {

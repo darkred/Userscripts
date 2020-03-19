@@ -10,6 +10,7 @@ In details:
 
   It generates timestamps *(making use of the existing `published_time` data from inside the pages, e.g. `2020-02-20T19:10:22.000Z`)*  
 in relative format. Also, it recalculates them every 1 minute.  
+_(the initial retrieved timestamps -converted to local timezone's offset- are tooltips: just hover mouse on a relative date to view)_
 
   It also shows a link to the Facebook comments next to the generated timestamp,  
 with **the comment count from that fb iframe** <sup>1</sup> (i.e. `6 Comments`, not just "Comments" ).  
