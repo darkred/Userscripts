@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.1
+// @version     1.1.1
+// @date        2020.04.01
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -42,7 +43,7 @@ function convertToLocalTimezone(timestamp) {
 	let initialTimestamp = timestamp;
 	if (moment(initialTimestamp, moment.ISO_8601, true).isValid()) {
 		// let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ');		// the server's timezone is GMT-5
-		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-03:54', 'YYYY-MM-DDTHH:mm:ssZ');		// the server's timezone is GMT-4 (6 min less, in order to sync with the relevant post timestamps in both Twitter and FB blabbbermouth pages)
+		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-03:53', 'YYYY-MM-DDTHH:mm:ssZ');		// the server's timezone is GMT-4 plus 7 min, in order to sync with the relevant post timestamps in both Twitter and FB blabbbermouth pages
 		publishedTimeLTZ = convertedToLocalTimezone.fromNow();
 		let format = 'YYYY-MM-DD HH:mm:ss';
 		publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
