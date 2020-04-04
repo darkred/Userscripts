@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.03.06
+// @version     2020.04.04
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -39,6 +39,9 @@ function convertToLocalTimezone(timestamps) {
 		// if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss').isValid()) {
 		if (moment(initialTimestamp, 'YYYY-MM-DD HH:mm:ss', true).isValid()) {		// As of moment.js v2.3.0, you may specify a boolean for the last argument to make Moment use strict parsing. Strict parsing requires that the format and input match exactly, including delimeters.
 			let convertedToLocalTimezone = moment(initialTimestamp + '+01:00', 'YYYY-MM-DD HH:mm:ss Z');	// The server time is GMT+1
+			if (moment().isDST()){
+				convertedToLocalTimezone.subtract(1, 'hours');
+			}
 			timestamps[i].textContent = convertedToLocalTimezone.fromNow();
 			// let format = 'MM/DD/YYYY HH:mm:ss';
 			let format = 'YYYY-MM-DD HH:mm:ss';
