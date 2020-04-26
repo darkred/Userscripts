@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.02.02
+// @version     2020.04.26
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -302,7 +302,14 @@ if (isOnSearchbyIMDbIdPage) {
 
 	let imdbIdTextElement = document.querySelector('h1.black');
 	let imdbRatingElement = $("b:contains('IMDB Rating:')");
-	imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
+	if (imdbRatingElement.length > 0){
+		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
+	} else {  			// Example: https://rarbgproxy.org/torrents.php?imdb=tt9139586
+		imdbRatingElement = $("b:contains('Runtime:')");
+		$(imdbRatingElement).parent().html($(imdbRatingElement).parent().html() + '<b>IMDB Rating:</b><br>');
+		imdbRatingElement = $("b:contains('IMDB Rating:')");
+		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating: -');
+	}
 
 	RTTomatometer = $("b:contains('Rotten Rating:')");
 	if ( RTTomatometer.length > 0 ) {
@@ -380,9 +387,9 @@ if (isOnSearchbyIMDbIdPage) {
 
 
 	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
-	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*10<br>)(<b>IMDb Summary:<\/b>.*<\/span><br>)[\s]*(<b>RT Critics Avg:.*10<br>)?[\s]*(<b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus:.*)?/;
+	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*10<br>)?(<b>IMDb Summary:<\/b>.*<\/span><br>)[\s]*(<b>RT Critics Avg:.*10<br>)?[\s]*(<b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus:.*)?/;
 	if (rearrangeRegex.test(imdbRefRatingElement.html())){
-		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s4) s4=''; if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
+		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s2) s2=''; if (!s3) s3=''; if (!s4) s4=''; if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
 	}
 
 
