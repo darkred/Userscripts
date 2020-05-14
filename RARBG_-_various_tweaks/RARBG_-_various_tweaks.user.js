@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.04.26
+// @version     2020.05.14
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -300,15 +300,20 @@ let imdbPlotStored = sessionStorage.getItem("imdbPlot");
 let rtPlotStored = sessionStorage.getItem("rtPlot");
 if (isOnSearchbyIMDbIdPage) {
 
-	let imdbIdTextElement = document.querySelector('h1.black');
+	let searchListingHeader = document.querySelector('h1.black').textContent;
+	const imdbIdRegex = /tt[0-9]+/;
+	let imdbId;
+	if (imdbIdRegex.test(searchListingHeader)){
+		imdbId = imdbIdRegex.exec(searchListingHeader)[0];
+	}
 	let imdbRatingElement = $("b:contains('IMDB Rating:')");
 	if (imdbRatingElement.length > 0){
-		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating:');
+		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbId + '/">IMDb</a> Rating:');
 	} else {  			// Example: https://rarbgproxy.org/torrents.php?imdb=tt9139586
 		imdbRatingElement = $("b:contains('Runtime:')");
 		$(imdbRatingElement).parent().html($(imdbRatingElement).parent().html() + '<b>IMDB Rating:</b><br>');
 		imdbRatingElement = $("b:contains('IMDB Rating:')");
-		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbIdTextElement.textContent + '/">IMDb</a> Rating: -');
+		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbId + '/">IMDb</a> Rating: -');
 	}
 
 	RTTomatometer = $("b:contains('Rotten Rating:')");
