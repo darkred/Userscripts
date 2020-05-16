@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.05.14
+// @version     2020.05.16
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -260,12 +260,17 @@ if (!isOnTorrentListPage) {
 					let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 						return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
 					}).next().html();
-					imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
-					sessionStorage.setItem("imdbPlot", imdbPlot);
+					if (imdbPlot !== undefined){
+						imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
+						sessionStorage.setItem("imdbPlot", imdbPlot);
+					}
 
 					let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
-					rtPlot = removePipesLinebreaks(rtPlot);
-					sessionStorage.setItem("rtPlot", rtPlot);
+					// alert(rtPlot)
+					if (rtPlot !== undefined){
+						rtPlot = removePipesLinebreaks(rtPlot);
+						sessionStorage.setItem("rtPlot", rtPlot);
+					}
 
 					window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
 
@@ -297,7 +302,16 @@ function makeBold(s, regex){
 
 const isOnSearchbyIMDbIdPage = window.location.href.includes('/torrents.php?imdb=');
 let imdbPlotStored = sessionStorage.getItem("imdbPlot");
+if (imdbPlotStored === "undefined") {
+	sessionStorage.removeItem("imdbPlot");
+	imdbPlotStored = '';
+}
 let rtPlotStored = sessionStorage.getItem("rtPlot");
+if (rtPlotStored === "undefined") {
+	sessionStorage.removeItem("rtPlot");
+	rtPlotStored = '';
+}
+
 if (isOnSearchbyIMDbIdPage) {
 
 	let searchListingHeader = document.querySelector('h1.black').textContent;
