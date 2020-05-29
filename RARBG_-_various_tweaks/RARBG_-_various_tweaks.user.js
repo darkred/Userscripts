@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.05.16
+// @version     2020.05.30
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -345,8 +345,12 @@ if (isOnSearchbyIMDbIdPage) {
 
 		if (rtPlotStored) {
 			rtPlotStored = removePipesLinebreaks(rtPlotStored);
-			let rtRatingElement = $("b:contains('RT Tomatometer:')");
-			$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlotStored + '<br>');  // This is the best way to insert text node after text node in jQuery (don't try after() or append() or .siblings().last()[0].nextSibling )
+			let rtRatingElement = $("b:contains('RT Critics Avg:')") || $("b:contains('RT Tomatometer:')");
+			var br = '';
+			if ($("b:contains('RT Tomatometer:')").length !== 0){
+				br = '<br>';
+			}
+			$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + br + "<b>RT Critics Consensus:</b> " + rtPlotStored + '<br>');  // This is the best way to insert text node after text node in jQuery (don't try after() or append() or .siblings().last()[0].nextSibling )
 		}
 
 
