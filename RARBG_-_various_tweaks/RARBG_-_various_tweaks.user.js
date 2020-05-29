@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.05.30
+// @version     2020.05.30.1
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -380,8 +380,12 @@ if (isOnSearchbyIMDbIdPage) {
 			$(imdbRatingElement).next().after("<b>IMDb Summary:</b> " + imdbPlot + '<br>');
 
 			if (!rtPlotStored) {
-				let rtRatingElement = $("b:contains('RT Tomatometer:')");
-				$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + "<br><b>RT Critics Consensus:</b> " + rtPlot + '<br>');
+				let rtRatingElement = $("b:contains('RT Critics Avg:')") || $("b:contains('RT Tomatometer:')");
+				var br = '';
+				if ($("b:contains('RT Tomatometer:')").length !== 0){
+					br = '<br>';
+				}
+				$(rtRatingElement).parent().html($(rtRatingElement).parent().html() + br + "<b>RT Critics Consensus:</b> " + rtPlot + '<br>');
 			}
 
 
