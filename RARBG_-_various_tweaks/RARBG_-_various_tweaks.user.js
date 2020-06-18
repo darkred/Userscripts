@@ -5,7 +5,7 @@
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrent\/.*|torrents\.php.*|catalog\/.*|tv\/.*|top10)$/
+// @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrent\/.*|torrents\.php.*|catalog\/.*|s\/.*|tv\/.*|top10)$/
 // @grant       none
 // ==/UserScript==
 
