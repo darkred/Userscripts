@@ -9,6 +9,7 @@
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
 // @run-at       document-start
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 process();

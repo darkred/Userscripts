@@ -12,6 +12,7 @@
 // @icon        https://s3.amazonaws.com/uso_ss/icon/97145/large.png
 //    This is an edited version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 // GM_addStyle("body { color: white; background-color: black; } img { border: 0; }");

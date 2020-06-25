@@ -9,6 +9,7 @@
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/keypress/2.1.3/keypress.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* eslint-disable no-unused-vars */

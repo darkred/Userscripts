@@ -24,6 +24,8 @@
 // @grant       GM.setClipboard
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
+//
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* globals Prism, cssbeautify */

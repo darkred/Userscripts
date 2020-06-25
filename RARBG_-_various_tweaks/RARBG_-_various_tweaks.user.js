@@ -7,6 +7,7 @@
 // @license     MIT
 // @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrent\/.*|torrents\.php.*|catalog\/.*|s\/.*|tv\/.*|top10)$/
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 'use strict';

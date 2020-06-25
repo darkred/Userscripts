@@ -10,6 +10,7 @@
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/arrive/2.4.1/arrive.min.js
 // @run-at      document-idle
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

@@ -9,7 +9,7 @@
 // @include     https://beta.protonmail.com/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
-
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 // wait for the formatting toolbar element to be created

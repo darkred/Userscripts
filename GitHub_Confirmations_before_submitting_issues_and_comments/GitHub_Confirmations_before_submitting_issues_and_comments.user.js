@@ -7,6 +7,7 @@
 // @license     MIT
 // @include     https://github.com/*
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

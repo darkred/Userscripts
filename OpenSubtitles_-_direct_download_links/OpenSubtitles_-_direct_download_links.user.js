@@ -8,6 +8,7 @@
 // @include     https://www.opensubtitles.org/*/search/*
 // @include     https://www.opensubtitles.org/*/subtitles/*
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

@@ -7,6 +7,7 @@
 // @license     MIT
 // @match       https://*.rottentomatoes.com/*
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

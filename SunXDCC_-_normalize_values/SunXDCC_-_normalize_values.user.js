@@ -8,6 +8,7 @@
 // @include     /^https?:\/\/(www\.)?sunxdcc\.com.*/
 // @grant       none
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* global MutationSummary */

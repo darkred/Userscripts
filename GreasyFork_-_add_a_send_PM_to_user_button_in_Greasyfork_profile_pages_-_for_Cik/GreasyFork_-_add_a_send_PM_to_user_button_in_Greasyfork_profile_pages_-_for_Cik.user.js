@@ -17,6 +17,7 @@
 // @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @run-at       document-idle
 // @grant        none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 if (document.querySelector('.user-profile-link > a:nth-child(1)') !== null) {

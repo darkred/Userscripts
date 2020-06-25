@@ -16,6 +16,7 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js
 // This userscript uses jQuery and it's plugin "tablesorter" (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

@@ -10,6 +10,7 @@
 // @grant       unsafeWindow
 // @require     http://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 // Jscroll code

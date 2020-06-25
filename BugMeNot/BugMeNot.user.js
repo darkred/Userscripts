@@ -19,6 +19,7 @@
 // @require     https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @noframes
 // @run-at      document-idle
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 // // @grant       GM.listValues

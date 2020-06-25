@@ -7,6 +7,7 @@
 // @license     MIT
 // @include     https://kat.cr/*
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

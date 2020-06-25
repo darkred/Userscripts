@@ -11,6 +11,7 @@
 // @include     https://www.facebook.com/plugins/feedback.php*
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

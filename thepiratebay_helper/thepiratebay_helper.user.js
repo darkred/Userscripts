@@ -14,9 +14,10 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.min.js
 // @run-at      document-idle
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
-/* global $:false, GM_config, moment */
+/* global GM_config, moment */
 
 
 

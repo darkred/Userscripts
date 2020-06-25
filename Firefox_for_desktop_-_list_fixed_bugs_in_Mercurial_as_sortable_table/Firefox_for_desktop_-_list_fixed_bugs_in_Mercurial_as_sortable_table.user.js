@@ -27,6 +27,7 @@
 // @resource    IconSet6  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-icons_469bdd_256x240.png
 // @resource    IconSet7  https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/images/ui-icons_6da8d5_256x240.png
 // Thanks a lot to: johnp (your contribution is most appreciated!), wOxxOm and Brock Adams.
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

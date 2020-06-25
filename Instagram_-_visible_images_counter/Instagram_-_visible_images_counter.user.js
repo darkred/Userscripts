@@ -9,6 +9,7 @@
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.1.min.js
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

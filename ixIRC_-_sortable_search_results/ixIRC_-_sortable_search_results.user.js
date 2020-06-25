@@ -14,6 +14,7 @@
 // @require     http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.13.1/math.min.js
 // @run-at      document-idle
 // 	Thanks a lot to Mottie for his help on using DateJs in a custom parser
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

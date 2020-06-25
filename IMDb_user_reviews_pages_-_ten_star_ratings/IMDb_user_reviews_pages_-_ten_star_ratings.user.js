@@ -7,6 +7,7 @@
 // @license     MIT
 // @match       https://www.imdb.com/title/*/reviews*
 // @grant       GM_addStyle
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

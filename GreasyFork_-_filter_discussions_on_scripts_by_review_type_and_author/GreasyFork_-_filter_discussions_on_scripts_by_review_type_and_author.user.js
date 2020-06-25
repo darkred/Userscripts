@@ -17,6 +17,7 @@
 // @resource    jquery-ui.css  http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 //    This is partially based on this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to kuehlschrank for making another great script.
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

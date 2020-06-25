@@ -14,6 +14,7 @@
 //    - kuehlschrank for making another great script,
 //    - valacar for the refactoring,
 //    - Graphen for the 'Non-Latin' regex.
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

@@ -8,6 +8,7 @@
 // @include     http://forums.mozillazine.org/viewtopic.php*
 // @grant       none
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 // v2.0: Script rewrite (based on johnp_'s contribution in the userscript 'Firefox for desktop - list fixed bugs in Mercurial'):

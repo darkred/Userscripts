@@ -9,6 +9,7 @@
 // @include     https://greasyfork.org/*/users/*
 // @require     https://code.jquery.com/jquery-3.3.1.min.js
 // @grant       none
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

@@ -9,6 +9,7 @@
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.0/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data-10-year-range.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 'use strict';

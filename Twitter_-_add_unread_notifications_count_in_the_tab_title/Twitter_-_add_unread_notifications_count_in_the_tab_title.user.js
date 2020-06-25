@@ -8,6 +8,7 @@
 // @include     https://twitter.com/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

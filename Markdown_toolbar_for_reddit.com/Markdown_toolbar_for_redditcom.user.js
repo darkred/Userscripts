@@ -14,6 +14,7 @@
 // This is a modified version of the script "Markdown toolbar for GreasyFork and UserStyles.org" ()https://greasyfork.org/en/scripts/6779-markdown-toolbar-for-greasyfork-and-userstyles-org)
 // Thanks a lot to wOxxOm for making that script.
 //
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 

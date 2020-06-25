@@ -10,6 +10,7 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* eslint-disable quotes, no-console */

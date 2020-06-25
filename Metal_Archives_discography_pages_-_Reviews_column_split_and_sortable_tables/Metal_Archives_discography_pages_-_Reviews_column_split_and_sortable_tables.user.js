@@ -18,6 +18,7 @@
 //
 // Thanks a lot for the invaluable help to RobG, Mottie and especially Brock Adams.
 //
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 
