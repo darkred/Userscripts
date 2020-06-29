@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2020.06.23
+// @version     2020.06.29
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
@@ -10,6 +10,7 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
+// @icon        https://protonmail.com/images/favicon.ico
 // ==/UserScript==
 
 // wait for the formatting toolbar element to be created
