@@ -2,7 +2,7 @@
 // @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
 // @namespace    darkred
 // @license      MIT
-// @version      2018.2.27
+// @version      2020.7.2
 // @description  It adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
 // @author       darkred
 // @include      https://greasyfork.org/*/users/*
@@ -20,18 +20,19 @@
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
-if (document.querySelector('.user-profile-link > a:nth-child(1)') !== null) {
-	var yourProfileName = document.querySelector('.user-profile-link > a:nth-child(1)').innerHTML;
+var yourProfileNameElement = document.querySelector('.user-profile-link > a:nth-child(1)');
+if (yourProfileNameElement !== null) {
+	var yourProfileName = yourProfileNameElement.innerHTML;
 }
-if (document.querySelector('.text-content > h2:nth-child(1)') !== null) {
-	var targetProfileName = document.querySelector('.text-content > h2:nth-child(1)').textContent.replace('\'s Profile', '');
+var targetProfileNameElement = document.querySelector('.text-content > h2');
+if (targetProfileNameElement !== null) {
+	var targetProfileName = targetProfileNameElement.firstChild.textContent.replace('\'s Profile', '');   // the .firstChild is for mods profile pages, e.g. https://greasyfork.org/en/users/1-jasonbarnabe , https://greasyfork.org/en/users/2159-woxxom
 }
 if (window.location.href.indexOf('users') !== -1 // if current URL is a profile page
 	&& yourProfileName !== targetProfileName) { // ... and this profile page is not yours
 	sessionStorage.setItem('recipient', targetProfileName); // store in sessionStorage the profileName (it will be inserted in the 'Recipients' textbox ) -after you press the button-
-	var referenceNode = document.querySelector('.text-content > h2:nth-child(1)');
 	var a = document.createElement('input');
-	referenceNode.appendChild(a);
+	targetProfileNameElement.appendChild(a);
 	a.style.padding = '0px 12px';
 	a.setAttribute('type', 'image');
 	// http://i.imgur.com/ZU0xS0c.jpg
