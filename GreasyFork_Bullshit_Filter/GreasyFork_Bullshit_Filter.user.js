@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name        GreasyFork Bullshit Filter
 // @namespace   darkred
-// @version     2019.12.5
+// @version     2020.30.7
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
 // @author      kuehlschrank, darkred, valacar, Graphen
 // @license     MIT
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter/large.png
-// @include     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts|forum|users).*$/
-// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)((scripts\/\d+)|forum\/(discussion\/|profile|messages)).*$/
+// @include     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts|forum|discussions|users).*$/
+// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)((scripts\/\S+)\/(discussions\/|users|messages)).*$/
 // @grant       none
 //    This is a modified version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to:
@@ -46,7 +46,7 @@
 		.filter-on,
 		.filter-off {
 			display: block;
-			width: 97px;
+			width: 100px;
 		}
 
 		.filter-switches a {
@@ -72,20 +72,20 @@
 		}
 	`;
 
-	const isOnForum = window.location.href.includes('forum');
+	const isOnForum = window.location.href.includes('discussions');
 
 	const site = {};
 	if (isOnForum) {
-		site.css = '.ItemDiscussion.filtered { display: none; } .filter-on, .filter-off { color: black; } ' + commonCss;
-		site.cssDebug = '.ItemDiscussion.filtered { background-color: khaki; } ' + commonCss;
-		site.filterStatusLocation = '.PanelColumn';
-		site.itemsToCheck = '.ItemDiscussion';
+		site.css = '.discussion-list-item.filtered { display: none; } .filter-on, .filter-off { color: black; } ' + commonCss;
+		site.cssDebug = '.discussion-list-item.filtered { background-color: khaki; } ' + commonCss;
+		site.filterStatusLocation = '.list-option-groups';
+		site.itemsToCheck = '.discussion-list-item';
 		site.itemType = 'discussions';
 		site.removeFilter = function(el) {
 			el.classList.remove('filtered');
 		};
 		site.applyFilter = function(el, activeFilter) {
-			const temp = el.children[1].firstElementChild.innerText;
+			const temp = el.children[1].innerText;
 			if (temp && temp.match(activeFilter)) {
 				el.classList.add('filtered');
 				return true;
