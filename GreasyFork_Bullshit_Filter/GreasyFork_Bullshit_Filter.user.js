@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name        GreasyFork Bullshit Filter
 // @namespace   darkred
-// @version     2020.30.7
+// @version     2020.30.7.1
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
 // @author      kuehlschrank, darkred, valacar, Graphen
 // @license     MIT
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter/large.png
-// @include     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts|forum|discussions|users).*$/
-// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)((scripts\/\S+)\/(discussions\/|users|messages)).*$/
+// @include     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts|discussions|users).*$/
+// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts\/[0-9]+.*|users\/.*\/conversations.*)$/
 // @grant       none
 //    This is a modified version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
 //    Thanks a lot to:
