@@ -222,9 +222,10 @@ function toggleHide() {
 
 function getAllTableLines(){
 	if (  ($('#searchResult > tbody > tr:last-child td a:last-child img').attr('alt') === 'Next')) {	// if there's a Next button, i.e. the search results are multi plage
-		return $('table#searchResult tbody tr').not('#searchResult > tbody > tr:last-child');			// then ignore the last row of the table (the navigation links)
+		// return $('table#searchResult tbody tr').not('#searchResult > tbody > tr:last-child');			// then ignore the last row of the table (the navigation links)
 	} else {
-		return $('table#searchResult tbody tr');
+		// return $('table#searchResult tbody tr');
+		return $('#torrents > .list-entry');
 	}
 
 }
@@ -236,9 +237,9 @@ function swapVerifiedIconsWithComments(){
 
 	// in order to swap the verified icons position with that of the comments
 	$( '[title ~= "comments."]' ).each(function() {
-		if (($(this).parent().parent().html().indexOf('title="VIP"') > -1) ||
-			($(this).parent().parent().html().indexOf('title="Trusted"') > -1) ||
-			($(this).parent().parent().html().indexOf('title="Moderator"') > -1) ||
+		if (($(this).parent().parent().html().indexOf('alt="VIP"') > -1) ||
+			($(this).parent().parent().html().indexOf('alt="Trusted"') > -1) ||
+			($(this).parent().parent().html().indexOf('alt="Super Mod"') > -1) ||
 			($(this).parent().parent().html().indexOf('Helper') > -1) ) {
 			$(this).parent().children().last().insertBefore($(this));
 		}
@@ -246,7 +247,7 @@ function swapVerifiedIconsWithComments(){
 
 
 	// // in order to move the verified icons before each uploader handle
-	// $('img[title="VIP"], img[title="Trusted"], img[title="Moderator"], img[title="Helper"]').each(function() {
+	// $('img[alt="VIP"], img[alt="Trusted"], img[alt="Super Mod"], img[alt="Helper"]').each(function() {
 	// 	$(this).insertBefore($(this).parent().parent().parent().parent().children().last().children().first());
 	// 	// $(this).insertAfter($(this).parent().parent().parent().parent().children().last().children().first());
 	// });
@@ -257,9 +258,9 @@ function swapVerifiedIconsWithComments(){
 
 // function restoreCommentIconsPosition(){
 // 	$( '[title ~= "comments."]' ).each(function() {
-// 		if (($(this).prev().html().indexOf('title="VIP"') > -1) ||
-// 			($(this).prev().html().indexOf('title="Trusted"') > -1) ||
-// 			($(this).prev().html().indexOf('title="Moderator"') > -1) ||
+// 		if (($(this).prev().html().indexOf('alt="VIP"') > -1) ||
+// 			($(this).prev().html().indexOf('alt="Trusted"') > -1) ||
+// 			($(this).prev().html().indexOf('alt="Super Mod"') > -1) ||
 // 			($(this).prev().html().indexOf('Helper') > -1) ) {
 // 			$(this).prev().insertAfter($(this));
 // 		}
@@ -272,8 +273,8 @@ function swapVerifiedIconsWithComments(){
 
 function hideNonTrusted() {
 	$(getAllTableLines()).each(function() {
-		if (   ($(this).html().indexOf('title="VIP"') === -1) &&
-			($(this).html().indexOf('title="Trusted"') === -1) && ($(this).html().indexOf('title="Moderator"') === -1) &&
+		if (($(this).html().indexOf('alt="VIP"') === -1) &&
+			($(this).html().indexOf('alt="Trusted"') === -1) && ($(this).html().indexOf('alt="Super Mod"') === -1) &&
 			($(this).html().indexOf('Helper') === -1) ){
 			$(this).hide();
 			counter++;
@@ -286,9 +287,9 @@ function hideNonTrusted() {
 
 function hideNonTrustedAndWithoutComments() {
 	$(getAllTableLines()).each(function() {
-		if (($(this).html().indexOf('title="VIP"') === -1) &&
-			($(this).html().indexOf('title="Trusted"') === -1) &&
-			($(this).html().indexOf('title="Moderator"') === -1) &&
+		if (($(this).html().indexOf('alt="VIP"') === -1) &&
+			($(this).html().indexOf('alt="Trusted"') === -1) &&
+			($(this).html().indexOf('alt="Super Mod"') === -1) &&
 			($(this).html().indexOf('Helper') === -1) &&
 			($(this).html().indexOf('icon_comment.gif') === -1) ){
 			$(this).hide();
@@ -306,15 +307,15 @@ function highlight() {
 
 	// $('table#searchResult tbody tr').each(function() {
 	$(getAllTableLines()).each(function() {
-		if ($(this).html().indexOf('title="VIP"') > -1) {
+		if ($(this).html().indexOf('alt="VIP"') > -1) {
 			$(this).css({
 				'background-color': '#CFFECD'
 			});
-		} else if ($(this).html().indexOf('title="Trusted"') > -1) {
+		} else if ($(this).html().indexOf('alt="Trusted"') > -1) {
 			$(this).css({
 				'background-color': '#F9D5DB'
 			}); // (initially it was FECDFE)   and then FECDD9
-		} else if ($(this).html().indexOf('title="Moderator"') > -1) {
+		} else if ($(this).html().indexOf('alt="Super Mod"') > -1) {
 			$(this).css({
 				'background-color': '#DCDCDC'
 			});
