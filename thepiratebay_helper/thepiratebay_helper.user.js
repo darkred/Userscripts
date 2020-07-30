@@ -6,7 +6,7 @@
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 // @authors     emptyparad0x, darkred
 // @license     MIT
-// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|tv|music|top).*$/
+// @include     /^https?://thepiratebay\.(org|se|gd|la|mn|vg)/(search|browse|user|recent|torrent|description\.php|tv|music|top).*$/
 // @grant       none
 // @require     https://code.jquery.com/jquery-3.2.0.min.js
 // @require     https://greasyfork.org/scripts/28536-gm-config/code/GM_config.js
@@ -58,11 +58,11 @@ $('#main-content').css({ 'overflow': 'visible' });	// Override the default rule 
 //GM_config stuff
 GM_config.init('TPB Helper settings',{
 	// timezone: {label: 'Text for Timezone:', type: 'text', cols: 10, default: 'EST'},
-	tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
+	// tpboffset: {label: 'TPB Timezone offset    : (GMT+1)  +', type: 'int', default: 0},             // Initially it was:   tpboffset:    { label: 'TPB Timezone: GMT+', type: 'int', default: 1 },
 	enhanceVisibility: {label: 'Show all / Highlight trusted / Hide non-trusted:',	section: ['Extras'], type: 'select', options: ['Show all', 'Highlight','Hide'], default: 'Show all'},
 	keepNonTrustedWithComments: {label: '...when toggle, include those non-trusted which have comments:', type: 'checkbox', default: true},
 	relativeDates: {label: 'Display torrent timestamps in relative format:', type: 'checkbox', default: true},
-	swapVerifiedIconsWithComments: {label: 'Swap the verified icons with the Comments icon:', type: 'checkbox', default: true},
+	// swapVerifiedIconsWithComments: {label: 'Swap the verified icons with the Comments icon:', type: 'checkbox', default: true},
 	RtColumn: {label: 'Add a Ratio column?', type: 'checkbox', default: true}
 },{
 	save: function(){location.reload();}
@@ -72,12 +72,12 @@ $('footer').append(`<center><a id='TimeChangerConfig'>TPB Helper settings</a></c
 $('#TimeChangerConfig').click(function(){GM_config.open();}).css({'cursor': 'pointer'});
 
 // var timezone = GM_config.get('timezone');
-var tpboffset = GM_config.get('tpboffset');
+// var tpboffset = GM_config.get('tpboffset');
 var enhanceVisibility = GM_config.get('enhanceVisibility');
 var keepNonTrustedWithComments = GM_config.get('keepNonTrustedWithComments');
 var relativeDates = GM_config.get('relativeDates');
 var RtColumn = GM_config.get('RtColumn');
-var swapVerifiedIconsWithCommentsChoice = GM_config.get('swapVerifiedIconsWithComments');
+// var swapVerifiedIconsWithCommentsChoice = GM_config.get('swapVerifiedIconsWithComments');
 
 
 
@@ -117,16 +117,18 @@ if (RtColumn === true) {
 
 }
 
-
+/*
 if (swapVerifiedIconsWithCommentsChoice === true) {
 	swapVerifiedIconsWithComments();
 }
+*/
 
 
 //Check page
 var url = window.location.href;
 var host = window.location.host;
-if (url.indexOf(host + '/torrent/') !== -1) { 	// if current is a torrent page
+// if (url.indexOf(host + '/torrent/') !== -1) { 	// if current is a torrent page
+if (url.indexOf(host + '/description.php') !== -1) { 	// if current is a torrent page
 	if (relativeDates === true) {
 		convertDatesInTorrentPage();
 	}
@@ -189,9 +191,9 @@ function toggleHide() {
 			$(this).show();
 		});
 
-		if (swapVerifiedIconsWithCommentsChoice === true) {
-			swapVerifiedIconsWithComments();
-		}
+		// if (swapVerifiedIconsWithCommentsChoice === true) {
+		// 	swapVerifiedIconsWithComments();
+		// }
 
 
 		if (flagHide === true) {
@@ -352,64 +354,25 @@ function convertDates() {
 		} else {												// else (in consequent calls)
 			initial = dates[i].title;
 		}
+
 		var temp = initial.trim();							// remove trailing spaces
-		// 50 mins ago
-		// Note: randomly, if the timestamps in browse/search lists are with in the 59 last mins (i.e. < 1 hour),
-		// then they are displayed in relative format (in bold) i.e. already in GMT+1
-		// instead of like this e.g. "Today 22:10", i.e. GMT, therefore it needs to be converted to GMT+1
-		// 1 min ago
-		/*
-		if (temp.indexOf('mins ago') !== -1 || temp.indexOf('min ago') !== -1) {
-			temp = moment().subtract(parseInt(temp), 'minutes');
-			dates[i].setAttribute('relative', 'true');
-		} else if (temp.indexOf('Today') !== -1) {
-			// Today 22:10
-			temp = temp.replace('Today', moment().format('MM-DD-YYYY'));
-			temp = moment(temp, 'MM-DD-YYYY HH:mm');
+		var today = moment().format('YYYY-MM-DD');
 
-		} else if (temp.indexOf('Y-day') !== -1) {
-			// Y-day 22:02
-			temp = temp.replace('Y-day', moment().subtract(1, 'days').format('MM-DD-YYYY'));
-			temp = moment(temp, 'MM-DD-YYYY HH:mm');
-
-		} else if (moment(temp, 'MM-DD HH:mm', true).isValid()) {
-			// 03-24 07:32
-			temp = moment(temp, 'MM-DD HH:mm');
-
-		} else if (moment(temp, 'MM-DD YYYY', true).isValid()) {
-			// 12-18 2016
-			temp = moment(temp, 'MM-DD YYYY');
-
+		if (temp === today) {
+			dates[i].title = initial;
+			dates[i].innerHTML = 'Today';
 		} else {
-			temp = moment(temp, 'MM-DD-YYYY HH:mm', true);
+			temp = moment(temp, 'YYYY-MM-DD', true);
+			dates[i].innerHTML = temp.fromNow();
+			// dates[i].setAttribute('relative', 'true');
+			dates[i].title = temp.format('YYYY-MM-DD');
 		}
-
-		// if the displayed timestamp (from the page itself) is not in relative format and the 'offset' attribute is not set to true
-		if (dates[i].getAttribute('offset') !== 'true' && dates[i].getAttribute('relative') !== 'true' ){
-			temp.add(tpboffset + 1, 'hours');			// then add the offset (+1 hour) to 'temp'
-			dates[i].setAttribute('offset', 'true');
-		}
-
-
-
-		// if the the examined time is later than now by 1 minutes or more  (e.g. for 1 min later it's: -1 min, -2 min, etc), i.e. it refers to yesterday,
-		if (moment().diff(temp, 'minute') < 0 && dates[i].getAttribute('minus1day') !== 'true'){
-			temp.subtract(1, 'days');					// ..then subtract 1 day from it
-			dates[i].setAttribute('minus1day', 'true');
-		}
-
-		*/
-
-		temp = moment(temp, 'YYYY-MM-DD', true);
-
-		dates[i].innerHTML = temp.fromNow();
-		// dates[i].title = temp.format('MM-DD-YYYY HH:mm');
-		dates[i].title = temp.format('YYYY-MM-DD');
 
 
 	}
 }
 
+/*
 if (relativeDates === true) {
 	// recalculate the timestamps in relative format every 10 sec
 	(function(){
@@ -417,22 +380,30 @@ if (relativeDates === true) {
 		setTimeout(arguments.callee, 1 * 10 * 1000);
 	})();
 }
+*/
+convertDates();
 
 function convertDatesInTorrentPage(){
-	// FOR THE TORRENT TIMESTAMP
-	// example: 2017-03-29 17:54:56 GMT
-	var torrentTimestamp = document.querySelector('.col2 > dd:nth-child(2)');
-	var initial = torrentTimestamp.innerHTML;
-	torrentTimestamp.innerHTML = moment(initial, 'YYYY-MM-DD HH:mm:ss').add(tpboffset + 1, 'hour').fromNow();
-	torrentTimestamp.title = initial;
 
-	// FOR THE COMMENT TIMESTAMPS
+	var torrentTimestamp = document.querySelector('#uld');
+	var initial = torrentTimestamp.innerHTML;
+	var today = moment().format('YYYY-MM-DD');
+
+	if (initial === today) {
+		torrentTimestamp.title = initial;
+		torrentTimestamp.innerHTML = 'Today';
+	} 	else {
+		torrentTimestamp.innerHTML = moment(initial, 'YYYY-MM-DD', true).fromNow();
+		torrentTimestamp.title = initial;
+	}
+
+
+	// FOR THE COMMENT TIMESTAMPS  ----> Currently as of 7/30/20 "Currently, you can't comments in TPB torrents.  (https://pirates-forum.org/Thread-TPB-comments-new-account?pid=301381#pid301381) "
 	var dates = document.querySelectorAll('#comments > div[id^="comment-"] > p');
 	for (var i = 0; i < dates.length; i++) {
 		// example: 2016-11-23 17:53 CET
 		var currentElement = dates[i].childNodes[2];
 		initial = currentElement.nodeValue.trim().replace('at ', '').slice(0, -1);
-		currentElement.nodeValue = ' ' + moment(initial, 'YYYY-MM-DD HH:mm zz').add(tpboffset + 1, 'hour').fromNow();
 		currentElement.parentElement.title = initial;
 
 	}
