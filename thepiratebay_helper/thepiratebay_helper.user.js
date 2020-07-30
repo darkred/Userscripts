@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        thepiratebay helper
 // @namespace   darkred
-// @date        2020.7.30
+// @version     2020.7.30
 // @description Converts dates to local timezone on thepiratebay and optionally either highlight VIP/Trusted/Moderator/Helper torrents or hide non verified torrents altogether
 // @authors     emptyparad0x, darkred
 // @license     MIT

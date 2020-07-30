@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        thepiratebay - add a sortable Ratio column
 // @namespace   darkred
-// @date        2020.7.29
+// @version     2020.7.29
 // @description Adds a sortable "Ratio" column
 // @author      darkred
 // @license     MIT
@@ -41,5 +41,5 @@ function appendColumn() {
 appendColumn();
 
 
-// Select all Ratio values (=all last cells of all rows) an align to the text
+// Select all 'ULed by' values (=all last cells of all rows) and align them to the right
 $('.list-item:last-child').css('text-align', 'right');
