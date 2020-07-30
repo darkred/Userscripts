@@ -2,7 +2,7 @@
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
 // @version     1.1.1
-// @date        2020.04.01
+// @date        2020.7.30
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -12,6 +12,7 @@
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
+// @icon        https://www.blabbermouth.net/assets/favicon-309148577f1b67c003487c069cccf8731e6f68e4d847c5576d6f5453b083c27a.png
 // ==/UserScript==
 
 
