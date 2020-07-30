@@ -2,7 +2,7 @@
 // @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
 // @namespace    darkred
 // @license      MIT
-// @version      2020.7.2
+// @version      2020.7.30
 // @description  It adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
 // @author       darkred
 // @include      https://greasyfork.org/*/users/*
@@ -27,6 +27,7 @@ if (yourProfileNameElement !== null) {
 var targetProfileNameElement = document.querySelector('.text-content > h2');
 if (targetProfileNameElement !== null) {
 	var targetProfileName = targetProfileNameElement.firstChild.textContent.replace('\'s Profile', '');   // the .firstChild is for mods profile pages, e.g. https://greasyfork.org/en/users/1-jasonbarnabe , https://greasyfork.org/en/users/2159-woxxom
+	var sendMessageToTargetURL = document.querySelector('#about-user > p > a').href;
 }
 if (window.location.href.indexOf('users') !== -1 // if current URL is a profile page
 	&& yourProfileName !== targetProfileName) { // ... and this profile page is not yours
@@ -39,9 +40,10 @@ if (window.location.href.indexOf('users') !== -1 // if current URL is a profile 
 	a.setAttribute('src', 'data:image/jpeg;base64,/9j/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAATABcDAREAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwAICf/EACgQAAEEAQMCBQUAAAAAAAAAAAECAwQFEQAGEgcIEyEiMUEUNmGl4//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDof1i6ryOlkCHIi0YvlvJdccjpl+A4203x5OAcFFQHMZx7A59skAMDvnyfsj9t/DQPnS/fUnqDtxyxmVQpJbb5YdgGT462jxSoBZ4p4qIWDxIyMjPn5ADTuZg3ibzZN1R0c+7kVf1q0twoy3gh1QZDZcCQfTkFWD5K4lPzoAqDXblqLJq7r+kVoxuFDiXA85AkOQ0KBBKm43h+lR/KylOfSkYGA0f2x0s6m2demdVz6gzLt+W1Gsm1oeCFNM+/IAqwQpPL5450DBoLQWg//9k=');
 	a.id = 'pmButton';
 	a.title = 'Send PM to ' + targetProfileName;
-	var lang = String(window.location).match(/^https:\/\/greasyfork\.org\/([a-zA-Z-]+)\/.*$/)[1];
+	// var lang = String(window.location).match(/^https:\/\/greasyfork\.org\/([a-zA-Z-]+)\/.*$/)[1];
 	document.getElementById('pmButton').addEventListener('click', function() {
-		window.open('https://greasyfork.org/' + lang + '/forum/messages/add', '_self');
+		// window.open('https://greasyfork.org/' + lang + '/forum/messages/add', '_self');
+		window.open(sendMessageToTargetURL);
 	});
 }
 
