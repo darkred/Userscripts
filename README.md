@@ -2,7 +2,7 @@
 
 This repo contains my userscripts.
 
-The scripts work and are tested with Tampermonkey and Violentmonkey.  
+The scripts are tested to work with Tampermonkey and Violentmonkey.  
 Greasemonkey -any version- is not supported (the scripts might work, but are not tested).
 
 ### Userscripts
