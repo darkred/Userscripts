@@ -2,6 +2,9 @@
 
 This repo contains my userscripts.
 
+The scripts work and are tested with Tampermonkey and Violentmonkey.  
+Greasemonkey -any version- is not supported (the scripts might work, but are not tested).
+
 ### Userscripts
 
 - [Blabbermouth - generate timestamps and add link to the fb comments area](https://github.com/darkred/Userscripts/tree/master/Blabbermouth_-_generate_timestamps_and_add_link_to_the_FB_comments_area#readme) - (blabbermouth cd/dvd reviews and news pages) Generates the missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
@@ -29,7 +32,7 @@ This repo contains my userscripts.
 - [ProtonMail - remove forced signature](https://github.com/darkred/Userscripts/tree/master/ProtonMail_-_remove_forced_signature#readme) - Removes the forced ProtonMail signature from the 'New message' textboxes
 - [RARBG - convert torrent timestamps to relative format](https://github.com/darkred/Userscripts/tree/master/RARBG_-_convert_torrent_timestamps_to_relative_format#readme) - Convert torrent upload timestamps to local timezone or to relative format.
 - [RARBG - various tweaks](https://github.com/darkred/Userscripts/tree/master/RARBG_-_various_tweaks#readme) - Rearranges various entries, displays in bold the various rating values, properly renames a few entries and use decimal rating for the users' ratings
-- [RARBG - torrent and magnet links](https://github.com/darkred/Userscripts/tree/master/RARBG_-_torrent_and_magnet_links#readme) - Adds a column in search results for direct torrent or magnet link downloading. 
+- [RARBG - torrent and magnet links](https://github.com/darkred/Userscripts/tree/master/RARBG_-_torrent_and_magnet_links#readme) - Adds a column in search results for direct torrent or magnet link downloading.
 - [Reddit Infinite Scrolling](https://github.com/darkred/Userscripts/tree/master/Reddit_Infinite_Scrolling#readme) - Adds infinite scrolling to subreddits and to comments.
 - [Rotten Tomatoes Decimal Rating](https://github.com/darkred/Userscripts/tree/master/Rotten_Tomatoes_Decimal_Rating#readme) - Changes base-5 Rating of Rotten Tomatoes to base-10.
 - [StackExchange sites - convert dates to local timezone](https://github.com/darkred/Userscripts/tree/master/StackExchange_sites_-_convert_dates_to_local_timezone#readme) - Converts dates to your local timezone.
