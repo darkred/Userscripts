@@ -4,7 +4,7 @@
 // @version     5.5.9.2
 // @date        2020.8.25
 // @description Lists (as sortable table) bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs
-// @authors     darkred, johnp
+// @author      darkred, johnp
 // @license     MIT
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL

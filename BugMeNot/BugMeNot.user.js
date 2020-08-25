@@ -2,7 +2,7 @@
 // @name        BugMeNot
 // @namespace   darkred
 // @version     2017.12.15
-// @description It integrates BugMeNot into any login form  (it retrieves all matching logins from bugmenot.com and autofills the login form)
+// @description Integrates BugMeNot into any login form  (it retrieves all matching logins from bugmenot.com and autofills the login form)
 // @authors     hosts, Matt McCarthy, darkred
 // @license     MIT
 // @include     http://*

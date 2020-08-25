@@ -1,22 +1,22 @@
 // ==UserScript==
-// @name         GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
-// @namespace    darkred
-// @license      MIT
-// @version      2020.7.30
-// @description  It adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
-// @author       darkred
-// @include      https://greasyfork.org/*/users/*
-// @include      https://greasyfork.org/*/forum/messages/add
-// @include      https://sleazyfork.org/*/users/*
-// @include      https://sleazyfork.org/*/forum/messages/add
-// @require      https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
-// @require      https://code.jquery.com/jquery-3.1.1.min.js
-// @require      https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
-// @require      https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
-// @require      https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
-// @require      https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
-// @run-at       document-idle
-// @grant        none
+// @name        GreasyFork - add a 'send PM to user' button in Greasyfork profile pages - for Citrus GFork
+// @namespace   darkred
+// @version     2020.7.30
+// @description Adds a 'send PM to user' button in Greasyfork profile pages (it now works even without Citrus GFork).
+// @author      darkred
+// @license     MIT
+// @include     https://greasyfork.org/*/users/*
+// @include     https://greasyfork.org/*/forum/messages/add
+// @include     https://sleazyfork.org/*/users/*
+// @include     https://sleazyfork.org/*/forum/messages/add
+// @require     https://greasyfork.org/scripts/24818-bililiterange/code/bililiteRange.js
+// @require     https://code.jquery.com/jquery-3.1.1.min.js
+// @require     https://greasyfork.org/scripts/24819-jquery-simulate/code/jquery-simulate.js
+// @require     https://greasyfork.org/scripts/24820-jquery-simulate-ext/code/jquery-simulate-ext.js
+// @require     https://greasyfork.org/scripts/24822-jquery-simulate-key-sequence-js/code/jquerysimulatekey-sequencejs.js
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
+// @run-at      document-idle
+// @grant       none
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 

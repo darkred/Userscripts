@@ -4,7 +4,7 @@
 // @version     4.2.9
 // @date        2020.8.25
 // @description Lists fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
-// @authors     darkred, johnp
+// @author      darkred, johnp
 // @license     MIT
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL
