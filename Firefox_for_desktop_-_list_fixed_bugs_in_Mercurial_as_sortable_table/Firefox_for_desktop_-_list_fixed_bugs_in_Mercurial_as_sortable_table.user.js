@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name        Firefox for desktop - list fixed bugs in Mercurial as sortable table
 // @namespace   darkred
-// @version     5.5.9.1
-// @description It generates a sortable table list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
+// @version     5.5.9.2
+// @date        2020.8.25
+// @description Lists (as sortable table) fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @authors     darkred, johnp
 // @license     MIT
-// @date        2018.5.16
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL
 // @grant       GM_getResourceText
 // @grant       GM_addStyle
+// @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.3/js/jquery.tablesorter.min.js
@@ -31,7 +32,6 @@
 // ==/UserScript==
 
 
-/* esli nt-disable no-console, indent, no-mixed-spaces-and-tabs, complexity */
 /* eslint-disable no-console, complexity */
 /* global jstz, moment */
 
@@ -209,230 +209,237 @@ time('MozillaMercurial-REST');
 
 
 
-$.getJSON(rest_url, function(data) {
-	timeEnd('MozillaMercurial-REST');
-	$.each(data.bugs, function(index) {
-		let bug = data.bugs[index];
-		// process bug (let "shorthands" just to simplify things during refactoring)
-		let status = bug.status;
-		if (bug.resolution !== '') {status += ' ' + bug.resolution;}
-		let product = bug.product;
-		let component = bug.component;
-		let platform = bug.platform;
-		if (platform === 'Unspecified') {
-			platform = 'Uns';
-		}
-		if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
-			platform += '/' + bug.op_sys;
-		}
-		let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
-		// todo: message???
+GM_xmlhttpRequest({
+	method: 'GET',
+	url: rest_url,
+	onload: function(response) {
 
+		var data = JSON.parse(response.responseText);
 
-
-
-
-		// 2015-11-09T14:40:41Z
-		function toRelativeTime(time, zone) {
-			var format2 = ('YYYY-MM-DD HH:mm:ss Z');
-			return moment(time, format2).tz(zone).fromNow();
-		}
-
-
-		function getLocalTimezone(){
-			var tz = jstz.determine();    // Determines the time zone of the browser client
-			return tz.name();             // Returns the name of the time zone eg "Europe/Berlin"
-		}
-
-
-
-
-		var changetime;
-		var localTimezone = getLocalTimezone();
-
-		if (bug.last_change_time !== '') {
-			var temp = toRelativeTime(bug.last_change_time, localTimezone);
-			if (temp.match(/(an?) .*/)) {
-				changetime = temp.replace(/an?/, 1);
-			} else {
-				changetime = temp;
+		timeEnd('MozillaMercurial-REST');
+		$.each(data.bugs, function(index) {
+			let bug = data.bugs[index];
+			// process bug (let "shorthands" just to simplify things during refactoring)
+			let status = bug.status;
+			if (bug.resolution !== '') {status += ' ' + bug.resolution;}
+			let product = bug.product;
+			let component = bug.component;
+			let platform = bug.platform;
+			if (platform === 'Unspecified') {
+				platform = 'Uns';
 			}
-		// changetime
-		} else {
-			changetime = '';
-		}
+			if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
+				platform += '/' + bug.op_sys;
+			}
+			let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
+			// todo: message???
 
 
 
 
 
+			// 2015-11-09T14:40:41Z
+			function toRelativeTime(time, zone) {
+				var format2 = ('YYYY-MM-DD HH:mm:ss Z');
+				return moment(time, format2).tz(zone).fromNow();
+			}
 
 
-
-		log('----------------------------------------------------------------------------------------------------------------------------------');
-		log((index + 1) + '/' + numBugs); // Progression counter
-		log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
-
-		if (isRelevant(bug)) {
-			// add html code for this bug
-			bugsComplete.push('<tr><td><a href="'
-						// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
-						+ bug.id
-						+ '</a></td>'
-						+ '<td nowrap>(' + product + ': ' + component + ') </td>'
-						+ '<td>'+bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '</td>'
-						+ '<td>' + changetime + '</td></tr>');  // previously had a <br> at the end;
-		}
-		counter++; // increase counter
-		// remove processed bug from bugIds
-		let i = bugIds.indexOf(bug.id);
-		if (i !== -1) {bugIds[i] = null;}
-	});
-	log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
+			function getLocalTimezone(){
+				var tz = jstz.determine();    // Determines the time zone of the browser client
+				return tz.name();             // Returns the name of the time zone eg "Europe/Berlin"
+			}
 
 
 
 
-	// process remaining bugs one-by-one
-	time('MozillaMercurial-missing');
-	$.each(bugIds, function(index) {
-		let id = bugIds[index];
-		if (id !== null) {
-			time('Requesting missing bug ' + id);
-			let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
-				function(json) {
-					// I've not end up here yet, so cry if we do
-					console.error('Request for bug ' + id + ' succeeded unexpectedly!');
-					timeEnd('Requesting missing bug ' + id);
-					console.error(json);
-				});
-			// Actually, we usually get an '401 Authorization Required' error
-			promise.fail(function(req, status, error) {
-				timeEnd('Requesting missing bug ' + id);
-				if (error === 'Authorization Required') {
-					// log("Bug " + id + " requires authorization!");
-					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
-					let text = ' requires authorization!<br>';
+			var changetime;
+			var localTimezone = getLocalTimezone();
 
-					bugsComplete.push('<a href="'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
-						+ id + '</a>' + text);
+			if (bug.last_change_time !== '') {
+				var temp = toRelativeTime(bug.last_change_time, localTimezone);
+				if (temp.match(/(an?) .*/)) {
+					changetime = temp.replace(/an?/, 1);
 				} else {
-					console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
+					changetime = temp;
 				}
-			});
-			requests.push(promise);
-		}
-	});
-	// wait for all requests to be settled, then join them together
-	// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
-	$.when.apply($, $.map(requests, function(p) {
-		return p.then(null, function() {
-			return $.Deferred().resolveWith(this, arguments);
+			// changetime
+			} else {
+				changetime = '';
+			}
+
+
+
+
+
+
+
+
+			log('----------------------------------------------------------------------------------------------------------------------------------');
+			log((index + 1) + '/' + numBugs); // Progression counter
+			log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
+
+			if (isRelevant(bug)) {
+				// add html code for this bug
+				bugsComplete.push('<tr><td><a href="'
+							// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '">'
+							+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
+							+ bug.id
+							+ '</a></td>'
+							+ '<td nowrap>(' + product + ': ' + component + ') </td>'
+							+ '<td>'+bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '</td>'
+							+ '<td>' + changetime + '</td></tr>');  // previously had a <br> at the end;
+			}
+			counter++; // increase counter
+			// remove processed bug from bugIds
+			let i = bugIds.indexOf(bug.id);
+			if (i !== -1) {bugIds[i] = null;}
 		});
-	})).always(function() {
-		timeEnd('MozillaMercurial-missing');
-		// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
-		var docu = '';
-		docu = bugsComplete.join('');
-		docu = ' <table id="tbl" style="width:100%">' +
-				'<thead>' +
-				'<tr><th>BugNo</th>' +
-				'<th>Product/Component</th>' +            // '<th>Product/Component_________</th>' +
-				'<th>Summary</th>' +
-				'<th>Modified</th></tr>' +              // '<th>Modified__</th></tr>' +
-				'</thead>' +
-				'<tbody>' + docu + '</tbody></table>';
+		log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
 
 
 
 
-		var div = document.createElement('div');
-		$('div.page_footer').append(div);
-		div.id = 'dialog';
-		docu = '<div id="dialog_content">' + docu + '</div>';
-		div.innerHTML = docu;
-		$('#dialog').hide();
+		// process remaining bugs one-by-one
+		time('MozillaMercurial-missing');
+		$.each(bugIds, function(index) {
+			let id = bugIds[index];
+			if (id !== null) {
+				time('Requesting missing bug ' + id);
+				let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
+					function(json) {
+						// I've not end up here yet, so cry if we do
+						console.error('Request for bug ' + id + ' succeeded unexpectedly!');
+						timeEnd('Requesting missing bug ' + id);
+						console.error(json);
+					});
+				// Actually, we usually get an '401 Authorization Required' error
+				promise.fail(function(req, status, error) {
+					timeEnd('Requesting missing bug ' + id);
+					if (error === 'Authorization Required') {
+						// log("Bug " + id + " requires authorization!");
+						log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
+						let text = ' requires authorization!<br>';
 
-		$(function() {
-			$('#dialog').dialog({
-				title: 'List of fixed bugs of Firefox for desktop (' + bugsComplete.length + ')',
-				width: '1350px'
-			});
+						bugsComplete.push('<a href="'
+							+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
+							+ id + '</a>' + text);
+					} else {
+						console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
+					}
+				});
+				requests.push(promise);
+			}
 		});
+		// wait for all requests to be settled, then join them together
+		// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
+		$.when.apply($, $.map(requests, function(p) {
+			return p.then(null, function() {
+				return $.Deferred().resolveWith(this, arguments);
+			});
+		})).always(function() {
+			timeEnd('MozillaMercurial-missing');
+			// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
+			var docu = '';
+			docu = bugsComplete.join('');
+			docu = ' <table id="tbl" style="width:100%">' +
+					'<thead>' +
+					'<tr><th>BugNo</th>' +
+					'<th>Product/Component</th>' +            // '<th>Product/Component_________</th>' +
+					'<th>Summary</th>' +
+					'<th>Modified</th></tr>' +              // '<th>Modified__</th></tr>' +
+					'</thead>' +
+					'<tbody>' + docu + '</tbody></table>';
+
+
+
+
+			var div = document.createElement('div');
+			$('div.page_footer').append(div);
+			div.id = 'dialog';
+			docu = '<div id="dialog_content">' + docu + '</div>';
+			div.innerHTML = docu;
+			$('#dialog').hide();
+
+			$(function() {
+				$('#dialog').dialog({
+					title: 'List of fixed bugs of Firefox for desktop (' + bugsComplete.length + ')',
+					width: '1350px'
+				});
+			});
 
 
 
 
 
 
-		// THE CUSTOM PARSER MUST BE PUT BEFORE '$('#tbl').tablesorter ( {'' or else it wont work !!!!
-		// add parser through the tablesorter addParser method  (for the "Last modified" column)
-		$.tablesorter.addParser({
-			// set a unique id
-			id: 'dates',
-			is: function(s) {
-				return false;                                // return false so this parser is not auto detected
-			},
-			format: function(s) {
-				// format your data for normalization
-				if (s !== ''){
-					var number1, number2;
-
+			// THE CUSTOM PARSER MUST BE PUT BEFORE '$('#tbl').tablesorter ( {'' or else it wont work !!!!
+			// add parser through the tablesorter addParser method  (for the "Last modified" column)
+			$.tablesorter.addParser({
+				// set a unique id
+				id: 'dates',
+				is: function(s) {
+					return false;                                // return false so this parser is not auto detected
+				},
+				format: function(s) {
 					// format your data for normalization
-					number1 = Number((/(.{1,2}) .*/).exec(s)[1]);
+					if (s !== ''){
+						var number1, number2;
+
+						// format your data for normalization
+						number1 = Number((/(.{1,2}) .*/).exec(s)[1]);
 
 
-					if (s.match(/A few seconds ago/)) { number2 = 0;}
-					else if (s.match(/(.*)seconds?.*/)) { number2 = 1;}
-					else if (s.match(/(.*)minutes?.*/)) {number2 = 60;}
-					else if (s.match(/(.*)hours?.*/)) { number2 = 3600;}
-					else if (s.match(/(.*)days?.*/)) { number2 = 86400;}
-					else if (s.match(/(.*)months?.*/)) { number2 = 30 * 86400;}
-					else if (s.match(/(.*)years?.*/)) {number2 = 365 * 30 * 86400;}
-					return number1 * number2;
+						if (s.match(/A few seconds ago/)) { number2 = 0;}
+						else if (s.match(/(.*)seconds?.*/)) { number2 = 1;}
+						else if (s.match(/(.*)minutes?.*/)) {number2 = 60;}
+						else if (s.match(/(.*)hours?.*/)) { number2 = 3600;}
+						else if (s.match(/(.*)days?.*/)) { number2 = 86400;}
+						else if (s.match(/(.*)months?.*/)) { number2 = 30 * 86400;}
+						else if (s.match(/(.*)years?.*/)) {number2 = 365 * 30 * 86400;}
+						return number1 * number2;
 
-				}
-			},
-			// set type, either numeric or text
-			type: 'numeric'
-		});
+					}
+				},
+				// set type, either numeric or text
+				type: 'numeric'
+			});
 
 
 
-		// make table sortable
-		$('#tbl').tablesorter({
-			cssAsc: 'up',
-			cssDesc: 'down',
-			sortList: [[3, 0],[1, 0],[2, 0]], // in order the table to be sorted by default by column 3 'Modified', then by column 1 'Product/Component' and then by column 2 'Summary'
-			headers: {3: {sorter: 'dates'}},
-			initialized: function() {
-				var mytable = document.getElementById('tbl');
-				for (let i = 2, j = mytable.rows.length + 1; i < j; i++) {
-					if (mytable.rows[i].cells[3].innerHTML !== mytable.rows[i - 1].cells[3].innerHTML) {
-						for (let k = 0; k < 4; k++) {
-							mytable.rows[i - 1].cells[k].style.borderBottom = '1px black dotted';
+			// make table sortable
+			$('#tbl').tablesorter({
+				cssAsc: 'up',
+				cssDesc: 'down',
+				sortList: [[3, 0],[1, 0],[2, 0]], // in order the table to be sorted by default by column 3 'Modified', then by column 1 'Product/Component' and then by column 2 'Summary'
+				headers: {3: {sorter: 'dates'}},
+				initialized: function() {
+					var mytable = document.getElementById('tbl');
+					for (let i = 2, j = mytable.rows.length + 1; i < j; i++) {
+						if (mytable.rows[i].cells[3].innerHTML !== mytable.rows[i - 1].cells[3].innerHTML) {
+							for (let k = 0; k < 4; k++) {
+								mytable.rows[i - 1].cells[k].style.borderBottom = '1px black dotted';
+							}
 						}
 					}
 				}
-			}
+			});
+
+
+
+
+
+
+			log('ALL IS DONE');
+			timeEnd('MozillaMercurial');
+
+
+
+
+
 		});
 
-
-
-
-
-
-		log('ALL IS DONE');
-		timeEnd('MozillaMercurial');
-
-
-
-
-
-	});
-
+	}
 });
 
 

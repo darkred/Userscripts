@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name        Firefox for desktop - list fixed bugs in Mercurial
 // @namespace   darkred
-// @version     4.2.8
-// @description It generates a list of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
+// @version     4.2.9
+// @date        2020.8.25
+// @description Lists fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @authors     darkred, johnp
 // @license     MIT
-// @date        2018.5.13
 // @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL
 // @grant       GM_getResourceText
 // @grant       GM_addStyle
+// @grant       GM_xmlhttpRequest
 // @grant       GM_setClipboard
 // @require     https://code.jquery.com/jquery-2.1.4.min.js
 // @require     https://code.jquery.com/ui/1.11.4/jquery-ui.min.js
@@ -31,7 +32,7 @@
 
 
 
-/* eslint-disable no-console, indent, no-mixed-spaces-and-tabs, complexity */
+/* eslint-disable no-console, complexity */
 
 
 var silent = false;
@@ -126,112 +127,120 @@ String.prototype.escapeHTML = function() {
 time('MozillaMercurial-REST');
 
 
-$.getJSON(rest_url, function(data) {
-	timeEnd('MozillaMercurial-REST');
-	data.bugs.sort(function(a, b) {
-		return (a.product + ': ' + a.component + ': ' + a.summary).localeCompare(b.product + ': ' + b.component + ': ' + b.summary);	// had to change '>' with '.localeCompare' because the sorting wasn't applied when run with Tampermonkey
-	});
-	$.each(data.bugs, function(index) {
-		let bug = data.bugs[index];
-		// process bug (let "shorthands" just to simplify things during refactoring)
-		let status = bug.status;
-		if (bug.resolution !== '') {status += ' ' + bug.resolution;}
-		let product = bug.product;
-		let component = bug.component;
-		let platform = bug.platform;
-		if (platform === 'Unspecified') {
-			platform = 'Uns';
-		}
-		if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
-			platform += '/' + bug.op_sys;
-		}
-		let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
-		// todo: message???
+GM_xmlhttpRequest({
+	method: 'GET',
+	url: rest_url,
+	onload: function(response) {
 
-		log('----------------------------------------------------------------------------------------------------------------------------------');
-		log((index + 1) + '/' + numBugs); // Progression counter
-		log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
+		var data = JSON.parse(response.responseText);
 
-		if (isRelevant(bug)) {
-			// add html code for this bug
-			// console.log(typeof bug.summary)
-			bugsComplete.push('<a href="'
-						// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' (' + product + ': ' + component + ') ' +  bug.summary + '">#'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
-						+ bug.id
-						+ '</a>'
-						+ ' (' + product + ': ' + component + ') '
-						+ bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '<br>');
-		}
-		counter++; // increase counter
-		// remove processed bug from bugIds
-		let i = bugIds.indexOf(bug.id);
-		if (i !== -1) {bugIds[i] = null;}
-	});
-	log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
+		timeEnd('MozillaMercurial-REST');
+		data.bugs.sort(function(a, b) {
+			return (a.product + ': ' + a.component + ': ' + a.summary).localeCompare(b.product + ': ' + b.component + ': ' + b.summary);	// had to change '>' with '.localeCompare' because the sorting wasn't applied when run with Tampermonkey
+		});
+		$.each(data.bugs, function(index) {
+			let bug = data.bugs[index];
+			// process bug (let "shorthands" just to simplify things during refactoring)
+			let status = bug.status;
+			if (bug.resolution !== '') {status += ' ' + bug.resolution;}
+			let product = bug.product;
+			let component = bug.component;
+			let platform = bug.platform;
+			if (platform === 'Unspecified') {
+				platform = 'Uns';
+			}
+			if (bug.op_sys !== '' && bug.op_sys !== 'Unspecified') {
+				platform += '/' + bug.op_sys;
+			}
+			let whiteboard = bug.whiteboard === '' ? '[]' : bug.whiteboard;
+			// todo: message???
 
-	// process remaining bugs one-by-one
-	time('MozillaMercurial-missing');
-	$.each(bugIds, function(index) {
-		let id = bugIds[index];
-		if (id !== null) {
-			time('Requesting missing bug ' + id);
-			let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
-				function(json) {
-					// I've not end up here yet, so cry if we do
-					console.error('Request for bug ' + id + ' succeeded unexpectedly!');
+			log('----------------------------------------------------------------------------------------------------------------------------------');
+			log((index + 1) + '/' + numBugs); // Progression counter
+			log('BugNo: ' + bug.id + '\nTitle: ' + bug.summary + '\nStatus: ' + status + '\nProduct: ' + product + '\nComponent: ' + component + '\nPlatform: ' + platform + '\nWhiteboard: ' + whiteboard);
+
+			if (isRelevant(bug)) {
+				// add html code for this bug
+				// console.log(typeof bug.summary)
+				bugsComplete.push('<a href="'
+							// + 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' (' + product + ': ' + component + ') ' +  bug.summary + '">#'
+							+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ bug.id + '"' + ' title="' + bug.id + ' - ' +  bug.summary + '">#'
+							+ bug.id
+							+ '</a>'
+							+ ' (' + product + ': ' + component + ') '
+							+ bug.summary.escapeHTML() + ' [' + platform + ']' + whiteboard.escapeHTML() + '<br>');
+			}
+			counter++; // increase counter
+			// remove processed bug from bugIds
+			let i = bugIds.indexOf(bug.id);
+			if (i !== -1) {bugIds[i] = null;}
+		});
+		log('==============\nReceived ' + counter + ' of ' + numBugs + ' bugs.');
+
+		// process remaining bugs one-by-one
+		time('MozillaMercurial-missing');
+		$.each(bugIds, function(index) {
+			let id = bugIds[index];
+			if (id !== null) {
+				time('Requesting missing bug ' + id);
+				let promise = $.getJSON('https://bugzilla.mozilla.org/rest/bug/' + id,
+					function(json) {
+						// I've not end up here yet, so cry if we do
+						console.error('Request for bug ' + id + ' succeeded unexpectedly!');
+						timeEnd('Requesting missing bug ' + id);
+						console.error(json);
+					});
+				// Actually, we usually get an '401 Authorization Required' error
+				promise.fail(function(req, status, error) {
 					timeEnd('Requesting missing bug ' + id);
-					console.error(json);
-			});
-			// Actually, we usually get an '401 Authorization Required' error
-		promise.fail(function(req, status, error) {
-			timeEnd('Requesting missing bug ' + id);
-			if (error === 'Authorization Required') {
-					log('Bug ' + id + ' requires authorization!');
-					log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
-					let text = ' requires authorization!<br>';
+					if (error === 'Authorization Required') {
+						log('Bug ' + id + ' requires authorization!');
+						log('https://bugzilla.mozilla.org/show_bug.cgi?id=' + id + ' requires authorization!');
+						let text = ' requires authorization!<br>';
 
-					bugsComplete.push('<a href="'
-						+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
-						+ id + '</a>' + text);
-				} else {
-					console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
-				}
-			});
-			requests.push(promise);
-		}
-	});
-	// wait for all requests to be settled, then join them together
-	// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
-	$.when.apply($, $.map(requests, function(p) {
-		return p.then(null, function() {
-			return $.Deferred().resolveWith(this, arguments);
+						bugsComplete.push('<a href="'
+							+ 'https://bugzilla.mozilla.org/show_bug.cgi?id='+ id + '">#'
+							+ id + '</a>' + text);
+					} else {
+						console.error('Unexpected error encountered (Bug' + id + '): ' + status + ' ' + error);
+					}
+				});
+				requests.push(promise);
+			}
 		});
-	})).always(function() {
-		timeEnd('MozillaMercurial-missing');
-		// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
-		var docu = '';
-		docu = bugsComplete.join('');
-
-		var div = document.createElement('div');
-		$('div.page_footer').append(div);
-		div.id = 'dialog';
-		// GM_setClipboard (docu);            // This line stores the list content HTML code to clipboard (aimed for MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer)
-		// docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
-		docu = '<div id="dialog_content">' + docu + '</div>';
-		div.innerHTML = docu;
-		$('#dialog').hide();
-
-		$(function() {
-			$('#dialog').dialog({
-				title: 'List of recently fixed bugs of Firefox for Desktop (' + bugsComplete.length + ')',
-				width: '1350px'
+		// wait for all requests to be settled, then join them together
+		// Source: https://stackoverflow.com/questions/19177087/deferred-how-to-detect-when-every-promise-has-been-executed
+		$.when.apply($, $.map(requests, function(p) {
+			return p.then(null, function() {
+				return $.Deferred().resolveWith(this, arguments);
 			});
+		})).always(function() {
+			timeEnd('MozillaMercurial-missing');
+			// Variable that will contain all values of the bugsComplete array, and will be displayed in the 'dialog' below
+			var docu = '';
+			docu = bugsComplete.join('');
+
+			var div = document.createElement('div');
+			$('div.page_footer').append(div);
+			div.id = 'dialog';
+			// GM_setClipboard (docu);            // This line stores the list content HTML code to clipboard (aimed for MozillaZine daily "The Official Win32 xxxxxxx builds" maintainer)
+			// docu = '<div id="dialog_content" title="Relevant Bugs">' + docu + '</div>';
+			docu = '<div id="dialog_content">' + docu + '</div>';
+			div.innerHTML = docu;
+			$('#dialog').hide();
+
+			$(function() {
+				$('#dialog').dialog({
+					title: 'List of recently fixed bugs of Firefox for Desktop (' + bugsComplete.length + ')',
+					width: '1350px'
+				});
+			});
+
+			log('ALL IS DONE');
+			timeEnd('MozillaMercurial');
 		});
 
-		log('ALL IS DONE');
-		timeEnd('MozillaMercurial');
-	});
+	}
 });
 
 function isRelevant(bug) {
@@ -246,29 +255,29 @@ function isRelevant(bug) {
 
 		return false;
 	}
-	if (      bug.product                       &&
-			  bug.product !== 'Add-on SDK'      &&
-			  bug.product !== 'Cloud Services'  &&
-			  bug.product !== 'Core'            &&
-			  bug.product !== 'Firefox'         &&
-			  bug.product !== 'Hello (Loop)'    &&
-			  bug.product !== 'Toolkit') {
+	if (    bug.product                       &&
+			bug.product !== 'Add-on SDK'      &&
+			bug.product !== 'Cloud Services'  &&
+			bug.product !== 'Core'            &&
+			bug.product !== 'Firefox'         &&
+			bug.product !== 'Hello (Loop)'    &&
+			bug.product !== 'Toolkit') {
 		log('    IRRELEVANT because of it\'s Product --> ' + bug.product);
 
 		return false;
 	}
-	if (bug.component && bug.component === 'AutoConfig'       ||
-			   bug.component === 'Build Config'               ||
-			   bug.component === 'DMD'                        ||
-			   bug.component === 'Embedding: GRE Core'        ||
-			   bug.component === 'Embedding: Mac'             ||
-			   bug.component === 'Embedding: MFC Embed'       ||
-			   bug.component === 'Embedding: Packaging'       ||
-			   bug.component === 'Hardware Abstraction Layer' ||
-			   bug.component === 'mach'                       ||
-			   bug.component === 'Nanojit'                    ||
-			   bug.component === 'QuickLaunch'                ||
-			   bug.component === 'Widget: Gonk') {
+	if (bug.component && bug.component === 'AutoConfig'||
+		bug.component === 'Build Config'               ||
+		bug.component === 'DMD'                        ||
+		bug.component === 'Embedding: GRE Core'        ||
+		bug.component === 'Embedding: Mac'             ||
+		bug.component === 'Embedding: MFC Embed'       ||
+		bug.component === 'Embedding: Packaging'       ||
+		bug.component === 'Hardware Abstraction Layer' ||
+		bug.component === 'mach'                       ||
+		bug.component === 'Nanojit'                    ||
+		bug.component === 'QuickLaunch'                ||
+		bug.component === 'Widget: Gonk') {
 		log('    IRRELEVANT because of it\'s Component --> ' + bug.component);
 
 		return false;
