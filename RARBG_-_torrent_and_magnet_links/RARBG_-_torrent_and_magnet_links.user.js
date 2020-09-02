@@ -4,7 +4,7 @@
 // @version     2020.02.02
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
-// @contributor sxe, dandyclubs
+// @contributor sxe, dandyclubs, lx19990999
 // @license     MIT
 // @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrents\.php.*|catalog\/.*|s\/.*|tv\/.*|top10)$/
 // @grant       none
