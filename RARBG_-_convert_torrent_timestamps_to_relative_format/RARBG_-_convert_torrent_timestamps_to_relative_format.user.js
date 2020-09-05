@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.05.02
+// @version     2020.09.02
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
