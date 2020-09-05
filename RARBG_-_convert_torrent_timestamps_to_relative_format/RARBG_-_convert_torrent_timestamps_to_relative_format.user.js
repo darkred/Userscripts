@@ -1,16 +1,14 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.09.02
+// @version     2020.05.02
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
-// @contributor Kxmode
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/((index\d{2}|torrents)\.php.*|torrent|catalog\/.*|s\/.*|tv\/.*|top10|viewnews)/
+// @include     /^(https?:)?\/\/(www\.)?(proxy|unblocked)?rarbg((2018|2019|2020|2021)?|access(ed)?|cdn|core|data|enter|get|go|index|mirror(ed)?|p2p|prox(ied|ies|y)|prx|to(r|rrents)?|unblock(ed)?|way|web)\.(to|com|org|is)\/(torrents\.php.*|catalog\/.*|s\/.*|tv\/.*|top10)$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.0/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data-10-year-range.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/arrive/2.4.1/arrive.min.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
@@ -74,18 +72,6 @@ function convertToLocalTimezone(timestamps) {
 
 }
 
-
-let timestamps;
-if (/index\d{2}|viewnews/.test(window.location.href)){
-
-	document.arrive('#top_news #newsRight > table:first-child', function() {
-		timestamps = document.querySelectorAll('span[class^="font-weight:300"]');
-		convertToLocalTimezone(timestamps);
-	});
-
-} else {
-
-	timestamps = document.querySelectorAll('td[width="150px"]');
-	convertToLocalTimezone(timestamps);
-
-}
+// const timestamps = document.querySelectorAll('tr.lista2 td:nth-child(3)');
+const timestamps = document.querySelectorAll('td[width="150px"]');
+convertToLocalTimezone(timestamps);
