@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name        Metal Archives discography pages - Reviews column split and sortable tables
 // @namespace   darkred
-// @version     2.0.7
-// @date        2019.10.27
+// @version     2.1.0
+// @date        2020.9.20
 // @description Splits the Reviews column into Reviews(count) and Ratings and makes the tables in all discography tabs sortable.
 // @author      RobG, Brock Adams, Mottie, darkred
 // @license     MIT
 // @include     /^https?:\/\/www\.metal-archives\.com/bands?/.*$/
 // @grant       GM_addStyle
-// @require     https://code.jquery.com/jquery-1.11.1.min.js
+// @require     https://code.jquery.com/jquery-3.5.1.min.js
 // @require     https://greasyfork.org/scripts/12036-mutation-summary/code/Mutation%20Summary.js
-// @require     https://greasyfork.org/scripts/5844-tablesorter/code/TableSorter.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/extras/jquery.tablesorter.pager.min.js
 //
 // This userscript uses jQuery v1.11.1,
 // the jQuery plugin 'tablesorter' (forked by Rob Garrison (Mottie)) http://mottie.github.io/tablesorter/docs/index.html ,
@@ -43,6 +45,68 @@ thead th.down {
 .discog th:nth-last-child(1){
 	width: 35px;
 }
+.tablesorter .filtered {
+	display: none;
+}
+
+
+
+/* All of the following css is already contained within each theme file; modify it as desired */
+/* filter row */
+.tablesorter-filter-row td {
+	background: #000;
+  line-height: normal;
+  text-align: center; /* center the input */
+  -webkit-transition: line-height 0.1s ease;
+  -moz-transition: line-height 0.1s ease;
+  -o-transition: line-height 0.1s ease;
+  transition: line-height 0.1s ease;
+}
+/* optional disabled input styling */
+.tablesorter-filter-row .disabled {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: not-allowed;
+}
+
+/* hidden filter row */
+.tablesorter-filter-row.hideme td {
+  /*** *********************************************** ***/
+  /*** change this padding to modify the thickness     ***/
+  /*** of the closed filter row (height = padding x 2) ***/
+  padding: 2px;
+  /*** *********************************************** ***/
+  margin: 0;
+  line-height: 0;
+  cursor: pointer;
+}
+.tablesorter-filter-row.hideme * {
+  height: 1px;
+  min-height: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  /* don't use visibility: hidden because it disables tabbing */
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+/* filters */
+.tablesorter-filter {
+  width: 95%;
+  height: inherit;
+  margin: 4px;
+  padding: 4px;
+  background-color: #1b0b0b;
+  color: #c2b8af;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: height 0.1s ease;
+  -moz-transition: height 0.1s ease;
+  -o-transition: height 0.1s ease;
+  transition: height 0.1s ease;
+}
+
 </style>`;
 
 $('head').append(stylesheet);
@@ -107,13 +171,26 @@ function appendColumn(jNode) {
 		}
 	}
 
+
+	// TODO: are you login? Then header0: sorter: false
+	let login;
+	// if login form doesn't exist (=you have login), then disable sorting (NOT filtering too) on column 0 ("Edit/Tools")
+	$('#login_form > div > button').length === 0 ? login = false : login = true;
+
 	//  STEP 3: MAKE THE DISCOGRAPHY TABLE SORTABLE  (using the jQuery plugin "tablesorter")
 	$(tbl).tablesorter ( {
 		cssAsc: 'up',
 		cssDesc: 'down',
-		// headers: {
+		headers: {
 			// 0: {sorter: false}
-		// }
+			0: { sorter: login,
+				filter: login}
+		},
+		widgets: ['filter'],
+		ignoreCase: true,
+		widgetOptions : {
+			filter_hideFilters : true,
+		},
 	} );
 }
 
