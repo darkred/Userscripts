@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.09.02
+// @version     2020.11.01
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -22,7 +22,8 @@
 
 // This is no typo:
 // const serverTimezone = 'Etc/GMT+2';  	// -02:00	-02:00  (=no DST)
-const serverTimezone = 'Etc/GMT-2';  		// +02:00	+02:00  (=no DST)
+// const serverTimezone = 'Etc/GMT-2';  	// +02:00	+02:00  (=no DST)
+const serverTimezone = 'Etc/GMT-1';  		// +01:00	+01:00  (=no DST)
 
 const localTimezone = moment.tz.guess();    // In my case ----> +02:00	+03:00  (DST)
 
