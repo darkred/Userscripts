@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.05.30.1
+// @version     2020.12.04
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -100,15 +100,15 @@ if (!isOnTorrentListPage) {
 	var runtime = runtimeNode.next().html();
 	var summaryNode = $(".header2:contains('IMDb Summary:')");
 	if (runtime !== undefined) {
-		summaryNode.next().text(function( index, string ) {
-			return string + ' ( ' + runtime + ' )';
-		});
+		summaryNode.next().text(
+			summaryNode.next()[0].innerText + ' ( ' + runtime + ' )'
+		);
 	}
 
 
 	// remove all '|' from the IMDb Summary text
-	$(".header2:contains('IMDb Summary:')").next().text(function( index,string ) {
-		return string.replace(/\|/g,'');
+	summaryNode.next().text(function( index,string ) {
+		return string.replace(/\|/g,',');
 	});
 
 
@@ -260,10 +260,13 @@ if (!isOnTorrentListPage) {
 
 					let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 						return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
-					}).next().html();
+					}).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
 					if (imdbPlot !== undefined){
 						imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
 						sessionStorage.setItem("imdbPlot", imdbPlot);
+					} else {            // never actually needed: all Recommended movies have IMDb plot
+						sessionStorage.removeItem("imdbPlot");
+						imdbPlot = '';
 					}
 
 					let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
@@ -271,6 +274,9 @@ if (!isOnTorrentListPage) {
 					if (rtPlot !== undefined){
 						rtPlot = removePipesLinebreaks(rtPlot);
 						sessionStorage.setItem("rtPlot", rtPlot);
+					} else {
+						sessionStorage.removeItem("rtPlot");
+						rtPlot = '';
 					}
 
 					window.location.href = links[i].href;				// https://www.w3schools.com/howto/howto_js_redirect_webpage.asp
@@ -288,7 +294,7 @@ if (!isOnTorrentListPage) {
 
 function removePipesLinebreaks(s){
 	if (s) {
-		return s.replace(/\|/g,'').replace(/<br>/g,' ');
+		return s.replace(/\|/g,',').replace(/\n/g,' ');
 	}
 }
 
@@ -303,12 +309,12 @@ function makeBold(s, regex){
 
 const isOnSearchbyIMDbIdPage = window.location.href.includes('/torrents.php?imdb=');
 let imdbPlotStored = sessionStorage.getItem("imdbPlot");
-if (imdbPlotStored === "undefined") {
+if (imdbPlotStored === undefined) {
 	sessionStorage.removeItem("imdbPlot");
 	imdbPlotStored = '';
 }
 let rtPlotStored = sessionStorage.getItem("rtPlot");
-if (rtPlotStored === "undefined") {
+if (rtPlotStored === undefined) {
 	sessionStorage.removeItem("rtPlot");
 	rtPlotStored = '';
 }
@@ -344,9 +350,17 @@ if (isOnSearchbyIMDbIdPage) {
 		imdbPlotStored = removePipesLinebreaks(imdbPlotStored);
 		$(imdbRatingElement).next().after("<b>IMDb Summary:</b> " + imdbPlotStored + '<br>');		// https://stackoverflow.com/questions/6617829/insertadjacenthtml-in-jquery
 
+
+		// Example list page with all possible rows: https://rarbgproxy.org/torrents.php?imdb=tt6146586 i.e.
+		// IMDb Rating: 7.4/10
+		// IMDb Summary:
+		// RT Critics Avg:
+		// RT Tomatometer:
+		// RT Critics Consensus:
+
 		if (rtPlotStored) {
 			rtPlotStored = removePipesLinebreaks(rtPlotStored);
-			let rtRatingElement = $("b:contains('RT Critics Avg:')") || $("b:contains('RT Tomatometer:')");
+			let rtRatingElement = $("b:contains('RT Critics Avg:'), b:contains('RT Tomatometer:'), b:contains('IMDb Summary:')").last() ;  // alternative selector for when no RT row is present, e.g. https://rarbgproxy.org/torrents.php?imdb=tt11057644
 			var br = '';
 			if ($("b:contains('RT Tomatometer:')").length !== 0){
 				br = '<br>';
@@ -355,7 +369,7 @@ if (isOnSearchbyIMDbIdPage) {
 		}
 
 
-	// new xhr for when plot is not already retrieved (=when opening a link from the Recomended area in a new tab)
+	// new xhr for when plot is not already retrieved (=when opening a link from the Recommended area in a new tab)
 	} else if (document.querySelector('.lista2t').rows.length > 1) {  	// if searchbyIMDbResultsTableLength has results
 
 		let tLink = document.querySelector('.lista2t').rows[1].cells[1].children[0].href; 		// the URL in the results table first row
@@ -369,7 +383,7 @@ if (isOnSearchbyIMDbIdPage) {
 
 			let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 				return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522 (in order to only select IMDb's plain "Plot", not "Rotten Plot", too )
-			}).next().html();
+			}).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
 			imdbPlot = removePipesLinebreaks(imdbPlot);
 			sessionStorage.setItem("imdbPlot", imdbPlot);
 
@@ -381,7 +395,7 @@ if (isOnSearchbyIMDbIdPage) {
 			$(imdbRatingElement).next().after("<b>IMDb Summary:</b> " + imdbPlot + '<br>');
 
 			if (!rtPlotStored) {
-				let rtRatingElement = $("b:contains('RT Critics Avg:')") || $("b:contains('RT Tomatometer:')");
+				let rtRatingElement = $("b:contains('RT Critics Avg:'), b:contains('RT Tomatometer:'), b:contains('IMDb Summary:')").last() ;  // if no RT row is present
 				var br = '';
 				if ($("b:contains('RT Tomatometer:')").length !== 0){
 					br = '<br>';
