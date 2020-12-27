@@ -8,9 +8,9 @@
 // @include     https://mail.protonmail.com/*
 // @include     https://beta.protonmail.com/*
 // @grant       none
-// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
+// @require     https://cdn.rawgit.org/greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
-// @icon        https://protonmail.com/images/favicon.ico
+// @icon        https://cdn.rawgit.org/icons.duckduckgo.com/ip2/protonmail.com.ico
 // ==/UserScript==
 
 const isInBeta = window.location.href.includes('beta');
