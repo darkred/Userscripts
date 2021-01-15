@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2019.11.1
+// @version      2021.1.15
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -24,7 +24,7 @@ function process(mutations) {
 	if (!menu)
 		return;
 
-	var menuContainer = menu.querySelector('.hdtb-imb').parentNode;
+	var menuContainer = menu.querySelector('#hdtb-msb-vis').parentNode;
 
 	if (!youtube) {
 		var q = '',
