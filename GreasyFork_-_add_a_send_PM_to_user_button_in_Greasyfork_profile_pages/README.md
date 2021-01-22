@@ -1,33 +1,28 @@
 By default you may send a pm via a user's forum profile page (e.g. see link 1).  
 With this script you may also send a pm via user's Greasyfork profile page (e.g. see link 2).
+
 ```
-Forum profile:      https://greasyfork.org/en/forum/profile/324/darkred
-Greasyfork profile: https://greasyfork.org/en/users/2160-darkred
+Forum profile:     https://greasyfork.org/en/forum/profile/1/JasonBarnabe
+Greasyfork profile: https://greasyfork.org/en/users/1-jasonbarnabe
 ```
 
 example:  
-![](https://i.imgur.com/LUN73U5.gif)
+![](https://i.imgur.com/0pe0Ce2.jpg)
 
-*Notes: the button doesn't appear in your own Greasyfork profile page,  
-and it only works when you are logged in, for obvious reasons  
-Also, it works even with Citrus GFork disabled.*. 
-<br>
+How it works:  
 
-**<u>Update 11/12/2016</u>**:
-The script was not working ok (because you have to simulate a keypress sequence -with a delay between each press-  
-in order the username to be "typed" in the autocomplete popup, and so the script to be able to click it, to select it).  
-I fixed it, but, in order to manage sending this simulated keypress sequence ( 1-line in the script! - line 47)   
-I have to use the following `require`'s :  
-- `jQuery`,  
-- 1 from [bililiteRange](https://github.com/dwachss/bililiteRange),   
-- 1 from [jquery-simulate](https://github.com/jquery/jquery-simulate) (by jQuery), and   
-- 2 from [jquery-simulate-ext](https://github.com/j-ulrich/jquery-simulate-ext) .  
+- By clicking the script's PM icon, the script always gets you to a "Create a new conversation" page (`https://greasyfork.org/en/users/your_username/conversations/new?other_user=target_username`).  
+- In contrast, by clicking the the site's built-in"Send message" link:
+  - if you haven't sent any PM before,  
+it gets you to a "Create a new conversation (`https://greasyfork.org/en/users/your_username/conversations/new?other_user=target_username`)
+  - if you have send PMs before,  
+it gets you to a "Conversation with user" page (`https://greasyfork.org/en/users/your_username/conversations/___`)  
+where all your previous PMs are displayed in the same page,  
+and you have to scroll down to reach the "Post Reply" form.
 
-The fact that these `require`'s are needed in order by the `jquery-simulate-ext` plugin to work,  
-is documented here: [https://github.com/j-ulrich/jquery-simulate-ext#usage](https://github.com/j-ulrich/jquery-simulate-ext#usage).
+Notes: 
 
-And, I also use [arrive.js](https://github.com/uzairfarooq/arrive) in the script.   
-
-<br>
+- the button doesn't appear in your own Greasyfork profile page, and it only works when you are logged in, for obvious reasons,  
+- it is compatible with Citrus GFork.
 
 [Hosted in GitHub](https://github.com/darkred/Userscripts)
