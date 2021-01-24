@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.1.1
-// @date        2020.7.30
+// @version     1.2
+// @date        2021.1.24
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -77,31 +77,36 @@ if (
 
 	let callback = (entries, observer) => {
 		entries.forEach(entry => {
-			if (entry.isIntersecting && !entry.target.classList.contains('in-viewport') ) {
-				entry.target.classList.add('in-viewport');
 
-				var xhr = new XMLHttpRequest();
-				var url = entry.target.parentElement.parentElement.firstElementChild.firstElementChild.href;
-				xhr.open('GET', url, true);	// XMLHttpRequest.open(method, url, async)
-				xhr.onload = function () {
+			if (!entry.target.classList.contains('done')){
 
-					let container = document.implementation.createHTMLDocument().documentElement;
-					container.innerHTML = xhr.responseText;
 
-					let publishedTimestamp = container.querySelector(
-						'meta[property="article:published_time"]'
-					).content;
+				if (entry.isIntersecting && !entry.target.classList.contains('in-viewport') ) {
+					entry.target.classList.add('in-viewport');
 
-					convertToLocalTimezone(publishedTimestamp);
+					var xhr = new XMLHttpRequest();
+					var url = entry.target.parentElement.parentElement.firstElementChild.firstElementChild.href;
+					xhr.open('GET', url, true);	// XMLHttpRequest.open(method, url, async)
+					xhr.onload = function () {
 
-					entry.target.textContent = publishedTimeLTZ;
-					entry.target.title = publishedTimeLTZtitle;
+						let container = document.implementation.createHTMLDocument().documentElement;
+						container.innerHTML = xhr.responseText;
 
-					recalc(entry.target, 'YYYY-MM-DD HH:mm:ss');
+						let publishedTimestamp = container.querySelector(
+							'meta[property="article:published_time"]'
+						).content;
 
-				};
-				xhr.send();
+						convertToLocalTimezone(publishedTimestamp);
 
+						entry.target.textContent = publishedTimeLTZ;
+						entry.target.title = publishedTimeLTZtitle;
+
+						entry.target.classList.add('done');
+
+						recalc(entry.target, 'YYYY-MM-DD HH:mm:ss');
+					};
+					xhr.send();
+				}
 			}
 		});
 	};
@@ -112,6 +117,27 @@ if (
 	allTimestamps.forEach((element) => {
 		observer.observe(element);
 	});
+
+
+	// ----------------------------------------
+	// Watch for pagination events (when new '.article' children are added inside the '.infinite_scroll' element)
+	const targetNode2 = document.querySelector('.infinite_scroll');
+	const config2 = { attributes: false, childList: true, subtree: false };
+
+	const callback2 = function(mutationsList, observer2) {
+		for(const mutation of mutationsList) {
+			if (mutation.type === 'childList') {
+				var allTimestamps = document.querySelectorAll('span.date-time');
+				allTimestamps.forEach((element) => {
+					observer.observe(element);
+				});
+			}
+		}
+	};
+
+	const observer2 = new MutationObserver(callback2);
+	observer2.observe(targetNode2, config2);
+	// ----------------------------------------
 
 
 } else if (window.location.href.includes('blabbermouth.net/news/')) {
