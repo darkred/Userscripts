@@ -20,6 +20,7 @@ with **the comment count from that fb iframe** <sup>1</sup> (i.e. `6 Comments`, 
 
   As you scroll down each page, it retrieves the relevant target news page in the background in order to get the relevant `published_time` data from the page, and then generates timestamps (like before) in relative format.  
 
+  Since v1.2 now the script also works in paginated news pages.
 &nbsp;
 
 <sup>1</sup> Compatibility note regarding that feature:
