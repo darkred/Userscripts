@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.1.27.3
+// @version     2021.1.27.4
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
@@ -22,16 +22,12 @@ GM_addStyle(`
 		max-width: 1450px;
 	}
 
-	.xhrMagnetLink, .xhrDownloadLink {
-		/* padding: 0px 1px 0px 1px; */
-	}
-
-	.list-dl-button-magnet > i.flaticon-magnet {
+	.list-button-magnet > i.flaticon-magnet {
 		font-size: 13px;
 		color: #da3a04
 	}
 
-	.list-dl-button > i.flaticon-torrent-download {
+	.list-button-dl > i.flaticon-torrent-download {
 		font-size: 13px;
 		color: #89ad19;
 	}
@@ -64,7 +60,8 @@ GM_addStyle(`
 		border-right: 1px solid silver;
 	}
 
-	.table-list > thead > tr > th:nth-child(2), .table-list > thead > tr > td:nth-child(2) {
+	.table-list > thead > tr > th:nth-child(2),
+	.table-list > thead > tr > td:nth-child(2) {
 		text-align: center;
 	}
 
@@ -102,9 +99,9 @@ function appendColumn(elem) {
 
 		let href = oldColumn[i].firstElementChild.nextElementSibling.href;
 
-		newColumn[i].innerHTML = '<a class="list-dl-button-magnet xhrMagnetLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
+		newColumn[i].innerHTML = '<a class="list-button-magnet" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
 
-		newColumn[i].innerHTML += '<a class="list-dl-button xhrDownloadLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="dl via xhr"><i class="flaticon-torrent-download"></i></a>';
+		newColumn[i].innerHTML += '<a class="list-button-dl" data-href="' + href + '"' + 'href="javascript:void(0)" + title="dl via xhr"><i class="flaticon-torrent-download"></i></a>';
 
 
 	}
