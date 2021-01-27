@@ -6,7 +6,7 @@
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
-// @include     /^https?:\/\/1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/(.+\/)?$/
+// @include     /^https?:\/\/1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
 // @grant       GM_addStyle
 // @run-at      document-idle
 //
