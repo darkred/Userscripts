@@ -1,18 +1,17 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.1.26
+// @version     2021.1.27
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
-// @include     /^https?://1337x\.(to|st|ws|eu|se|is|gd|unblocked.dk)/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)(\/.+)?$/
+// @include     /^https?:\/\/1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/(.+\/)?$/
 // @grant       GM_addStyle
 // @run-at      document-idle
-// ==/UserScript==
-
-
+//
 // Thanks to NotNeo: most of the CSS used is taken from this script https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere .
+// ==/UserScript==
 
 
 
