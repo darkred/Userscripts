@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.1.27.2
+// @version     2021.1.27.3
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
@@ -102,9 +102,9 @@ function appendColumn(elem) {
 
 		let href = oldColumn[i].firstElementChild.nextElementSibling.href;
 
-		newColumn[i].innerHTML = '<a class="list-dl-button-magnet xhrMagnetLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ML via XHR"><i class="flaticon-magnet"></i></a>';
+		newColumn[i].innerHTML = '<a class="list-dl-button-magnet xhrMagnetLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
 
-		newColumn[i].innerHTML += '<a class="list-dl-button xhrDownloadLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="DL via XHR"><i class="flaticon-torrent-download"></i></a>';
+		newColumn[i].innerHTML += '<a class="list-dl-button xhrDownloadLink" data-href="' + href + '"' + 'href="javascript:void(0)" + title="dl via xhr"><i class="flaticon-torrent-download"></i></a>';
 
 
 	}
