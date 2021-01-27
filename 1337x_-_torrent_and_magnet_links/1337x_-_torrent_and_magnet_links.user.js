@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.1.27
+// @version     2021.1.27.1
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
@@ -24,17 +24,6 @@ GM_addStyle(`
 
 	.xhrMagnetLink, .xhrDownloadLink {
 		/* padding: 0px 1px 0px 1px; */
-	}
-
-	.coll-1b {
-		/* padding: 10px 8px 10px 8px !important; */
-		/* display: flex; */
-		/* align: center; */
-		/* width: 52px; */
-		/* min-height: 37px; */
-		/* text-align: center; */
-		/* vertical-align: middle; */
-		/* box-sizing: border-box; */
 	}
 
 	.list-dl-button-magnet > i.flaticon-magnet {
@@ -71,18 +60,20 @@ GM_addStyle(`
 		margin: 0 2px;
 	}
 
-	table.table-list td.coll-2 {
-		/* border-left: 1px solid silver; */
-		border-left: 1px solid #f6f6f6;
+	table.table-list td.coll-1b {
+		border-right: 1px solid silver;
 	}
 
+	.table-list > thead > tr > th:nth-child(2), .table-list > thead > tr > td:nth-child(2) {
+		text-align: center;
+	}
 
 `);
 
 
 function appendColumn(elem) {
 
-	const title = 'ML&nbsp;DL';
+	const title = 'ml&nbsp;dl';
 
 	let entries = elem.querySelectorAll('.table-list > thead > tr > th:nth-child(1), .table-list > tbody > tr > td:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
 
@@ -94,7 +85,6 @@ function appendColumn(elem) {
 
 	let header = elem.querySelector('.table-list > thead > tr > th:nth-child(2)');       // the first cell (the header cell) of the new column
 	header.innerHTML = title;
-	header.setAttribute('align', 'center');
 	header.setAttribute('class', 'coll-1b');
 
 	let cells = elem.querySelectorAll('.table-list > tbody > tr > td:nth-child(2)');               // the rest cells of the new column
