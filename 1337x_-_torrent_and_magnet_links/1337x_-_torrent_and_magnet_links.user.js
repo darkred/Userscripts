@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.1.27.4
+// @version     2021.1.28
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
@@ -157,8 +157,8 @@ function addClickListeners(links, type){
 
 function createColumn(element){
 	appendColumn(element);
-	addClickListeners(element.querySelectorAll('.xhrMagnetLink'), 'ml' );
-	addClickListeners(element.querySelectorAll('.xhrDownloadLink'), 'dl' );
+	addClickListeners(element.querySelectorAll('.list-button-magnet'), 'ml' );
+	addClickListeners(element.querySelectorAll('.list-button-dl'), 'dl' );
 }
 
 
