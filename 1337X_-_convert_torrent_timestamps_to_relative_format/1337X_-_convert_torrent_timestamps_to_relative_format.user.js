@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337X - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2020.12.07
+// @version     2021.1.30
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -37,7 +37,6 @@
 const serverTimezone = 'Etc/GMT-1';
 
 const localTimezone = moment.tz.guess();    // In my case ----> +02:00	+03:00  (DST)
-alert(localTimezone)
 
 // const format = 'MM/DD/YYYY HH:mm:ss';
 // const format = 'YYYY-MM-DD HH:mm:ss';
