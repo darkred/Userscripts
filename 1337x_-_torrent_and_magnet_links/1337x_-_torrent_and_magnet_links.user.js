@@ -6,13 +6,14 @@
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
-// @include     /^https?:\/\/1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
+// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
 // @grant       GM_addStyle
 // @run-at      document-idle
 //
 // Thanks to NotNeo: most of the CSS used is taken from this script https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere .
 // ==/UserScript==
 
+// Official mirrors list: https://1337x.to/about
 
 
 GM_addStyle(`

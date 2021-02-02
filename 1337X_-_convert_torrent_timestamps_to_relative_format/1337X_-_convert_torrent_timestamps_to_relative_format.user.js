@@ -5,12 +5,14 @@
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
-// @include     /^https?://1337x\.to/(home|search|sort-search|trending|cat|top-100).*$/
+// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data-10-year-range.min.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
+
+// Official mirrors list: https://1337x.to/about
 
 'use strict';
 /* global moment */
