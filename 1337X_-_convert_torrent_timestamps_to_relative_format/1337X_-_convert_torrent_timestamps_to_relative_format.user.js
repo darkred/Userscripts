@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337X - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2021.1.30
+// @version     2021.2.2
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -44,6 +44,8 @@ const localTimezone = moment.tz.guess();    // In my case ----> +02:00	+03:00  (
 // const format = 'YYYY-MM-DD HH:mm:ss';
 moment.locale('en');
 const format = ['h:mma', 'ha MMM. Do', 'MMM. Do \'YY'];
+const formatTooltip1 = 'h:mma'; 		// the 1st element of the above array.
+const formatTooltip2 = 'ha MMM. Do';	// the 2st element of the array (there can be no 3rd format, e.g. Oct. 31st '20 is only date, not time ).
 
 // Customize the strings in the locale to display "1 minute ago" instead of "a minute ago" (https://github.com/moment/moment/issues/3764#issuecomment-279928245)
 moment.updateLocale('en', {
@@ -72,25 +74,33 @@ function convertToLocalTimezone(timestamps) {
 			let convertedToLocalTimezone = moment.tz(initialTimestamp, format, serverTimezone).tz(localTimezone);
 			timestamps[i].textContent = convertedToLocalTimezone.fromNow();
 
-			// TODO
-			// timestamps[i].title = convertedToLocalTimezone.format(format);   // <-- not working because you use MULTIPLE FORMATS !!
-			// timestamps[i].title = convertedToLocalTimezone.format(format[0]) || convertedToLocalTimezone.format(format[1]) || convertedToLocalTimezone.format(format[2]) ;   // <-- not working because you use MULTIPLE FORMATS !!
-			timestamps[i].title = initialTimestamp;
-			// timestamps[i].title = convertedToLocalTimezone.toISOString();	// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
-			// timestamps[i].title = convertedToLocalTimezone.format();
+			// timestamps[i].title = initialTimestamp;
+			if (moment(initialTimestamp, formatTooltip1, true).isValid()) {
+				timestamps[i].title = convertedToLocalTimezone.format(formatTooltip1);
+			} else if (moment(initialTimestamp, formatTooltip2, true).isValid()) {
+				timestamps[i].title = convertedToLocalTimezone.format(formatTooltip2);
+				// timestamps[i].title = convertedToLocalTimezone.toISOString();	// Display timestamps in tooltips in ISO 8601 format, combining date and time  (https://stackoverflow.com/questions/25725019/how-do-i-format-a-date-as-iso-8601-in-moment-js/)
+			}
 		}
 	}
 
-	// TODO
-	/*
-	// recalculate the relative times every 10 sec
+
+	// recalculate the relative dates every 1 min
 	(function(){
 		for (let i = 0; i < timestamps.length; i++) {
-			timestamps[i].textContent = moment(timestamps[i].title).fromNow();
+			// timestamps[i].textContent = moment(timestamps[i].title).fromNow();
+
+			if (timestamps[i].title !== '') {
+				let tooltipValue = timestamps[i].title;
+				let convertedToLocalTimezone = moment(tooltipValue, format); // no need to reconvert, it's already in local timezone
+				timestamps[i].textContent = convertedToLocalTimezone.fromNow();
+			}
+
 		}
-		setTimeout(arguments.callee, 1 * 60 * 1000);
+		// setTimeout(arguments.callee, 10 * 1000); 	// 10 sec
+		setTimeout(arguments.callee, 60 * 1000); 	// 1 min = 60 * 1000 msec
 	})();
-	*/
+
 
 }
 
