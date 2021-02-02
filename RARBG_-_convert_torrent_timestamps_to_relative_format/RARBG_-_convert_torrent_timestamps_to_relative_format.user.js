@@ -63,12 +63,13 @@ function convertToLocalTimezone(timestamps) {
 		}
 	}
 
-	// recalculate the relative times every 10 sec
+	// recalculate the relative dates every 1 min
 	(function(){
 		for (let i = 0; i < timestamps.length; i++) {
 			timestamps[i].textContent = moment(timestamps[i].title).fromNow();
 		}
-		setTimeout(arguments.callee, 1 * 60 * 1000);
+		// setTimeout(arguments.callee, 10 * 1000); 	// 10 * 1000 msec = 10 sec = 1/6 min
+		setTimeout(arguments.callee, 60 * 1000); 	// 60 * 1000 msec = 1 min
 	})();
 
 }
