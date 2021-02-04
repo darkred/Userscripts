@@ -97,8 +97,8 @@ function convertToLocalTimezone(timestamps) {
 			}
 
 		}
-		// setTimeout(arguments.callee, 10 * 1000); 	// 10 sec
-		setTimeout(arguments.callee, 60 * 1000); 	// 1 min = 60 * 1000 msec
+		// setTimeout(arguments.callee, 10 * 1000); 	// 10 * 1000 msec = 10 sec = 1/6 min
+		setTimeout(arguments.callee, 60 * 1000); 	// 60 * 1000 msec = 1 min
 	})();
 
 
