@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2021.2.4
+// @version      2021.2.4.1
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -66,8 +66,8 @@ function process(mutations) {
 		`;
 
 		var text =  '<div class="hdtb-mitem hdtb-imb" aria-selected="false" role="tab" id="__YOUTUBE_SEARCH__">' +
-					'<a class="q qs" href="https://www.youtube.com/results?search_query=' + q + '">' +
-					'<span class="HF9Klc iJddsb" style="height:16px;width:16px">' + svg + '</span>YouTube' +
+					'<a class="hide-focus-ring" href="https://www.youtube.com/results?search_query=' + q + '">' +
+					'<span class="bmaJhd iJddsb" style="height:16px;width:16px">' + svg + '</span>YouTube' +
 					'</a></div>';
 
 		var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
