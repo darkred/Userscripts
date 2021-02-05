@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2021.2.4.1
+// @version      2021.2.5
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -65,7 +65,7 @@ function process(mutations) {
 		</svg>
 		`;
 
-		var text =  '<div class="hdtb-mitem hdtb-imb" aria-selected="false" role="tab" id="__YOUTUBE_SEARCH__">' +
+		var text =  '<div class="hdtb-mitem" aria-selected="false" role="tab" id="__YOUTUBE_SEARCH__">' +
 					'<a class="hide-focus-ring" href="https://www.youtube.com/results?search_query=' + q + '">' +
 					'<span class="bmaJhd iJddsb" style="height:16px;width:16px">' + svg + '</span>YouTube' +
 					'</a></div>';
