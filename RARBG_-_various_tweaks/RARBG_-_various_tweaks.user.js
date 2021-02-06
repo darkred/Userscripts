@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2020.12.04
+// @version     2021.2.6
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -309,12 +309,12 @@ function makeBold(s, regex){
 
 const isOnSearchbyIMDbIdPage = window.location.href.includes('/torrents.php?imdb=');
 let imdbPlotStored = sessionStorage.getItem("imdbPlot");
-if (imdbPlotStored === undefined) {
+if (imdbPlotStored === null || imdbPlotStored === 'undefined') {
 	sessionStorage.removeItem("imdbPlot");
 	imdbPlotStored = '';
 }
 let rtPlotStored = sessionStorage.getItem("rtPlot");
-if (rtPlotStored === undefined) {
+if (rtPlotStored === null || rtPlotStored === 'undefined') {
 	sessionStorage.removeItem("rtPlot");
 	rtPlotStored = '';
 }
