@@ -1,5 +1,5 @@
 This script applies to RARBG lists: 
-- it converts torrent timestamps to relative format in local timezone. Also, it recalculates them every 10 seconds. 
+- it converts torrent timestamps to relative format in local timezone. Also, it recalculates them every 1 min. 
 - The initial timestamps are still available as tooltips (on mouse hover), also converted to local timezone.
 
 Note: there's a timestamp on the footer of each RARBG page e.g. `Mon, 02 Nov 2020 12:23:26 +0100`.  
