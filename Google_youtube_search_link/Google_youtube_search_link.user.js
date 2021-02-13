@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2021.2.13
+// @version      2021.2.13.1
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -20,12 +20,13 @@ function process(mutations) {
 	if (youtube)
 		return;
 
-	var menu = document.querySelector('#hdtb');			// selector for the element that contains all the links (Web, Images, Videos, News, Maps, Shopping, ...)
-	// TODO: var menu = document.querySelector('#hdtb, .ndYZfc');			// TODO  .ndYZfc is for when Images tab is selected
+	// var menu = document.querySelector('#hdtb');			// selector for the element that contains all the links (Web, Images, Videos, News, Maps, Shopping, ...)
+	var menu = document.querySelector('#hdtb, .ndYZfc');			// .ndYZfc is for when Images tab is selected
 	if (!menu)
 		return;
 
-	var menuContainer = menu.querySelector('#hdtb-msb').parentNode;
+	// var menuContainer = menu.querySelector('#hdtb-msb').parentNode;
+	var menuContainer = menu.querySelector('#hdtb-msb, .tAcEof').parentNode;	// .tAcEof is for when Images tab is selected
 
 	if (!youtube) {
 		var q = '',
@@ -71,24 +72,17 @@ function process(mutations) {
 					'<span class="bmaJhd iJddsb" style="height:16px;width:16px">' + svg + '</span>YouTube' +
 					'</a></div>';
 
-		// var node = document.querySelector(`a[href*='tbm=vid']`);
-		var selectedTabElement = document.querySelector('div.hdtb-mitem.hdtb-msel');  // Unfortunately NOT WORKING when the 'Images' tab is selected
-		if (selectedTabElement.textContent === 'All' || selectedTabElement.textContent === 'News'){
-			var node = document.querySelector(`a[href*='tbm=vid']`);			// selector for the 'Videos' link (works in any Google search page language)
-		} else if (selectedTabElement.textContent === 'Videos'){
-			node = selectedTabElement.firstElementChild;
-		}
-		// <!--
-		// TODO:  for when selecting the 'Images' tab
-		/* else if (selectedTabElement.textContent === 'Images') {
+		var node = document.querySelector(`a[href*='tbm=vid']`) || document.querySelector('path[d^="M10 16.5l6-4.5-6-4.5"]').closest('span');
 
-			alert()
-			console.log('EGINE')
+		// select the 'Images' selected tab svg icon by its path[d] attribute
+		var imagesTabElement = document.querySelector('path[d^="M14 13l"]').closest('span.rQEFy');
+		if (imagesTabElement) {
 			text =	'<a id="__YOUTUBE_SEARCH__" jsname="ONH4Gc" data-navigation="server" class="NZmxZe"' +
-					'href="https://www.youtube.com/results?search_query=' + q + '"><span class="m3kSL">' + svg + '</span>Videos</a>';
-			node = document.querySelector(`a[href*='tbm=vid']`);
-		} */
-		// -->
+					'href="https://www.youtube.com/results?search_query=' + q + '"><span class="m3kSL">' + svg + '</span>YouTube</a>';
+			// select the 'Videos' tab svg icon by its path[d] attribute
+			node = document.querySelector('path[d^="M10 16.5l6-4.5-6-4.5"]').closest('span');
+		}
+
 		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
 
 	}
