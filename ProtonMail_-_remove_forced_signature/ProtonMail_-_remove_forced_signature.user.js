@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2020.12.01
+// @version     2021.2.16
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
