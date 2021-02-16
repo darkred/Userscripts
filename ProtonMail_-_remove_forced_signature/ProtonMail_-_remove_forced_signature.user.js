@@ -7,6 +7,7 @@
 // @license     MIT
 // @include     https://mail.protonmail.com/*
 // @include     https://beta.protonmail.com/*
+// @include     https://protonirockerxow.onion/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
