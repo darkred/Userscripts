@@ -10,19 +10,7 @@ assignees: ''
 <!--
 
 When making feature requests:
-- Be as specific as possible, don't make me have to guess what you want.
+- Be as specific as possible, don't make me have to guess what your requested feature is.
 - Before you request to write a new script for you, check in https://greasyfork.org/en/scripts and https://openuserjs.org/ : what you ask might be there already.
 
 -->
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
