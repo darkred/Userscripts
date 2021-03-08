@@ -2,32 +2,36 @@
 // @name              Markdown toolbar for GreasyFork
 // @name:ru           Markdown-тулбар для GreasyFork
 // @name:zh-CN        GreasyFork markdown
-// @author            wOxxOm, darkred
-// @contributor       JixunMoe
-// @license           MIT License
+// @namespace         darkred
+// @version           2.0.0
 // @description       Select Markdown format by default, add help links, add toolbar formatting buttons for markdown
 // @description:ru    Включает формат Markdown по умолчанию, добавляет справочные ссылки по форматам, добавляет панель кнопок форматирования markdown
 // @description:zh-CN 在论坛默认使用 Markdown 格式，添加格式帮助链接及 Markdown 工具栏
+// @author            wOxxOm, darkred
+// @contributor       JixunMoe
+// @license           MIT
 // @icon              https://raw.githubusercontent.com/dcurtis/markdown-mark/master/png/66x40-solid.png
-// @namespace         wOxxOm.scripts
-// @version           2.0.0
 // @include           https://greasyfork.org/*discussions/*
 // @include           https://greasyfork.org/*scripts/*/versions/new*
 // @include           https://greasyfork.org/*script_versions/new*
 // @include           https://greasyfork.org/*/conversations/*
 // @include           https://greasyfork.org/en/users/edit
-// @run-at            document-start
 // @grant             GM_addStyle
+// @run-at            document-start
+// @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* jshint lastsemic:true, multistr:true, laxbreak:true, -W030, -W041, -W084 */
 
 
+// Previous inclure rules - kept for reference
 // @include           https://forum.userstyles.org/discussion/*
 // @include           https://forum.userstyles.org/post/discussion*
 // @include           https://forum.userstyles.org/messages/*
 // @include           https://forum.userstyles.org/messages/add*
 // @include           https://forum.userstyles.org/*/editdiscussion/*
+
+
 
 var inForum = location.href.indexOf('/discussions') > 0;
 

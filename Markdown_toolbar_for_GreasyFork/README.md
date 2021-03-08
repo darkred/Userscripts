@@ -19,7 +19,7 @@ Screenshots:
 <details>
 <summary>Publish script | Info</summary>
 
-![](https://i.imgur.com/9CLLAzV.jpg)
+![](https://i.imgur.com/poPEKZ3.jpg)
 </details>
 
 <details>
