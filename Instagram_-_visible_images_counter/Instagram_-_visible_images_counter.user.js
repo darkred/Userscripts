@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2019.4.28
+// @version     2021.3.8
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -80,6 +80,11 @@ function createDiv() {
 
 function createObserver() {
 
+	var thePics = document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]');
+	if (!thePics){
+		return;
+	}
+
 	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
 	hrefs.length = 0;
 	/// ---------------------------------
@@ -90,9 +95,11 @@ function createObserver() {
 			div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
 		}
 	// }).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
-	}).observe(document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
-		{
-			// attributes: true,
+	// }).observe(document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
+	});
+
+	observer.observe(thePics, 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
+		{	// attributes: true,
 			childList: true,
 			// characterData: true,
 			// subtree: true,
@@ -111,16 +118,21 @@ var observer;
 // var avatarSelector = 'span[style="width: 152px; height: 152px;"]';   // the profile's photo/avatar element
 // var avatarSelector = '._mainc';                                      // the profile's bio area element
 // var avatarSelector = 'h1.notranslate';                               // the profile name element
-var avatarSelector = 'h1.rhpdm';                                  // the profile name element
+// var avatarSelector = 'h1.rhpdm';                                  // the profile name element
+// var avatarSelector = 'span.-nal3';                                  // the 'posts' count element, e.g.  683 posts
+// var avatarSelector = 'ul.k9GMp';                                  // the profile's 3 counters container element
+var avatarSelector = '.nZSzR';                                  // the profile's username container element
 // var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
 // var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
 
 
 
 
-if (document.querySelector(avatarSelector)) {
-	createDiv();
-	createObserver();
+if (document.querySelector(avatarSelector) ) {
+	if (!document.querySelector('.counter')){
+		createDiv();
+		createObserver();
+	}
 } else {
 	console.log('ERROR: Cannot create the Counter element, the avatarSelector element ( ' + avatarSelector + ' ) doesn\'t exist !!');
 }
@@ -129,15 +141,56 @@ if (document.querySelector(avatarSelector)) {
 document.arrive(avatarSelector, function() { // the avatar in the profile page
 	createDiv();
 	createObserver();
+	alert()
 });
 
+
+
+function removeCounter(){
+	div.remove();
+	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
+	hrefs.length = 0;
+	observer.disconnect();
+	// if (observer) {
+	// 	observer.disconnect();
+	// }
+}
 
 
 document.leave(avatarSelector, function() {
-	if (!document.querySelector('h1.notranslate')){
-		div.remove();
-		hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
-		hrefs.length = 0;
-		observer.disconnect();
+	if (!document.querySelector(avatarSelector)){
+		removeCounter();
 	}
 });
+
+
+// when navigating using the browser's back/forth
+window.addEventListener('popstate', function (event) {
+	// alert()
+	removeCounter();
+	console.log('COUNTER IS REMOVED');
+
+	// TODO
+	// createDiv();
+	// createObserver();
+
+	hrefselems = [];
+	hrefs = [];
+	total = '';
+
+
+});
+
+
+// when navigating from a profile to another via searchbox // history API)
+// https://stackoverflow.com/questions/56760727/how-to-observe-a-change-in-the-url-using-javascript
+(function(){
+	var rs = history.pushState;
+	history.pushState = function(){
+		rs.apply(history, arguments); // preserve normal functionality
+		console.log("navigating", arguments); // do something extra here; raise an event
+		// alert('ALERTI')
+		removeCounter();
+	};
+}());
+
