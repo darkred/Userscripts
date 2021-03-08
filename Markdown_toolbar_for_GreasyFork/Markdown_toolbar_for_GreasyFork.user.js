@@ -18,7 +18,7 @@
 // @include           https://greasyfork.org/en/users/edit
 // @grant             GM_addStyle
 // @run-at            document-start
-// @supportURL  https://github.com/darkred/Userscripts/issues
+// @supportURL        https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
 /* jshint lastsemic:true, multistr:true, laxbreak:true, -W030, -W041, -W084 */
