@@ -3,7 +3,7 @@
 // @name:ru           Markdown-тулбар для GreasyFork
 // @name:zh-CN        GreasyFork markdown
 // @namespace         darkred
-// @version           2.0.0
+// @version           2.0.1
 // @description       Select Markdown format by default, add help links, add toolbar formatting buttons for markdown
 // @description:ru    Включает формат Markdown по умолчанию, добавляет справочные ссылки по форматам, добавляет панель кнопок форматирования markdown
 // @description:zh-CN 在论坛默认使用 Markdown 格式，添加格式帮助链接及 Markdown 工具栏
@@ -13,6 +13,7 @@
 // @icon              https://raw.githubusercontent.com/dcurtis/markdown-mark/master/png/66x40-solid.png
 // @include           https://greasyfork.org/*discussions/*
 // @include           https://greasyfork.org/*scripts/*/versions/new*
+// @include           https://greasyfork.org/*scripts/*/feedback*
 // @include           https://greasyfork.org/*script_versions/new*
 // @include           https://greasyfork.org/*/conversations/*
 // @include           https://greasyfork.org/en/users/edit
@@ -24,12 +25,15 @@
 /* jshint lastsemic:true, multistr:true, laxbreak:true, -W030, -W041, -W084 */
 
 
-// Previous inclure rules - kept for reference
-// @include           https://forum.userstyles.org/discussion/*
-// @include           https://forum.userstyles.org/post/discussion*
-// @include           https://forum.userstyles.org/messages/*
-// @include           https://forum.userstyles.org/messages/add*
-// @include           https://forum.userstyles.org/*/editdiscussion/*
+// Example URLS to test:
+// https://greasyfork.org/en/discussions/new
+// https://greasyfork.org/en/scripts/422887-markdown-toolbar-for-greasyfork/discussions/78139
+// https://greasyfork.org/en/scripts/23493/versions/new
+// https://greasyfork.org/en/scripts/422445-github-watcher/feedback
+// https://greasyfork.org/en/users/2160-darkred/conversations/new
+// https://greasyfork.org/en/users/edit
+
+
 
 
 
@@ -37,7 +41,9 @@ var inForum = location.href.indexOf('/discussions') > 0;
 
 window.addEventListener('DOMContentLoaded', function(e) {
 	if (inForum){
-		addFeatures(document.querySelector('.label-note > input').parentNode.appendChild(document.createElement('br')));
+		var refElement = document.querySelector('div > div > .label-note') || document.querySelector('.label-note');
+		addFeatures(refElement.insertAdjacentHTML('beforeend','<br>'));
+		addFeatures(refElement);
 	}
 	else {
 
@@ -76,6 +82,10 @@ window.addEventListener('DOMContentLoaded', function(e) {
 
 
 
+function insertAfter(referenceNode, newNode) {
+	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 
 
 function addFeatures(n) {
@@ -85,29 +95,29 @@ function addFeatures(n) {
 	}
 
 /*
-	if (!inForum) {
+	if (inForum) {
 */
 		var form = n.closest('form');
+		// console.log(form)
 		// span.current > a.write-tab
 		// var form = n.querySelector('form');
 		if (form.action.indexOf('/edit') < 0) {
 			n.click();
 		}
 
-		n.parentNode.textAreaNode = form.querySelector('textarea.TextBox, textarea.previewable');
+		n.parentNode.textAreaNode = form.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea');
 		// add formatting help tooltips (the '(?)' )
-		n.previousElementSibling.insertAdjacentHTML('beforeend',
-					' (<a href="/help/allowed-markup" target="_blank" title="'+
+
+		// .querySelector('input[value="html').firstElementChild
+
+		// n.previousElementSibling.insertAdjacentHTML('beforeend',
+		// n.querySelector('input[value="html"]').nextSibling.insertAdjacentHTML('beforeend',
+		const newContent = document.createElement('a');
+		newContent.innerHTML = '<a href="/help/allowed-markup" target="_blank" title="'+
 					'* (name, title), a (href), abbr, b, blockquote (cite), br, center, cite, code, dd, del, dfn, div, dl, dt, em, '+
 					'h1, h2, h3, h4, h5, h6, hr, i, ins, img (alt, height, src (https), width), kbd, li, mark, ol, p, pre, q (cite), '+
 					'rp, rt, ruby, s, samp, small, span, strike, strong, tt, table, tbody, tfoot, thead, td, th, tr, sub, sup, '+
-					'time (datetime, pubdate), u, ul, var">?</a>)');
-		n.insertAdjacentHTML('beforeend',
-					' (<a href="http://www.darkcoding.net/software/markdown-quick-reference/" target="_blank">?</a>)');
-		// if (location.href.indexOf('/forum/messages/') > -1)
-		if (location.href.indexOf('/conversations/') > -1)
-			GM_addStyle('#ConversationForm label { display:inline-block; margin-right:2ex }\
-						 #ConversationForm .TextBox { margin-top:0 }');
+					'time (datetime, pubdate), u, ul, var">?</a>' ;
 
 
 /*
@@ -144,7 +154,6 @@ function addFeatures(n) {
 
 
 	// add buttons
-	// console.log(n);
 	// debugger
 	btnMake(n, '<b>'+__('B')+'</b>', __('Bold'), '**');
 	btnMake(n, '<i>'+__('I')+'</i>', __('Italic'), '*');
@@ -208,13 +217,17 @@ function btnMake(afterNode, label, title, tag1_or_cb, tag2, noWrap) {
 						noWrap ? function(e){edInsertText(tag1_or_cb, edInit(e.target))} : 	// else if
 						function(e){edWrapInTag(tag1_or_cb, tag2, edInit(e.target))} 		// else
 	);
+
+	/* INITIAL
 	var nparent = afterNode.parentNode;
-	console.log(nparent)
-	// a.textAreaNode = nparent.textAreaNode ;
-	a.textAreaNode = nparent.parentNode.querySelector('textArea');
-	// console.log(a.textAreaNode)
-	// inForum ? nparent.insertBefore(a, nparent.firstElementChild) : nparent.appendChild(a);
-	// nparent.insertBefore(a, nparent.firstElementChild)
+	a.textAreaNode = nparent.textAreaNode;
+	inForum ? nparent.insertBefore(a, nparent.firstElementChild) : nparent.appendChild(a);
+	*/
+
+	var nparent;
+	inForum ? nparent = afterNode : nparent = afterNode.parentNode;
+	a.textAreaNode = nparent.textAreaNode || nparent.parentNode.querySelector('textArea');;
+	// a.textAreaNode = nparent.textAreaNode || nparent.closest('textArea');
 	nparent.appendChild(a);
 }
 
