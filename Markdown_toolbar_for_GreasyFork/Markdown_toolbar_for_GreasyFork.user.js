@@ -3,7 +3,7 @@
 // @name:ru           Markdown-тулбар для GreasyFork
 // @name:zh-CN        GreasyFork markdown
 // @namespace         darkred
-// @version           2.0.1
+// @version           2.0.2
 // @description       Select Markdown format by default, add help links, add toolbar formatting buttons for markdown
 // @description:ru    Включает формат Markdown по умолчанию, добавляет справочные ссылки по форматам, добавляет панель кнопок форматирования markdown
 // @description:zh-CN 在论坛默认使用 Markdown 格式，添加格式帮助链接及 Markdown 工具栏
@@ -41,7 +41,7 @@ var inForum = location.href.indexOf('/discussions') > 0;
 
 window.addEventListener('DOMContentLoaded', function(e) {
 	if (inForum){
-		var refElement = document.querySelector('div > div > .label-note') || document.querySelector('.label-note');
+		var refElement = document.querySelector('input[value] + .label-note') || document.querySelector('.form-control + .label-note') ||  document.querySelector('form .label-note') || document.querySelector('div > div > .form-control + .label-note')
 		addFeatures(refElement.insertAdjacentHTML('beforeend','<br>'));
 		addFeatures(refElement);
 	}
@@ -109,7 +109,7 @@ function addFeatures(n) {
 		// add formatting help tooltips (the '(?)' )
 
 		// .querySelector('input[value="html').firstElementChild
-
+/*
 		// n.previousElementSibling.insertAdjacentHTML('beforeend',
 		// n.querySelector('input[value="html"]').nextSibling.insertAdjacentHTML('beforeend',
 		const newContent = document.createElement('a');
@@ -124,7 +124,7 @@ function addFeatures(n) {
 		if (location.href.indexOf('/conversations/') > -1)
 			GM_addStyle('#ConversationForm label { display:inline-block; margin-right:2ex }\
 						 #ConversationForm .TextBox { margin-top:0 }');
-
+*/
 
 /*
 
