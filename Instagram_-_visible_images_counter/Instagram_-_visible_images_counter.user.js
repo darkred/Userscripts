@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2021.3.8
+// @version     2021.3.10
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -141,7 +141,7 @@ if (document.querySelector(avatarSelector) ) {
 document.arrive(avatarSelector, function() { // the avatar in the profile page
 	createDiv();
 	createObserver();
-	alert()
+	// alert()
 });
 
 
@@ -189,7 +189,7 @@ window.addEventListener('popstate', function (event) {
 	history.pushState = function(){
 		rs.apply(history, arguments); // preserve normal functionality
 		console.log("navigating", arguments); // do something extra here; raise an event
-		// alert('ALERTI')
+		// alert()
 		removeCounter();
 	};
 }());
