@@ -118,6 +118,12 @@ function addFeatures(n) {
 					'h1, h2, h3, h4, h5, h6, hr, i, ins, img (alt, height, src (https), width), kbd, li, mark, ol, p, pre, q (cite), '+
 					'rp, rt, ruby, s, samp, small, span, strike, strong, tt, table, tbody, tfoot, thead, td, th, tr, sub, sup, '+
 					'time (datetime, pubdate), u, ul, var">?</a>' ;
+		n.insertAdjacentHTML('beforeend',
+					' (<a href="http://www.darkcoding.net/software/markdown-quick-reference/" target="_blank">?</a>)');
+		// if (location.href.indexOf('/forum/messages/') > -1)
+		if (location.href.indexOf('/conversations/') > -1)
+			GM_addStyle('#ConversationForm label { display:inline-block; margin-right:2ex }\
+						 #ConversationForm .TextBox { margin-top:0 }');
 
 
 /*
