@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2021.3.10
+// @version     2021.3.11
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -57,6 +57,9 @@ function showCounter() {
 	var visibleCount = hrefs.length;
 
 	var visiblePercent = ((visibleCount / total) * 100).toFixed(1); // Visible images count as percentage
+	if (isNaN(visiblePercent)) {
+		visiblePercent = 0 ;  // avoid NaN
+	}
 
 	var counter = visibleCount + ' / ' + totalString + ' that is ' + visiblePercent + '%';
 	return counter;
@@ -80,7 +83,8 @@ function createDiv() {
 
 function createObserver() {
 
-	var thePics = document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]');
+	// var thePics = document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]');
+	var thePics = document.querySelector('div[style^="flex-direction: column;"], div[style|="padding-top: 0px;"]');  // the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)   --> https://stackoverflow.com/a/5110337  ("wildcard * in CSS") starting (^=) with x and ending (|=) with y
 	if (!thePics){
 		return;
 	}
@@ -90,7 +94,7 @@ function createObserver() {
 	/// ---------------------------------
 	/// mutation observer -monitors the Posts grid for infinite scrolling event-.
 	/// ---------------------------------
-	observer = new MutationObserver(function() {
+	observer = new MutationObserver(function() {  // --> Callback function to execute when mutations are observed
 		if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
 			div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
 		}
@@ -98,7 +102,7 @@ function createObserver() {
 	// }).observe(document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 	});
 
-	observer.observe(thePics, 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
+	observer.observe(thePics, 	// target of the observer
 		{	// attributes: true,
 			childList: true,
 			// characterData: true,
@@ -150,6 +154,7 @@ function removeCounter(){
 	div.remove();
 	hrefselems.length = 0;  // empty the array (see https://stackoverflow.com/a/1232046, method #2)
 	hrefs.length = 0;
+	total = '';
 	observer.disconnect();
 	// if (observer) {
 	// 	observer.disconnect();
@@ -174,11 +179,6 @@ window.addEventListener('popstate', function (event) {
 	// createDiv();
 	// createObserver();
 
-	hrefselems = [];
-	hrefs = [];
-	total = '';
-
-
 });
 
 
@@ -186,11 +186,13 @@ window.addEventListener('popstate', function (event) {
 // https://stackoverflow.com/questions/56760727/how-to-observe-a-change-in-the-url-using-javascript
 (function(){
 	var rs = history.pushState;
-	history.pushState = function(){
-		rs.apply(history, arguments); // preserve normal functionality
-		console.log("navigating", arguments); // do something extra here; raise an event
-		// alert()
-		removeCounter();
+	history.pushState = function(state, title, url){
+		if ( !url.includes('/following/') && !url.includes('/followers/') && !url.includes('/p/') ){   // avoid all possible in-page/popup "pages" (a profile's following/followers, and posts -opened by clicking on a thumb-)
+			rs.apply(history, arguments); // preserve normal functionality
+			console.log('navigating', arguments); // do something extra here; raise an event
+			removeCounter();
+			// alert()
+		}
 	};
 }());
 
