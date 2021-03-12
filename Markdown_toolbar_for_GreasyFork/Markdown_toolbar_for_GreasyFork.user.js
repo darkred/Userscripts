@@ -3,7 +3,7 @@
 // @name:ru           Markdown-тулбар для GreasyFork
 // @name:zh-CN        GreasyFork markdown
 // @namespace         darkred
-// @version           2.0.2
+// @version           2.0.3
 // @description       Select Markdown format by default, add help links, add toolbar formatting buttons for markdown
 // @description:ru    Включает формат Markdown по умолчанию, добавляет справочные ссылки по форматам, добавляет панель кнопок форматирования markdown
 // @description:zh-CN 在论坛默认使用 Markdown 格式，添加格式帮助链接及 Markdown 工具栏
@@ -38,46 +38,53 @@
 
 
 var inForum = location.href.indexOf('/discussions') > 0;
+var inPostNewScriptVer = location.href.indexOf('/versions/new') > 0;
+
+
+// Native  $("selector:contains('text')");      https://github.com/nefe/You-Dont-Need-jQuery#1.12
+function contains(selector, text) {
+	var elements = document.querySelectorAll(selector);
+	return Array.from(elements).filter(function(element) {
+		return RegExp(text).test(element.textContent);
+	});
+}
+
 
 window.addEventListener('DOMContentLoaded', function(e) {
+
+	var refElements = contains('.label-note', '(See allowed code)' );
+
 	if (inForum){
-		var refElement = document.querySelector('input[value] + .label-note') || document.querySelector('.form-control + .label-note') ||  document.querySelector('form .label-note') || document.querySelector('div > div > .form-control + .label-note')
-		addFeatures(refElement.insertAdjacentHTML('beforeend','<br>'));
-		addFeatures(refElement);
+
+		refElements.forEach(element => {element.insertAdjacentHTML('beforeend','<br>'); addFeatures(element); });
+
 	}
-	else {
+	else { // not in Forum
 
-		if (nn = document.querySelectorAll('input[value="markdown"]'))
-			for (var n, i=0; (i<nn.length) && (n=nn[i]); i++) {
-				if (location.href.indexOf('/script_versions/')) {
-					n.click();
-				}
-				n.click(); // posting a new script
-				addFeatures(n.parentNode.appendChild(document.createElement('br')));
-			}
+		// multiple textareas
+		if (inPostNewScriptVer) {
+			refElements = contains('.label-note', '(See allowed code)' );
+			refElements.forEach(element => {  addFeatures(element.appendChild(document.createElement('br')));  });
 
-		// addFeatures(document.querySelector('.form-control'));
-	}
+		} else { // every other page
 
-	new MutationObserver(function(mutations) {
-		for (var i=0, ml=mutations.length, m; (i<ml) && (m=mutations[i]); i++) {
-			for (var j=0, nodes=m.addedNodes, nl=nodes.length, n; (j<nl) && (n=nodes[j]); j++) {
-				if (n.nodeType == 1) // Node.ELEMENT_NODE 1 An Element node like <p> or <div>.
-					if (inForum) {
-						if ((n.localName == 'label' && n.querySelector('input[value="Markdown"], input[value="Html"], input[value="markdown"], input[value="html"]'))
-						|| (n = n.querySelector('input[value="Markdown"], input[value="markdown"]') || n.querySelector('input[value="Html"], input[value="html"]')))
-							return addFeatures(n.closest('label'));
-					} else {
-						if (((n.localName == 'input') && (n.value.toLowerCase() == 'Markdown'))
-						|| (n = n.querySelector('input[value="Markdown"], input[value="markdown"]'))) {
-							if (location.href.indexOf('/script_versions/'))
-								n.click();
-							return addFeatures(n.parentNode.appendChild(document.createElement('br')));
-						}
+
+			if (nn = document.querySelectorAll('input[value="markdown"]')) {
+				for (var n, i=0; (i<nn.length) && (n=nn[i]); i++) {
+					if (location.href.indexOf('/script_versions/')) {
+						n.click();
 					}
+					n.click(); // posting a new script
+					addFeatures(n.parentNode.appendChild(document.createElement('br')));
+				}
 			}
+
+
 		}
-	}).observe(document, {subtree:true, childList:true});
+
+	}
+
+
 });
 
 
@@ -94,18 +101,30 @@ function addFeatures(n) {
 		return;
 	}
 
-/*
-	if (inForum) {
-*/
-		var form = n.closest('form');
-		// console.log(form)
-		// span.current > a.write-tab
-		// var form = n.querySelector('form');
-		if (form.action.indexOf('/edit') < 0) {
-			n.click();
-		}
+	var form = n.closest('form');
+	if (form.action.indexOf('/edit') < 0) {
+		n.click();
+	}
 
+
+
+
+
+
+	if (inPostNewScriptVer) {
+		n.parentNode.textAreaNode = n.parentNode.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea');
+	} else {
 		n.parentNode.textAreaNode = form.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea');
+
+	}
+
+	// ------------------------------------------------------------------
+
+
+		// console.log(form.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea'));
+		// console.log(form)
+		// console.log(form.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea'));
+//THIS //		n.parentNode.textAreaNode = form.querySelector('textarea.TextBox, textarea.previewable, div.previewable textarea');
 		// add formatting help tooltips (the '(?)' )
 
 		// .querySelector('input[value="html').firstElementChild
@@ -125,18 +144,10 @@ function addFeatures(n) {
 			GM_addStyle('#ConversationForm label { display:inline-block; margin-right:2ex }\
 						 #ConversationForm .TextBox { margin-top:0 }');
 */
+// ------------------------------------------------------------------
 
-/*
 
-	} else { // if not in forum
-*/
-		for (var wrapper=n; wrapper = wrapper.parentNode; )
-			// if (t = wrapper.querySelector('textarea[id*="additional-info"]')) {
-			if (t = wrapper.querySelector('textarea[id*="additional-info"], textarea[id*="conversation_messages_attributes_0_content"], textarea[id*="discussion_comments_attributes_0_text"], textarea[id*="comment_text"], textarea[id*="user_profile"]')) {
-				n.parentNode.textAreaNode = t;
-				break;
-			}
-		GM_addStyle('\
+	GM_addStyle('\
 			.Button {\
 					display: inline-block;\
 					cursor: pointer;\
@@ -152,9 +163,9 @@ function addFeatures(n) {
 					text-shadow: 0px 1px 0px #FFF;\
 					box-shadow: 0px 1px 0px #FFF inset, 0px -1px 2px #BBB inset;\
 					color: #333;}'
-					);
+	);
 
-	// }
+
 
 
 
@@ -189,19 +200,22 @@ function addFeatures(n) {
 
 
 
-	var previewTab = document.querySelector('span > a.preview-tab > span');
-	if (previewTab){
-		previewTab.onclick = function(){
-			document.querySelectorAll('.Button').forEach(element => element.style.display = 'none');
-		};
-	}
 
-	var writeTab = document.querySelector('span > a.write-tab > span');
-	if (writeTab){
-		writeTab.onclick = function(){
-			document.querySelectorAll('.Button').forEach(element => element.style.display = 'inline-block');
-		};
-	}
+	var allPreviewTabs = contains('.preview-tab', 'Preview' );
+	allPreviewTabs.forEach(element => { element.onclick = function(event) {
+		let target = event.target; // delegation:   where was the click?
+		if (target.tagName !== 'A' && target.tagName !== 'SPAN') {return}
+		// console.log(element.closest('.label-note') )
+		form.querySelectorAll('.Button').forEach(element2 => element2.style.display = 'none');
+	} } );
+
+	var allWriteTabs = contains('.write-tab', 'Write' );
+	allWriteTabs.forEach(element => { element.onclick = function(event) {
+		let target = event.target; // where was the click?
+		if (target.tagName !== 'A' && target.tagName !== 'SPAN') {return}
+		form.querySelectorAll('.Button').forEach(element2 => element2.style.display = 'inline-block');
+	} });
+
 
 
 
@@ -224,16 +238,10 @@ function btnMake(afterNode, label, title, tag1_or_cb, tag2, noWrap) {
 						function(e){edWrapInTag(tag1_or_cb, tag2, edInit(e.target))} 		// else
 	);
 
-	/* INITIAL
-	var nparent = afterNode.parentNode;
-	a.textAreaNode = nparent.textAreaNode;
-	inForum ? nparent.insertBefore(a, nparent.firstElementChild) : nparent.appendChild(a);
-	*/
 
 	var nparent;
 	inForum ? nparent = afterNode : nparent = afterNode.parentNode;
 	a.textAreaNode = nparent.textAreaNode || nparent.parentNode.querySelector('textArea');;
-	// a.textAreaNode = nparent.textAreaNode || nparent.closest('textArea');
 	nparent.appendChild(a);
 }
 
