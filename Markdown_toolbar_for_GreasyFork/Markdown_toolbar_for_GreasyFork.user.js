@@ -3,7 +3,7 @@
 // @name:ru           Markdown-тулбар для GreasyFork
 // @name:zh-CN        GreasyFork markdown
 // @namespace         darkred
-// @version           2.0.3
+// @version           2.0.4
 // @description       Select Markdown format by default, add help links, add toolbar formatting buttons for markdown
 // @description:ru    Включает формат Markdown по умолчанию, добавляет справочные ссылки по форматам, добавляет панель кнопок форматирования markdown
 // @description:zh-CN 在论坛默认使用 Markdown 格式，添加格式帮助链接及 Markdown 工具栏
@@ -16,13 +16,11 @@
 // @include           https://greasyfork.org/*scripts/*/feedback*
 // @include           https://greasyfork.org/*script_versions/new*
 // @include           https://greasyfork.org/*/conversations/*
-// @include           https://greasyfork.org/en/users/edit
+// @include           https://greasyfork.org/*/users/edit
 // @grant             GM_addStyle
 // @run-at            document-start
 // @supportURL        https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
-
-/* jshint lastsemic:true, multistr:true, laxbreak:true, -W030, -W041, -W084 */
 
 
 // Example URLS to test:
@@ -52,7 +50,19 @@ function contains(selector, text) {
 
 window.addEventListener('DOMContentLoaded', function(e) {
 
-	var refElements = contains('.label-note', '(See allowed code)' );
+	// var refElements = contains('.label-note', '(See allowed code)' );
+	var refElements = document.querySelectorAll(`
+	input[name="authenticity_token"]              + .label-note,
+
+	label[for="script-version-additional-info-0"] + .label-note,
+	label[for="changelog"]                        + .label-note,
+
+	label[for="conversation_messages_attributes_0_content"] +  .label-note,
+
+	label[for="user_profile"] + .label-note,
+
+	form > .label-note
+	`);
 
 	if (inForum){
 
@@ -61,9 +71,9 @@ window.addEventListener('DOMContentLoaded', function(e) {
 	}
 	else { // not in Forum
 
-		// multiple textareas
+		// This page has 2 non-code textareas: 'Additional info' and 'Changelog'
 		if (inPostNewScriptVer) {
-			refElements = contains('.label-note', '(See allowed code)' );
+
 			refElements.forEach(element => {  addFeatures(element.appendChild(document.createElement('br')));  });
 
 		} else { // every other page
@@ -88,10 +98,6 @@ window.addEventListener('DOMContentLoaded', function(e) {
 });
 
 
-
-function insertAfter(referenceNode, newNode) {
-	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
 
 
 
