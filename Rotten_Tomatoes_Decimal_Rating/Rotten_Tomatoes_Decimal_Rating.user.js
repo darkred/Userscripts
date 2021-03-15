@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     5.0.1
+// @version     6.0
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm, darkred
 // @license     MIT
@@ -17,24 +17,66 @@
 
 
 
-const buttonSeeScoreDetails = document.querySelector('.mop-ratings-wrap__score-detail-container');
+function modifyaudienceScoreStars(audienceScoreStars){
+	if (!audienceScoreStars.textContent.includes('NaN') && audienceScoreStars.textContent.includes('out of 5') ) {
+		audienceScoreStars.textContent = audienceScoreStars.textContent.replace('out of 5','');
+		audienceScoreStars.textContent *= 2;
+		audienceScoreStars.textContent += ' out of 10';
+	}
+}
+
 
 function audienceScorex2(){
-	// 'See Score Details' | 'Audience Score' > Avg rating" score  --> Multiply x2
-	let audienceScoreStars = document.querySelector('span.js-audience-score-info');
-	audienceScoreStars.textContent = audienceScoreStars.textContent.replace('/5','');
-	audienceScoreStars.textContent *= 2;
-	audienceScoreStars.textContent += '/10';
+
+	// 'Score Details' card | 'AUDIENCE' > average rating" score  --> Multiply x2
+	let audienceScoreStars = document.querySelector('score-details-audience').shadowRoot.querySelector('star-rating').shadowRoot.querySelector('.average-stars');
+	modifyaudienceScoreStars(audienceScoreStars);
+
+
+	// Select the node that will be observed for mutations
+	const targetNode = audienceScoreStars;
+
+	// Options for the observer (which mutations to observe)
+	const config = { // attributes: true ,
+		childList: true ,
+				// subtree: true,
+				// characterData: true
+	};
+
+
+	// Callback function to execute when mutations are observed
+	const callback = mutations => {
+
+		mutations.forEach(function(mutation) {
+
+			observer.disconnect();
+			modifyaudienceScoreStars(audienceScoreStars);
+
+		});
+
+	};
+
+	// Create an observer instance linked to the callback function
+	const observer = new MutationObserver(callback);
+
+	// Start observing the target node for configured mutations
+	observer.observe(targetNode, config);
+
 }
 
 
 
-buttonSeeScoreDetails.addEventListener('click', function(){
+let scoreBoard = document.querySelector('score-board');
+
+
+scoreBoard.onclick = function(event) {
+
+	// let target = event.target;
 
 	audienceScorex2();
 
-	let buttonVerifiedAudience = document.querySelector('div.score-detail__info-wrap-section:nth-child(2) > nav:nth-child(2) > button:nth-child(1)');
-	let buttonAllAudience =      document.querySelector('div.score-detail__info-wrap-section:nth-child(2) > nav:nth-child(2) > button:nth-child(2)');
+	let buttonVerifiedAudience = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > filter-chip:nth-child(2)');
+	let buttonAllAudience =      document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > filter-chip:nth-child(3)');
 	[ buttonVerifiedAudience, buttonAllAudience ].forEach(function(element) {
 		if (element) {
 			element.addEventListener('click', function() {
@@ -46,28 +88,33 @@ buttonSeeScoreDetails.addEventListener('click', function(){
 
 
 	// the '?' buttons for the two descriptive texts
-	let buttonQuestionmarkTomatometer = document.querySelector('.score-detail__help--tomatometer');
-	let buttonQuestionmarkAudienceScore = document.querySelector('.score-detail__help--audience-score');
+	let buttonQuestionmarkTomatometer = document.querySelector('#mainColumn > overlay-base > score-details > score-details-critics > tool-tip');
+	let buttonQuestionmarkAudienceScore = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip');
 
 
 	buttonQuestionmarkTomatometer.addEventListener('click', function(){
 
-		let descriptiveTextTomatometer = document.querySelector('.score-detail__tooltip-content > p:nth-child(1)');
-		// "TOMATOMETER" descriptive text - Append '(=6 stars or higher)'
-		descriptiveTextTomatometer.innerHTML = descriptiveTextTomatometer.innerHTML.replace('review', 'review (=6 stars or higher)');
+		let descriptiveTextTomatometer = document.querySelector('#mainColumn > overlay-base > score-details > score-details-critics > tool-tip').shadowRoot.querySelector('.description');
+		if (!descriptiveTextTomatometer.textContent.includes('review (=6 stars or higher)')) {
+			descriptiveTextTomatometer.innerHTML = descriptiveTextTomatometer.innerHTML.replace('review', 'review (=6 stars or higher)');
+		}
 
 	});
 
 
 	buttonQuestionmarkAudienceScore.addEventListener('click', function(){
 
-		let descriptiveTextAudienceScode = document.querySelector('.score-detail__tooltip-content');
-		// "AUDIENCE SCORE" descriptive text - Modify '3.5 stars or higher' to '7 stars or higher'
+		let descriptiveTextAudienceScode = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip').shadowRoot.querySelector('.description');
+		/*
 		descriptiveTextAudienceScode.innerHTML = descriptiveTextAudienceScode.innerHTML.replace(/([\d.]+)( stars)/g, function (m, s1, s2) {
 			return 2 * s1 + s2;
 		});
+		*/
+		if (!descriptiveTextAudienceScode.textContent.includes('7 stars or higher')) {
+			descriptiveTextAudienceScode.textContent = descriptiveTextAudienceScode.textContent.replace('3.5 stars or higher', '7 stars or higher');
+		}
 
 	});
 
 
-});
+};
