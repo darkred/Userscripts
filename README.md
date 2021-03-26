@@ -10,7 +10,7 @@ Greasemonkey -any version- is not supported (the scripts might work, but are not
 - [1337X - convert torrent timestamps to relative format](https://github.com/darkred/Userscripts/tree/master/1337X_-_convert_torrent_timestamps_to_relative_format#readme) - Converts torrent upload timestamps to relative format
 - [Blabbermouth - generate timestamps and add link to the fb comments area](https://github.com/darkred/Userscripts/tree/master/Blabbermouth_-_generate_timestamps_and_add_link_to_the_FB_comments_area#readme) - (blabbermouth cd/dvd reviews and news pages) Generates the missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 - [Bugzilla - reveal the Depends, Blocks, See Also and Duplicates bug titles](https://github.com/darkred/Userscripts/tree/master/Bugzilla_-_reveal_the_Depends%2C_Blocks%2C_See_Also_and_Duplicates_bug_titles#readme) - Reveals the Depends, Blocks, See Also and Duplicates bug titles in bugzilla.mozilla.org via keyboard shortcuts.
-- 'Firefox for desktop' variations:
+- 'Firefox for desktop' :
   - [Firefox for desktop - list fixed bugs in Mercurial](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial#readme) - Generates lists of fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
   - [Firefox for desktop - list fixed bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_fixed_bugs_in_Mercurial_as_sortable_table#readme) - Generates a list of recently fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs.
   - [Firefox for desktop - list modified bugs in Mercurial as sortable table](https://github.com/darkred/Userscripts/tree/master/Firefox_for_desktop_-_list_modified_bugs_in_Mercurial_as_sortable_table#readme) - Generates lists of bugs related to Firefox for desktop for which patches have landed in Mozilla Mercurial pushlogs.
@@ -41,8 +41,8 @@ networks as well as scripts that use "foreign" characters in descriptions.
 
 - [BugMeNot](https://github.com/darkred/Userscripts/tree/master/BugMeNot#readme) - Fetches logins from bugmenot.com and autofills the login form. *(original by hosts)*
 - [Google youtube search link](https://github.com/darkred/Userscripts/tree/master/Google_youtube_search_link) - Adds a Youtube search link next to the Videos link (e.g. Web, Images, Videos, Youtube, News, Maps, Shopping, ...) *(original by wOxxOm)*
-- 'GreasyFork Bullshit Filter' variations: *(original by kuehlschrank)*
-  - [GreasyFork Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/GreasyFork_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
+- [GreasyFork Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/GreasyFork_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. *(original by kuehlschrank)*  
+& my additional versions: 
   - [GreasyFork Bullshit Filter (compatible with Citrus GFork)](https://github.com/darkred/Userscripts/tree/master/GreasyFork_Bullshit_Filter_(compatible_with_Citrus_GFork)#readme) - Hides scripts for popular browser games and social 
   - [OpenUserJS Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/OpenUserJS_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
   - [Userstyles Bullshit Filter](https://github.com/darkred/Userscripts/tree/master/Userstyles_Bullshit_Filter#readme) - Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions.
