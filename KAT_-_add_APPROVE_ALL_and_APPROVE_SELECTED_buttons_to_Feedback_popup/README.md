@@ -5,5 +5,4 @@ _(by default it only has `DISCARD SELECTED`)_
 
 _Note: You may uncomment lines 59, 76 and/or 94 to also close the popup after approving all/selected torrents._
 
-<br>
 Thanks to wOxxOm for his help in [here](http://stackoverflow.com/questions/34072802/insertbefore-enclosed-in-addeventlistener-click-and-called-via-mutationobserv).
