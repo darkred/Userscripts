@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name        GreasyFork Bullshit Filter - for TS Citrus Gfork
 // @namespace   darkred
-// @version     2020.7.31
+// @version     2021.3.31
 // @description Hides scripts for popular browser games and social networks as well as scripts that use "foreign" characters in descriptions. Applies to posts in Forum too.
 // @author      kuehlschrank, darkred, valacar, Graphen
 // @license     MIT
 // @icon        https://raw.githubusercontent.com/darkred/Userscripts/master/GreasyFork_Bullshit_Filter_-_for_TS_Citrus_Gfork/large.png
 // @include     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts|discussions|users).*$/
-// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts\/[0-9]+.*(?<!feedback)|users\/.*\/conversations.*)$/
+// @exclude     /^https:\/\/(greasy|sleazy)fork\.org\/(.*\/)?(scripts\/[\w-]+\/feedback|discussions\/[\d]+|users\/.*\/conversations.*)$/
 // @grant       none
 // @run-at      document-idle
 //    This is a modified version of this script (http://userscripts-mirror.org/scripts/show/97145) by kuehlschrank.
