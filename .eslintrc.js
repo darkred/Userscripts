@@ -4,21 +4,33 @@ module.exports = {
 		"es6": true,
 		"greasemonkey": true,
 		"jquery": true,
-		"node": true,
+		// "node": true
 	},
-	"extends": "eslint:recommended",
+	// "extends": "eslint:all",
+	// "extends": "eslint:recommended",
+	"extends": [
+		// "eslint:all",
+		"eslint:recommended",
+		"plugin:clean-regex/recommended"
+	],
+	"plugins": [
+		"clean-regex"
+	],
 	"parserOptions": {
-		"ecmaVersion": 10,
+		"ecmaVersion": 12,
 		"sourceType": "script",
 		"ecmaFeatures": {
 			"globalReturn ": true,
 			"impliedStrict": true,
+			// "jsx": true,
 		},
 	},
 	"rules": {
 		"complexity": ["warn", 20],
 		"eqeqeq": "warn",
 		"func-style": "off",
+		// "indent": ["warn","tab" ],
+		// "indent": ["warn","tab", { "SwitchCase": 1 } ],
 		"indent": ["warn","tab", { "ignoreComments": true, "SwitchCase": 1 } ],
 		"linebreak-style": ["warn","unix"],
 		"max-len": "off",
@@ -31,6 +43,7 @@ module.exports = {
 		"no-magic-numbers": "off",
 		"no-misleading-character-class": "warn",
 		"no-mixed-spaces-and-tabs": "warn",
+		// "no-var": "off",
 		"no-multiple-empty-lines": "off",
 		"no-tabs": "off",
 		"no-unused-labels": "warn",
@@ -39,9 +52,14 @@ module.exports = {
 		"padded-blocks": "off",
 		"quotes": ["warn", "single", { "allowTemplateLiterals": true }] ,
 		"require-jsdoc": "off",
+		"require-unicode-regexp": "off",
 		"semi": ["warn","always"],
+		// "strict": ["error", "global"],
 		"space-before-function-paren": "off",
-		"unicode-bom": ["warn", "never"]
+		// "space-in-parens": ["warn", "always"],
+		"unicode-bom": ["warn", "never"],
 
-	}
+	},
+	"reportUnusedDisableDirectives": true
+
 };
