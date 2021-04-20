@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.2.6
+// @version     2021.4.20
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -294,7 +294,7 @@ if (!isOnTorrentListPage) {
 
 function removePipesLinebreaks(s){
 	if (s) {
-		return s.replace(/\|/g,',').replace(/\n/g,' ');
+		return s.replace(/(\||\n|&nbsp;|<br>)/g,' ');
 	}
 }
 
