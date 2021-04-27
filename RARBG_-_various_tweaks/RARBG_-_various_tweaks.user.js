@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.4.20.1
+// @version     2021.4.27
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -21,7 +21,7 @@
 if (/torrents\.php\?search=tt[0-9]+/.test(window.location.href)) {
 	// window.location.href = window.location.href.replace('?search=', '?imdb=');
 	window.location.replace(window.location.href.replace('?search=', '?imdb='));  // Use window.location.replace(url) if you want to redirect the user in a way that the current page is forgotten by the back button, ( https://stackoverflow.com/a/3170964 )
-	throw 'Reloading page'; // Exit script execution
+	throw 'Reloading page'; // Stop script execution
 }
 
 
@@ -262,7 +262,8 @@ if (!isOnTorrentListPage) {
 
 					let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 						return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522
-					}).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
+					// }).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
+					}).next()[0].innerHTML.replace('<span>','').replace('</span>','');
 					if (imdbPlot !== undefined){
 						imdbPlot = removePipesLinebreaks(imdbPlot);		// remove all '|', and replace all newlines with spaces
 						sessionStorage.setItem("imdbPlot", imdbPlot);
@@ -272,7 +273,6 @@ if (!isOnTorrentListPage) {
 					}
 
 					let rtPlot = $(container).find(".header2:contains('Rotten Plot:')").next().html();
-					// alert(rtPlot)
 					if (rtPlot !== undefined){
 						rtPlot = removePipesLinebreaks(rtPlot);
 						sessionStorage.setItem("rtPlot", rtPlot);
@@ -296,7 +296,9 @@ if (!isOnTorrentListPage) {
 
 function removePipesLinebreaks(s){
 	if (s) {
-		return s.replace(/(\||\n|&nbsp;|<br>)/g,' ');
+		return s.replace(/(\ \|)/gm,',')
+				.replace(/(\|)/gm,',')
+				.replace(/(\r\n|\n|\r|&nbsp;|<br>)/gm,' ');
 	}
 }
 
@@ -333,7 +335,8 @@ if (isOnSearchbyIMDbIdPage) {
 	if (imdbRatingElement.length > 0){
 		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbId + '/">IMDb</a> Rating:');
 	} else {  			// Example: https://rarbgproxy.org/torrents.php?imdb=tt9139586
-		imdbRatingElement = $("b:contains('Runtime:')");
+		// imdbRatingElement = $("b:contains('Runtime:')");
+		imdbRatingElement = $("b:contains('Runtime:'), b:contains('Year:')");  // when there's no 'Runtime' element but only 'Year', e.g. https://rarbgproxy.org/torrents.php?imdb=tt4136456
 		$(imdbRatingElement).parent().html($(imdbRatingElement).parent().html() + '<b>IMDB Rating:</b><br>');
 		imdbRatingElement = $("b:contains('IMDB Rating:')");
 		imdbRatingElement.html('<a href="https://www.imdb.com/title/' + imdbId + '/">IMDb</a> Rating: -');
@@ -385,7 +388,8 @@ if (isOnSearchbyIMDbIdPage) {
 
 			let imdbPlot = $(container).find(".header2:contains('Plot:')").filter(function() {		// https://stackoverflow.com/questions/8978411/jquery-ajax-findp-in-responsetext
 				return $(this).text() === "Plot:";													// https://stackoverflow.com/questions/15364298/select-element-by-exact-match-of-its-content/18462522 (in order to only select IMDb's plain "Plot", not "Rotten Plot", too )
-			}).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
+			// }).next()[0].innerText;  // [0] ---> convert jQuery element/node to a regular DOM element
+			}).next()[0].innerHTML.replace('<span>','').replace('</span>','');
 			imdbPlot = removePipesLinebreaks(imdbPlot);
 			sessionStorage.setItem("imdbPlot", imdbPlot);
 
