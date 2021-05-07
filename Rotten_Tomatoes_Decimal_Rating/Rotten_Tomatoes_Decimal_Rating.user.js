@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     6.0
+// @version     6.0.1
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm, darkred
 // @license     MIT
@@ -95,8 +95,8 @@ scoreBoard.onclick = function(event) {
 	buttonQuestionmarkTomatometer.addEventListener('click', function(){
 
 		let descriptiveTextTomatometer = document.querySelector('#mainColumn > overlay-base > score-details > score-details-critics > tool-tip').shadowRoot.querySelector('.description');
-		if (!descriptiveTextTomatometer.textContent.includes('review (=6 stars or higher)')) {
-			descriptiveTextTomatometer.innerHTML = descriptiveTextTomatometer.innerHTML.replace('review', 'review (=6 stars or higher)');
+		if (!descriptiveTextTomatometer.textContent.includes('review (6 stars or higher)')) {
+			descriptiveTextTomatometer.innerHTML = descriptiveTextTomatometer.innerHTML.replace('review', 'review (6 stars or higher)');
 		}
 
 	});
