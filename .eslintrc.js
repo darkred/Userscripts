@@ -11,10 +11,13 @@ module.exports = {
 	"extends": [
 		// "eslint:all",
 		"eslint:recommended",
-		"plugin:clean-regex/recommended"
+		// "plugin:clean-regex/recommended"
+		"plugin:regexp/recommended"
+
 	],
 	"plugins": [
-		"clean-regex"
+		// "clean-regex"
+		"regexp"
 	],
 	"parserOptions": {
 		"ecmaVersion": 12,
