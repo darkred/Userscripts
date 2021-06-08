@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2021.2.16
+// @version     2021.6.9
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
 // @include     https://mail.protonmail.com/*
-// @include     https://beta.protonmail.com/*
 // @include     https://protonirockerxow.onion/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
@@ -14,50 +13,36 @@
 // @icon        https://protonmail.com/images/favicon.ico
 // ==/UserScript==
 
-const isInBeta = window.location.href.includes('beta');
-
-var elementToWatch;
-isInBeta? elementToWatch = '.squireIframe' : elementToWatch = '.squireToolbar-row-1';
-
-
-// wait for the formatting toolbar element to be created
+const elementToWatch = 'iframe[title="Editor"]';
 document.arrive(elementToWatch, function () {
+	let iframe = this.contentDocument; // refers to the newly created element
 
-	// debugger
+	const config = {
+		childList: true,
+		subtree: true
+	};
 
-	let iframe;
+	const callback = function(mutationList, observer) {
+		mutationList.forEach( (mutation) => {
+			mutation.addedNodes.forEach( (node) => {
+				if (node.className === 'protonmail_signature_block') {
+					const parent = node.parentElement;
 
+					node.previousSibling.remove(); 	// remove (the element that contains a) leftover newline (<br>)
+					node.remove();  				// remove the signature element itself
 
+					// Simulate a 'Delete' key press on the message textarea
+					parent.children[0].dispatchEvent(new KeyboardEvent('keydown', {'key':'Delete'} ));
+					parent.children[0].dispatchEvent(new KeyboardEvent( 'keyup' , {'key':'Delete'} ));
 
-	if (!isInBeta) {
-
-		iframe = document.querySelector('.squireIframe').contentDocument;
-		iframe.querySelector('.protonmail_signature_block').remove();   // remove the signature element
-		iframe.querySelector('body > div:last-child').remove();         // remove (the element that contains a) leftover newline (<br>)
-
-	} else {
-
-		iframe = this.contentDocument;
-
-		// Setup the config
-		const config = {
-			childList: true,
-			subtree: true
-		};
-
-		const callback = function callback(mutationList, observer) {
-			mutationList.forEach( (mutation) => {
-				mutation.addedNodes.forEach( (node) => {
-					if (node.className === 'protonmail_signature_block') {
-						node.remove();
-						observer.disconnect();
-					}});
-
+					observer.disconnect();
+				}
 			});
-		};
 
-		// Watch the iframe for changes
-		const observer = new MutationObserver(callback);
-		observer.observe(iframe, config);
-	}
+		});
+	};
+
+	const observer = new MutationObserver(callback);
+	observer.observe(iframe, config);
+
 });
