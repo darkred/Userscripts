@@ -26,14 +26,14 @@ document.arrive(elementToWatch, function () {
 		mutationList.forEach( (mutation) => {
 			mutation.addedNodes.forEach( (node) => {
 				if (node.className === 'protonmail_signature_block') {
-					const parent = node.parentElement;
+					const parent = node.parentElement; // it's '#squire' and has 3 children: two with <br> and the signature itself
 
-					node.previousSibling.remove(); 	// remove (the element that contains a) leftover newline (<br>)
-					node.remove();  				// remove the signature element itself
+					node.previousSibling.remove(); 	// remove the element that contains a leftover newline (<br>)  ( children[1] )
+					node.remove();  				// remove the signature element itself                         ( children[2] )
 
-					// Simulate a 'Delete' key press on the message textarea
-					parent.children[0].dispatchEvent(new KeyboardEvent('keydown', {'key':'Delete'} ));
-					parent.children[0].dispatchEvent(new KeyboardEvent( 'keyup' , {'key':'Delete'} ));
+					// Simulate a 'Delete' key press on the message textarea to remove the remaining <br> element  ( children[0] )
+					parent.firstChild.dispatchEvent(new KeyboardEvent('keydown', {'key':'Delete'} ));
+					parent.firstChild.dispatchEvent(new KeyboardEvent( 'keyup' , {'key':'Delete'} ));
 
 					observer.disconnect();
 				}
