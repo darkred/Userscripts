@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        1337X - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2021.3.28
+// @version     2021.6.15
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
-// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
+// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100(-(((non-eng|eng)-)?movies|television|games|applications|music|documentaries|anime|other|xxx))?|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data-10-year-range.min.js
