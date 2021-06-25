@@ -63,7 +63,7 @@ body:
     id: browsers
     attributes:
       label: Browser
-      description:  What browsers are you seeing the problem on? old Firefox/Waterfox versions are NOT supported)
+      description:  What browsers are you seeing the problem on? (old Firefox/Waterfox versions are NOT supported)
       multiple: true
       options:
         - Chrome
