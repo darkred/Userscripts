@@ -1,0 +1,71 @@
+name: Bug Report
+description: File a bug report
+title: "[script title]: "
+labels: [bug, triage]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Please confirm the following
+      options:
+        - label: "I included in the issue title the script name I'm referring to" 
+          required: true
+        - label: I performed a cursory search of the [issue tracker](https://github.com/darkred/Userscripts/issues) to avoid opening a duplicate issue
+          required: true
+        - label: I tested the script disabling all others, and if needed in a fresh profile.
+          required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: "Also tell us, what did you expect to happen? Provide STR (steps to reproduce). <br> When the script doesn't work, is it because it doesn't run at all in the page (check TM/VM's toolbar dropdown button), or because it has errors in Console?         If it's the former them its `@include` rule needs additions. If it's the latter, include the Console errors in the textarea below. "
+      placeholder: Describe the issue.
+      value:        
+    validations:
+      required: true
+  - type: input
+    id: example-url
+    attributes:
+      label: Example URL
+      description: Provide a full URL where the bug appears.
+      placeholder: example.com/page1.htm
+    validations:
+      required: false
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What script manager are you using? (Greasemonkey is NOT supported)
+      multiple: true
+      options:
+        - Tampermonkey
+        - Violentmonkey
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: "Please drag'n'drop any screenshots/gif in so I can help you better."
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
