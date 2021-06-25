@@ -70,3 +70,5 @@ body:
         - Firefox
         - Safari
         - Microsoft Edge
+    validations:
+      required: true
