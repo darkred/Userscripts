@@ -10,7 +10,7 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: Please confirm the following
+      label: Please confirm the following:
       options:
         - label: "I included in the issue title the script name I'm referring to." 
           required: true
@@ -45,7 +45,7 @@ body:
       description: Provide a full URL where the bug appears.
       placeholder: example.com/page1.htm
     validations:
-      required: false
+      required: true
   - type: dropdown
     id: version
     attributes:
