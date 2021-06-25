@@ -18,7 +18,7 @@ body:
           required: true
         - label: I performed a cursory search of the [issue tracker](https://github.com/darkred/Userscripts/issues) to avoid opening a duplicate issue.
           required: true
-        - label: I tested the script disabling all others, and if needed in a fresh browser profile.
+        - label: I tested the script having disabled all others, and in a fresh browser profile if needed.
           required: true
   - type: textarea
     id: what-happened
