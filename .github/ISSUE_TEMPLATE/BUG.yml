@@ -24,7 +24,7 @@ body:
       label: What happened?
       description: "Also describe, what did you expect to happen? Provide STR (steps to reproduce). <br> When the script doesn't work, is it because it doesn't run at all in the page (check TM/VM's toolbar dropdown button), or because it has errors in Console?         If it's the former them its `@include` rule needs additions. If it's the latter, include the Console errors in the relevant textarea to the end. "
       placeholder: Describe the issue (be as specific as possible, I need to know where to look). Provide all necessary details.
-      value: ''
+      value: 
     validations:
       required: true
   - type: textarea
