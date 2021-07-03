@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
-// @version     2020.02.02
+// @version     2021.7.3
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor sxe, dandyclubs, lx19990999
@@ -111,19 +111,24 @@ function createColumn(element){
 
 const isOnTV = window.location.href.includes('/tv/');  // example link: https://rarbgproxy.org/tv/tt1720601/
 
+const tvEpisodes = 'div[id^="episode_"]';
+const tvContent  = 'div[id^="tvcontent_"] .lista2t';
+
 if (isOnTV) {
-	var tvLinks = document.querySelectorAll('.tvshowClick');
+	// var tvLinks = document.querySelectorAll('.tvshowClick');
+	var tvLinks = document.querySelectorAll(tvEpisodes);
 
 	for (let i = 0; i < tvLinks.length; i++) {
-		tvLinks[i].addEventListener('click',
-			function handler(e) {  // https://stackoverflow.com/questions/26617719/turn-off-event-listener-after-triggered-once
-				var targetElement = e.target || e.srcElement;   // https://stackoverflow.com/questions/11741070/js-how-to-get-the-element-clicked-on
-				targetElement.parentElement.nextElementSibling.arrive('.lista2t', function() {
-					createColumn(targetElement.parentElement.nextElementSibling);
-					targetElement.parentElement.nextElementSibling.unbindArrive('.lista2t');
-				});
-			}
-		);
+		tvLinks[i].addEventListener('click', function handler(event) {  // https://stackoverflow.com/questions/26617719/turn-off-event-listener-after-triggered-once
+
+			var targetElement = ( event.target || event.srcElement ).closest(tvEpisodes);   // https://stackoverflow.com/questions/11741070/js-how-to-get-the-element-clicked-on
+			targetElement.arrive(tvContent, function() {
+					// createColumn(targetElement.querySelector(tvContent));
+				createColumn(this); // 'this' refers to the newly created element
+				targetElement.unbindArrive(tvContent);
+			});
+
+		});
 	}
 } else {
 	createColumn(document);        // the initial column 'Files' after of which the extra column will be appended);
