@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2021.3.28
+// @version     2021.7.3
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -9,6 +9,7 @@
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.0/moment.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data-10-year-range.min.js
+// @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
@@ -74,6 +75,26 @@ function convertToLocalTimezone(timestamps) {
 
 }
 
-// const timestamps = document.querySelectorAll('tr.lista2 td:nth-child(3)');
-const timestamps = document.querySelectorAll('td[width="150px"]');
-convertToLocalTimezone(timestamps);
+
+
+// Per request: https://greasyfork.org/en/scripts/21550-rarbg-convert-torrent-timestamps-to-relative-format/discussions/91794
+const isOnTV = window.location.href.includes('/tv/');  // example link: https://rarbgproxy.org/tv/tt1720601/
+
+if (isOnTV) {
+
+	// document.querySelectorAll('.tvshowClick').forEach((element) => {
+	document.querySelectorAll('div[id^="episode_"]').forEach((element) => {
+		element.addEventListener('click', function(){
+			document.arrive('div[id^="tvcontent_"] .lista2t', function () {
+				convertToLocalTimezone(document.querySelectorAll('td[width="150px"]'));
+			});
+		});
+	});
+
+} else {
+
+	// const timestamps = document.querySelectorAll('tr.lista2 td:nth-child(3)');
+	const timestamps = document.querySelectorAll('td[width="150px"]');
+	convertToLocalTimezone(timestamps);
+
+}
