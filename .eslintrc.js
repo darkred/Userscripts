@@ -12,6 +12,7 @@ module.exports = {
 		// "eslint:all",
 		"eslint:recommended",
 		// "plugin:clean-regex/recommended"
+		// "plugin:regexp/all"
 		"plugin:regexp/recommended"
 
 	],
@@ -20,7 +21,8 @@ module.exports = {
 		"regexp"
 	],
 	"parserOptions": {
-		"ecmaVersion": 12,
+		// "ecmaVersion": 12,
+		"ecmaVersion": 'latest',
 		"sourceType": "script",
 		"ecmaFeatures": {
 			"globalReturn ": true,
