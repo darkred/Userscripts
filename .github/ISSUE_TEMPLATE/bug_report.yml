@@ -30,8 +30,8 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots
-      description: "Please drag'n'drop screenshots/gif so I can help you better."
+      label: Screenshots/video/gif
+      description: "Please drag'n'drop screenshots/video/gif of the issue, if it’s visual, so I can help you better."
   - type: textarea
     id: logs
     attributes:
