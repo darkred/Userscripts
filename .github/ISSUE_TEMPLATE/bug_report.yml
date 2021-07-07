@@ -18,7 +18,7 @@ body:
           required: true
         - label: I performed a search of the [issue tracker](https://github.com/darkred/Userscripts/issues) and in the relevant Greasyfork [feedback page](https://greasyfork.org/en/users/2160-darkred?sort=updated) to avoid opening a duplicate issue.
           required: true
-        - label: The bug is caused by the script itself. It doesn't happen if I disable the script, and in a fresh browser profile.
+        - label: The bug is caused by the script itself. It doesn't happen if I disable the script, or in a fresh browser profile.
           required: true
   - type: textarea
     id: the-problem
