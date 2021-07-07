@@ -48,7 +48,7 @@ body:
     id: script-manager
     attributes:
       label: Script Manager
-      description: What script manager are you using? (Greasemonkey is NOT supported)
+      description: What script manager are you using? (make sure it is the latest version - Greasemonkey is NOT supported)
       multiple: true
       options:
         - Tampermonkey
