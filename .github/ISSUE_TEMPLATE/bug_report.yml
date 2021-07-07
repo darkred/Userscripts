@@ -10,13 +10,13 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: "Please confirm the following:"
+      label: "Please ensure:"
       options:
         - label: "I included in the issue title the script name I'm referring to." 
           required: true
-        - label: I performed a cursory search of the [issue tracker](https://github.com/darkred/Userscripts/issues) and in the relevant Greasyfork [feedback page](https://greasyfork.org/en/users/2160-darkred?sort=updated) to avoid opening a duplicate issue.
+        - label: I performed a search of the [issue tracker](https://github.com/darkred/Userscripts/issues) and in the relevant Greasyfork [feedback page](https://greasyfork.org/en/users/2160-darkred?sort=updated) to avoid opening a duplicate issue.
           required: true
-        - label: I tested the script having disabled all others, and in a fresh browser profile if needed.
+        - label: The bug is caused by the script itself. It doesn't happen if I disable the script, or in a fresh browser profile.
           required: true
   - type: textarea
     id: the-problem
