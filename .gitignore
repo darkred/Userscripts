@@ -48,3 +48,6 @@ Temporary Items
 
 
 node_modules/
+
+# lockfiles
+package-lock.json
