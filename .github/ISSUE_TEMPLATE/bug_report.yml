@@ -1,6 +1,6 @@
 name: 🐛 Report a bug
 description: File a bug report
-title: "[script title] "
+title: "[script title] bug description"
 labels: bug
 body:
   - type: markdown
