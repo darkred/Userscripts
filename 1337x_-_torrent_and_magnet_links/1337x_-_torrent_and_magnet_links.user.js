@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.6.15
+// @version     2021.7.7
 // @description Adds a column with torrent and magnet links in RARBG lists
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
-// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending|cat|top-100(-(((non-eng|eng)-)?movies|television|games|applications|music|documentaries|anime|other|xxx))?|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
+// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending(-week)?|cat|top-100(-(((non-eng|eng)-)?movies|television|games|applications|music|documentaries|anime|other|xxx))?|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
 // @grant       GM_addStyle
 // @run-at      document-idle
 //
