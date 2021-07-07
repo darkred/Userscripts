@@ -1,12 +1,14 @@
-name: Bug Report
+name: 🐛 Report a bug
 description: File a bug report
 title: "[script title] "
-labels: [bug, triage]
+labels: bug
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        # Thanks for reporting a bug! ⛰
+        
+        Help us replicate the issue by filling in this form. 
   - type: checkboxes
     id: terms
     attributes:
