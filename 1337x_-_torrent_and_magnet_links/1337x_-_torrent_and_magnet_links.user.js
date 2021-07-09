@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.7.7
-// @description Adds a column with torrent and magnet links in RARBG lists
+// @version     2021.7.9
+// @description Adds a column with torrent and magnet links in 1337x lists
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
