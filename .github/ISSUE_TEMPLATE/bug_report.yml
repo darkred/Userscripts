@@ -55,6 +55,6 @@ body:
     id: browsers
     attributes:
       label: Browser(s) used
-      description:  What browsers are you seeing the problem on? (make sure it is the latest version - old versions such as Waterfox are NOT supported)
+      description:  What browsers are you seeing the problem on? (old versions such as Waterfox are NOT supported)
     validations:
       required: true
