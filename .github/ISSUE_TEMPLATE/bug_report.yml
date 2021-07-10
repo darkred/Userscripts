@@ -48,13 +48,13 @@ body:
     id: script-manager
     attributes:
       label: Script Manager
-      description: What script manager are you using? (Tampermonkey and Violentmonkey are supported - Greasemonkey is NOT supported)
+      description: (Tampermonkey and Violentmonkey are supported - Greasemonkey is NOT supported)
     validations:
       required: true
   - type: input
     id: browsers
     attributes:
       label: Browser(s) used
-      description:  What browsers are you seeing the problem on? (make sure it is the latest version - old versions are NOT supported)
+      description:  (make sure it is the latest version - old versions are NOT supported)
     validations:
       required: true
