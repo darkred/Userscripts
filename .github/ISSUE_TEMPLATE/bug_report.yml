@@ -44,26 +44,17 @@ body:
       placeholder: https://example.com/page1.htm
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: script-manager
     attributes:
       label: Script Manager
-      description: What script manager are you using? (make sure it is the latest version - Greasemonkey is NOT supported)
-      multiple: true
-      options:
-        - Tampermonkey
-        - Violentmonkey
+      description: What script manager are you using? (Tampermonkey and Violentmonkey are supported - Greasemonkey is NOT supported)
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: browsers
     attributes:
       label: Browser(s) used
       description:  What browsers are you seeing the problem on? (make sure it is the latest version - old versions such as Waterfox are NOT supported)
-      multiple: true
-      options:
-        - Chrome (or Edge/Opera)
-        - Firefox
-        - Safari
     validations:
       required: true
