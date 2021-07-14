@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.7.9
-// @description Adds a column with torrent and magnet links in 1337x lists
+// @version     2021.7.14
+// @description Adds a column with torrent and magnet links in lists
 // @author      darkred
 // @contributor NotNeo
 // @license     MIT
-// @include     /^https?:\/\/x?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)\/(home|search|sort-search|trending(-week)?|cat|top-100(-(((non-eng|eng)-)?movies|television|games|applications|music|documentaries|anime|other|xxx))?|sub|popular-(.+)|new-episodes)\/?(.+\/)?$/
+// @include     /^https:\/\/(www\.)?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)((?!\/torrent)).*$/
 // @grant       GM_addStyle
 // @run-at      document-idle
 //
@@ -69,36 +69,51 @@ GM_addStyle(`
 `);
 
 
-function appendColumn(elem) {
+function appendColumn() {
+
 
 	const title = 'ml&nbsp;dl';
 
-	let entries = elem.querySelectorAll('.table-list > thead > tr > th:nth-child(1), .table-list > tbody > tr > td:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
+	let headers = document.querySelectorAll('.table-list > thead > tr:not(.blank) > th:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
+	let cells =   document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
 
-	entries[0].insertAdjacentHTML('afterend', `<th>` + title + `</th>`);          // creation of the extra column
-	for (let i = 1; i < entries.length; i++) {
-		entries[i].insertAdjacentHTML('afterend', `<td>` + title + `</td>`);
+	for (let i = 0; i < headers.length; i++) {
+		headers[i].insertAdjacentHTML('afterend', `<th>` + title + `</th>`);          // creation of the extra column
 	}
 
-
-	let header = elem.querySelector('.table-list > thead > tr > th:nth-child(2)');       // the first cell (the header cell) of the new column
-	header.innerHTML = title;
-	header.setAttribute('class', 'coll-1b');
-
-	let cells = elem.querySelectorAll('.table-list > tbody > tr > td:nth-child(2)');               // the rest cells of the new column
 	for (let i = 0; i < cells.length; i++) {
-		cells[i].classList.add('coll-1b');
-		cells[i].classList.add('dl-buttons');
+		cells[i].insertAdjacentHTML('afterend', `<td>` + title + `</td>`);
+	}
+
+	let headersNew = document.querySelectorAll('.table-list > thead > tr:not(.blank) > th:nth-child(2)');       // the first cell (the header cell) of the new column
+	for (let i = 0; i < headersNew.length; i++) {
+		headersNew[i].innerHTML = title;
+		headersNew[i].setAttribute('class', 'coll-1b');
 	}
 
 
-	let newColumn = elem.querySelectorAll('.table-list > tbody > tr > td:nth-child(2)');       // new column
-	let oldColumn = elem.querySelectorAll('.table-list > tbody > tr > td:nth-child(1)');       // old column
+
+
+
+	let restCells = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');               // the rest cells of the new column    tr:not(.blank) is for lists that also have empty lines e.g. https://1337x.to/series/a-to-z/1/13/
+	for (let i = 0; i < cells.length; i++) {
+		restCells[i].classList.add('coll-1b');
+		restCells[i].classList.add('dl-buttons');
+	}
+
+
+	let newColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');       // new column
+	let oldColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(1)');       // old column
 
 
 	for (let i = 0; i < newColumn.length; i++) {
 
-		let href = oldColumn[i].firstElementChild.nextElementSibling.href;
+		let href;
+		if (!window.location.href.includes('/series/')){
+			href = oldColumn[i].firstElementChild.nextElementSibling.href;
+		} else {    // e.g.for https://1337x.to/series/a-to-z/1/13/
+			href = oldColumn[i].firstElementChild.href;
+		}
 
 		newColumn[i].innerHTML = '<a class="list-button-magnet" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
 
@@ -137,7 +152,6 @@ function addClickListeners(links, type){
 
 
 					if (retrievedLink) {
-						// links[i].setAttribute('href', retrievedLink.href);
 						links[i].setAttribute('href', retrievedLink.href.replace('http:', 'https:'));  // the links are http and as such are blocked in Chrome
 						links[i].click();
 					}
@@ -156,11 +170,11 @@ function addClickListeners(links, type){
 
 
 
-function createColumn(element){
-	appendColumn(element);
-	addClickListeners(element.querySelectorAll('.list-button-magnet'), 'ml' );
-	addClickListeners(element.querySelectorAll('.list-button-dl'), 'dl' );
+function createColumn(){
+	appendColumn();
+	addClickListeners(document.querySelectorAll('.list-button-magnet'), 'ml' );
+	addClickListeners(document.querySelectorAll('.list-button-dl'), 'dl' );
 }
 
 
-createColumn(document);        // the initial column 'Files' after of which the extra column will be appended);
+createColumn();
