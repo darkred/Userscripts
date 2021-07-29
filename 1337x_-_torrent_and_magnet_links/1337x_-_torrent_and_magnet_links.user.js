@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.7.14
+// @version     2021.7.29
 // @description Adds a column with torrent and magnet links in lists
 // @author      darkred
 // @contributor NotNeo
@@ -82,43 +82,40 @@ function appendColumn() {
 	}
 
 	for (let i = 0; i < cells.length; i++) {
-		cells[i].insertAdjacentHTML('afterend', `<td>` + title + `</td>`);
+		cells[i].insertAdjacentHTML('afterend', `<td>` + '' + `</td>`);
 	}
 
+
 	let headersNew = document.querySelectorAll('.table-list > thead > tr:not(.blank) > th:nth-child(2)');       // the first cell (the header cell) of the new column
+	let cellsNew =   document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');               // the rest cells of the new column    tr:not(.blank) is for lists that also have empty lines e.g. https://1337x.to/series/a-to-z/1/13/
+
 	for (let i = 0; i < headersNew.length; i++) {
 		headersNew[i].innerHTML = title;
 		headersNew[i].setAttribute('class', 'coll-1b');
 	}
 
-
-
-
-
-	let restCells = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');               // the rest cells of the new column    tr:not(.blank) is for lists that also have empty lines e.g. https://1337x.to/series/a-to-z/1/13/
-	for (let i = 0; i < cells.length; i++) {
-		restCells[i].classList.add('coll-1b');
-		restCells[i].classList.add('dl-buttons');
+	for (let i = 0; i < cellsNew.length; i++) {
+		cellsNew[i].classList.add('coll-1b');
+		cellsNew[i].classList.add('dl-buttons');
 	}
+
 
 
 	let newColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');       // new column
 	let oldColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(1)');       // old column
-
 
 	for (let i = 0; i < newColumn.length; i++) {
 
 		let href;
 		if (!window.location.href.includes('/series/')){
 			href = oldColumn[i].firstElementChild.nextElementSibling.href;
-		} else {    // e.g.for https://1337x.to/series/a-to-z/1/13/
+		} else {    // e.g. https://1337x.to/series/a-to-z/1/13/
 			href = oldColumn[i].firstElementChild.href;
 		}
 
 		newColumn[i].innerHTML = '<a class="list-button-magnet" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
 
 		newColumn[i].innerHTML += '<a class="list-button-dl" data-href="' + href + '"' + 'href="javascript:void(0)" + title="dl via xhr"><i class="flaticon-torrent-download"></i></a>';
-
 
 	}
 
