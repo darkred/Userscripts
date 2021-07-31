@@ -34,7 +34,8 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: Console errors, if any
+      label: Console errors
+      description: If any
       render: shell
   - type: input
     id: example-url
