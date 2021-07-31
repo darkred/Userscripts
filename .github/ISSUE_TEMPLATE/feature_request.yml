@@ -10,7 +10,7 @@ body:
       options:
         - label: "I included in the issue title the script name I'm referring to." 
           required: true
-        - label: Before you request from me to write a new script for you, check in https://greasyfork.org/en/scripts and https://openuserjs.org/ : what you ask might be there already.
+        - label: "Before you request from me to write a new script for you, check in https://greasyfork.org/en/scripts and https://openuserjs.org/ : what you ask might be there already."
           required: false
   - type: textarea
     attributes:
