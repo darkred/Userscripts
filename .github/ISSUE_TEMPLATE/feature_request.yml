@@ -1,12 +1,17 @@
 name: 🆕 Suggest an improvement or new feature
 description: ———
+title: "[script title] <improvement/new feature description>"
 labels: enhancement, under discussion
 body:
-  - type: markdown
+  - type: checkboxes
+    id: terms
     attributes:
-      value: |
-        - When referring to an existing script of mine, include its name in parenthesis in the title.
-        - Before you request from me to write a new script for you, check in https://greasyfork.org/en/scripts and https://openuserjs.org/ : what you ask might be there already.
+      label: "Please ensure:"
+      options:
+        - label: "I included in the issue title the script name I'm referring to." 
+          required: true
+        - label: Before you request from me to write a new script for you, check in https://greasyfork.org/en/scripts and https://openuserjs.org/ : what you ask might be there already.
+          required: false
   - type: textarea
     attributes:
       label: Description
