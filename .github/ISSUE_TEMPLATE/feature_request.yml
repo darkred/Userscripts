@@ -10,7 +10,7 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: "Be as specific as possible, don't make me have to guess what your suggested improvement or feature is."
+      description: "Try to be as specific as possible, don't make me have to guess what your suggested improvement or feature is."
     validations:
       required: true
   - type: textarea
@@ -20,7 +20,7 @@ body:
   - type: input
     attributes:
       label: Example URL
-      description: Include a REAL URL where the feature should appear. e.g. Do you want a feature to appear on the main page of a repo? Paste a link to a repo
+      description: Include a REAL URL where the feature should appear. Paste a link here
       placeholder: https://example.com/index.html
       value: https://
     validations:
