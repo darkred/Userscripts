@@ -5,5 +5,5 @@ which is appended by default to each mail body and cannot be modified via Settin
 
 It uses the excellent library [arrive.js](https://github.com/uzairfarooq/arrive)
 
-The script only works in Chrome, see [here](https://github.com/darkred/Userscripts/issues/13#issuecomment-739492052) and [here](https://github.com/darkred/Userscripts/issues/43#issuecomment-893362520).  
+The script only works in Chrome, not Firefox - see [here](https://github.com/darkred/Userscripts/issues/13#issuecomment-739492052) and [here](https://github.com/darkred/Userscripts/issues/43#issuecomment-893362520).  
 Tampermonkey and Violentmonkey are supported - Greasemonkey is not supported.
