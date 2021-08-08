@@ -50,6 +50,7 @@ body:
     attributes:
       label: Script Manager
       description: (Tampermonkey and Violentmonkey are supported - Greasemonkey is NOT supported)
+      placeholder: e.g. Tampermonkey 4.14
     validations:
       required: true
   - type: input
@@ -57,5 +58,6 @@ body:
     attributes:
       label: Browser(s) used
       description:  (make sure it is the latest version - old versions are NOT supported)
+      placeholder: e.g. Chrome 92
     validations:
       required: true
