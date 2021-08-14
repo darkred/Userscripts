@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.7.29
+// @version     2021.8.14
 // @description Adds a column with torrent and magnet links in lists
 // @author      darkred
 // @contributor NotNeo
@@ -71,53 +71,47 @@ GM_addStyle(`
 
 function appendColumn() {
 
-
+	const allTables = document.querySelectorAll('.table-list-wrap');
+	const isSeries = window.location.href.includes('/series/');
 	const title = 'ml&nbsp;dl';
 
-	let headers = document.querySelectorAll('.table-list > thead > tr:not(.blank) > th:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
-	let cells =   document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(1)');        // the initial column 'Files' after of which the extra column will be appended
 
-	for (let i = 0; i < headers.length; i++) {
-		headers[i].insertAdjacentHTML('afterend', `<th>` + title + `</th>`);          // creation of the extra column
-	}
+	allTables.forEach((table) => {
 
-	for (let i = 0; i < cells.length; i++) {
-		cells[i].insertAdjacentHTML('afterend', `<td>` + '' + `</td>`);
-	}
+		const headersCellsInitial = table.querySelectorAll(`.table-list > thead > tr:not(.blank) > th:nth-child(1),
+		                                                    .table-list > tbody > tr:not(.blank) > td:nth-child(1)`);
+		headersCellsInitial.forEach((cell, index) => {
+			if (index === 0 && !isSeries) {
+				cell.insertAdjacentHTML('afterend', `<th>` + title + `</th>`);
+			} else {
+				cell.insertAdjacentHTML('afterend', `<td>` + title + `</td>`);
+			}
+		});
+
+		const headersCellsNew = table.querySelectorAll(`.table-list > thead > tr:not(.blank) > th:nth-child(2),
+		                                                .table-list > tbody > tr:not(.blank) > td:nth-child(2)`);
+		headersCellsNew.forEach((cell, index) => {
+			cell.classList.add('coll-1b');
+			if (index === 0 && !isSeries) {
+				cell.innerHTML = title;
+			} else {
+				cell.classList.add('dl-buttons');
+
+				let href;
+				if (!isSeries){
+					href = headersCellsInitial[index].firstElementChild.nextElementSibling.href;
+				} else {    // e.g. https://1337x.to/series/a-to-z/1/13/
+					href = headersCellsInitial[index].firstElementChild.href;
+				}
+
+				cell.innerHTML =  `<a class="list-button-magnet" data-href=" ${href} "href="javascript:void(0)" title="ml via xhr"><i class="flaticon-magnet"></i></a>`;
+				cell.innerHTML += `<a class="list-button-dl" data-href="     ${href} "href="javascript:void(0)" title="dl via xhr"><i class="flaticon-torrent-download"></i></a>`;
+			}
+		});
 
 
-	let headersNew = document.querySelectorAll('.table-list > thead > tr:not(.blank) > th:nth-child(2)');       // the first cell (the header cell) of the new column
-	let cellsNew =   document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');               // the rest cells of the new column    tr:not(.blank) is for lists that also have empty lines e.g. https://1337x.to/series/a-to-z/1/13/
+	});
 
-	for (let i = 0; i < headersNew.length; i++) {
-		headersNew[i].innerHTML = title;
-		headersNew[i].setAttribute('class', 'coll-1b');
-	}
-
-	for (let i = 0; i < cellsNew.length; i++) {
-		cellsNew[i].classList.add('coll-1b');
-		cellsNew[i].classList.add('dl-buttons');
-	}
-
-
-
-	let newColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(2)');       // new column
-	let oldColumn = document.querySelectorAll('.table-list > tbody > tr:not(.blank) > td:nth-child(1)');       // old column
-
-	for (let i = 0; i < newColumn.length; i++) {
-
-		let href;
-		if (!window.location.href.includes('/series/')){
-			href = oldColumn[i].firstElementChild.nextElementSibling.href;
-		} else {    // e.g. https://1337x.to/series/a-to-z/1/13/
-			href = oldColumn[i].firstElementChild.href;
-		}
-
-		newColumn[i].innerHTML = '<a class="list-button-magnet" data-href="' + href + '"' + 'href="javascript:void(0)" + title="ml via xhr"><i class="flaticon-magnet"></i></a>';
-
-		newColumn[i].innerHTML += '<a class="list-button-dl" data-href="' + href + '"' + 'href="javascript:void(0)" + title="dl via xhr"><i class="flaticon-torrent-download"></i></a>';
-
-	}
 
 }
 
@@ -140,13 +134,7 @@ function addClickListeners(links, type){
 					let container = document.implementation.createHTMLDocument().documentElement;
 					container.innerHTML = xhr.responseText;
 
-					let retrievedLink;
-					if (type === 'ml'){
-						retrievedLink = container.querySelector('a[href^="magnet:"]');		// the 'magnet link' element in the retrieved page
-					} else {
-						retrievedLink = container.querySelector('.dropdown-menu > li > a');		// the 'download link' element in the retrieved page
-					}
-
+					let retrievedLink = (type === 'ml') ? container.querySelector('a[href^="magnet:"]') : container.querySelector('.dropdown-menu > li > a');
 
 					if (retrievedLink) {
 						links[i].setAttribute('href', retrievedLink.href.replace('http:', 'https:'));  // the links are http and as such are blocked in Chrome
