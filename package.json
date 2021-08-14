@@ -2,6 +2,7 @@
   "devDependencies": {
     "eslint": "*",
     "eslint-plugin-clean-regex": "*",
-    "eslint-plugin-regexp": "*"
+    "eslint-plugin-regexp": "*",
+    "eslint-plugin-userscripts": "*"
   }
 }
