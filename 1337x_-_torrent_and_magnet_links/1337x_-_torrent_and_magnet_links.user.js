@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.8.14
+// @version     2021.8.15
 // @description Adds a column with torrent and magnet links in lists
 // @author      darkred
 // @contributor NotNeo
@@ -119,9 +119,9 @@ function appendColumn() {
 
 function addClickListeners(links, type){
 
-	for(let i = 0; i < links.length; i++) {
+	links.forEach((link) => {
 
-		links[i].addEventListener('click', function(event){
+		link.addEventListener('click', function(event){
 
 			let href = this.getAttribute('href');
 			if (href === 'javascript:void(0)') {
@@ -137,8 +137,8 @@ function addClickListeners(links, type){
 					let retrievedLink = (type === 'ml') ? container.querySelector('a[href^="magnet:"]') : container.querySelector('.dropdown-menu > li > a');
 
 					if (retrievedLink) {
-						links[i].setAttribute('href', retrievedLink.href.replace('http:', 'https:'));  // the links are http and as such are blocked in Chrome
-						links[i].click();
+						link.setAttribute('href', retrievedLink.href.replace('http:', 'https:'));  // the links are http and as such are blocked in Chrome
+						link.click();
 					}
 
 
@@ -149,7 +149,7 @@ function addClickListeners(links, type){
 
 		}, false);
 
-	}
+	});
 
 }
 
