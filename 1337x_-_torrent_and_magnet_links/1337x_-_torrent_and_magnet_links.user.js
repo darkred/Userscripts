@@ -71,8 +71,8 @@ GM_addStyle(`
 
 function appendColumn() {
 
-	const allTables = document.querySelectorAll('.table-list-wrap');
-	const isSeries = window.location.href.includes('/series/');
+	const allTables = document.querySelectorAll('.table-list-wrap');  // for pages with multiple tables e.g. https://1337x.to/home/
+	const isSeries = window.location.href.includes('/series/');       // for pages with tables that have no header e.g. https://1337x.to/series/a-to-z/1/13/
 	const title = 'ml&nbsp;dl';
 
 
@@ -100,7 +100,7 @@ function appendColumn() {
 				let href;
 				if (!isSeries){
 					href = headersCellsInitial[index].firstElementChild.nextElementSibling.href;
-				} else {    // e.g. https://1337x.to/series/a-to-z/1/13/
+				} else {
 					href = headersCellsInitial[index].firstElementChild.href;
 				}
 
