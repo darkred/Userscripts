@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        1337x - torrent and magnet links
 // @namespace   darkred
-// @version     2021.8.15
+// @version     2021.8.17
 // @description Adds a column with torrent and magnet links in lists
 // @author      darkred
-// @contributor NotNeo
+// @contributor NotNeo, barn852
 // @license     MIT
 // @include     /^https:\/\/(www\.)?1337x\.(to|st|ws|eu|se|is|gd|unblocked\.dk)((?!\/torrent)).*$/
 // @grant       GM_addStyle
@@ -35,13 +35,13 @@ GM_addStyle(`
 
 	table.table-list td.dl-buttons {
 		border-left: 1px solid #f6f6f6;
+		border-right: 1px solid #c0c0c0;
 		padding-left: 2.5px;
 		padding-right: 2.5px;
 		text-align: center !important;
 		position: relative;
-		display: inline-block !important;
-		/* width: 50px; */
-		width: 52px;
+		display: table-cell !important; /* proper height of cell on multiple row torrent name */
+		width: 6%;
 	}
 
 	td.dl-buttons > a,
