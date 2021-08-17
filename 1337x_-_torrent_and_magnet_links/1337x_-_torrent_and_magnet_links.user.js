@@ -10,10 +10,14 @@
 // @grant       GM_addStyle
 // @run-at      document-idle
 //
-// Thanks to NotNeo: most of the CSS used is taken from this script https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere .
+//    Thanks to:
+//    - NotNeo: most of the CSS used is taken from this script: https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere .
+//    - barn852 for his contribution here: https://greasyfork.org/en/scripts/420754-1337x-torrent-and-magnet-links/discussions/96026
+//
+// Official mirrors list: https://1337x.to/about
+//
 // ==/UserScript==
 
-// Official mirrors list: https://1337x.to/about
 
 
 GM_addStyle(`
