@@ -1,12 +1,17 @@
-Adds a column with torrent and magnet links in 1337x lists: 
-![](https://i.imgur.com/S4nzRP8.jpg)
+Adds a column with torrent and magnet links in 1337x lists:  
+![](https://i.imgur.com/goYAFQH.jpg)
 
-Notes: 
+Notes:
 
 - The script generates all links via XHR:
-  - The DL/ML links will have: 
-    - initially, as its destination (`href`) a: `javascript:void(0)`, 
-    - as tooltip: "`DL/ML via XHR`".
-  - As you click a DL/ML icon, the relevant target page will be retrieved via XHR in the background (so, after clicking an icon, it will now have the magnet link).  
-- Thanks to NotNeo: most of the CSS used is taken from this script https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere ,  
-- and to barn852 (for [this](https://greasyfork.org/en/scripts/420754-1337x-torrent-and-magnet-links/discussions/96026) contribution).- 
+  - The DL/ML links will have:  
+     - as tooltip: "`ml/dl via xhr`".
+     - as destination (href):
+         - initially: `javascript:void(0)` *(to avoid taking the user back to the top of the page, which occurred if having `#`, instead)*,
+         - as you click a ml/dl icon, the relevant target URL will be retrieved via XHR in the background.  
+- Thanks to: 
+  - NotNeo: most of the CSS is from his [1337X - Magnet/Torrent links everywhere](https://greasyfork.org/en/scripts/373230-1337x-magnet-torrent-links-everywhere) script,
+  - barn852 for [this](https://greasyfork.org/en/scripts/420754-1337x-torrent-and-magnet-links/discussions/96026) contribution .
+- Tampermonkey and Violentmonkey are supported - Greasemonkey is NOT supported.
+
+[Hosted at GitHub](https://github.com/darkred/Userscripts)
