@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.4.27
+// @version     2021.9.16
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -235,9 +235,11 @@ if (!isOnTorrentListPage) {
 
 } else {	// i.e. if isOnTorrentListPage === true
 
-	var links = document.querySelectorAll('a[onmouseover~="return"]');
+	// var links = document.querySelectorAll('a[onmouseover^="return"]');
+	var links = document.querySelectorAll('td[valign="top"] > a[onmouseover^="return overlib"]');  // The "Recommended torrents" elements on https://rarbgproxy.org/torrents.php* .
 
-	for(let i = 0; i < 8; i++) {
+	// for(let i = 0; i < 9; i++) {
+	for(let i = 0; i < links.length; i++) {
 
 		links[i].addEventListener('click', function(event){
 
