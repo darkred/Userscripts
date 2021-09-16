@@ -18,7 +18,7 @@
 // Automatically redirect e.g.
 // https://rarbgproxy.org/torrents.php?search=tt6139732 to
 // https://rarbgproxy.org/torrents.php?imdb=tt6139732
-if (/torrents\.php\?search=tt[0-9]+/.test(window.location.href)) {
+if (/torrents\.php\?search=tt\d+/.test(window.location.href)) {
 	// window.location.href = window.location.href.replace('?search=', '?imdb=');
 	window.location.replace(window.location.href.replace('?search=', '?imdb='));  // Use window.location.replace(url) if you want to redirect the user in a way that the current page is forgotten by the back button, ( https://stackoverflow.com/a/3170964 )
 	throw 'Reloading page'; // Stop script execution
@@ -66,7 +66,7 @@ if (!isOnTorrentListPage) {
 	var ratingByUsersElement = document.querySelector('.ratingblock p');
 	var text = document.querySelector('.ratingblock p').innerHTML;
 	ratingByUsersElement.title = ratingByUsersElement.innerText;
-	var regex = /[\s]+<strong>[\s]+([\d.]+)<\/strong>\/([\d.]+)(.*)/;
+	var regex = /\s+<strong>\s+([\d.]+)<\/strong>\/([\d.]+)(.*)/;
 	var average = text.match(regex)[1] * 2;
 	var votes = text.match(regex)[2] * 2;
 	var rest = text.match(regex)[3];
@@ -139,7 +139,7 @@ if (!isOnTorrentListPage) {
 
 	var rtTomatometerNode = $(".header2:contains('RT Tomatometer, Audience Score:')").next();
 	if (rtTomatometerNode.length !== 0)
-		$(rtTomatometerNode).html($(rtTomatometerNode).html().replace(/(.*) ([\d]+%)(.*)s ([\d]+%)/, function(m, s1, s2, s3, s4) { return s1 + '<strong>'+ s2 + '</strong>' + s3 + '<strong>'+ s4 + '</strong>' ;}));
+		$(rtTomatometerNode).html($(rtTomatometerNode).html().replace(/(.*) (\d+%)(.*)s (\d+%)/, function(m, s1, s2, s3, s4) { return s1 + '<strong>'+ s2 + '</strong>' + s3 + '<strong>'+ s4 + '</strong>' ;}));
 
 
 	var rtCriticsAvgNode = $(".header2:contains('RT Critics Avg:')").next();
@@ -258,7 +258,7 @@ if (!isOnTorrentListPage) {
 
 					if (retrievedLink) {
 						let currentDomainName = window.location.hostname;
-						links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/.*(tt[0-9]*).*/)[1]);  // example URL: https://rarbgproxy.org/torrents.php?imdb=tt7605074
+						links[i].setAttribute('href', 'https://' + currentDomainName + '/torrents.php?imdb=' + retrievedLink.match(/(tt\d+)/)[1]);  // example URL: https://rarbgproxy.org/torrents.php?imdb=tt7605074
 					}
 
 
@@ -298,9 +298,9 @@ if (!isOnTorrentListPage) {
 
 function removePipesLinebreaks(s){
 	if (s) {
-		return s.replace(/(\ \|)/gm,',')
-				.replace(/(\|)/gm,',')
-				.replace(/(\r\n|\n|\r|&nbsp;|<br>)/gm,' ');
+		return s.replace(/( \|)/g,',')
+				.replace(/(\|)/g,',')
+				.replace(/(\r\n|\n|\r|&nbsp;|<br>)/g,' ');
 	}
 }
 
@@ -328,7 +328,7 @@ if (rtPlotStored === null || rtPlotStored === 'undefined') {
 if (isOnSearchbyIMDbIdPage) {
 
 	let searchListingHeader = document.querySelector('h1.black').textContent;
-	const imdbIdRegex = /tt[0-9]+/;
+	const imdbIdRegex = /tt\d+/;
 	let imdbId;
 	if (imdbIdRegex.test(searchListingHeader)){
 		imdbId = imdbIdRegex.exec(searchListingHeader)[0];
@@ -428,23 +428,23 @@ if (isOnSearchbyIMDbIdPage) {
 
 	// make bold  (example URL: https://rarbgproxy.org/torrents.php?imdb=tt6146586)
 	let imdbRefRatingElement = $("b:contains('IMDb Rating:')").parent();
-	let imdbRatingBoldRegex = /(.*IMDb<\/a> Rating:<\/b> )([0-9.]+)(\/.*)/;
-	let rtCriticsBoldRegex =  /(.*RT Critics Avg:<\/b> )([0-9.]+)(\/.*)/;
-	let rtTomatometerBoldRegex =  /(.*<b>RT Tomatometer:<\/b> <img.*> )([\d]+%.*[\d]+%)(.*)/;
+	let imdbRatingBoldRegex = /(.*IMDb<\/a> Rating:<\/b> )([\d.]+)(\/.*)/;
+	let rtCriticsBoldRegex =  /(.*RT Critics Avg:<\/b> )([\d.]+)(\/.*)/;
+	let rtTomatometerBoldRegex =  /(.*<b>RT Tomatometer:<\/b> <img.*> )(\d+%.*\d+%)(.*)/;
 	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), imdbRatingBoldRegex));
 	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), rtCriticsBoldRegex));
 	imdbRefRatingElement.html(makeBold(imdbRefRatingElement.html(), rtTomatometerBoldRegex));
 
 
 	// duration from min to h:mm
-	let durationRegex = /(.*<b>Runtime:<\/b> )([\d]+)(.*)/;
+	let durationRegex = /(.*<b>Runtime:<\/b> )(\d+)(.*)/;
 	if (durationRegex.test(imdbRefRatingElement.html())){
 		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
 	}
 
 
 	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
-	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt[0-9]+\/">IMDb<\/a> Rating:.*10<br>)?(<b>IMDb Summary:<\/b>.*<\/span><br>)[\s]*(<b>RT Critics Avg:.*10<br>)?[\s]*(<b>RT Tomatometer:.*%<\/b>[\s]+<br>)?(<b>RT Critics Consensus:.*)?/;
+	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt\d+\/">IMDb<\/a> Rating:.*10<br>)?(<b>IMDb Summary:<\/b>.*<\/span><br>)\s*(<b>RT Critics Avg:.*10<br>)?\s*(<b>RT Tomatometer:.*%<\/b>\s+<br>)?(<b>RT Critics Consensus:.*)?/;
 	if (rearrangeRegex.test(imdbRefRatingElement.html())){
 		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s2) s2=''; if (!s3) s3=''; if (!s4) s4=''; if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
 	}
