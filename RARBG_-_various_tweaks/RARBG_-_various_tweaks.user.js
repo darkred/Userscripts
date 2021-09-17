@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.9.18
+// @version     2021.9.18.1
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -445,7 +445,7 @@ if (isOnSearchbyIMDbIdPage) {
 	imdbRefRatingElement.html(imdbRefRatingElement.html().replace('RT Tomatometer:', 'RT Tomatometer/Audience Score:'));
 
 	let preferredPatterns = [
-		/([\S\s]+<br>)\s+<b><a href="https:\/\/www\.imdb\.com\/title\//,
+		/([\s\S]+<br>)\s+<b><a href="https:\/\/www\.imdb\.com\/title\//,
 		/(<b><a href="https:\/\/www\.imdb\.com\/title\/tt\d+\/">IMDb<\/a> Rating:.*\.<br>)/,
 		/(<b>RT Critics Avg:.*10<br>)/,
 		// /(<b>RT Tomatometer:.*%<\/b>\s+<br>)/,
@@ -456,7 +456,7 @@ if (isOnSearchbyIMDbIdPage) {
 	let result = [];
 
 	for (let i=0; i < preferredPatterns.length;i++) {
-		if(RegExp(preferredPatterns[i]).test(imdbRefRatingElement.html())) {
+		if (preferredPatterns[i].test(imdbRefRatingElement.html())) {
 			result[i] = imdbRefRatingElement.html().match(preferredPatterns[i])[1];
 		} else {
 			result[i] = '';
