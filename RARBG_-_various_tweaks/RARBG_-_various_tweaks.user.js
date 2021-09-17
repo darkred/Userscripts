@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.9.16
+// @version     2021.9.18
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -219,8 +219,8 @@ if (!isOnTorrentListPage) {
 	// pgRating        .insertAfter(tableLastRow());
 	imdbLink        .insertAfter(tableLastRow());
 	trailer         .insertAfter(tableLastRow());
-	imdbSummary     .insertAfter(tableLastRow());
 	imdbRating      .insertAfter(tableLastRow());
+	imdbSummary     .insertAfter(tableLastRow());
 	RTTomatometer   .insertAfter(tableLastRow());
 	RTCriticsAvg    .insertAfter(tableLastRow());
 	RTCriticsCons   .insertAfter(tableLastRow());
@@ -442,12 +442,27 @@ if (isOnSearchbyIMDbIdPage) {
 		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(durationRegex, function(m, s1, s2, s3) { return s1 + minsToHoursMins(s2) + s3  ;}));
 	}
 
+	imdbRefRatingElement.html(imdbRefRatingElement.html().replace('RT Tomatometer:', 'RT Tomatometer/Audience Score:'));
 
-	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
-	var rearrangeRegex = /([\s\S]+)(<b><a href="https:\/\/www\.imdb\.com\/title\/tt\d+\/">IMDb<\/a> Rating:.*10<br>)?(<b>IMDb Summary:<\/b>.*<\/span><br>)\s*(<b>RT Critics Avg:.*10<br>)?\s*(<b>RT Tomatometer:.*%<\/b>\s+<br>)?(<b>RT Critics Consensus:.*)?/;
-	if (rearrangeRegex.test(imdbRefRatingElement.html())){
-		imdbRefRatingElement.html(imdbRefRatingElement.html().replace(rearrangeRegex, function(m, s1, s2, s3, s4, s5, s6) { if (!s2) s2=''; if (!s3) s3=''; if (!s4) s4=''; if (!s5) s5=''; if (!s6) s6='';  return s1 + s3 + s2  + s5 + s4 + s6 ;}));
+	let preferredPatterns = [
+		/([\S\s]+<br>)\s+<b><a href="https:\/\/www\.imdb\.com\/title\//,
+		/(<b><a href="https:\/\/www\.imdb\.com\/title\/tt\d+\/">IMDb<\/a> Rating:.*\.<br>)/,
+		/(<b>RT Critics Avg:.*10<br>)/,
+		// /(<b>RT Tomatometer:.*%<\/b>\s+<br>)/,
+		/(<b>RT Tomatometer\/Audience Score:.*%<\/b>\s+<br>)/,
+		/(<b>RT Critics Consensus:.*)/,
+	];
+
+	let result = [];
+
+	for (let i=0; i < preferredPatterns.length;i++) {
+		if(RegExp(preferredPatterns[i]).test(imdbRefRatingElement.html())) {
+			result[i] = imdbRefRatingElement.html().match(preferredPatterns[i])[1];
+		} else {
+			result[i] = '';
+		}
 	}
 
+	imdbRefRatingElement.html(result[0] + result[1] + result[3] + result[2] + result[4]);
 
 }
