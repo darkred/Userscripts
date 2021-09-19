@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - various tweaks
 // @namespace   darkred
-// @version     2021.9.18.1
+// @version     2021.9.19
 // @description Various tweaks for RARBG torrent detail pages, listings and search-by-IMDb-id pages.
 // @author      darkred
 // @license     MIT
@@ -150,7 +150,7 @@ if (!isOnTorrentListPage) {
 	var userRating = $(".header2:contains('Rating:')").filter(function() {
 		return $.trim($(this).text()) === "Rating:";
 	}).parent();
-	userRating = $("p:contains('votes cast')");
+	userRating = $("p:contains('votes cast'), p:contains('vote cast')");
 	$(userRating).css('font-size', '11px');
 	$(userRating).html($(userRating).html().replace('Rating:', ''));
 	$(userRating).replaceWith(function() {
@@ -463,6 +463,7 @@ if (isOnSearchbyIMDbIdPage) {
 		}
 	}
 
+	// rearrange:  IMDb Summary --> IMDb Rating --> RT Tomatometer --> RT Critics Avg --> RT Critics Consensus
 	imdbRefRatingElement.html(result[0] + result[1] + result[3] + result[2] + result[4]);
 
 }
