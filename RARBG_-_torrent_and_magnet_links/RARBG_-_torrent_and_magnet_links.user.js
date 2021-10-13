@@ -2,7 +2,7 @@
 // @name        RARBG - torrent and magnet links
 // @namespace   darkred
 // @version     2021.7.3
-// @description Adds a column with torrent and magnet links in RARBG lists
+// @description Adds a column with torrent and magnet links in lists
 // @author      darkred
 // @contributor sxe, dandyclubs, lx19990999
 // @license     MIT
