@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "eslint": "*",
-    "eslint-plugin-clean-regex": "*",
+    "eslint-plugin-no-jquery": "*",
     "eslint-plugin-regexp": "*",
     "eslint-plugin-userscripts": "*"
   }

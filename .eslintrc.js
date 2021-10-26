@@ -12,13 +12,18 @@ module.exports = {
 		// "eslint:all",
 		"eslint:recommended",
 		// "plugin:clean-regex/recommended"
-		// "plugin:regexp/all"
-		"plugin:regexp/recommended"
+		"plugin:no-jquery/deprecated",
+		// "plugin:no-jquery/recommended",
+		// "plugin:no-jquery/slim",
+		// "plugin:no-jquery/all",
+		// "plugin:regexp/all",
+		"plugin:regexp/recommended",
 
 	],
 	"plugins": [
 		// "clean-regex"
-		"regexp"
+		"regexp",
+		"no-jquery",
 	],
 	"parserOptions": {
 		// "ecmaVersion": 12,
