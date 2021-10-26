@@ -20,23 +20,18 @@ body:
           required: true
         - label: The bug is caused by the script itself. It doesn't happen if I disable the script, or in a fresh browser profile.
           required: true
+  - type: checkboxes
+    attributes:
+      label: 'Include in this issue:'
+      options:
+        - label: Screenshots/video/gif demonstrating the bug, if it’s visual
+        - label: Console errors, if any
   - type: textarea
     id: the-problem
     attributes:
       label: Describe the problem and how to replicate it
     validations:
       required: true
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots/video/gif showing the issue, if it’s visual
-      description: Files can be dropped in this field
-  - type: textarea
-    id: logs
-    attributes:
-      label: Console errors
-      description: If any
-      render: shell
   - type: input
     id: example-url
     attributes:
