@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        RARBG - convert torrent timestamps to relative format
 // @namespace   darkred
-// @version     2021.11.8
+// @version     2021.11.9
 // @description Converts torrent upload timestamps to relative format
 // @author      darkred
 // @license     MIT
@@ -17,14 +17,19 @@
 /* global moment */
 
 
-// Based on the timestamp on the footer of each RARBG page --> "Sat, 01 May 2020 20:14:56 +0200",
-// the script takes that the server time is GMT+2 and that it doesn't take DST.
+// Based on the timestamp on the footer of each RARBG page --> "Sat, 01 May 2020 20:14:56 +0200", the script takes that the server time is GMT+2 and that it doesn't take DST.
+// Otherwise, when it's e.g.                               --> "Mon, 08 Nov 2021 21:26:11 +0100",         it takes that the server time is GMT+1 and that it doesn't take DST.
 // Also, the script uses the 'moment-timezone' library as it takes DST offsets into account when converting the timestamps to user/local timezone.
 
+/*
 // This is no typo:
 // const serverTimezone = 'Etc/GMT+2';  	// -02:00	-02:00  (=no DST)
 // const serverTimezone = 'Etc/GMT-2';  	// +02:00	+02:00  (=no DST)
 const serverTimezone = 'Etc/GMT-1';  		// +01:00	+01:00  (=no DST)
+*/
+let serverTimezone;
+$('div:contains("SUPPORT :")').contents().last().text().trim().slice(-5) === '+0200' ? serverTimezone = 'Etc/GMT-2' : serverTimezone = 'Etc/GMT-1';
+
 
 const localTimezone = moment.tz.guess();    // In my case ----> +02:00	+03:00  (DST)
 
