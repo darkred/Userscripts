@@ -1,0 +1,29 @@
+# from https://github.com/tophf/mpiv/blob/master/.github/workflows/lint.yml
+# and https://github.com/stefanoeb/eslint-action/blob/master/README.md
+
+name: ESLint
+
+on: 
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - '.github/**' # this yml is also excluded so you need to re-run it explicitly if necessary
+      - .editorconfig
+      - LICENSE
+      - README.md
+  pull_request:
+    branches: [ master ]
+    paths-ignore:
+      - '.github/**' # this yml is also excluded so you need to re-run it explicitly if necessary
+      - .editorconfig
+      - LICENSE
+      - README.md
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm install
+    - name: Run ESLint
+      run: eslint . --ext .js
