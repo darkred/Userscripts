@@ -9,19 +9,19 @@ module.exports = {
 	// "extends": "eslint:all",
 	// "extends": "eslint:recommended",
 	"extends": [
-		// "eslint:all",
 		"eslint:recommended",
-		// "plugin:clean-regex/recommended"
-		"plugin:no-jquery/deprecated",
+		// "eslint:all",
 		// "plugin:no-jquery/recommended",
+		"plugin:no-jquery/deprecated",
 		// "plugin:no-jquery/slim",
 		// "plugin:no-jquery/all",
-		// "plugin:regexp/all",
+		// "plugin:clean-regex/recommended"
 		"plugin:regexp/recommended",
+		// "plugin:regexp/all",
 
 	],
 	"plugins": [
-		// "clean-regex"
+		// "clean-regex",
 		"regexp",
 		"no-jquery",
 	],
