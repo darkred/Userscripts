@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2021.4.12
+// @version     2021.12.13
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -40,8 +40,8 @@ var total;
 function showCounter() {
 
 	// var totalString = $(`span:contains('posts'):last-child > span, .g47SY`).html(); 																	// The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
-	var totalString = document.querySelector(`#react-root > section > main > div > header > section > ul > li:nth-child(1) > span > span,
-											  #react-root > section > main > div > header > section > ul > li:nth-child(1) >   a  > span`).textContent; // The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
+	var totalString = document.querySelector(`#react-root > div > div > section > main > div > header > section > ul > li:nth-child(1) > span > span,
+											  #react-root > div > div > section > main > div > header > section > ul > li:nth-child(1) >   a  > span`).textContent; // The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
 	total = totalString.replace(',', '').replace('.', ''); // strip the thousand comma/dot seperator
 
 
@@ -125,7 +125,7 @@ var observer;
 // var avatarSelector = 'h1.rhpdm';                                  // the profile name element
 // var avatarSelector = 'span.-nal3';                                  // the 'posts' count element, e.g.  683 posts
 // var avatarSelector = 'ul.k9GMp';                                  // the profile's 3 counters container element
-var avatarSelector = '.nZSzR';                                  // the profile's username container element
+var avatarSelector = '.eC4Dz';                                  // the profile's username container element
 // var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
 // var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
 
