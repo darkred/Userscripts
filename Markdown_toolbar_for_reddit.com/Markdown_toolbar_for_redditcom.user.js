@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name        Markdown toolbar for reddit.com
 // @namespace   darkred
-// @version     1.3
+// @version     1.4.1
 // @description Creates a Markdown toolbar whenever you make/edit text posts or comments in reddit.com
 // @author      wOxxOm, darkred
 // @license     MIT
 // @include     https://www.reddit.com/*submit*
+// @include     https://old.reddit.com/*submit*
 // @include     https://www.reddit.com/*comments*
+// @include     https://old.reddit.com/*comments*
 // @grant       GM_addStyle
 // @icon        https://raw.githubusercontent.com/dcurtis/markdown-mark/master/png/66x40-solid.png
 //
@@ -30,7 +32,7 @@ else {
 	var textareas = document.querySelectorAll('textarea');
 
 	// ADD TOOLBAR: TO EDITING YOUR POST, TO 'NEW COMMENT' FORM AND TO EDITING YOUR EXISTING COMMENT(S)
-	for (var i = 0; i < textareas.length - 2; i++) {
+	for (var i = 0; i < textareas.length; i++) {
 		x = document.querySelectorAll('textarea') [i].parentNode;
 		addFeatures(x);
 	}
