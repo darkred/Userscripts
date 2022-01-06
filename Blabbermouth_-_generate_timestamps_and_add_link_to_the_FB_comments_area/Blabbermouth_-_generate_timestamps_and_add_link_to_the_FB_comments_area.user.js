@@ -17,6 +17,8 @@
 
 
 /* global moment */
+/* eslint-disable no-console */
+
 'use strict';
 
 
@@ -75,7 +77,7 @@ if (
 		threshold: 0
 	};
 
-	let callback = (entries, observer) => {
+	let callback = (entries) => {
 		entries.forEach(entry => {
 
 			if (!entry.target.classList.contains('done')){
@@ -124,7 +126,7 @@ if (
 	const targetNode2 = document.querySelector('.infinite_scroll');
 	const config2 = { attributes: false, childList: true, subtree: false };
 
-	const callback2 = function(mutationsList, observer2) {
+	const callback2 = function(mutationsList) {
 		for(const mutation of mutationsList) {
 			if (mutation.type === 'childList') {
 				var allTimestamps = document.querySelectorAll('span.date-time');

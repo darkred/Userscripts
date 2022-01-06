@@ -125,7 +125,7 @@ function addClickListeners(links, type){
 
 	links.forEach((link) => {
 
-		link.addEventListener('click', function(event){
+		link.addEventListener('click', function(){
 
 			let href = this.getAttribute('href');
 			if (href === 'javascript:void(0)') {

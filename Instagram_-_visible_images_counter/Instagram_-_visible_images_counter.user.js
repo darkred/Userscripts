@@ -12,6 +12,7 @@
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
+/* eslint-disable no-console */
 
 var stylesheet =
 `<style>
@@ -170,7 +171,7 @@ document.leave(avatarSelector, function() {
 
 
 // when navigating using the browser's back/forth
-window.addEventListener('popstate', function (event) {
+window.addEventListener('popstate', function () {
 	// alert()
 	removeCounter();
 	console.log('COUNTER IS REMOVED');
