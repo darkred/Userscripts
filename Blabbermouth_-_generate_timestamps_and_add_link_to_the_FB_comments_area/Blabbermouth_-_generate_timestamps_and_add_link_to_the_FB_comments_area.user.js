@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.2.1
-// @date        2021.3.31
+// @version     1.3
+// @date        2022.1.8
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
@@ -65,6 +65,7 @@ function recalc(existingTimestampElement, format, notitle) {
 }
 
 
+// 1. IF ON NEWS PAGES LISTINGS (convertTolocal + apply to pagination)
 if (
 	window.location.href.endsWith('blabbermouth.net/') ||
 	window.location.href.endsWith('blabbermouth.net/news') ||
@@ -94,9 +95,7 @@ if (
 						let container = document.implementation.createHTMLDocument().documentElement;
 						container.innerHTML = xhr.responseText;
 
-						let publishedTimestamp = container.querySelector(
-							'meta[property="article:published_time"]'
-						).content;
+						let publishedTimestamp = container.querySelector('meta[property="article:published_time"]').content;
 
 						convertToLocalTimezone(publishedTimestamp);
 
@@ -141,62 +140,59 @@ if (
 	observer2.observe(targetNode2, config2);
 	// ----------------------------------------
 
-
-} else if (window.location.href.includes('blabbermouth.net/news/')) {
-	if (
-		document.querySelector('meta[property="article:published_time"]') !==
-		null
-	) {
-		var publishedTimestamp = document.querySelector(
-			'meta[property="article:published_time"]'
-		).content;
-	}
-
-
-	console.log('publishedTimestamp: ' + publishedTimestamp);
-
-	var publishedTimeLTZ, publishedTimeLTZtitle;
-
-	convertToLocalTimezone(publishedTimestamp);
-
-	let existingTimestampElement = document.querySelector('.date-time');
-
-	existingTimestampElement.textContent = publishedTimeLTZ;
-	existingTimestampElement.title = publishedTimeLTZtitle;
-
-	recalc(existingTimestampElement, 'YYYY-MM-DD HH:mm:ss');
-
-
-} else if (
-	(window.location.href.includes('blabbermouth.net/cdreviews/') ||
-	window.location.href.includes('blabbermouth.net/dvdreviews/')) &&
-	!window.location.href.includes('/page/')
-) {
+// 2+3. ELSE IF ON CD/DVD PAGE REVIEWS ((convertTolocal + generate timestamp)
+} else if
+((	window.location.href.includes('blabbermouth.net/cdreviews/') ||
+	window.location.href.includes('blabbermouth.net/dvdreviews/') ||
+	window.location.href.includes('blabbermouth.net/news/') )
+	&& !window.location.href.includes('/page/'))
+{
 	//--- Double-check that this iframe is on the expected domain:
 	if (/blabbermouth\.net/i.test(location.host)) {
 		console.log('Userscript is in the MAIN page.');
 
 		// 2019-10-17T15:32:18.000Z
 
-		if (
-			document.querySelector(
-				'meta[property="article:published_time"]'
-			) !== null
-		) {
-			publishedTimestamp = document.querySelector(
-				'meta[property="article:published_time"]'
-			).content;
+
+		if (document.querySelector('meta[property="article:published_time"]') !== null) {
+			var publishedTimestamp = document.querySelector('meta[property="article:published_time"]').content;
+		}
+		console.log('publishedTimestamp: ' + publishedTimestamp);
+
+
+
+		if (window.location.href.includes('blabbermouth.net/news/')) {
+
+			var publishedTimeLTZ, publishedTimeLTZtitle;
+
+			convertToLocalTimezone(publishedTimestamp);
+
+			let existingTimestampElement = document.querySelector('.date-time');
+
+			existingTimestampElement.textContent = publishedTimeLTZ;
+			existingTimestampElement.title = publishedTimeLTZtitle;
+
+			recalc(existingTimestampElement, 'YYYY-MM-DD HH:mm:ss');
+
 		}
 
-		console.log(publishedTimestamp);
 
-		var currentURL = window.location.href;
 
-		convertToLocalTimezone(publishedTimestamp);
 
-		var commentcount = '';
 
-		var HTML = `
+
+
+
+		if (!window.location.href.includes('blabbermouth.net/news/')){
+
+
+			var currentURL = window.location.href;
+
+			convertToLocalTimezone(publishedTimestamp);
+
+			var commentcount = '0';
+
+			var HTML = `
 <p class="byline-single vcard">
 <span class="date-time">${publishedTimeLTZ}</span>
 <span class="date-comments">
@@ -208,27 +204,31 @@ Comments
 </p>
 `;
 
-		if (document.querySelector('.entry-content') !== null) {
-			document
-				.querySelector('.entry-content')
-				.insertAdjacentHTML('beforebegin', HTML);
-			document.querySelector('.date-time').title = publishedTimeLTZtitle;
 
-			let newDateTimeElement = document.querySelector('.date-time');
-			recalc(newDateTimeElement, 'YYYY-MM-DD HH:mm:ss');
+			if (document.querySelector('.entry-content') !== null) {
+				document
+					.querySelector('.entry-content')
+					.insertAdjacentHTML('beforebegin', HTML);
+				document.querySelector('.date-time').title = publishedTimeLTZtitle;
+
+				let newDateTimeElement = document.querySelector('.date-time');
+				recalc(newDateTimeElement, 'YYYY-MM-DD HH:mm:ss');
+			}
+
 		}
 
-		// Wait fof messages (from iframe)
+		// Wait for messages [commentcount] (from iframe)
 		window.addEventListener(
 			'message',
 			function addFbCounter(e) {
 				// something from an unknown domain, or doesn't contain the string "Comment" let's ignore it
+				// console.log('Received message: ' + e.data);
 				if (e.origin !== 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
 					return;
 				}
 				console.log('Received message: ' + e.data);
 				document.querySelector(
-					'#main > article > p > span.date-comments > a:nth-child(1)'
+					'#main > article > p > span.date-comments > a:nth-child(1), #main header > p > span.date-comments > a:nth-child(1)'
 				).innerText = e.data.replace(/ Comments?/i,'');
 				window.removeEventListener('message', addFbCounter);
 			},
@@ -236,11 +236,17 @@ Comments
 		);
 		console.log('Waiting for Message 1, from iframe...');
 	}
-}  else if (window.location.href.includes('facebook.com')) {
+
+
+// ELSE IF IT'S ON THE FACEBOOK COMMENTS IFRAME  (send fb comment count to main page)
+}
+
+if (window.location.href.includes('facebook.com')) {
 
 	console.log('Userscript is in the FRAMED page.');
 
 	var selector = '._50f7';
+	// Send commentcount to MAIN page
 	window.parent.postMessage(
 		document.querySelector(selector).innerText,
 		'https://www.blabbermouth.net/cdreviews/'
