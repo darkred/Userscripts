@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2021.2.13.1
+// @version      2022.2.10
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -12,6 +12,11 @@
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
+/* globals trustedTypes */
+
+const escapeHTMLPolicy = trustedTypes.createPolicy('myEscapePolicy', {
+	createHTML: (str) => str,
+})
 process();
 new MutationObserver(process).observe(document, { childList: true, subtree: true });
 
@@ -83,7 +88,8 @@ function process(mutations) {
 			node = document.querySelector('path[d^="M10 16.5l6-4.5-6-4.5"]').closest('span');
 		}
 
-		node.parentElement.insertAdjacentHTML('afterend', text);		// insert the YouTube link
+		const escaped = escapeHTMLPolicy.createHTML(text);
+		node.parentElement.insertAdjacentHTML('afterend', escaped);		// insert the YouTube link
 
 	}
 
@@ -95,7 +101,7 @@ function addCss(cssString) {
 	var head = document.getElementsByTagName('head')[0];
 	var newCss = document.createElement('style');
 	newCss.type = 'text/css';
-	newCss.innerHTML = cssString;
+	newCss.innerHTML = escapeHTMLPolicy.createHTML(cssString);
 	head.appendChild(newCss);
 }
 
