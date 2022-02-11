@@ -4,7 +4,7 @@
 // @author       wOxxOm, darkred
 // @license      MIT
 // @description  Adds a YouTube search link next to the Videos link (e.g. Web, Images, Videos, YouTube, News, Maps, Shopping, ...)
-// @version      2022.2.10
+// @version      2022.2.11
 // @include      https://www.google.com/*
 // @include      /https?:\/\/(www\.)?google\.(com|(?:com?\.)?\w\w)\/.*/
 // @grant        none
@@ -12,11 +12,13 @@
 // @supportURL  https://github.com/darkred/Userscripts/issues
 // ==/UserScript==
 
-/* globals trustedTypes */
-
-const escapeHTMLPolicy = trustedTypes.createPolicy('myEscapePolicy', {
+const escapeHTMLPolicy = (({ trustedTypes }, policy) =>
+	trustedTypes
+		? trustedTypes.createPolicy('myEscapePolicy', policy)
+		: policy)(window, {
 	createHTML: (str) => str,
-})
+});
+
 process();
 new MutationObserver(process).observe(document, { childList: true, subtree: true });
 
