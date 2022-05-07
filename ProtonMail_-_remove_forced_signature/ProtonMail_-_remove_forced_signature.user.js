@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2021.6.9
+// @version     2022.5.7
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
@@ -13,7 +13,7 @@
 // @icon        https://protonmail.com/images/favicon.ico
 // ==/UserScript==
 
-const elementToWatch = 'iframe[title="Editor"]';
+const elementToWatch = 'iframe[title="Email composer"]';
 document.arrive(elementToWatch, function () {
 	let iframe = this.contentDocument; // refers to the newly created element
 
