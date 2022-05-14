@@ -1,18 +1,18 @@
 // ==UserScript==
 // @name        Blabbermouth - generate timestamps and add link to the fb comments area
 // @namespace   darkred
-// @version     1.3
-// @date        2022.1.8
+// @version     2.0
+// @date        2022.5.14
 // @description Generates missing timestamps or converts the existing ones in relative format, and adds link to the fb comments area
 // @author      darkred
 // @license     MIT
-// @include     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/(news|cdreviews|dvdreviews)?/
-// @exclude     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/(cdreviews|dvdreviews)(\/page|$)/
+// @include     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/(news|reviews)?/
+// @exclude     /^(https?:)?\/\/(www\.)?blabbermouth\.net\/reviews(\/page|$)/
 // @include     https://www.facebook.com/plugins/feedback.php*
 // @grant       none
 // @require     https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
-// @icon        https://www.blabbermouth.net/assets/favicon-309148577f1b67c003487c069cccf8731e6f68e4d847c5576d6f5453b083c27a.png
+// @icon        https://drnizx3otcofi.cloudfront.net/b64e6010-2ac1-4e95-b545-1a2994bbbd04/img/favicon/favicon-32x32.png
 // ==/UserScript==
 
 
@@ -43,11 +43,12 @@ moment.updateLocale('en', {
 
 function convertToLocalTimezone(timestamp) {
 	// (the timestamp is in ISO 8601 format and its trailing Z means that it's in UTC )
-	// 2020-03-05T15:40:38.000Z
+	// 2020-03-05T15:40:38.000Z    old
+	// 2022-05-11T12:16:05+00:00   new
 	let initialTimestamp = timestamp;
 	if (moment(initialTimestamp, moment.ISO_8601, true).isValid()) {
 		// let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-05:00', 'YYYY-MM-DDTHH:mm:ssZ');		// the server's timezone is GMT-5
-		let convertedToLocalTimezone = moment(initialTimestamp.replace('Z','')  + '-03:47', 'YYYY-MM-DDTHH:mm:ssZ');		// the server's timezone is GMT-4 plus 13 min, in order to sync with the relevant post timestamps in both Facebook and Twitter(TW is 1 min later than FB) blabbbermouth pages
+		let convertedToLocalTimezone = moment(initialTimestamp + '-03:47', 'YYYY-MM-DDTHH:mm:ss+Z');		// the server's timezone is GMT-4 plus 13 min, in order to sync with the relevant post timestamps in both Facebook and Twitter(TW is 1 min later than FB) blabbbermouth pages
 		publishedTimeLTZ = convertedToLocalTimezone.fromNow();
 		let format = 'YYYY-MM-DD HH:mm:ss';
 		publishedTimeLTZtitle = convertedToLocalTimezone.format(format);
@@ -62,6 +63,11 @@ function recalc(existingTimestampElement, format, notitle) {
 			existingTimestampElement.innerText = moment(existingTimestampElement.innerText.trim()).fromNow();
 		}
 	}, 1 * 60 * 1000);		// repeat every 1 minute
+}
+
+
+function onClick(){
+	document.querySelector('iframe[title="fb:comments Facebook Social Plugin"]').scrollIntoView();
 }
 
 
@@ -87,8 +93,8 @@ if (
 				if (entry.isIntersecting && !entry.target.classList.contains('in-viewport') ) {
 					entry.target.classList.add('in-viewport');
 
-					var xhr = new XMLHttpRequest();
-					var url = entry.target.parentElement.parentElement.firstElementChild.firstElementChild.href;
+					const xhr = new XMLHttpRequest();
+					const url = entry.target.parentElement.parentElement.firstElementChild.firstElementChild.href;
 					xhr.open('GET', url, true);	// XMLHttpRequest.open(method, url, async)
 					xhr.onload = function () {
 
@@ -114,7 +120,7 @@ if (
 
 	let observer = new IntersectionObserver(callback, options);
 
-	var allTimestamps = document.querySelectorAll('span.date-time');
+	let allTimestamps = document.querySelectorAll('.news-single span.date');
 	allTimestamps.forEach((element) => {
 		observer.observe(element);
 	});
@@ -122,13 +128,13 @@ if (
 
 	// ----------------------------------------
 	// Watch for pagination events (when new '.article' children are added inside the '.infinite_scroll' element)
-	const targetNode2 = document.querySelector('.infinite_scroll');
+	const targetNode2 = document.querySelector('.infinite-scroll-component');
 	const config2 = { attributes: false, childList: true, subtree: false };
 
 	const callback2 = function(mutationsList) {
 		for(const mutation of mutationsList) {
 			if (mutation.type === 'childList') {
-				var allTimestamps = document.querySelectorAll('span.date-time');
+				let allTimestamps = document.querySelectorAll('.news-single span.date');
 				allTimestamps.forEach((element) => {
 					observer.observe(element);
 				});
@@ -140,13 +146,13 @@ if (
 	observer2.observe(targetNode2, config2);
 	// ----------------------------------------
 
-// 2+3. ELSE IF ON CD/DVD PAGE REVIEWS ((convertTolocal + generate timestamp)
-} else if
-((	window.location.href.includes('blabbermouth.net/cdreviews/') ||
-	window.location.href.includes('blabbermouth.net/dvdreviews/') ||
-	window.location.href.includes('blabbermouth.net/news/') )
-	&& !window.location.href.includes('/page/'))
-{
+
+	// /blabbermouth\.net/\(reviews|news)/i.test(window.location.href)
+
+// 2+3. ELSE IF ON CD/DVD REVIEWS OR NEWS PAGES ((convertTolocal + generate timestamp)
+} else if ( /blabbermouth\.net\/(reviews|news)/i.test(window.location.href) &&
+		!window.location.href.includes('/page/') ) {
+
 	//--- Double-check that this iframe is on the expected domain:
 	if (/blabbermouth\.net/i.test(location.host)) {
 		console.log('Userscript is in the MAIN page.');
@@ -154,8 +160,9 @@ if (
 		// 2019-10-17T15:32:18.000Z
 
 
+		let publishedTimestamp;
 		if (document.querySelector('meta[property="article:published_time"]') !== null) {
-			var publishedTimestamp = document.querySelector('meta[property="article:published_time"]').content;
+			publishedTimestamp = document.querySelector('meta[property="article:published_time"]').content;
 		}
 		console.log('publishedTimestamp: ' + publishedTimestamp);
 
@@ -167,7 +174,7 @@ if (
 
 			convertToLocalTimezone(publishedTimestamp);
 
-			let existingTimestampElement = document.querySelector('.date-time');
+			let existingTimestampElement = document.querySelector('div > h1+span.date');
 
 			existingTimestampElement.textContent = publishedTimeLTZ;
 			existingTimestampElement.title = publishedTimeLTZtitle;
@@ -183,56 +190,50 @@ if (
 
 
 
-		if (!window.location.href.includes('blabbermouth.net/news/')){
-
-
-			var currentURL = window.location.href;
+		if (!window.location.href.includes('blabbermouth.net/news/page/')){
 
 			convertToLocalTimezone(publishedTimestamp);
 
 			var commentcount = '0';
 
+			var datePart = !window.location.href.includes('blabbermouth.net/news/') ? `<span class="date">${publishedTimeLTZ}</span>` : '';
+
 			var HTML = `
-<p class="byline-single vcard">
-<span class="date-time">${publishedTimeLTZ}</span>
-<span class="date-comments">
-<a data-permalink="${currentURL}" href="#comments">${commentcount}</a>
-<a href="#comments">
-Comments
-</a>
+${datePart}
+<div>
+<span class="date">
+<a href="javascript:void(0)" id="commentCount">${commentcount} Comments</a>
 </span>
-</p>
+</div>
 `;
 
+			const refSelector = '.reviews-single-article > div > .reviews-rate-comments,div > h1+span.date';
 
-			if (document.querySelector('.entry-content') !== null) {
-				document
-					.querySelector('.entry-content')
-					.insertAdjacentHTML('beforebegin', HTML);
-				document.querySelector('.date-time').title = publishedTimeLTZtitle;
+			if (document.querySelector(refSelector) !== null) {
+				document.querySelector(refSelector).insertAdjacentHTML('afterend', HTML);
+				document.querySelector(refSelector).title = publishedTimeLTZtitle;
 
-				let newDateTimeElement = document.querySelector('.date-time');
+				document.getElementById('commentCount').addEventListener('click', onClick, false);
+
+				let newDateTimeElement = document.querySelector('span.date');
 				recalc(newDateTimeElement, 'YYYY-MM-DD HH:mm:ss');
 			}
 
 		}
 
 		// Wait for messages [commentcount] (from iframe)
-		window.addEventListener(
-			'message',
-			function addFbCounter(e) {
-				// something from an unknown domain, or doesn't contain the string "Comment" let's ignore it
-				// console.log('Received message: ' + e.data);
-				if (e.origin !== 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
-					return;
-				}
-				console.log('Received message: ' + e.data);
-				document.querySelector(
-					'#main > article > p > span.date-comments > a:nth-child(1), #main header > p > span.date-comments > a:nth-child(1)'
-				).innerText = e.data.replace(/ Comments?/i,'');
-				window.removeEventListener('message', addFbCounter);
-			},
-			false
+		window.addEventListener('message', function addFbCounter(e) {
+			// something from an unknown domain, or doesn't contain the string "Comment" let's ignore it
+			console.log('Received message: ' + e.data);
+			if (e.origin !== 'https://www.facebook.com' || e.data.indexOf(' Comment') === -1) {
+				return;
+			}
+			console.log('Received message: ' + e.data);
+			// document.querySelector('#commentCount').innerText = e.data.replace(/ Comments?/i,'');
+			document.querySelector('#commentCount').innerText = e.data;
+			window.removeEventListener('message', addFbCounter);
+		},
+		false
 		);
 		console.log('Waiting for Message 1, from iframe...');
 	}
@@ -245,10 +246,10 @@ if (window.location.href.includes('facebook.com')) {
 
 	console.log('Userscript is in the FRAMED page.');
 
-	var selector = '._50f7';
+	const selector = '._50f7';
 	// Send commentcount to MAIN page
 	window.parent.postMessage(
 		document.querySelector(selector).innerText,
-		'https://www.blabbermouth.net/cdreviews/'
+		'https://blabbermouth.net/reviews/'
 	);
 }
