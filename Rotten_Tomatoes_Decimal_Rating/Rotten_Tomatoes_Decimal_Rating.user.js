@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     6.0.1
+// @version     6.0.2
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm, darkred
 // @license     MIT
@@ -104,15 +104,18 @@ scoreBoard.onclick = function(event) {
 
 	buttonQuestionmarkAudienceScore.addEventListener('click', function(){
 
-		let descriptiveTextAudienceScode = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip').shadowRoot.querySelector('.description');
+		// There are now two occurrences of '3.5 stars or higher' in the AUDIENCE descriptive text overlay, hence the querySelectorAll()
+		let descriptiveTextAudienceScode = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip').shadowRoot.querySelectorAll('.description');
 		/*
 		descriptiveTextAudienceScode.innerHTML = descriptiveTextAudienceScode.innerHTML.replace(/([\d.]+)( stars)/g, function (m, s1, s2) {
 			return 2 * s1 + s2;
 		});
 		*/
-		if (!descriptiveTextAudienceScode.textContent.includes('7 stars or higher')) {
-			descriptiveTextAudienceScode.textContent = descriptiveTextAudienceScode.textContent.replace('3.5 stars or higher', '7 stars or higher');
-		}
+		descriptiveTextAudienceScode.forEach((el) => {
+			if (!el.textContent.includes('7 stars or higher')) {
+				el.textContent = el.textContent.replace('3.5 stars or higher', '7 stars or higher');
+			}
+		});
 
 	});
 
