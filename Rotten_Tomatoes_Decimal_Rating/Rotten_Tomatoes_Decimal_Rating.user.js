@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     6.0.2
+// @version     6.0.3
+// @date        2022.5.15
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm, darkred
 // @license     MIT
@@ -113,7 +114,7 @@ scoreBoard.onclick = function(event) {
 		*/
 		descriptiveTextAudienceScode.forEach((el) => {
 			if (!el.textContent.includes('7 stars or higher')) {
-				el.textContent = el.textContent.replace('3.5 stars or higher', '7 stars or higher');
+				el.innerHTML = el.innerHTML.replace('3.5 stars or higher', '7 stars or higher');
 			}
 		});
 
