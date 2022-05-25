@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2022.5.7
+// @version     2022.5.25
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
 // @include     https://mail.protonmail.com/*
+// @include     https://mail.proton.me/*
 // @include     https://protonirockerxow.onion/*
+// @include     https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd.onion/*
 // @grant       none
 // @require     https://greasyfork.org/scripts/21927-arrive-js/code/arrivejs.js
 // @supportURL  https://github.com/darkred/Userscripts/issues
-// @icon        https://protonmail.com/images/favicon.ico
+// @icon        https://proton.me/favicons/favicon.ico
 // ==/UserScript==
 
 const elementToWatch = 'iframe[title="Email composer"]';
