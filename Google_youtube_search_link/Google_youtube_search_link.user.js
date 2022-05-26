@@ -80,7 +80,7 @@ function process(mutations) {
 					'</a></div>';
 
 		const isVideosTabSelected = !!document.querySelector('.hdtb-mitem.hdtb-msel path[d^="M10 16.5l6-4.5-6-4.5"]');
-		var node = isVideosTabSelected === false ? document.querySelector(`a[href*='tbm=vid']`) : document.querySelector('.hdtb-mitem.hdtb-msel path[d^="M10 16.5l6-4.5-6-4.5"]').closest('span').parentNode;
+		var node = isVideosTabSelected === false ? document.querySelector(`a[href*='tbm=vid']`) : document.querySelector('path[d^="M10 16.5l6-4.5-6-4.5"]').closest('span').parentNode;
 
 
 		// (when the selected/active tab is 'Images') select the 'Images' selected tab svg icon by its path[d] attribute
