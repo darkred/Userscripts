@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2022.5.25
+// @version     2022.6.11
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
@@ -28,14 +28,32 @@ document.arrive(elementToWatch, function () {
 		mutationList.forEach( (mutation) => {
 			mutation.addedNodes.forEach( (node) => {
 				if (node.className === 'protonmail_signature_block') {
-					const parent = node.parentElement; // it's '#squire' and has 3 children: two with <br> and the signature itself
 
-					node.previousSibling.remove(); 	// remove the element that contains a leftover newline (<br>)  ( children[1] )
-					node.remove();  				// remove the signature element itself                         ( children[2] )
+					// DOM STRUCTURE:
+					//
+					// The 2 previous element siblings of the main signature element, '.protonmail_signature_block', are both <div> elements with <br>:
+					//                                  <br>  | <br> | .protonmail_signature_block
+					//
+					// The '.protonmail_signature_block' itself has 3 <div> children which can be:
+					// (when user signature doesn't exist) 2 with <br>, and the proton signature
+					//                                  <br>  | <br> | .protonmail_signature_block-proton
+					// (when user signature exists) the user signature (.protonmail_signature_block-user) , 1 with <br> , and the signature itself
+					//       .protonmail_signature_block-user | <br> | .protonmail_signature_block-proton
+					//
+					// Our aim is:
+					// 1. if there user signature exists, to also remove the 2 <br> elements before the main '.protonmail_signature_block' element.
+					// 2. Regardless of whether user signature exists, to remove the last element ('.protonmail_signature_block-proton') and the <br> before it.
 
-					// Simulate a 'Delete' key press on the message textarea to remove the remaining <br> element  ( children[0] )
-					parent.firstChild.dispatchEvent(new KeyboardEvent('keydown', {'key':'Delete'} ));
-					parent.firstChild.dispatchEvent(new KeyboardEvent( 'keyup' , {'key':'Delete'} ));
+					const signatureUser   = '.protonmail_signature_block-user';
+					const signatureProton = '.protonmail_signature_block-proton';
+
+					if (node.querySelector(signatureUser).firstElementChild.innerText === '' ) {
+						node.previousElementSibling.remove();
+						node.previousElementSibling.remove();
+					}
+
+					node.querySelector(signatureProton).previousElementSibling.remove();
+					node.querySelector(signatureProton).remove();
 
 					observer.disconnect();
 				}
