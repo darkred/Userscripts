@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2022.2.13
+// @version     2022.6.12
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -13,6 +13,14 @@
 // ==/UserScript==
 
 /* eslint-disable no-console */
+
+const escapeHTMLPolicy = (({ trustedTypes }, policy) =>
+	trustedTypes
+		? trustedTypes.createPolicy('myEscapePolicy', policy)
+		: policy)(window, {
+	createHTML: (str) => str,
+});
+
 
 var stylesheet =
 `<style>
@@ -41,12 +49,13 @@ var total;
 function showCounter() {
 
 	// var totalString = $(`span:contains('posts'):last-child > span, .g47SY`).html(); 																	// The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
-	var totalString = document.querySelector(`#react-root > section > main > div > header > section > ul > li:nth-child(1) > * > span`).textContent;	// The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
+	// var totalString = document.querySelector(`#react-root > section > main > div > header > section > ul > li:nth-child(1) > * > span`).textContent;	// The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
+	var totalString = document.querySelector(`[id^=mount_0_0_] section > main > div > header > section > ul > li:nth-child(1) > * > span`).textContent;	// The 'total' value (it's a string). The ".g47SY" selector is for localized pages, e.g. https://www.instagram.com/instagram/?hl=de
 	total = totalString.replace(',', '').replace('.', ''); // strip the thousand comma/dot seperator
 
 
 	// hrefselems = document.querySelectorAll(`a[href*='taken-by']`);
-	hrefselems = document.querySelectorAll(`.v1Nh3.kIKUG._bz0w > a`);
+	hrefselems = document.querySelectorAll(`._aabd._aa8k._aanf > a`);
 	$.each(hrefselems, function(index, value) {
 		// hrefs.indexOf(String(value)) === -1 ? hrefs.push(String(value)) : console.log("This item already exists"); // https://stackoverflow.com/a/36683363
 		if (hrefs.indexOf(String(value)) === -1) { 		// hrefs.count -below- serves as a counter for the newly added displayed images (on each infinite scrolling event)
@@ -72,7 +81,8 @@ function showCounter() {
 function createDiv() {
 	// Creation of the counter element
 	document.body.appendChild(div);
-	div.innerHTML = showCounter(); 	// Initial display of the counter
+	// div.innerHTML = showCounter(); 	// Initial display of the counter
+	div.innerHTML = escapeHTMLPolicy.createHTML(showCounter()); 	// Initial display of the counter
 	div.style.top = '1px';
 	div.style.right = '1px';
 	div.style.position = 'fixed';
@@ -96,7 +106,8 @@ function createObserver() {
 	/// ---------------------------------
 	observer = new MutationObserver(function() {  // --> Callback function to execute when mutations are observed
 		if (div.innerHTML.indexOf(total + ' / ' + total) === -1) {
-			div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
+			// div.innerHTML = showCounter(); 	// On each infinite scrolling event, re-calculate counter
+			div.innerHTML = escapeHTMLPolicy.createHTML(showCounter()); 	// On each infinite scrolling event, re-calculate counter
 		}
 	// }).observe(document.querySelector('._havey'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
 	// }).observe(document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]'), 	// target of the observer: the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)
@@ -125,7 +136,8 @@ var observer;
 // var avatarSelector = 'h1.rhpdm';                                  // the profile name element
 // var avatarSelector = 'span.-nal3';                                  // the 'posts' count element, e.g.  683 posts
 // var avatarSelector = 'ul.k9GMp';                                  // the profile's 3 counters container element
-var avatarSelector = '.eC4Dz';                                  // the profile's username container element
+// var avatarSelector = '.eC4Dz';                                  // the profile's username container element
+var avatarSelector = '._aa_m';                                  // the profile's username container element
 // var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
 // var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
 
