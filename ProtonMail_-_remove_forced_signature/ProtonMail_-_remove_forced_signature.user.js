@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ProtonMail - remove forced signature
 // @namespace   darkred
-// @version     2022.6.11
+// @version     2022.7.11
 // @description Removes the forced ProtonMail signature from the 'New message' textboxes
 // @author      darkred
 // @license     MIT
@@ -40,14 +40,14 @@ document.arrive(elementToWatch, function () {
 					// (when user signature exists) the user signature (.protonmail_signature_block-user) , 1 with <br> , and the signature itself
 					//       .protonmail_signature_block-user | <br> | .protonmail_signature_block-proton
 					//
-					// Our aim is:
-					// 1. if there user signature exists, to also remove the 2 <br> elements before the main '.protonmail_signature_block' element.
-					// 2. Regardless of whether user signature exists, to remove the last element ('.protonmail_signature_block-proton') and the <br> before it.
+					// The script's functionality is:
+					// 1. if a user signature exists, to also remove the 2 <br> elements before the main '.protonmail_signature_block' element.
+					// 2. Regardless of whether a user signature exists or not, to remove the last element ('.protonmail_signature_block-proton') and the <br> before it.
 
 					const signatureUser   = '.protonmail_signature_block-user';
 					const signatureProton = '.protonmail_signature_block-proton';
 
-					if (node.querySelector(signatureUser).firstElementChild.innerText === '' ) {
+					if (node.querySelector(signatureUser).firstElementChild.textContent === '' ) {
 						node.previousElementSibling.remove();
 						node.previousElementSibling.remove();
 					}
