@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2022.9.5
+// @version     2022.11.5
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -94,7 +94,7 @@ function createDiv() {
 function createObserver() {
 
 	// var thePics = document.querySelector('div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]');
-	var thePics = document.querySelector('div[style*="flex-direction: column;"], div[style$="padding-top: 0px;"]');  // the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)   --> https://stackoverflow.com/a/5110337  ("wildcard * in CSS") containing (*=) x and ending ($=) with y
+	var thePics = document.querySelector('div[style*="flex-direction: column;"], div[style$="padding-top: 0px;"]');  // the "pics" area element, with rows that contain 3 pics each (watching for 'row' element additions)   --> https://stackoverflow.com/a/5110337  ("wildcard * in CSS") starting (^=) with x and ending ($=) with y
 	if (!thePics){
 		return;
 	}
@@ -137,7 +137,8 @@ var observer;
 // var avatarSelector = 'span.-nal3';                                  // the 'posts' count element, e.g.  683 posts
 // var avatarSelector = 'ul.k9GMp';                                  // the profile's 3 counters container element
 // var avatarSelector = '.eC4Dz';                                  // the profile's username container element
-var avatarSelector = '._aa_m';                                  // the profile's username container element
+// var avatarSelector = '._aa_m';                                  // the profile's username container element
+var avatarSelector = '._aa_c';                                  // the profile's username container element
 // var avatarSelector = 'main > article > header > section > div._ienqf > div > button';                                  // the 3-dots icon
 // var avatarSelector = 'div[style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;"]';                                  // the 3-dots icon
 
