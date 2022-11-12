@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Instagram - visible images counter
 // @namespace   darkred
-// @version     2022.11.5
+// @version     2022.11.13
 // @description Shows in instagram profile pages how many images out of total (as a number and as a percentage) are currently visible, as you scroll down the page.
 // @author      darkred
 // @license     MIT
@@ -200,7 +200,7 @@ window.addEventListener('popstate', function () {
 (function(){
 	var rs = history.pushState;
 	history.pushState = function(state, title, url){
-		if ( !url.includes('/following/') && !url.includes('/followers/') && !url.includes('/p/') && !url.includes('/direct/') ){   // avoid all possible in-page/popup "pages" (a profile's following/followers, and posts -opened by clicking on a thumb-)
+		if ( !url.includes('/following/') && !url.includes('/followers/') && !url.includes('/p/') && !url.includes('/direct/') && !window.location.href.includes('/p/') ){   // avoid all possible in-page/popup "pages" (a profile's following/followers, and posts -opened by clicking on a thumb-)
 			rs.apply(history, arguments); // preserve normal functionality
 			console.log('navigating', arguments); // do something extra here; raise an event
 			removeCounter();
