@@ -1,9 +1,12 @@
 {
   "devDependencies": {
     "eslint": "*",
+    "eslint-plugin-css": "*",
+    "eslint-plugin-es-x": "*",
     "eslint-plugin-jsonc": "*",
     "eslint-plugin-no-jquery": "*",
     "eslint-plugin-regexp": "*",
-    "eslint-plugin-userscripts": "*"
+    "eslint-plugin-userscripts": "*",
+    "eslint-plugin-yml": "*"
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+
 module.exports = {
 	"env": {
 		"browser": true,
@@ -11,6 +13,7 @@ module.exports = {
 	"extends": [
 		"eslint:recommended",
 		// "eslint:all",
+		"plugin:jsonc/recommended-with-json",
 		// "plugin:no-jquery/recommended",
 		"plugin:no-jquery/deprecated",
 		// "plugin:no-jquery/slim",
@@ -49,6 +52,7 @@ module.exports = {
 		"new-cap": "off",
 		"no-alert": "warn",
 		"no-console": "warn",
+		"no-dupe-keys": "warn",
 		"no-extra-semi": "warn",
 		"no-inline-comments": "off",
 		"no-magic-numbers": "off",
