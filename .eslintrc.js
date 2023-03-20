@@ -1,6 +1,8 @@
 /* eslint-disable quotes */
 
 module.exports = {
+	"root": true,
+
 	"env": {
 		"browser": true,
 		"es6": true,
@@ -8,11 +10,24 @@ module.exports = {
 		"jquery": true,
 		// "node": true
 	},
+
+	"parserOptions": {
+		// "ecmaVersion": 12,
+		"ecmaVersion": "latest",
+		"sourceType": "script",
+		"ecmaFeatures": {
+			"globalReturn ": true,
+			"impliedStrict": true,
+			// "jsx": true,
+		},
+	},
+
 	// "extends": "eslint:all",
 	// "extends": "eslint:recommended",
 	"extends": [
 		"eslint:recommended",
 		// "eslint:all",
+		"plugin:css/recommended",
 		"plugin:jsonc/recommended-with-json",
 		// "plugin:no-jquery/recommended",
 		"plugin:no-jquery/deprecated",
@@ -21,23 +36,16 @@ module.exports = {
 		// "plugin:clean-regex/recommended"
 		"plugin:regexp/recommended",
 		// "plugin:regexp/all",
+	],
 
-	],
 	"plugins": [
+		"css",
+		"jsonc",
 		// "clean-regex",
-		"regexp",
 		"no-jquery",
+		"regexp",
 	],
-	"parserOptions": {
-		// "ecmaVersion": 12,
-		"ecmaVersion": 'latest',
-		"sourceType": "script",
-		"ecmaFeatures": {
-			"globalReturn ": true,
-			"impliedStrict": true,
-			// "jsx": true,
-		},
-	},
+
 	"rules": {
 		"complexity": ["warn", 20],
 		"eqeqeq": "warn",
@@ -73,8 +81,8 @@ module.exports = {
 		"space-before-function-paren": "off",
 		// "space-in-parens": ["warn", "always"],
 		"unicode-bom": ["warn", "never"],
-
 	},
+
 	"reportUnusedDisableDirectives": true
 
 };
