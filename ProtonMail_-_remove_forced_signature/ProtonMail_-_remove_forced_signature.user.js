@@ -46,9 +46,9 @@ document.arrive(elementToWatch, function () {
 					//       .protonmail_signature_block-user                    |  <div> \ <br>  |  .protonmail_signature_block-proton
 					//
 					// The script's functionality is:
-					// 1. Regardless of whether a user signature exists or not, to remove the 2 <div> \ <br> elements before the main/reference '.protonmail_signature_block' element.
-					// 2a. to remove the last element ('.protonmail_signature_block-proton')
-					// 2b.   +  if a user signature is not empty, to also remove the <div> \ <br> before it.
+					// 1a. If user signature exists(=it's not empty), to remove the  <div> \ <br>  element before the last element ('.protonmail_signature_block-proton') ...
+					// 1b. ... otherwise to remove the 2 <div> \ <br> elements before the main/reference '.protonmail_signature_block' element.
+					// 2. To remove the last element ('.protonmail_signature_block-proton') itself.
 					//
 					// See DOM screenshots: https://imgur.com/a/VEI4nDQ
 
