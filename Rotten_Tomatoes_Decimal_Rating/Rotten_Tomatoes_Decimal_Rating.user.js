@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        Rotten Tomatoes Decimal Rating
 // @namespace   darkred
-// @version     6.0.3
-// @date        2022.5.15
+// @version     7
+// @date        2023.6.3
 // @description Changes base-5 Rating of Rotten Tomatoes to base-10
 // @author      wOxxOm, darkred
 // @license     MIT
@@ -76,8 +76,8 @@ scoreBoard.onclick = function(event) {
 
 	audienceScorex2();
 
-	let buttonVerifiedAudience = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > filter-chip:nth-child(2)');
-	let buttonAllAudience =      document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > filter-chip:nth-child(3)');
+	let buttonVerifiedAudience = document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-audience > filter-chip:nth-child(2)');
+	let buttonAllAudience =      document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-audience > filter-chip:nth-child(3)');
 	[ buttonVerifiedAudience, buttonAllAudience ].forEach(function(element) {
 		if (element) {
 			element.addEventListener('click', function() {
@@ -89,13 +89,13 @@ scoreBoard.onclick = function(event) {
 
 
 	// the '?' buttons for the two descriptive texts
-	let buttonQuestionmarkTomatometer = document.querySelector('#mainColumn > overlay-base > score-details > score-details-critics > tool-tip');
-	let buttonQuestionmarkAudienceScore = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip');
+	let buttonQuestionmarkTomatometer = document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-critics > tool-tip');
+	let buttonQuestionmarkAudienceScore = document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-audience > tool-tip');
 
 
 	buttonQuestionmarkTomatometer.addEventListener('click', function(){
 
-		let descriptiveTextTomatometer = document.querySelector('#mainColumn > overlay-base > score-details > score-details-critics > tool-tip').shadowRoot.querySelector('.description');
+		let descriptiveTextTomatometer = document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-critics > tool-tip').shadowRoot.querySelector('.description');
 		if (!descriptiveTextTomatometer.textContent.includes('review (6 stars or higher)')) {
 			descriptiveTextTomatometer.innerHTML = descriptiveTextTomatometer.innerHTML.replace('review', 'review (6 stars or higher)');
 		}
@@ -106,7 +106,7 @@ scoreBoard.onclick = function(event) {
 	buttonQuestionmarkAudienceScore.addEventListener('click', function(){
 
 		// There are now two occurrences of '3.5 stars or higher' in the AUDIENCE descriptive text overlay, hence the querySelectorAll()
-		let descriptiveTextAudienceScode = document.querySelector('#mainColumn > overlay-base > score-details > score-details-audience > tool-tip').shadowRoot.querySelectorAll('.description');
+		let descriptiveTextAudienceScode = document.querySelector('#topSection > div.thumbnail-scoreboard-wrap > overlay-base > score-details > score-details-audience > tool-tip').shadowRoot.querySelectorAll('.description');
 		/*
 		descriptiveTextAudienceScode.innerHTML = descriptiveTextAudienceScode.innerHTML.replace(/([\d.]+)( stars)/g, function (m, s1, s2) {
 			return 2 * s1 + s2;
