@@ -15,7 +15,7 @@
 // @icon        https://proton.me/favicons/favicon.ico
 // ==/UserScript==
 
-const elementToWatch = 'iframe[title="Email composer"]';
+const elementToWatch = 'iframe[data-testid="rooster-iframe"]';
 document.arrive(elementToWatch, function () {
 	let iframe = this.contentDocument; // refers to the newly created element
 
