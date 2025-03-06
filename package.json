@@ -1,12 +1,29 @@
 {
+  "type": "module",
   "devDependencies": {
-    "eslint": "*",
+    "@biomejs/biome": "*",
+    "@eslint/config-inspector": "*",
+    "@eslint/css": "*",
+    "@eslint/eslintrc": "*",
+    "@eslint/js": "*",
+    "@eslint/json": "*",
+    "@eslint/markdown": "*",
+    "@eslint/migrate-config": "*",
+    "@stylistic/eslint-plugin": "*",
+    "@stylistic/eslint-plugin-js": "*",
+    "eslint": "^9.10.0",
     "eslint-plugin-css": "*",
     "eslint-plugin-es-x": "*",
+    "eslint-plugin-jsdoc": "*",
     "eslint-plugin-jsonc": "*",
     "eslint-plugin-no-jquery": "*",
     "eslint-plugin-regexp": "*",
     "eslint-plugin-userscripts": "*",
-    "eslint-plugin-yml": "*"
+    "eslint-plugin-yml": "*",
+    "globals": "*"
+  },
+  "dependencies": {
+    "rescript": "*",
+    "turbo": "*"
   }
 }
