@@ -1,0 +1,61 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es6": true,
+		"greasemonkey": true,
+		"jquery": true
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "script",
+		"ecmaFeatures": {
+			"globalReturn ": true,
+			"impliedStrict": true
+		}
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:css/recommended",
+		"plugin:jsonc/recommended-with-json",
+		"plugin:no-jquery/deprecated",
+		"plugin:regexp/recommended"
+	],
+	"plugins": [
+		"css",
+		"jsonc",
+		"no-jquery",
+		"regexp"
+	],
+	"rules": {
+		"complexity": ["warn", 20],
+		"eqeqeq": "warn",
+		"func-style": "off",
+		"indent": ["warn","tab", { "ignoreComments": false, "SwitchCase": 1 } ],
+		"linebreak-style": ["warn","unix"],
+		"max-len": "off",
+		"max-statements-per-line": "off",
+		"new-cap": "off",
+		"no-alert": "warn",
+		"no-console": "warn",
+		"no-dupe-keys": "warn",
+		"no-extra-semi": "warn",
+		"no-inline-comments": "off",
+		"no-magic-numbers": "off",
+		"no-misleading-character-class": "warn",
+		"no-mixed-spaces-and-tabs": "warn",
+		"no-multiple-empty-lines": "off",
+		"no-tabs": "off",
+		"no-unused-labels": "warn",
+		"no-unused-vars": ["warn", {"vars": "all", "args": "after-used"}],
+		"no-useless-escape": "warn",
+		"padded-blocks": "off",
+		"quotes": ["warn", "single", { "allowTemplateLiterals": true }] ,
+		"require-jsdoc": "off",
+		"require-unicode-regexp": "off",
+		"semi": ["warn","always"],
+		"space-before-function-paren": "off",
+		"unicode-bom": ["warn", "never"]
+	},
+	"reportUnusedDisableDirectives": true
+}
