@@ -6,7 +6,7 @@
 // @description Lists (as sortable table) fixed bugs related to Firefox for desktop in Mozilla Mercurial pushlogs
 // @author      darkred, johnp
 // @license     MIT
-// @include     /^https?:\/\/hg\.mozilla\.org.*pushloghtml.*/
+// @include     /^https?:\/\/hg-edge\.mozilla\.org.*pushloghtml.*/
 // @grant       GM_getResourceURL
 // @grant       GM_getResourceText
 // @grant       GM_addStyle
