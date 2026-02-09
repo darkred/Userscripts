@@ -11,7 +11,7 @@
     "@eslint/migrate-config": "*",
     "@stylistic/eslint-plugin": "*",
     "@stylistic/eslint-plugin-js": "*",
-    "eslint": "^9.10.0",
+    "eslint": "^10.0.0",
     "eslint-plugin-css": "*",
     "eslint-plugin-es-x": "*",
     "eslint-plugin-jsdoc": "*",
