@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Run evergreen action
-        uses: github/evergreen@v1
+        uses: github/evergreen@v2
         env:
           GH_TOKEN: ${{ secrets.EVERGREEN_ACTION }}
           REPOSITORY: darkred
